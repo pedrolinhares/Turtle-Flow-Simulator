@@ -9,7 +9,9 @@ QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += main.cpp \
         main_window.cpp \
-        grid.cpp
+        grid.cpp \
+        startDialog.cpp
 
 HEADERS  += main_window.h \
-                      grid.h
+            grid.h \
+            startDialog.h

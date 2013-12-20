@@ -19,6 +19,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   createActions();
   createMenus();
 
+  startDialog = new StartDialog(this);
+  connect(startDialog,
+          SIGNAL(dialogFinished(std::string, std::string, std::map<std::string, std::string>, int, int)),
+          this, SLOT(createGrid(std::string, std::string, std::map<std::string, std::string>, int, int)));
+
   setWindowTitle(tr("Interface"));
   setMinimumSize(200, 200);
   resize(1200, 800);
@@ -27,69 +32,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 MainWindow::~MainWindow() {
 }
 
-void MainWindow::newProject() {
-  QDialog *dialog = new QDialog(this);
-  QLabel *rowns_label = new QLabel(tr("Linhas: "));
-  QLabel *columns_label = new QLabel(tr("colunas: "));
-
-  rows = new QSpinBox;
-  columns = new QSpinBox;
-
-  rows->setRange(0, 50);
-  rows->setValue(25);
-  columns->setRange(0, 50);
-  columns->setValue(25);
-
-  rowns_label->setBuddy(rows);
-  columns_label->setBuddy(columns);
-
-  QPushButton *ok_button = new QPushButton(tr("Ok"));
-  QPushButton *close_button = new QPushButton(tr("Cancelar"));
-
-  ok_button->setDefault(true);
-
-  QHBoxLayout *buttons_layout = new QHBoxLayout;
-  buttons_layout->addWidget(ok_button);
-  buttons_layout->addWidget(close_button);
-
-  connect(close_button, SIGNAL(clicked()), dialog, SLOT(close()));
-  connect(ok_button, SIGNAL(clicked()), this, SLOT(createGrid()));
-  connect(ok_button, SIGNAL(clicked()), dialog, SLOT(close()));
-
-  QVBoxLayout* mainLayout = new QVBoxLayout;
-  mainLayout->addWidget(rowns_label);
-  mainLayout->addWidget(rows);
-  mainLayout->addWidget(columns_label);
-  mainLayout->addWidget(columns);
-  mainLayout->addLayout(buttons_layout);
-
-  dialog->setLayout(mainLayout);
-
-  dialog->show();
-}
-
 void MainWindow::createActions() {
-  newProjectAct = new QAction(tr("&Novo projeto"), this);
-  newProjectAct->setStatusTip(tr("Criar novo projeto"));
+  newProjectAct = new QAction(tr("&New simulation"), this);
+  newProjectAct->setStatusTip(tr("Creates a new simulation"));
   connect(newProjectAct, SIGNAL(triggered()), this, SLOT(newProject()));
 
   //Close Action
-    closeAct = new QAction(tr("&Sair"), this);
+    closeAct = new QAction(tr("&Quit"), this);
     closeAct->setShortcut(tr("Ctrl+Q"));
-    closeAct->setStatusTip(tr("Sair da aplicação"));
+    closeAct->setStatusTip(tr("Quit the application"));
 
     connect(closeAct, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
 }
 
 void MainWindow::createMenus() {
-  fileMenu = menuBar()->addMenu(tr("&Arquivo"));
+  fileMenu = menuBar()->addMenu(tr("&File"));
   fileMenu->addAction(newProjectAct);
   fileMenu->addSeparator();
   fileMenu->addAction(closeAct);
-}
-
-//private slot
-void MainWindow::toolTabChanged(int index) {
 }
 
 void MainWindow::setUpToolBox() {
@@ -117,7 +77,16 @@ void MainWindow::setUpToolBox() {
   toolBoxLayout->addWidget(toolBox);
 }
 
-void MainWindow::createGrid() {
+//private slots
+
+void MainWindow::toolTabChanged(int index) {}
+
+void MainWindow::newProject() {
+  startDialog->show();
+ }
+
+void MainWindow::createGrid(std::string dimension, std::string nPhases,
+                            std::map<std::string, std::string> typeOfphases, int nRows, int nColumns) {
   setUpToolBox();
 
   if (!gridLayout->isEmpty()) {
@@ -131,7 +100,10 @@ void MainWindow::createGrid() {
   connect(toolBox, SIGNAL(currentChanged(int)), grids, SLOT(setCurrentIndex(int)));
 
   for (int i = 0; i < nToolboxItems; ++i) {
-    grids->addWidget(new Grid(rows->value(), columns->value(), this));
+    if (dimension == "oneDimensional")
+      grids->addWidget(new Grid(1, nColumns, this));
+    else
+      grids->addWidget(new Grid(nRows, nColumns, this));
   }
 
   gridLayout->addWidget(grids);
