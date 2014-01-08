@@ -1,6 +1,8 @@
 #include <QtWidgets>
 #include <QTableWidget>
+#include <QDoubleValidator>
 #include <iostream>
+#include <string>
 #include "main_window.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
@@ -24,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
           SIGNAL(dialogFinished(std::string, std::string, std::map<std::string, std::string>, int, int)),
           this, SLOT(createGrid(std::string, std::string, std::map<std::string, std::string>, int, int)));
 
-  setWindowTitle(tr("Interface"));
+  setWindowTitle(tr("Simulator"));
   setMinimumSize(200, 200);
   resize(1200, 800);
 }
@@ -61,20 +63,109 @@ void MainWindow::setUpToolBox() {
   toolBox = new QToolBox;
   toolBox->setMaximumWidth(250);
 
-  QLineEdit* test = new QLineEdit;
-  QLabel* testLabel = new QLabel(tr("teste"));
-  testLabel->setBuddy(test);
+  QWidget *test = new QWidget;
 
-  toolBox->insertItem(0, test, tr("Teste"));
+  toolBox->insertItem(0, test, tr("Geometria"));
 
-  QLineEdit* test2 = new QLineEdit;
-  QLabel* testLabel2 = new QLabel(tr("teste 2"));
-  testLabel2->setBuddy(test2);
+  QVBoxLayout *rockLayout = new QVBoxLayout;
+  rockInnerLayout = new QVBoxLayout;
 
-  toolBox->insertItem(1, test2, tr("Teste 2"));
+  QValidator *intValidator = new QIntValidator(1, 99,this);
+  numberOfBlocksEdit = new QLineEdit;
+  numberOfBlocksEdit->setValidator(intValidator);
+
+  QPushButton *ok_button = new QPushButton(tr("Ok"));
+
+  QHBoxLayout *numberOfBlocksLayout = new QHBoxLayout;
+  numberOfBlocksLayout->addWidget(numberOfBlocksEdit);
+  numberOfBlocksLayout->addWidget(ok_button);
+
+  connect(ok_button, SIGNAL(clicked()), this, SLOT(createRockInnerDialog()));
+
+
+  QLabel* numberofBlocksLabel = new QLabel(tr("Enter the number of Blocks:"));
+  numberofBlocksLabel->setBuddy(numberOfBlocksEdit);
+
+  rockLayout->addWidget(numberofBlocksLabel);
+  rockLayout->addLayout(numberOfBlocksLayout);
+  rockLayout->addLayout(rockInnerLayout);
+
+  rockLayout->setAlignment(Qt::AlignTop);
+
+  rockWidget = new QWidget(this);
+  rockWidget->setLayout(rockLayout);
+
+
+  toolBox->insertItem(1, rockWidget, tr("Rock"));
+
+  QWidget *fluidTabContent = new QWidget;
+
+  QHBoxLayout *pvtPointsLayout = new QHBoxLayout;
+
+  pvtSpinBox = new QSpinBox;
+  pvtSpinBox->setMinimum(1);
+
+  QLabel *pvtLabel = new QLabel(tr("Number of PVT Points: "));
+  pvtLabel->setBuddy(pvtSpinBox);
+
+  pvtPointsLayout->addWidget(pvtLabel);
+  pvtPointsLayout->addWidget(pvtSpinBox);
+  pvtPointsLayout->setAlignment(Qt::AlignTop);
+
+  fluidTabContent->setLayout(pvtPointsLayout);
+
+  toolBox->insertItem(2, fluidTabContent, tr("Fluid"));
+
+  QWidget *propertiesTab = new QWidget;
+
+  toolBox->insertItem(3, propertiesTab, tr("Numeric Properties"));
 
   nToolboxItems = toolBox->count();
   toolBoxLayout->addWidget(toolBox);
+}
+
+QGroupBox* MainWindow::createBlockProperties() {
+   //Block properties
+  QGroupBox *groupBox = new QGroupBox(tr("Block properties"));
+  QVBoxLayout *vbox = new QVBoxLayout;
+
+  QDoubleValidator *doubleValidator = new QDoubleValidator;
+
+  QLineEdit* edit1 = new QLineEdit;
+  edit1->setValidator(doubleValidator);
+  QLabel* edit1Label = new QLabel(tr("Porosity:"));
+  edit1Label->setBuddy(edit1);
+
+  QHBoxLayout *layout1 = new QHBoxLayout;
+  layout1->addWidget(edit1Label);
+  layout1->addWidget(edit1);
+
+  QLineEdit* edit2 = new QLineEdit;
+  edit2->setValidator(doubleValidator);
+  QLabel* edit2Label = new QLabel(tr("Permeability:"));
+  edit2Label->setBuddy(edit2);
+
+  QHBoxLayout *layout2 = new QHBoxLayout;
+  layout2->addWidget(edit2Label);
+  layout2->addWidget(edit2);
+
+  QLineEdit* edit3 = new QLineEdit;
+  edit3->setValidator(doubleValidator);
+  QLabel* edit3Label = new QLabel(tr("Compressibility:"));
+  edit3Label->setBuddy(edit3);
+
+  QHBoxLayout *layout3 = new QHBoxLayout;
+  layout3->addWidget(edit3Label);
+  layout3->addWidget(edit3);
+
+  vbox->addLayout(layout1);
+  vbox->addLayout(layout2);
+  vbox->addLayout(layout3);
+
+  vbox->setAlignment(Qt::AlignTop);
+  groupBox->setLayout(vbox);
+
+  return groupBox;
 }
 
 //private slots
@@ -85,26 +176,82 @@ void MainWindow::newProject() {
   startDialog->show();
  }
 
+void MainWindow::createRockInnerDialog() {
+  if (!rockInnerLayout->isEmpty()) {
+    QLayoutItem* item;
+    while ((item = rockInnerLayout->takeAt(0)) != NULL ) {
+      delete item->widget();
+      delete item;
+    }
+  }
+
+  int numberOfBlocks = std::stoi(numberOfBlocksEdit->text().toStdString());
+
+  QComboBox *numberOfBlocksComboBox = new QComboBox;
+
+  QLabel *numberOfBlocksLabel = new QLabel(tr("Choose block to configure:"));
+  numberOfBlocksLabel->setBuddy(numberOfBlocksComboBox);
+
+  blockPropertiesStackedWidget = new QStackedWidget;
+
+  for(int i = 0; i < numberOfBlocks; i++) {
+    numberOfBlocksComboBox->insertItem(i, std::to_string(i + 1).c_str());
+    blockPropertiesStackedWidget->addWidget(createBlockProperties());
+  }
+
+  connect(numberOfBlocksComboBox, SIGNAL(currentIndexChanged(int)),
+          blockPropertiesStackedWidget, SLOT(setCurrentIndex(int)));
+
+  rockInnerLayout->addWidget(numberOfBlocksLabel);
+  rockInnerLayout->addWidget(numberOfBlocksComboBox);
+  rockInnerLayout->addWidget(blockPropertiesStackedWidget);
+
+ }
+
 void MainWindow::createGrid(std::string dimension, std::string nPhases,
-                            std::map<std::string, std::string> typeOfphases, int nRows, int nColumns) {
+                            std::map<std::string, std::string> typeOfphases, 
+                            int nRows, int nColumns) {
   setUpToolBox();
 
   if (!gridLayout->isEmpty()) {
-    gridLayout->removeWidget(grids);
-    delete grids;
+    gridLayout->removeWidget(tabedContent);
+    delete tabedContent;
   }
 
-  grids = new QStackedWidget;
+  if (dimension == "oneDimensional")
+    nRows = 1;
+
+  tabedContent = new QStackedWidget;
 
   //connects toolbox to the grid to change its content
-  connect(toolBox, SIGNAL(currentChanged(int)), grids, SLOT(setCurrentIndex(int)));
+  connect(toolBox, SIGNAL(currentChanged(int)), tabedContent, SLOT(setCurrentIndex(int)));
 
-  for (int i = 0; i < nToolboxItems; ++i) {
-    if (dimension == "oneDimensional")
-      grids->addWidget(new Grid(1, nColumns, this));
-    else
-      grids->addWidget(new Grid(nRows, nColumns, this));
-  }
+  //create the tabed content for each item from the left toolbox
+  //for the geometry tab
+  geometryTab = new QTabWidget;
 
-  gridLayout->addWidget(grids);
+  geometryTab->addTab(new Grid(nRows, nColumns), "Width");
+  geometryTab->addTab(new Grid(nRows, nColumns), "Thickness");
+  geometryTab->addTab(new Grid(nRows, nColumns), "Depth");
+
+  tabedContent->addWidget(geometryTab);
+
+
+  //For the rock tab
+  rockTab = new QTabWidget;
+  rockTab->addTab(new Grid(nRows, nColumns), "Cells");
+
+  tabedContent->addWidget(rockTab);
+
+  //for the fluid tab
+  fluidTab = new QTabWidget;
+
+  QDialog *fluidDialog = new FluidDialog(fluidTab);
+
+  connect(pvtSpinBox, SIGNAL(valueChanged(int)), fluidDialog, SLOT(insertRows(int)));
+
+  fluidTab->addTab(fluidDialog, "Fluid Properties");
+
+  tabedContent->addWidget(fluidTab);
+  gridLayout->addWidget(tabedContent);
 }
