@@ -1,7 +1,13 @@
+/** @file fluid_dialog.cpp */
+
 #include <QtWidgets>
-#include <iostream>
 #include "fluid_dialog.h"
 
+/**************************************************************************//** 
+** \brief constructor that takes the parent pointer.
+**
+** Creates the widgets that compose the dialog.
+******************************************************************************/
 FluidDialog::FluidDialog(QWidget *parent) : QDialog(parent) {
   QVBoxLayout *mainLayout = new QVBoxLayout;
 
@@ -24,7 +30,14 @@ FluidDialog::FluidDialog(QWidget *parent) : QDialog(parent) {
 }
 
 //private slots
-void FluidDialog::insertRows(int i) {
+/**************************************************************************//** 
+** \brief Insert or remove rows in the table.
+**
+** As the user manipulates a QSpinBox, the number of rows are increased or
+** decreased acording to the user input.
+** \param i Number of rows the table should have, as inputed by user.
+******************************************************************************/
+void FluidDialog::insertOrRemoveRows(int i) {
   int numberOfNewRows = i - pvtTableWidget->rowCount();
 
   if (numberOfNewRows > 0)
@@ -33,5 +46,4 @@ void FluidDialog::insertRows(int i) {
   else
     for(int j = 0; j < -numberOfNewRows; j++)
       pvtTableWidget->removeRow(pvtTableWidget->rowCount() - 1);
-    
 }

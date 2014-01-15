@@ -609,7 +609,7 @@ void MainWindow::createGrid(std::string dimension, std::string nPhases,
 
   fluidDialog = new FluidDialog(fluidTab);
 
-  connect(pvtSpinBox, SIGNAL(valueChanged(int)), fluidDialog, SLOT(insertRows(int)));
+  connect(pvtSpinBox, SIGNAL(valueChanged(int)), fluidDialog, SLOT(insertOrRemoveRows(int)));
 
   fluidTab->addTab(fluidDialog, "Fluid Properties");
 
