@@ -368,7 +368,7 @@ QVBoxLayout* MainWindow::createSolutionInitializationLayout() {
   QVBoxLayout* vBox = new QVBoxLayout;
   vBox->addLayout(hBox2);
   vBox->addLayout(hBox3);
-  vBox->Stretch();
+  vBox->addStretch();
   vBox->addWidget(generateFilesButton);
   vBox->setAlignment(Qt::AlignTop);
 
