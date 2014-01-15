@@ -12,10 +12,12 @@ class FluidDialog : public QDialog {
   public:
     FluidDialog(QWidget *parent = 0);
     ~FluidDialog() {};
-    
+
+    QTableWidget* getTable() const { return pvtTableWidget; };
+
   private slots:
   void insertRows(int);
-  
+
   private:
     QSpinBox *pvtSpinBox;
     QTableWidget *pvtTableWidget;

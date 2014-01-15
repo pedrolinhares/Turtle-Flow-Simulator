@@ -3,9 +3,7 @@
 #include <iostream>
 #include "grid.h"
 
-Grid::Grid(int row, int column, QWidget* parent) : QTableWidget(row, column, parent) {
-
-}
+Grid::Grid(int row, int column, QWidget* parent) : QTableWidget(row, column, parent) {}
 
 bool Grid::isBeingEdited() {
 	std::cout << this->state();

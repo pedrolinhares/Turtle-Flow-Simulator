@@ -182,24 +182,33 @@ std::string StartDialog::getPhaseModelChosen() {
   else if (twoPhaseRadio->isChecked())
     return std::string("twoPhase");
   else if (threePhaseRadio->isChecked())
-    return std::string("threePhase"); 
+    return std::string("threePhase");
 }
 
-std::map<std::string, std::string> StartDialog::getPhaseTypeChosen() {
-  std::map<std::string, std::string> phaseMap;
+std::map<std::string, FluidType> StartDialog::getPhaseTypeChosen() {
+  std::map<std::string, FluidType> phaseMap;
 
   std::string phase = getPhaseModelChosen();
-  phaseMap["phaseOne"] = phaseOne->currentText().toStdString();
+  phaseMap["phaseOne"] = convertStringToFluidType(phaseOne);
 
   if (phase == "twoPhase") {
-    phaseMap["phaseTwo"] = phaseTwo->currentText().toStdString();
-  } 
+    phaseMap["phaseTwo"] = convertStringToFluidType(phaseTwo);
+  }
     else if (phase == "threePhase") {
-      phaseMap["phaseTwo"] = phaseTwo->currentText().toStdString();
-      phaseMap["phaseThree"] = phaseThree->currentText().toStdString();
+      phaseMap["phaseTwo"] = convertStringToFluidType(phaseTwo);
+      phaseMap["phaseThree"] = convertStringToFluidType(phaseThree);
     }
 
   return phaseMap;
+}
+
+FluidType StartDialog::convertStringToFluidType(QComboBox* comboBox) {
+  if (comboBox->currentText() == "GAS")
+    return FluidType::GAS;
+  else if (comboBox->currentText() == "Oil")
+    return FluidType::OIL;
+
+  return FluidType::WATER;
 }
 
 //private slots
@@ -209,6 +218,6 @@ void StartDialog::allowTwoDiminsional(bool toggled) {
 }
 
 void StartDialog::emitSignal() {
-  emit dialogFinished(getGridModelChosen(), getPhaseModelChosen(), 
+  emit dialogFinished(getGridModelChosen(), getPhaseModelChosen(),
                       getPhaseTypeChosen(), rows->value(), columns->value());
 }

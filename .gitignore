@@ -3,4 +3,7 @@
 interface
 Makefile
 moc*
+html
+kernel
+latex
 

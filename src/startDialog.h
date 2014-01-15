@@ -5,6 +5,7 @@
 #include <QDialog>
 #include <string>
 #include <map>
+#include "fluid_definitions.h"
 
 class QGroupBox;
 class QRadioButton;
@@ -18,7 +19,7 @@ class StartDialog : public QDialog
 public:
   explicit StartDialog(QWidget *parent = 0);
   ~StartDialog() {};
-  
+
   void show();
 
 private slots:
@@ -26,7 +27,7 @@ private slots:
   void emitSignal();
 
 signals:
-  void dialogFinished(std::string, std::string, std::map<std::string, std::string>, 
+  void dialogFinished(std::string, std::string, std::map<std::string, FluidType>,
                       int nRows, int nColumns);
 
 private:
@@ -37,7 +38,8 @@ private:
 
   std::string getGridModelChosen();
   std::string getPhaseModelChosen();
-  std::map<std::string, std::string> getPhaseTypeChosen();
+  std::map<std::string, FluidType> getPhaseTypeChosen();
+  FluidType convertStringToFluidType(QComboBox*);
 
   QRadioButton *oneDimensionalRadio;
   QRadioButton *twoDimensionalRadio;
