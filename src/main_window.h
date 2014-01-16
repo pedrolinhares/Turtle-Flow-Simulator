@@ -31,7 +31,7 @@ public:
   /// A constructor that takes the parent pointer.
   explicit MainWindow(QWidget *parent = 0);
   ///Destroys all children widgets when destroyed.
-  ~MainWindow();
+  ~MainWindow() {};
 
 private slots:
   void newProject();

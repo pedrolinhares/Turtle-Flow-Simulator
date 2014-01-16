@@ -1,8 +1,8 @@
 /** @file main_window.cpp */
+
 #include <QtWidgets>
 #include <QTableWidget>
 #include <QDoubleValidator>
-#include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -27,15 +27,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
   startDialog = new StartDialog(this);
   connect(startDialog,
-          SIGNAL(dialogFinished(std::string, std::string, std::map<std::string, FluidType>, int, int)),
-          this, SLOT(createGrid(std::string, std::string, std::map<std::string, FluidType>, int, int)));
+          SIGNAL(dialogFinished(std::string, std::string,
+                                std::map<std::string, FluidType>, int, int)),
+          this, SLOT(createGrid(std::string, std::string,
+                                std::map<std::string, FluidType>, int, int)));
 
   setWindowTitle(tr("Simulator"));
   setMinimumSize(200, 200);
   resize(1200, 800);
-}
-
-MainWindow::~MainWindow() {
 }
 
 /**************************************************************************//**
@@ -363,13 +362,15 @@ QVBoxLayout* MainWindow::createSolutionInitializationLayout() {
   hBox3->setAlignment(Qt::AlignTop);
 
   QPushButton* generateFilesButton = new QPushButton(tr("Create Files"));
-  connect(generateFilesButton, SIGNAL(clicked()), this, SLOT(generateConfigurationFiles()));  
+  connect(generateFilesButton, SIGNAL(clicked()),
+          this, SLOT(generateConfigurationFiles()));  
 
   QVBoxLayout* vBox = new QVBoxLayout;
   vBox->addLayout(hBox2);
   vBox->addLayout(hBox3);
   vBox->addStretch();
   vBox->addWidget(generateFilesButton);
+  vBox->addStretch();
   vBox->setAlignment(Qt::AlignTop);
 
   return vBox;
@@ -585,7 +586,8 @@ void MainWindow::createGrid(std::string dimension, std::string nPhases,
   tabedContent = new QStackedWidget;
 
   //connects toolbox to the grid to change its content
-  connect(toolBox, SIGNAL(currentChanged(int)), tabedContent, SLOT(setCurrentIndex(int)));
+  connect(toolBox, SIGNAL(currentChanged(int)),
+          tabedContent, SLOT(setCurrentIndex(int)));
 
   //create the tabed content for each item from the left toolbox
   //for the geometry tab
@@ -609,7 +611,8 @@ void MainWindow::createGrid(std::string dimension, std::string nPhases,
 
   fluidDialog = new FluidDialog(fluidTab);
 
-  connect(pvtSpinBox, SIGNAL(valueChanged(int)), fluidDialog, SLOT(insertOrRemoveRows(int)));
+  connect(pvtSpinBox, SIGNAL(valueChanged(int)),
+          fluidDialog, SLOT(insertOrRemoveRows(int)));
 
   fluidTab->addTab(fluidDialog, "Fluid Properties");
 
@@ -689,8 +692,8 @@ void MainWindow::createGeometryFile() {
   Grid* cellsGrid = (Grid*)rockTab->widget(0);
 
   int numberOfCells = lenghtGrid->columnCount();
-  int numberOfRows = lenghtGrid->rowCount();
 
+  //TODO: Refactor to treat grid with several rows
   QTableWidgetItem *cell;
   for(int i = 0; i < numberOfCells; i++) {
     file << i + 1 << std::endl; //cell Id
@@ -727,12 +730,11 @@ void MainWindow::createGeometryFile() {
 **
 ******************************************************************************/
 void MainWindow::createBlockFile() {
-  int numberOfFields = 3;
-
   std::ofstream file;
   file.open("kernel/ArqBlock.dat");
 
-  QList<QLineEdit *> SolutionInitFields = solutionInitializationWidget->findChildren<QLineEdit *>();
+  QList<QLineEdit *> SolutionInitFields = solutionInitializationWidget->
+                                          findChildren<QLineEdit *>();
 
   int numberOfBlocks = blockPropertiesStackedWidget->count();
   for (int i = 0; i < numberOfBlocks; i++) {
@@ -823,7 +825,8 @@ void MainWindow::createWellsFile() {
 **
 ******************************************************************************/
 void MainWindow::createSolutionFile() {
-  QList<QLineEdit *> allFields = solutionInitializationWidget->findChildren<QLineEdit *>();
+  QList<QLineEdit *> allFields = solutionInitializationWidget->
+                                 findChildren<QLineEdit *>();
 
   if (allFields.count() > 0) {
     std::ofstream file("kernel/ArqInit1d.dat");
