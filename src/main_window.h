@@ -17,6 +17,7 @@ class QToolBox;
 class QVBoxLayout;
 class QHBoxLayout;
 class QStackedWidget;
+class KernelConfigurator;
 
 /*! \class MainWindow
  *  \brief Class that represents the interface's main window.
@@ -40,18 +41,14 @@ private slots:
   void createWellInnerDialog();
   void run();
   void generateConfigurationFiles();
+  void changeLeftBoundaryValue(const QString&);
+  void changeRightBoundaryValue(const QString&);
 
 private:
   void createActions();
   void createMenus();
   void setUpToolBox();
   void createGeometryFile();
-  void createBlockFile();
-  void createFluidFile();
-  void createWellsFile();
-  void createSolutionFile();
-  void createArqResFile();
-  void createNumericPropertiesFile();
   bool canRunSimulation();
   QGroupBox* createBlockProperties();
   QGroupBox* createWellProperties();
@@ -61,6 +58,7 @@ private:
   QVBoxLayout* createWellLayout();
   QVBoxLayout* createNumericPropertiesLayout();
   QVBoxLayout* createSolutionInitializationLayout();
+  QVBoxLayout* createBoundaryConditionLayout();
 
   int nToolboxItems = 0;
   QMenu* fileMenu;
@@ -78,6 +76,7 @@ private:
   QWidget *rockWidget;
   QWidget *propertiesWidget;
   QWidget *solutionInitializationWidget;
+  QWidget *boundaryConditionWidget;
   QSpinBox* rows;
   QSpinBox* columns;
   QSpinBox* pvtSpinBox;
@@ -88,12 +87,17 @@ private:
   QVBoxLayout *wellInnerLayout;
   QLineEdit *numberOfBlocksEdit;
   QLineEdit *numberOfWellsEdit;
+  QLineEdit *leftBoudaryValueEdit;
+  QLineEdit *rightBoudaryValueEdit;
   StartDialog *startDialog;
   FluidDialog *fluidDialog;
+  KernelConfigurator *kernelConfigurator;
 
   QStackedWidget *blockPropertiesStackedWidget = nullptr;
   QStackedWidget *wellPropertiesStackedWidget = nullptr;
   std::map<std::string, FluidType> typeOfphases;
+
+  friend class KernelConfigurator;
 };
 
 #endif // MAIN_WINDOW_H

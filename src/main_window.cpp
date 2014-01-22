@@ -8,8 +8,10 @@
 #include <sstream>
 #include <cstdlib>
 #include "main_window.h"
+#include "kernel_configurator.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+  kernelConfigurator = new KernelConfigurator(this);
   QHBoxLayout* layout = new QHBoxLayout;
 
   gridLayout = new QVBoxLayout;
@@ -77,7 +79,7 @@ void MainWindow::createMenus() {
 /**************************************************************************//**
 ** \brief Creates the ToolBox located to the left side of the window.
 **
-** The ToolBox contains the tabs that identify which simulator configuration 
+** The ToolBox contains the tabs that identify which simulator configuration
 ** part. Each part comes from a method that returns a layout widget that
 ** holds its configuration parts.
 ******************************************************************************/
@@ -124,6 +126,12 @@ void MainWindow::setUpToolBox() {
   solutionInitializationWidget->setLayout(createSolutionInitializationLayout());
 
   toolBox->insertItem(5, solutionInitializationWidget, tr("Initialize Solution"));
+
+  //Boundary Conditions tab
+  boundaryConditionWidget = new QWidget;
+  boundaryConditionWidget->setLayout(createBoundaryConditionLayout());
+
+  toolBox->insertItem(6, boundaryConditionWidget, tr("Boundary Condition"));
 
   nToolboxItems = toolBox->count();
   toolBoxLayout->addWidget(toolBox);
@@ -361,13 +369,74 @@ QVBoxLayout* MainWindow::createSolutionInitializationLayout() {
   hBox3->addWidget(refDeepthEdit);
   hBox3->setAlignment(Qt::AlignTop);
 
-  QPushButton* generateFilesButton = new QPushButton(tr("Create Files"));
-  connect(generateFilesButton, SIGNAL(clicked()),
-          this, SLOT(generateConfigurationFiles()));  
-
   QVBoxLayout* vBox = new QVBoxLayout;
   vBox->addLayout(hBox2);
   vBox->addLayout(hBox3);
+  vBox->setAlignment(Qt::AlignTop);
+
+  return vBox;
+}
+
+/**************************************************************************//**
+** Creates the boundary conditions tab options.
+** \return a Layout object
+******************************************************************************/
+QVBoxLayout* MainWindow::createBoundaryConditionLayout() {
+  QDoubleValidator *doubleValidator = new QDoubleValidator;
+
+  QVBoxLayout* vBox = new QVBoxLayout;
+  vBox->addWidget(new QLabel(tr("Left Boundary")));
+
+  QComboBox* boundaryTypeComboBox = new QComboBox;
+  boundaryTypeComboBox->insertItem(0, tr("Closed System"));
+  boundaryTypeComboBox->insertItem(1, tr("Specified Flow Rate"));
+  boundaryTypeComboBox->insertItem(2, tr("Specified Pressure"));
+  boundaryTypeComboBox->setCurrentIndex(1);
+
+  leftBoudaryValueEdit = new QLineEdit;
+  leftBoudaryValueEdit->setValidator(doubleValidator);
+
+  connect(boundaryTypeComboBox, SIGNAL(currentIndexChanged(const QString&)),
+          this, SLOT(changeLeftBoundaryValue(const QString&)));
+
+  QHBoxLayout* hBox1 = new QHBoxLayout;
+  hBox1->addWidget(new QLabel(tr("Boundary Type")));
+  hBox1->addWidget(boundaryTypeComboBox);
+
+  QHBoxLayout* hBox2 = new QHBoxLayout;
+  hBox2->addWidget(new QLabel(tr("Value: ")));
+  hBox2->addWidget(leftBoudaryValueEdit);
+
+  vBox->addLayout(hBox1);
+  vBox->addLayout(hBox2);
+  vBox->addWidget(new QLabel(tr("Right Boundary")));
+
+  QComboBox* boundaryTypeComboBox2 = new QComboBox;
+  boundaryTypeComboBox2->insertItem(0, tr("Closed System"));
+  boundaryTypeComboBox2->insertItem(1, tr("Specified Flow Rate"));
+  boundaryTypeComboBox2->insertItem(2, tr("Specified Pressure"));
+  boundaryTypeComboBox2->setCurrentIndex(1);
+
+  rightBoudaryValueEdit = new QLineEdit;
+  rightBoudaryValueEdit->setValidator(doubleValidator);
+
+  connect(boundaryTypeComboBox2, SIGNAL(currentIndexChanged(const QString&)),
+          this, SLOT(changeRightBoundaryValue(const QString&)));
+
+  QHBoxLayout* hBox3 = new QHBoxLayout;
+  hBox3->addWidget(new QLabel(tr("Boundary Type")));
+  hBox3->addWidget(boundaryTypeComboBox2);
+
+  QHBoxLayout* hBox4 = new QHBoxLayout;
+  hBox4->addWidget(new QLabel(tr("Value: ")));
+  hBox4->addWidget(rightBoudaryValueEdit);
+
+  QPushButton* generateFilesButton = new QPushButton(tr("Create Files"));
+  connect(generateFilesButton, SIGNAL(clicked()),
+          this, SLOT(generateConfigurationFiles()));
+
+  vBox->addLayout(hBox3);
+  vBox->addLayout(hBox4);
   vBox->addStretch();
   vBox->addWidget(generateFilesButton);
   vBox->addStretch();
@@ -635,6 +704,11 @@ void MainWindow::createGrid(std::string dimension, std::string nPhases,
 
   tabedContent->addWidget(initSolutionTabContent);
 
+  //Boundary Condition Tab
+  QWidget* boundaryConditionTabContent = new QWidget;
+
+  tabedContent->addWidget(boundaryConditionTabContent);
+
   //enable the run simulation action
   runAction->setEnabled(true);
 }
@@ -651,7 +725,7 @@ void MainWindow::run() {
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
 
-    system("./kernel/ReservoirSoftware");
+    kernelConfigurator->runKernel();
   }
 }
 
@@ -662,13 +736,7 @@ void MainWindow::run() {
 ******************************************************************************/
 void MainWindow::generateConfigurationFiles() {
   if (canRunSimulation()) {
-    createGeometryFile();
-    createBlockFile();
-    createFluidFile();
-    createWellsFile();
-    createSolutionFile();
-    createArqResFile();
-    createNumericPropertiesFile();
+    kernelConfigurator->generateKernelConfigurationFiles();
 
     QMessageBox msgBox;
     msgBox.setText("Configuration files have been generated.");
@@ -678,233 +746,32 @@ void MainWindow::generateConfigurationFiles() {
 }
 
 /**************************************************************************//**
-** Create the File responsable for the grid geometry.
+** Set the value of left boundary if condition is met.
 **
+** \note private slot
 ******************************************************************************/
-void MainWindow::createGeometryFile() {
-  std::ofstream file;
-  file.open("kernel/ArqCell1d.dat");
-
-  //get the lenght Tab
-  Grid* lenghtGrid = (Grid*)geometryTab->widget(0);
-  Grid* thicknessGrid = (Grid*)geometryTab->widget(1);
-  Grid* depthGrid = (Grid*)geometryTab->widget(2);
-  Grid* cellsGrid = (Grid*)rockTab->widget(0);
-
-  int numberOfCells = lenghtGrid->columnCount();
-
-  //TODO: Refactor to treat grid with several rows
-  QTableWidgetItem *cell;
-  for(int i = 0; i < numberOfCells; i++) {
-    file << i + 1 << std::endl; //cell Id
-
-    cell = thicknessGrid->item(0, i);
-    if (cell != 0)
-      file << cell->text().toStdString();
-    else
-      file << 0;
-    file << "\n";
-
-    cell = depthGrid->item(0, i);
-
-    if (cell != 0)
-      file << cell->text().toStdString();
-    else
-      file << 0;
-    file << "\n"; //cell Depth
-
-    cell = cellsGrid->item(0, i);
-    if (cell != 0)
-      file << cell->text().toStdString();
-    else
-      file << 0;
-    file << "\n"; //block connected
-    file << std::endl;
-  }
-
-  file.close();
-}
-
-/**************************************************************************//**
-** Creates the File with the blocks properties.
-**
-******************************************************************************/
-void MainWindow::createBlockFile() {
-  std::ofstream file;
-  file.open("kernel/ArqBlock.dat");
-
-  QList<QLineEdit *> SolutionInitFields = solutionInitializationWidget->
-                                          findChildren<QLineEdit *>();
-
-  int numberOfBlocks = blockPropertiesStackedWidget->count();
-  for (int i = 0; i < numberOfBlocks; i++) {
-     file << i + 1 << "\n";
-
-     QGroupBox* gBox = (QGroupBox*)blockPropertiesStackedWidget->widget(i);
-      QList<QLineEdit *> allFields = gBox->findChildren<QLineEdit *>();
-
-
-     for (int j = 0; j < allFields.count(); ++j) {
-        file << allFields.at(j)->text().toStdString() << "\n";
-     }
-     //Reference Pressure
-     file << SolutionInitFields[0]->text().toStdString() << "\n";
-     file << std::endl;
-  }
-
-  file.close();
-}
-
-/**************************************************************************//**
-** Create the File with the Fluid properties.
-**
-******************************************************************************/
-void MainWindow::createFluidFile() {
-  std::ofstream file;
-  file.open("kernel/ArqWater.dat");
-
-  int numberOPoints = pvtSpinBox->value();
-
-  QTableWidget* grid = fluidDialog->getTable();
-
-  if (file.good() && grid != nullptr) {
-    file << numberOPoints << "\n" << std::endl;
-    QTableWidgetItem *cell = nullptr;
-
-    for (int i = 0; i < numberOPoints; ++i) {
-      for(int j = 0; j < 4; j++)  {
-        cell = grid->item(i, j);
-        if (cell != 0)
-          file << cell->text().toStdString();
-        else
-          file << 0;
-        file << " ";
-      }
-      file << std::endl;
-    }
-
-    file.close();
+void MainWindow::changeLeftBoundaryValue(const QString& text) {
+  if (text == "Closed System") {
+    leftBoudaryValueEdit->setText("0");
+    leftBoudaryValueEdit->setDisabled(true);
+  } else {
+    leftBoudaryValueEdit->setText("");
+    leftBoudaryValueEdit->setDisabled(false);
   }
 }
 
 /**************************************************************************//**
-** Create the File with the Wells properties.
+** Set the value of right boundary if condition is met.
 **
+** \note private slot
 ******************************************************************************/
-void MainWindow::createWellsFile() {
-  int numberOfWells = wellPropertiesStackedWidget->count();
-
-  if (canRunSimulation()) {
-    std::ofstream file("kernel/ArqWell1d.dat");
-
-    file << numberOfWells << "\n\n";
-
-    for (int i = 0; i < numberOfWells; i++) {
-     QGroupBox* gBox = (QGroupBox*)wellPropertiesStackedWidget->widget(i);
-     QList<QLineEdit *> editFields = gBox->findChildren<QLineEdit *>();
-     QList<QComboBox *> comboFields = gBox->findChildren<QComboBox *>();
-
-     //Cell Id Field
-     file << editFields[0]->text().toStdString() << "\n";
-
-     //Well Id
-     file << i + 1 << "\n";
-
-     if (comboFields[0]->currentText() == "Water") {
-      file << "1" << "\n";
-      }
-
-      file << editFields[1]->text().toStdString() << "\n";
-      file << std::endl;
-    }
-  }
-}
-
-/**************************************************************************//**
-** Create the File with the Solution Initialization properties.
-**
-******************************************************************************/
-void MainWindow::createSolutionFile() {
-  QList<QLineEdit *> allFields = solutionInitializationWidget->
-                                 findChildren<QLineEdit *>();
-
-  if (allFields.count() > 0) {
-    std::ofstream file("kernel/ArqInit1d.dat");
-
-    for (auto field : allFields)
-      file << field->text().toStdString() << std::endl;
-
-    file.close();
-  }
-}
-
-/**************************************************************************//**
-** Create the File with the Reservoir properties.
-**
-******************************************************************************/
-void MainWindow::createArqResFile() {
-  int numberOfBlocks = blockPropertiesStackedWidget->count();
-
-  Grid* lenghtGrid = (Grid*)geometryTab->widget(0);
-  int numberOfCells = lenghtGrid->columnCount();
-
-  QList<QLineEdit *> allFields = geometryWidget->findChildren<QLineEdit *>();
-
-  std::ofstream file("kernel/ArqRes1d.dat");
-
-  if (allFields.count() > 0 && file.good()) {
-    file << numberOfBlocks << "\n";
-    file << numberOfCells << "\n";
-    file << allFields[0]->text().toStdString() << "\n"; //width
-
-    std::map<std::string, FluidType>::const_iterator iter = typeOfphases.begin();
-    file << getFluidCorrespondingInt(iter->second) << "\n\n";
-
-    QTableWidgetItem *cell;
-    //TODO: Generalizar para varias linhas
-    for(int i = 0; i < numberOfCells; i++) {
-      cell = lenghtGrid->item(0, i);
-      if (cell != 0)
-        file << cell->text().toStdString();
-      else
-        file << 0;
-      file << "\n";
-    }
-  }
-
-  file.close();
-}
-
-/**************************************************************************//**
-** Create the File with the Numeric properties.
-**
-******************************************************************************/
-void MainWindow::createNumericPropertiesFile() {
-  QList<QComboBox *> solversList = propertiesWidget->findChildren<QComboBox *>();
-  QList<QSpinBox *> numberOfIteractionsList = propertiesWidget->findChildren<QSpinBox *>();
-  QList<QLineEdit *> otherFieldsList = propertiesWidget->findChildren<QLineEdit *>();
-
-  if (solversList.count() > 0 && numberOfIteractionsList.count() > 0 &&
-      otherFieldsList.count() > 0) {
-
-    std::ofstream file("kernel/ArqNumeric.dat");
-
-    if (solversList[0]->currentText() == "Gauss-Seidel") {
-      file << "1" << "\n";
-    }
-
-    //Number of iteractions
-    file << numberOfIteractionsList[0]->value() << "\n";
-
-    //precision
-    file << otherFieldsList[1]->text().toStdString() << "\n";
-    file << std::endl;
-
-    for (int i = 2; i < otherFieldsList.count(); ++i) {
-      file << otherFieldsList[i]->text().toStdString() << "\n";
-    }
-
-    file.close();
+void MainWindow::changeRightBoundaryValue(const QString& text) {
+  if (text == "Closed System") {
+    rightBoudaryValueEdit->setText("0");
+    rightBoudaryValueEdit->setDisabled(true);
+  } else {
+    rightBoudaryValueEdit->setText("");
+    rightBoudaryValueEdit->setDisabled(false);
   }
 }
 
