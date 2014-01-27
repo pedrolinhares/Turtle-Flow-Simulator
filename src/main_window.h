@@ -6,7 +6,7 @@
 #include <QMainWindow>
 #include <map>
 #include "grid.h"
-#include "startDialog.h"
+#include "start_dialog.h"
 #include "fluid_dialog.h"
 
 class QMenu;
@@ -40,6 +40,8 @@ private slots:
   void createRockInnerDialog();
   void createWellInnerDialog();
   void run();
+  void plot();
+  void createPlotDialog();
   void generateConfigurationFiles();
   void changeLeftBoundaryValue(const QString&);
   void changeRightBoundaryValue(const QString&);
@@ -48,7 +50,6 @@ private:
   void createActions();
   void createMenus();
   void setUpToolBox();
-  void createGeometryFile();
   bool canRunSimulation();
   QGroupBox* createBlockProperties();
   QGroupBox* createWellProperties();
@@ -66,6 +67,7 @@ private:
   QAction* newProjectAct;
   QAction* closeAct;
   QAction* runAction;
+  QAction* plotAction;
   QStackedWidget* tabedContent;
   QTabWidget* geometryTab;
   QTabWidget* rockTab;
@@ -89,6 +91,13 @@ private:
   QLineEdit *numberOfWellsEdit;
   QLineEdit *leftBoudaryValueEdit;
   QLineEdit *rightBoudaryValueEdit;
+  QLineEdit *wellNumberEdit;
+  QLineEdit *cellNumberEdit;
+  QLineEdit *timeEdit;
+  QRadioButton *wellPressureRadio;
+  QRadioButton *wellProductionRadio;
+  QRadioButton *gridPressureRadio;
+  QRadioButton *cellPressureRadio;
   StartDialog *startDialog;
   FluidDialog *fluidDialog;
   KernelConfigurator *kernelConfigurator;

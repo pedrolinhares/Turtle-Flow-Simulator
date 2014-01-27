@@ -1,8 +1,6 @@
 /** @file main_window.cpp */
 
 #include <QtWidgets>
-#include <QTableWidget>
-#include <QDoubleValidator>
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -34,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
           this, SLOT(createGrid(std::string, std::string,
                                 std::map<std::string, FluidType>, int, int)));
 
-  setWindowTitle(tr("Simulator"));
+  setWindowTitle(tr("Turtle Flow Simulator"));
   setMinimumSize(200, 200);
   resize(1200, 800);
 }
@@ -61,6 +59,12 @@ void MainWindow::createActions() {
   runAction->setStatusTip(tr("Runs the simulation"));
   runAction->setEnabled(false);
   connect(runAction, SIGNAL(triggered()), this, SLOT(run()));
+
+  //plot action
+  plotAction = new QAction(tr("Plot results"), this);
+  plotAction->setStatusTip(tr("Plot resulto of the simulation"));
+  plotAction->setEnabled(false);
+  connect(plotAction, SIGNAL(triggered()), this, SLOT(createPlotDialog()));
 }
 
 /**************************************************************************//**
@@ -74,6 +78,7 @@ void MainWindow::createMenus() {
 
   actionsMenu = menuBar()->addMenu(tr("&Actions"));
   actionsMenu->addAction(runAction);
+  actionsMenu->addAction(plotAction);
 }
 
 /**************************************************************************//**
@@ -96,7 +101,7 @@ void MainWindow::setUpToolBox() {
   geometryWidget = new QWidget;
   geometryWidget->setLayout(createGeometryLayout());
 
-  toolBox->insertItem(0, geometryWidget, tr("Geometria"));
+  toolBox->insertItem(0, geometryWidget, tr("Geometry"));
 
   //Rock Tab
   rockWidget = new QWidget(this);
@@ -714,6 +719,149 @@ void MainWindow::createGrid(std::string dimension, std::string nPhases,
 }
 
 /**************************************************************************//**
+** creates dialog that asks information needed to plot graphic results.
+**
+** \note private slot
+******************************************************************************/
+void MainWindow::createPlotDialog() {
+  QDialog *dialog = new QDialog(this);
+
+  QValidator *intValidator = new QIntValidator(1, 99,this);
+
+  QGroupBox *typeBox = new QGroupBox(tr("Type"));
+
+  wellPressureRadio = new QRadioButton(tr("Well Pressure"));
+  wellProductionRadio = new QRadioButton(tr("Well Production"));
+  gridPressureRadio = new QRadioButton(tr("Grid Pressure"));
+  cellPressureRadio = new QRadioButton(tr("Cell Pressure"));
+  wellPressureRadio->setChecked(true);
+
+  QVBoxLayout *vBox = new QVBoxLayout;
+  vBox->addWidget(wellPressureRadio);
+  vBox->addWidget(wellProductionRadio);
+  vBox->addWidget(gridPressureRadio);
+  vBox->addWidget(cellPressureRadio);
+
+  typeBox->setLayout(vBox);
+
+  QGroupBox *dataBox = new QGroupBox(tr("Data"));
+
+  wellNumberEdit = new QLineEdit;
+  wellNumberEdit->setValidator(intValidator);
+  wellNumberEdit->setDisabled(false);
+  QLabel *wellNumberLabel = new QLabel(tr("Well Number: "));
+
+  QHBoxLayout *hBox1 = new QHBoxLayout;
+  hBox1->addWidget(wellNumberLabel);
+  hBox1->addWidget(wellNumberEdit);
+
+  cellNumberEdit = new QLineEdit;
+  cellNumberEdit->setValidator(intValidator);
+  cellNumberEdit->setDisabled(true);
+  QLabel *cellNumberLabel = new QLabel(tr("Cell Number: "));
+
+  QHBoxLayout *hBox2 = new QHBoxLayout;
+  hBox2->addWidget(cellNumberLabel);
+  hBox2->addWidget(cellNumberEdit);
+
+  timeEdit = new QLineEdit;
+  timeEdit->setValidator(intValidator);
+  timeEdit->setDisabled(true);
+  QLabel *timeLabel = new QLabel(tr("Time: "));
+
+  QHBoxLayout *hBox3 = new QHBoxLayout;
+  hBox3->addWidget(timeLabel);
+  hBox3->addWidget(timeEdit);
+
+  QVBoxLayout *vBox2 = new QVBoxLayout;
+  vBox2->addLayout(hBox1);
+  vBox2->addLayout(hBox2);
+  vBox2->addLayout(hBox3);
+
+  dataBox->setLayout(vBox2);
+
+  //connections
+  connect(wellPressureRadio, &QRadioButton::toggled, [=](bool toggled) {
+    if (toggled == true) {
+      wellNumberEdit->setEnabled(true);
+      timeEdit->setEnabled(false);
+      cellNumberEdit->setEnabled(false);
+    }});
+
+  connect(wellProductionRadio, &QRadioButton::toggled, [=](bool toggled) {
+    if (toggled == true) {
+      wellNumberEdit->setEnabled(true);
+      timeEdit->setEnabled(false);
+      cellNumberEdit->setEnabled(false);
+    }});
+
+  connect(gridPressureRadio, &QRadioButton::toggled, [=](bool toggled) {
+    if (toggled == true) {
+      wellNumberEdit->setEnabled(false);
+      timeEdit->setEnabled(true);
+      cellNumberEdit->setEnabled(false);
+    }});
+
+  connect(cellPressureRadio, &QRadioButton::toggled, [=](bool toggled) {
+    if (toggled == true) {
+      wellNumberEdit->setEnabled(false);
+      timeEdit->setEnabled(false);
+      cellNumberEdit->setEnabled(true);
+    }});
+
+
+  //Buttons
+  QPushButton *ok_button = new QPushButton(tr("Ok"));
+  QPushButton *close_button = new QPushButton(tr("Cancel"));
+
+  ok_button->setDefault(true);
+
+  QHBoxLayout *buttonsLayout = new QHBoxLayout;
+  buttonsLayout->addStretch(1);
+  buttonsLayout->addWidget(close_button);
+  buttonsLayout->addWidget(ok_button);
+
+  connect(close_button, SIGNAL(clicked()), dialog, SLOT(close()));
+  connect(ok_button, SIGNAL(clicked()), this, SLOT(plot()));
+  connect(ok_button, SIGNAL(clicked()), dialog, SLOT(close()));
+
+  QHBoxLayout *hBox4 = new QHBoxLayout;
+  hBox4->addWidget(typeBox);
+  hBox4->addWidget(dataBox);
+
+  QVBoxLayout *vBox3 = new QVBoxLayout;
+  vBox3->addLayout(hBox4);
+  vBox3->addLayout(buttonsLayout);
+
+  dialog->setLayout(vBox3);
+
+  dialog->show();
+}
+
+/**************************************************************************//**
+** Calls the plot object.
+**
+** \note private slot
+******************************************************************************/
+void MainWindow::plot() {
+  if (wellPressureRadio->isChecked()) {
+    std::string nWell = wellNumberEdit->text().toStdString();
+    kernelConfigurator->plotWellPressure(nWell);
+  } else if (wellProductionRadio->isChecked()) {
+
+  } else if (gridPressureRadio->isChecked()) {
+    Grid* lenghtGrid = (Grid*)geometryTab->widget(0);
+    int numberOfCells = lenghtGrid->columnCount();
+    std::string timeValue = timeEdit->text().toStdString();
+    kernelConfigurator->plotGridPressure(timeValue, numberOfCells);
+  } else if (cellPressureRadio->isChecked()) {
+    std::string nCell = cellNumberEdit->text().toStdString();
+
+    kernelConfigurator->plotCellPressure(nCell);
+  }
+}
+
+/**************************************************************************//**
 ** Run the simulation by executing the kernel's run.
 **
 ** \note private slot
@@ -726,6 +874,9 @@ void MainWindow::run() {
     msgBox.exec();
 
     kernelConfigurator->runKernel();
+
+    //make plot available
+    plotAction->setDisabled(false);
   }
 }
 

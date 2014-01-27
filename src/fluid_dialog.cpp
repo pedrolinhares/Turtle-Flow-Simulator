@@ -3,7 +3,7 @@
 #include <QtWidgets>
 #include "fluid_dialog.h"
 
-/**************************************************************************//** 
+/**************************************************************************//**
 ** \brief constructor that takes the parent pointer.
 **
 ** Creates the widgets that compose the dialog.
@@ -30,7 +30,7 @@ FluidDialog::FluidDialog(QWidget *parent) : QDialog(parent) {
 }
 
 //private slots
-/**************************************************************************//** 
+/**************************************************************************//**
 ** \brief Insert or remove rows in the table.
 **
 ** As the user manipulates a QSpinBox, the number of rows are increased or

@@ -1,6 +1,5 @@
 /** \file grid.cpp */
 
-#include <QtGui>
 #include "grid.h"
 
 /** \brief basic constructor, takes number of rows, columns and parent pointer */

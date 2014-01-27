@@ -11,7 +11,7 @@ namespace kernel_definitions {
   const char* SOLUTION_FILENAME = "kernel/ArqInit1d.dat";
   const char* RESERVOIR_FILENAME = "kernel/ArqRes1d.dat";
   const char* NUMERIC_PROPERTIES_FILENAME = "kernel/ArqNumeric.dat";
-  const char* BOUNDARY_CONDITION_FILENAME = "kernel/BoundaryCondition.dat";
+  const char* BOUNDARY_CONDITION_FILENAME = "kernel/ArqBoundCond1d.dat";
   const char* KERNEL_COMMAND = "kernel/ReservoirSoftware";
 }
 
@@ -28,6 +28,7 @@ namespace kernel_definitions {
   const char* SOLUTION_FILENAME = "kernel/ArqInit1d.dat";
   const char* RESERVOIR_FILENAME = "kernel/ArqRes1d.dat";
   const char* NUMERIC_PROPERTIES_FILENAME = "kernel/ArqNumeric.dat";
+  const char* BOUNDARY_CONDITION_FILENAME = "kernel/ArqBoundCond1d.dat";
   const char* KERNEL_COMMAND = "../kernel/ReservoirSoftware";
 }
 

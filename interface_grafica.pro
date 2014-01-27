@@ -15,11 +15,15 @@ SOURCES += src/main.cpp \
         src/main_window.cpp \
         src/fluid_dialog.cpp \
         src/grid.cpp \
-        src/startDialog.cpp
+        src/start_dialog.cpp \
+        kernel/CPlot.cpp \
+        kernel/CGnuplot.cpp
 
 HEADERS  += src/kernel_configurator.h \
             src/main_window.h \
             src/fluid_dialog.h \
             src/grid.h \
-            src/startDialog.h \
-            src/kernel_definitions.h
+            src/start_dialog.h \
+            src/kernel_definitions.h \
+            kernel/CPlot.h \
+            kernel/CGnuplot.h

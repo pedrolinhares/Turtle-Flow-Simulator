@@ -1,6 +1,8 @@
 #ifndef KERNEL_CONFIGURATOR_H
 #define KERNEL_CONFIGURATOR_H
 
+#include "../kernel/CPlot.h"
+
 class MainWindow;
 
 /*!
@@ -14,6 +16,10 @@ public:
 
   bool generateKernelConfigurationFiles();
   void runKernel();
+  void plotWellPressure(std::string wellNumber);
+  void plotWellProduction(std::string wellNumber);
+  void plotCellPressure(std::string cellNumber);
+  void plotGridPressure(std::string time, int nCells);
 
 private:
   void createGeometryFile();
@@ -25,7 +31,9 @@ private:
   void createNumericPropertiesFile();
   void createBoundaryConditionFile();
 
+
   MainWindow* mainWindow;
+  CPlot* plot; ///< CPlot object responsable to plot to the screen
 };
 
 #endif // KERNEL_CONFIGURATOR_H

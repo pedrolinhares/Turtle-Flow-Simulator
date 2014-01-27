@@ -10,7 +10,9 @@ using namespace kernel_definitions;
 ** Constructor that takes a MainWindow pointer.
 **
 ******************************************************************************/
-KernelConfigurator::KernelConfigurator(MainWindow* _mainWindow):mainWindow(_mainWindow) {}
+KernelConfigurator::KernelConfigurator(MainWindow* _mainWindow):mainWindow(_mainWindow) {
+  plot = new CPlot;
+}
 
 /**************************************************************************//**
 ** Calls the private methods to create the files.
@@ -299,4 +301,36 @@ void KernelConfigurator::createBoundaryConditionFile() {
   }
 
   file.close();
+}
+
+/**************************************************************************//**
+** makes a call to the CPlot object to plot the desired graph.
+**
+******************************************************************************/
+void KernelConfigurator::plotWellPressure(std::string wellNumber) {
+  plot->PlotWellPressure(std::stoi(wellNumber));
+}
+
+/**************************************************************************//**
+** makes a call to the CPlot object to plot the desired graph.
+**
+******************************************************************************/
+void KernelConfigurator::plotWellProduction(std::string wellNumber) {
+  plot->PlotWellProduction(std::stoi(wellNumber));
+}
+
+/**************************************************************************//**
+** makes a call to the CPlot object to plot the desired graph.
+**
+******************************************************************************/
+void KernelConfigurator::plotCellPressure(std::string cellNumber) {
+  plot->PlotCellPressure(std::stoi(cellNumber));
+}
+
+/**************************************************************************//**
+** makes a call to the CPlot object to plot the desired graph.
+**
+******************************************************************************/
+void KernelConfigurator::plotGridPressure(std::string timeStr, int nCells) {
+plot->PlotGridPressure(std::stoi(timeStr), nCells);
 }

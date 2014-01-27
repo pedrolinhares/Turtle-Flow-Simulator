@@ -1,4 +1,4 @@
-/** @file startDialog.h */
+/** @file start_dialog.h */
 
 #ifndef START_DIALOG_H
 #define START_DIALOG_H

@@ -1,6 +1,8 @@
+/** @file start_dialog.cpp */
+
 #include <QtWidgets>
 #include <iostream>
-#include "startDialog.h"
+#include "start_dialog.h"
 
 /**************************************************************************//**
   ** \brief class constructor that takes a parent pointer.
@@ -41,7 +43,7 @@ StartDialog::StartDialog(QWidget *parent) : QDialog(parent) {
 }
 
 /**************************************************************************//**
-  ** Creates the box with information regarding the grid. 
+  ** Creates the box with information regarding the grid.
   ** \return QGroupBox* that contains the widgets related.
   ****************************************************************************/
 QGroupBox* StartDialog::createGridModels() {
@@ -51,6 +53,7 @@ QGroupBox* StartDialog::createGridModels() {
   twoDimensionalRadio = new QRadioButton(tr("Two Dimensional"));
   threeDimensionalRadio = new QRadioButton(tr("Three Dimensional"));
   oneDimensionalRadio->setChecked(true);
+  twoDimensionalRadio->setDisabled(true);
   threeDimensionalRadio->setDisabled(true);
 
   connect(twoDimensionalRadio, SIGNAL(toggled(bool)), this, SLOT(allowTwoDiminsional(bool)));
@@ -66,7 +69,7 @@ QGroupBox* StartDialog::createGridModels() {
 }
 
 /**************************************************************************//**
-  ** Creates the box with information regarding the number of phases. 
+  ** Creates the box with information regarding the number of phases.
   ** \return QGroupBox* that contains the widgets related.
   ****************************************************************************/
 QGroupBox* StartDialog::createPhaseModels() {
@@ -92,7 +95,7 @@ QGroupBox* StartDialog::createPhaseModels() {
 }
 
 /**************************************************************************//**
-  ** Creates the box with information regarding the type of the phases. 
+  ** Creates the box with information regarding the type of the phases.
   ** \return QGroupBox* that contains the widgets related.
   ****************************************************************************/
 QGroupBox* StartDialog::createPhasesBox() {
@@ -147,7 +150,7 @@ QGroupBox* StartDialog::createPhasesBox() {
 
 /**************************************************************************//**
   ** Creates the box with information regarding the layout of the grid
-  ** (number of rows and columns). 
+  ** (number of rows and columns).
   ** \return QGroupBox* that contains the widgets related.
   ****************************************************************************/
 QGroupBox* StartDialog::createGridLayoutBox() {
@@ -181,7 +184,7 @@ QGroupBox* StartDialog::createGridLayoutBox() {
 /**************************************************************************//**
   ** \brief Show the dialog on the screen.
   **
-  ** Sets the default options in the dialog and calls the inherited show method. 
+  ** Sets the default options in the dialog and calls the inherited show method.
   ****************************************************************************/
 void StartDialog::show() {
   oneDimensionalRadio->setChecked(true);
@@ -196,7 +199,7 @@ void StartDialog::show() {
 }
 
 /**************************************************************************//**
-  ** \brief Gets the chosen grid model. 
+  ** \brief Gets the chosen grid model.
   ** \return type of dimension.
   ****************************************************************************/
 std::string StartDialog::getGridModelChosen() {
@@ -209,7 +212,7 @@ std::string StartDialog::getGridModelChosen() {
 }
 
 /**************************************************************************//**
-  ** \brief Gets the chosen type of phase. 
+  ** \brief Gets the chosen type of phase.
   ** \return type of phase (single phase, two phases or three phases).
   ****************************************************************************/
 std::string StartDialog::getPhaseModelChosen() {
@@ -222,7 +225,7 @@ std::string StartDialog::getPhaseModelChosen() {
 }
 
 /**************************************************************************//**
-  ** \brief Gets the phase type. 
+  ** \brief Gets the phase type.
   ** \return a map relating each phase to its chosen type.
   ****************************************************************************/
 std::map<std::string, FluidType> StartDialog::getPhaseTypeChosen() {
@@ -243,7 +246,7 @@ std::map<std::string, FluidType> StartDialog::getPhaseTypeChosen() {
 }
 
 /**************************************************************************//**
-  ** Converts a string to the specific FLuidType mapping. 
+  ** Converts a string to the specific FLuidType mapping.
   ** \return a FluidType mapping.
   ****************************************************************************/
 FluidType StartDialog::convertStringToFluidType(QComboBox* comboBox) {
@@ -258,7 +261,7 @@ FluidType StartDialog::convertStringToFluidType(QComboBox* comboBox) {
 //private slots
 
 /**************************************************************************//**
-  ** Enable the rows edit if it is two dimensional. 
+  ** Enable the rows edit if it is two dimensional.
   ** \note private slot.
   ****************************************************************************/
 void StartDialog::allowTwoDiminsional(bool toggled) {
@@ -266,7 +269,7 @@ void StartDialog::allowTwoDiminsional(bool toggled) {
 }
 
 /**************************************************************************//**
-  ** Emits the dialogFinished signal. 
+  ** Emits the dialogFinished signal.
   ** \note private slot.
   ****************************************************************************/
 void StartDialog::emitSignal() {
