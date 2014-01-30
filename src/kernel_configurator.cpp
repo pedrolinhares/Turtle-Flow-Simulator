@@ -127,7 +127,16 @@ void KernelConfigurator::createBlockFile() {
 ******************************************************************************/
 void KernelConfigurator::createFluidFile() {
   std::ofstream file;
-  file.open(FLUID_FILENAME);
+
+  std::map<std::string, FluidType>::const_iterator iter = mainWindow->typeOfphases.begin();
+  std::string fluidType = getFluidCorrespondingStdString(iter->second);
+
+  if (fluidType == "Water")
+    file.open(FLUID_WATER_FILENAME);
+  else if (fluidType == "Oil")
+    file.open(FLUID_OIL_FILENAME);
+  else
+    file.open(FLUID_GAS_FILENAME);
 
   int numberOPoints = mainWindow->pvtSpinBox->value();
 

@@ -9,6 +9,8 @@
 #include <map>
 #include "fluid_definitions.h"
 
+using namespace fluid_difinitions;
+
 class QGroupBox;
 class QRadioButton;
 class QComboBox;

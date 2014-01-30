@@ -6,7 +6,9 @@
 namespace kernel_definitions {
   const char* GEOMETRY_FILENAME = "kernel/ArqCell1d.dat";
   const char* BLOCK_FILENAME = "kernel/ArqBlock.dat";
-  const char* FLUID_FILENAME = "kernel/ArqWater.dat";
+  const char* FLUID_WATER_FILENAME = "kernel/ArqWater.dat";
+  const char* FLUID_OIL_FILENAME = "kernel/ArqOil.dat";
+  const char* FLUID_GAS_FILENAME = "kernel/ArqGas.dat";
   const char* WELLS_FILENAME = "kernel/ArqWell1d.dat";
   const char* SOLUTION_FILENAME = "kernel/ArqInit1d.dat";
   const char* RESERVOIR_FILENAME = "kernel/ArqRes1d.dat";
@@ -23,7 +25,9 @@ namespace kernel_definitions {
 namespace kernel_definitions {
   const char* GEOMETRY_FILENAME = "kernel/ArqCell1d.dat";
   const char* BLOCK_FILENAME = "kernel/ArqBlock.dat";
-  const char* FLUID_FILENAME = "kernel/ArqWater.dat";
+  const char* FLUID_WATER_FILENAME = "kernel/ArqWater.dat";
+  const char* FLUID_OIL_FILENAME = "kernel/ArqOil.dat";
+  const char* FLUID_GAS_FILENAME = "kernel/ArqGas.dat";
   const char* WELLS_FILENAME = "kernel/ArqWell1d.dat";
   const char* SOLUTION_FILENAME = "kernel/ArqInit1d.dat";
   const char* RESERVOIR_FILENAME = "kernel/ArqRes1d.dat";

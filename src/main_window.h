@@ -19,6 +19,8 @@ class QHBoxLayout;
 class QStackedWidget;
 class KernelConfigurator;
 
+using namespace fluid_difinitions;
+
 /*! \class MainWindow
  *  \brief Class that represents the interface's main window.
  *

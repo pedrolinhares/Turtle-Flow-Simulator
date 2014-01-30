@@ -207,9 +207,7 @@ QVBoxLayout* MainWindow::createFluidLayout() {
 
   int count = 0;
   for (iter = typeOfphases.begin(); iter != typeOfphases.end(); iter++) {
-    std::ostringstream ss;
-    ss << getFluidCorrespondingInt(iter->second); //convert int to string
-    chooseOil->insertItem(count, ss.str().c_str());
+    chooseOil->insertItem(count, getFluidCorrespondingStdString(iter->second).c_str());
     count++;
   }
 
@@ -283,6 +281,7 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
   hbox1->addWidget(solverComboBox);
 
   QSpinBox* numberOfIteractionsSpinBox = new QSpinBox;
+  numberOfIteractionsSpinBox->setRange(0, 1000);
   numberOfIteractionsSpinBox->setValue(50);
   QLabel* numberOfIteractionsLabel = new QLabel(tr("Iteractions: "));
   numberOfIteractionsLabel->setBuddy(numberOfIteractionsSpinBox);
@@ -305,7 +304,7 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
 
   QLineEdit* deltaTEdit = new QLineEdit;
   deltaTEdit->setValidator(doubleValidator);
-  QLabel* deltaTLabel = new QLabel(tr("Delta t: "));
+  QLabel* deltaTLabel = new QLabel(tr("Δt: "));
   deltaTLabel->setBuddy(deltaTEdit);
 
   QHBoxLayout* hbox4 = new QHBoxLayout;
@@ -847,13 +846,17 @@ void MainWindow::plot() {
   if (wellPressureRadio->isChecked()) {
     std::string nWell = wellNumberEdit->text().toStdString();
     kernelConfigurator->plotWellPressure(nWell);
+
   } else if (wellProductionRadio->isChecked()) {
+    std::string nWell = wellNumberEdit->text().toStdString();
+    kernelConfigurator->plotWellProduction(nWell);
 
   } else if (gridPressureRadio->isChecked()) {
     Grid* lenghtGrid = (Grid*)geometryTab->widget(0);
     int numberOfCells = lenghtGrid->columnCount();
     std::string timeValue = timeEdit->text().toStdString();
     kernelConfigurator->plotGridPressure(timeValue, numberOfCells);
+
   } else if (cellPressureRadio->isChecked()) {
     std::string nCell = cellNumberEdit->text().toStdString();
 
