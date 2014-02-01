@@ -40,7 +40,8 @@ bool KernelConfigurator::generateKernelConfigurationFiles() {
 **
 ******************************************************************************/
 void KernelConfigurator::runKernel() {
-  system(KERNEL_COMMAND);
+  t = new std::thread([] { system(KERNEL_COMMAND); });
+  t->detach();
 }
 
 /**************************************************************************//**

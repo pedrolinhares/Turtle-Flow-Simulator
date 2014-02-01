@@ -10,22 +10,22 @@ DESTDIR = bin
 OBJECTS_DIR = build
 MOC_DIR = build
 
-SOURCES += src/main.cpp \
-        src/kernel_configurator.cpp \
-        src/fluid_definitions.cpp \
-        src/main_window.cpp \
-        src/fluid_dialog.cpp \
-        src/grid.cpp \
-        src/start_dialog.cpp \
-        kernel/CPlot.cpp \
-        kernel/CGnuplot.cpp
+SOURCES += src/interface/main.cpp \
+        src/interface/kernel_configurator.cpp \
+        src/interface/fluid_definitions.cpp \
+        src/interface/main_window.cpp \
+        src/interface/fluid_dialog.cpp \
+        src/interface/grid.cpp \
+        src/interface/start_dialog.cpp \
+        src/kernel/CPlot.cpp \
+        src/kernel/CGnuplot.cpp
 
-HEADERS  += src/kernel_configurator.h \
-            src/main_window.h \
-            src/fluid_dialog.h \
-            src/fluid_definitions.h \
-            src/grid.h \
-            src/start_dialog.h \
-            src/kernel_definitions.h \
-            kernel/CPlot.h \
-            kernel/CGnuplot.h
+HEADERS  += src/interface/kernel_configurator.h \
+            src/interface/main_window.h \
+            src/interface/fluid_dialog.h \
+            src/interface/fluid_definitions.h \
+            src/interface/grid.h \
+            src/interface/start_dialog.h \
+            src/interface/kernel_definitions.h \
+            src/kernel/CPlot.h \
+            src/kernel/CGnuplot.h

@@ -1,9 +1,8 @@
 *.o
 *~
-interface
 Makefile
 moc*
 html
-kernel
 latex
 Documentacao/
+bin/

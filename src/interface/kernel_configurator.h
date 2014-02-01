@@ -1,6 +1,7 @@
 #ifndef KERNEL_CONFIGURATOR_H
 #define KERNEL_CONFIGURATOR_H
 
+#include <thread>
 #include "../kernel/CPlot.h"
 
 class MainWindow;
@@ -34,6 +35,7 @@ private:
 
   MainWindow* mainWindow;
   CPlot* plot; ///< CPlot object responsable to plot to the screen
+  std::thread* t;
 };
 
 #endif // KERNEL_CONFIGURATOR_H
