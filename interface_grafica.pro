@@ -7,8 +7,8 @@ TEMPLATE = app
 QMAKE_CXXFLAGS += -std=c++11
 
 DESTDIR = bin
-OBJECTS_DIR = build
-MOC_DIR = build
+OBJECTS_DIR = src/interface/build
+MOC_DIR = src/interface/build
 
 SOURCES += src/interface/main.cpp \
         src/interface/kernel_configurator.cpp \
