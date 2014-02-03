@@ -17,27 +17,24 @@
  *  You should have received a copy of the GNU General Public License
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
+
 #include <cstdlib>
 #include <iostream>
 
 #include "CReservoir.h"
 #include "CDataControl.h"
 
-using namespace std;
-
 void onExit() {
-  cout << "End of Execution" << endl;
-  cout << "UENF - LENEP"  << endl;
+  std::cout << "End of Execution" << std::endl;
+  std::cout << "UENF - LENEP"  << std::endl;
 }
 
-int main()
-{
+int main() {
   std::atexit(onExit);
-    {
-          CDataControl dcontrol; ///< Class created to manage the variables input.
-          CReservoir reservoir(&dcontrol); ///< Reservoir Constructor
-          reservoir.Run(); ///< Running the simulation. This is the main code of the program.
-    }
+
+  CDataControl dcontrol; ///< Class created to manage the variables input.
+  CReservoir reservoir(&dcontrol); ///< Reservoir Constructor
+  reservoir.Run(); ///< Running the simulation. This is the main code of the program.
 
   return 0;
 }
