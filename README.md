@@ -45,7 +45,7 @@ To run the software you should execute it from the bin/ folder, from the project
     $ cd ./bin/
     $ ./tfs
 
-== Exemples ==
+== Examples ==
 The tutorial folder contains two examples of the TFS software:
 
 1. One-dimensional horizontal closed homogeneous reservoir.
