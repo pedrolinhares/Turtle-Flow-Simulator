@@ -166,7 +166,7 @@ void MainWindow::setUpToolBox() {
 ******************************************************************************/
 QHBoxLayout* MainWindow::createGeometryLayout() {
   QLineEdit* widthEdit = new QLineEdit;
-  QLabel* widthEditLabel = new QLabel(tr("Width: "));
+  QLabel* widthEditLabel = new QLabel(tr("Width [ft]: "));
 
   QHBoxLayout* hBox = new QHBoxLayout;
   hBox->addWidget(widthEditLabel);
@@ -324,7 +324,7 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
   QLineEdit* deltaTEdit = new QLineEdit;
   deltaTEdit->setValidator(doubleValidator);
   deltaTEdit->setText("1");
-  QLabel* deltaTLabel = new QLabel(tr("Δt: "));
+  QLabel* deltaTLabel = new QLabel(tr("Δt [Days]: "));
   deltaTLabel->setBuddy(deltaTEdit);
 
   QHBoxLayout* hbox4 = new QHBoxLayout;
@@ -334,7 +334,7 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
 
   QLineEdit* endTimeEdit = new QLineEdit;
   endTimeEdit->setValidator(intValidator);
-  QLabel* endTimeLabel = new QLabel(tr("Final simulation time: "));
+  QLabel* endTimeLabel = new QLabel(tr("Final simulation time [Days]: "));
   endTimeLabel->setBuddy(endTimeEdit);
 
   QHBoxLayout* hbox5 = new QHBoxLayout;
@@ -344,7 +344,7 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
   QLineEdit* thresholdMaxIterationsEdit = new QLineEdit;
   thresholdMaxIterationsEdit->setValidator(intValidator);
   thresholdMaxIterationsEdit->setText("100");
-  QLabel* thresholdMaxIterationsLabel = new QLabel(tr("Thresholding Max Iteractions: "));
+  QLabel* thresholdMaxIterationsLabel = new QLabel(tr("Linear Max Iteractions: "));
   thresholdMaxIterationsLabel->setBuddy(thresholdMaxIterationsEdit);
 
   QVBoxLayout* vbox6 = new QVBoxLayout;
@@ -354,7 +354,7 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
   QLineEdit* thresholdRelativePrecisionEdit = new QLineEdit;
   thresholdRelativePrecisionEdit->setValidator(doubleValidator);
   thresholdRelativePrecisionEdit->setText("0.001");
-  QLabel* thresholdRelativePrecisionLabel = new QLabel(tr("Thresholding Relative Precision: "));
+  QLabel* thresholdRelativePrecisionLabel = new QLabel(tr("Linear Relative Precision: "));
   thresholdRelativePrecisionLabel->setBuddy(thresholdRelativePrecisionEdit);
 
   QVBoxLayout* vbox7 = new QVBoxLayout;
@@ -380,7 +380,7 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
 ******************************************************************************/
 QVBoxLayout* MainWindow::createSolutionInitializationLayout() {
   QLineEdit* refPressureEdit = new QLineEdit;
-  QLabel* refPressureEditLabel = new QLabel(tr("Reference Pressure: "));
+  QLabel* refPressureEditLabel = new QLabel(tr("Reference Pressure [psia]: "));
 
   QHBoxLayout* hBox2 = new QHBoxLayout;
   hBox2->addWidget(refPressureEditLabel);
@@ -388,7 +388,7 @@ QVBoxLayout* MainWindow::createSolutionInitializationLayout() {
   hBox2->setAlignment(Qt::AlignTop);
 
   QLineEdit* refDeepthEdit = new QLineEdit;
-  QLabel* refDeepthEditLabel = new QLabel(tr("Reference Deepth: "));
+  QLabel* refDeepthEditLabel = new QLabel(tr("Reference Deepth [ft]: "));
 
   QHBoxLayout* hBox3 = new QHBoxLayout;
   hBox3->addWidget(refDeepthEditLabel);
@@ -505,7 +505,7 @@ QGroupBox* MainWindow::createWellProperties() {
 
   QLineEdit* wellRateEdit = new QLineEdit;
   wellRateEdit->setValidator(intValidator);
-  QLabel* wellRateLabel = new QLabel(tr("Well Rate \n(Negative - productor \n Positive - injector): "));
+  QLabel* wellRateLabel = new QLabel(tr("Well Rate [STB/d] \n(Negative - productor \n Positive - injector): "));
   wellRateLabel->setBuddy(wellRateEdit);
 
   QVBoxLayout *layout3 = new QVBoxLayout;
@@ -535,7 +535,7 @@ QGroupBox* MainWindow::createBlockProperties() {
 
   QLineEdit* edit1 = new QLineEdit;
   edit1->setValidator(doubleValidator);
-  QLabel* edit1Label = new QLabel(tr("Porosity:"));
+  QLabel* edit1Label = new QLabel(tr("Porosity [-]:"));
   edit1Label->setBuddy(edit1);
 
   QHBoxLayout *layout1 = new QHBoxLayout;
@@ -544,7 +544,7 @@ QGroupBox* MainWindow::createBlockProperties() {
 
   QLineEdit* edit2 = new QLineEdit;
   edit2->setValidator(doubleValidator);
-  QLabel* edit2Label = new QLabel(tr("Permeability:"));
+  QLabel* edit2Label = new QLabel(tr("Permeability [D]:"));
   edit2Label->setBuddy(edit2);
 
   QHBoxLayout *layout2 = new QHBoxLayout;
@@ -553,7 +553,7 @@ QGroupBox* MainWindow::createBlockProperties() {
 
   QLineEdit* edit3 = new QLineEdit;
   edit3->setValidator(doubleValidator);
-  QLabel* edit3Label = new QLabel(tr("Compressibility:"));
+  QLabel* edit3Label = new QLabel(tr("Compressibility [1/psia]:"));
   edit3Label->setBuddy(edit3);
 
   QHBoxLayout *layout3 = new QHBoxLayout;
@@ -688,9 +688,9 @@ void MainWindow::createGrid(std::string dimension, std::string nPhases,
   //for the geometry tab
   geometryTab = new QTabWidget;
 
-  geometryTab->addTab(new Grid(nRows, nColumns), "Lenght");
-  geometryTab->addTab(new Grid(nRows, nColumns), "Thickness");
-  geometryTab->addTab(new Grid(nRows, nColumns), "Depth");
+  geometryTab->addTab(new Grid(nRows, nColumns), "Lenght [ft]");
+  geometryTab->addTab(new Grid(nRows, nColumns), "Thickness [ft]");
+  geometryTab->addTab(new Grid(nRows, nColumns), "Depth [ft]");
 
   tabedContent->addWidget(geometryTab);
 

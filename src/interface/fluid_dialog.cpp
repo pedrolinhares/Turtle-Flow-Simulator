@@ -34,7 +34,8 @@ FluidDialog::FluidDialog(QWidget *parent) : QDialog(parent) {
   pvtTableWidget->setRowCount(2);
 
   QStringList labels;
-  labels << "Pressure" << "FVF" << "Density" << "Viscosity";
+  labels << "Pressure [psia]" << "FVF [RB/STB]" << "Density [psi/ft]"
+         << "Viscosity [cp]";
   pvtTableWidget->setHorizontalHeaderLabels(labels);
   pvtTableWidget->resizeRowsToContents();
 
