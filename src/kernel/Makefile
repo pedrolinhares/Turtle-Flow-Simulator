@@ -8,7 +8,6 @@ TARGET = ../../bin/ReservoirSoftware
 SOURCES = $(wildcard *.cpp)
 OBJSDIR = build
 OBJECTS = $(patsubst %.cpp, $(OBJSDIR)/%.o, $(SOURCES))
-# OBJECTS = $(SOURCES:.cpp=.o)
 
 # Main target
 $(TARGET): $(OBJECTS)
