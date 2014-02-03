@@ -9,7 +9,8 @@
 using namespace std;
 
 void onExit() {
-  std::cout << "**Program Execution Failure**" << std::endl;
+  cout << "End of Execution" << endl;
+  cout << "UENF - LENEP"  << endl;
 }
 
 int main()
@@ -21,10 +22,8 @@ int main()
           reservoir.Run(); ///< Running the simulation. This is the main code of the program.
     }
 
-    cout << "End of Execution" << endl;
     //cout << "Pedro Henrique Linhares" << endl;
     //cout << "Wagner Queiroz Barros" << endl;
     //cout << "Petroleum Engineer" << endl;
-    cout << "UENF - LENEP"  << endl;
     return 0;
 }

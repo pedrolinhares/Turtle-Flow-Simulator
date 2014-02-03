@@ -33,10 +33,10 @@ class CPlot
   public:
     CPlot();
     ~CPlot();
-    void PlotWellPressure(int welln); ///< Plot the pressure data for well n;
-    void PlotWellProduction(int welln);  ///< Plot the cumulative production data for well n;
-    void PlotGridPressure(double time, int ncells); ///< Plot the reservoir pressure for a specific time.
-    void PlotCellPressure(int celln); ///< Plot the pressure profile for a specific cell in time.
+    int PlotWellPressure(int welln); ///< Plot the pressure data for well n;
+    int PlotWellProduction(int welln);  ///< Plot the cumulative production data for well n;
+    int PlotGridPressure(double time, int ncells); ///< Plot the reservoir pressure for a specific time.
+    int PlotCellPressure(int celln); ///< Plot the pressure profile for a specific cell in time.
 
 
     void PlotGraph(); ///< Plots a graph using the class parameters;

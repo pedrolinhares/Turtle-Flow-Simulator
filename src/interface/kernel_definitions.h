@@ -14,7 +14,7 @@ namespace kernel_definitions {
   const char* RESERVOIR_FILENAME = "reservoir_data/ArqRes1d.in";
   const char* NUMERIC_PROPERTIES_FILENAME = "reservoir_data/ArqNumeric.in";
   const char* BOUNDARY_CONDITION_FILENAME = "reservoir_data/ArqBoundCond1d.in";
-  const char* KERNEL_COMMAND = "ReservoirSoftware";
+  const char* KERNEL_COMMAND = "./ReservoirSoftware";
 }
 
 #endif

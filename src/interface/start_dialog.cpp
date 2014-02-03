@@ -18,8 +18,8 @@ StartDialog::StartDialog(QWidget *parent) : QDialog(parent) {
   modelsLayouts->addWidget(createPhaseModels());
 
   QHBoxLayout *otherLayout = new QHBoxLayout;
-  otherLayout->addWidget(createPhasesBox());
   otherLayout->addWidget(createGridLayoutBox());
+  otherLayout->addWidget(createPhasesBox());
 
   QPushButton *ok_button = new QPushButton(tr("Ok"));
   QPushButton *close_button = new QPushButton(tr("Cancel"));
@@ -40,6 +40,7 @@ StartDialog::StartDialog(QWidget *parent) : QDialog(parent) {
   mainLayout->addLayout(buttonsLayout);
 
   setLayout(mainLayout);
+  setWindowTitle(tr("configure the simulation"));
 }
 
 /**************************************************************************//**
@@ -160,9 +161,9 @@ QGroupBox* StartDialog::createGridLayoutBox() {
   rows = new QSpinBox;
   columns = new QSpinBox;
 
-  rows->setRange(1, 50);
+  rows->setRange(1, 1000);
   rows->setValue(20);
-  columns->setRange(1, 50);
+  columns->setRange(1, 1000);
   columns->setValue(20);
   rows->setDisabled(true);
 
@@ -207,8 +208,8 @@ std::string StartDialog::getGridModelChosen() {
     return std::string("oneDimensional");
   else if (twoDimensionalRadio->isChecked())
     return std::string("twoDimensional");
-  else if (threeDimensionalRadio->isChecked())
-    return std::string("threeDimensional");
+
+  return std::string("threeDimensional");
 }
 
 /**************************************************************************//**
@@ -220,8 +221,8 @@ std::string StartDialog::getPhaseModelChosen() {
     return std::string("singlePhase");
   else if (twoPhaseRadio->isChecked())
     return std::string("twoPhase");
-  else if (threePhaseRadio->isChecked())
-    return std::string("threePhase");
+
+  return std::string("threePhase");
 }
 
 /**************************************************************************//**

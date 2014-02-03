@@ -199,7 +199,7 @@ QVBoxLayout* MainWindow::createFluidLayout() {
   QHBoxLayout *pvtPointsLayout = new QHBoxLayout;
 
   pvtSpinBox = new QSpinBox;
-  pvtSpinBox->setMinimum(1);
+  pvtSpinBox->setMinimum(2);
 
   QComboBox* chooseOil = new QComboBox;
 
@@ -281,8 +281,8 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
   hbox1->addWidget(solverComboBox);
 
   QSpinBox* numberOfIteractionsSpinBox = new QSpinBox;
-  numberOfIteractionsSpinBox->setRange(0, 1000);
-  numberOfIteractionsSpinBox->setValue(50);
+  numberOfIteractionsSpinBox->setRange(0, 1000000);
+  numberOfIteractionsSpinBox->setValue(150);
   QLabel* numberOfIteractionsLabel = new QLabel(tr("Iteractions: "));
   numberOfIteractionsLabel->setBuddy(numberOfIteractionsSpinBox);
 
@@ -295,6 +295,7 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
 
   QLineEdit* precisionSolverEdit = new QLineEdit;
   precisionSolverEdit->setValidator(doubleValidator);
+  precisionSolverEdit->setText("0.001");
   QLabel* precisionSolverLabel = new QLabel(tr("Solver Precision: "));
   precisionSolverLabel->setBuddy(precisionSolverEdit);
 
@@ -304,6 +305,7 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
 
   QLineEdit* deltaTEdit = new QLineEdit;
   deltaTEdit->setValidator(doubleValidator);
+  deltaTEdit->setText("1");
   QLabel* deltaTLabel = new QLabel(tr("Δt: "));
   deltaTLabel->setBuddy(deltaTEdit);
 
@@ -323,29 +325,31 @@ QVBoxLayout* MainWindow::createNumericPropertiesLayout() {
 
   QLineEdit* thresholdMaxIterationsEdit = new QLineEdit;
   thresholdMaxIterationsEdit->setValidator(intValidator);
+  thresholdMaxIterationsEdit->setText("100");
   QLabel* thresholdMaxIterationsLabel = new QLabel(tr("Thresholding Max Iteractions: "));
   thresholdMaxIterationsLabel->setBuddy(thresholdMaxIterationsEdit);
 
-  QHBoxLayout* hbox6 = new QHBoxLayout;
-  hbox6->addWidget(thresholdMaxIterationsLabel);
-  hbox6->addWidget(thresholdMaxIterationsEdit);
+  QVBoxLayout* vbox6 = new QVBoxLayout;
+  vbox6->addWidget(thresholdMaxIterationsLabel);
+  vbox6->addWidget(thresholdMaxIterationsEdit);
 
   QLineEdit* thresholdRelativePrecisionEdit = new QLineEdit;
   thresholdRelativePrecisionEdit->setValidator(doubleValidator);
+  thresholdRelativePrecisionEdit->setText("0.001");
   QLabel* thresholdRelativePrecisionLabel = new QLabel(tr("Thresholding Relative Precision: "));
   thresholdRelativePrecisionLabel->setBuddy(thresholdRelativePrecisionEdit);
 
-  QHBoxLayout* hbox7 = new QHBoxLayout;
-  hbox7->addWidget(thresholdRelativePrecisionLabel);
-  hbox7->addWidget(thresholdRelativePrecisionEdit);
+  QVBoxLayout* vbox7 = new QVBoxLayout;
+  vbox7->addWidget(thresholdRelativePrecisionLabel);
+  vbox7->addWidget(thresholdRelativePrecisionEdit);
 
   vbox->addLayout(hbox1);
   vbox->addLayout(hbox2);
   vbox->addLayout(hbox3);
   vbox->addLayout(hbox4);
   vbox->addLayout(hbox5);
-  vbox->addLayout(hbox6);
-  vbox->addLayout(hbox7);
+  vbox->addLayout(vbox6);
+  vbox->addLayout(vbox7);
 
   vbox->setAlignment(Qt::AlignTop);
 
@@ -395,7 +399,7 @@ QVBoxLayout* MainWindow::createBoundaryConditionLayout() {
   boundaryTypeComboBox->insertItem(0, tr("Closed System"));
   boundaryTypeComboBox->insertItem(1, tr("Specified Flow Rate"));
   boundaryTypeComboBox->insertItem(2, tr("Specified Pressure"));
-  boundaryTypeComboBox->setCurrentIndex(1);
+  boundaryTypeComboBox->setCurrentIndex(2);
 
   leftBoudaryValueEdit = new QLineEdit;
   leftBoudaryValueEdit->setValidator(doubleValidator);
@@ -419,7 +423,7 @@ QVBoxLayout* MainWindow::createBoundaryConditionLayout() {
   boundaryTypeComboBox2->insertItem(0, tr("Closed System"));
   boundaryTypeComboBox2->insertItem(1, tr("Specified Flow Rate"));
   boundaryTypeComboBox2->insertItem(2, tr("Specified Pressure"));
-  boundaryTypeComboBox2->setCurrentIndex(1);
+  boundaryTypeComboBox2->setCurrentIndex(2);
 
   rightBoudaryValueEdit = new QLineEdit;
   rightBoudaryValueEdit->setValidator(doubleValidator);
@@ -483,7 +487,7 @@ QGroupBox* MainWindow::createWellProperties() {
 
   QLineEdit* wellRateEdit = new QLineEdit;
   wellRateEdit->setValidator(intValidator);
-  QLabel* wellRateLabel = new QLabel(tr("Well Rate (Negative - productor \n Positive - injector): "));
+  QLabel* wellRateLabel = new QLabel(tr("Well Rate \n(Negative - productor \n Positive - injector): "));
   wellRateLabel->setBuddy(wellRateEdit);
 
   QVBoxLayout *layout3 = new QVBoxLayout;
@@ -693,10 +697,13 @@ void MainWindow::createGrid(std::string dimension, std::string nPhases,
   gridLayout->addWidget(tabedContent);
 
   //Well Tab
-  wellTab = new QTabWidget;
-  wellTab->addTab(new Grid(nRows, nColumns), "Wells");
+  // wellTab = new QTabWidget;
+  // wellTab->addTab(new Grid(nRows, nColumns), "Wells");
 
-  tabedContent->addWidget(wellTab);
+  // tabedContent->addWidget(wellTab);
+
+  QWidget* wellWidget = new QWidget;
+  tabedContent->addWidget(wellWidget);
 
   //Numeric Properties Tab
   QWidget* numericPropertiesTabContent = new QWidget;
@@ -764,7 +771,6 @@ void MainWindow::createPlotDialog() {
   hBox2->addWidget(cellNumberEdit);
 
   timeEdit = new QLineEdit;
-  timeEdit->setValidator(intValidator);
   timeEdit->setDisabled(true);
   QLabel *timeLabel = new QLabel(tr("Time: "));
 
@@ -892,10 +898,17 @@ void MainWindow::generateConfigurationFiles() {
   if (canRunSimulation()) {
     kernelConfigurator->generateKernelConfigurationFiles();
 
+    QPushButton* runKernelButton = new QPushButton(tr("run Simulation"));
+
     QMessageBox msgBox;
     msgBox.setText("Configuration files have been generated.");
     msgBox.setIcon(QMessageBox::Information);
-    msgBox.exec();
+    msgBox.addButton(runKernelButton, QMessageBox::AcceptRole);
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    int res = msgBox.exec();
+
+    if (res == QMessageBox::AcceptRole)
+      run();
   }
 }
 

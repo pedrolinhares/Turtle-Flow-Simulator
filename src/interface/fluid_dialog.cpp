@@ -13,6 +13,7 @@ FluidDialog::FluidDialog(QWidget *parent) : QDialog(parent) {
 
   pvtTableWidget = new QTableWidget(1, 4, this);
   pvtTableWidget->setMaximumWidth(420);
+  pvtTableWidget->setRowCount(2);
 
   QStringList labels;
   labels << "Pressure" << "FVF" << "Density" << "Viscosity";

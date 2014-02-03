@@ -2,12 +2,11 @@
 
 using namespace std;
 
-CPlot::CPlot()
-{
-    /// Constructor of CPlot;
+/// Constructor of CPlot;
+CPlot::CPlot() {
+  // Gnuplot::Terminal("wxt");
 
-    time = 0.;  ///< time that will be plotted (only for pressure in cells);
-
+  time = 0.;  ///< time that will be plotted (only for pressure in cells);
 
   pstyle = "linespoints"; ///< Gnuplot style;
   xlabel = "x"; ///< Xlabel
@@ -22,7 +21,7 @@ CPlot::~CPlot()
 {
 }
 
-void CPlot::PlotWellPressure(int welln) {
+int CPlot::PlotWellPressure(int welln) {
     ///This function opens the Well "welln" output file,
     ///and plots the data in GnuPlot grapher.
     ///The well data contains a vector for time, pwf and for cumulative production.
@@ -30,16 +29,16 @@ void CPlot::PlotWellPressure(int welln) {
     ifstream wellf;
 
     ostringstream wdn;
-  wdn << "kernel/Out_Well_" << welln;
+  wdn << "reservoir_data/Out_Well_" << welln;
   plabel = wdn.str();  ///< Plot label;
-  wdn << ".dat";
+  wdn << ".out";
 
   wellf.open(wdn.str().c_str()); ///< Opning the well data
   if (wellf.fail())
        {
             cerr << "There is no well data." << endl;
             // cin.ignore();
-            exit(EXIT_FAILURE);
+            return 1;
        }
 
     /// Getting data
@@ -66,9 +65,10 @@ void CPlot::PlotWellPressure(int welln) {
 
    PlotGraph();
 
+   return 0;
  }
 
-void CPlot::PlotWellProduction(int welln) {
+int CPlot::PlotWellProduction(int welln) {
     ///This function opens the Well "welln" output file,
     ///and plots the data in GnuPlot grapher.
     ///The well data contains a vector for time, pwf and for cumulative production.
@@ -76,16 +76,16 @@ void CPlot::PlotWellProduction(int welln) {
     ifstream wellf;
 
     ostringstream wdn;
-  wdn << "kernel/Out_Well_" << welln;
+  wdn << "reservoir_data/Out_Well_" << welln;
   plabel = wdn.str();  ///< Plot label;
-  wdn << ".dat";
+  wdn << ".out";
 
   wellf.open(wdn.str().c_str()); ///< Opning the well data
   if (wellf.fail())
        {
             cerr << "There is no well data." << endl;
             // cin.ignore();
-            exit(EXIT_FAILURE);
+            return 1;
        }
 
     /// Getting data
@@ -113,21 +113,22 @@ void CPlot::PlotWellProduction(int welln) {
 
    PlotGraph();
 
+   return 0;
 }
 
-void CPlot::PlotGridPressure(double time, int ncells){
+int CPlot::PlotGridPressure(double time, int ncells){
   /// This function plots the reservoir pressure for a specified time.
   ///This function opens the grid output file,
     ///and plots the data in GnuPlot grapher.
 
   ifstream gridf;
 
-  gridf.open("kernel/Out_GridPressure.dat"); ///< Opning the grid data
+  gridf.open("reservoir_data/Out_GridPressure.out"); ///< Opning the grid data
   if (gridf.fail())
        {
             cerr << "There is no grid data." << endl;
             // cin.ignore();
-            exit(EXIT_FAILURE);
+            return 1;
        }
 
   /// Getting data
@@ -143,7 +144,7 @@ void CPlot::PlotGridPressure(double time, int ncells){
     while ((!gridf.eof()) && (tvalue < time)) {
 
         gridf >> tvalue;
-        if (gridf.eof()) { return; } ///Time is out of simulated time;
+        if (gridf.eof()) { return 0; } ///Time is out of simulated time;
 
         if (tvalue < time) { gridf.ignore(256,'\n'); }
         else {
@@ -166,21 +167,22 @@ void CPlot::PlotGridPressure(double time, int ncells){
 
    PlotGraph();
 
+   return 0;
 }
 
-void CPlot::PlotCellPressure(int celln) {
+int CPlot::PlotCellPressure(int celln) {
   /// This function plot the pressure profile for a specific cell in time.
   ///This function opens the grid output file,
     ///and plots the data in GnuPlot grapher.
 
     ifstream gridf;
 
-  gridf.open("kernel/Out_GridPressure.dat"); ///< Opning the grid data
+  gridf.open("reservoir_data/Out_GridPressure.out"); ///< Opning the grid data
   if (gridf.fail())
        {
             cerr << "There is no grid data." << endl;
             // cin.ignore();
-            exit(EXIT_FAILURE);
+            return 1;
        }
 
   /// Getting data
@@ -212,6 +214,8 @@ void CPlot::PlotCellPressure(int celln) {
    pstyle = "lines";
 
    PlotGraph();
+
+   return 0;
 }
 
 void CPlot::PlotGraph(){

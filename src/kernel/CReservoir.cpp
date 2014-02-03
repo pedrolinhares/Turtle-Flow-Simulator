@@ -137,7 +137,7 @@ void CReservoir::Run() {
 
 void CReservoir::OutPutInitiate() {
   /// This function is used to initiate the output files;
-   grid_data.open(OUT_GRIDS_FILE);
+   grid_data.open(OUT_GRIDS_FILE.c_str());
 
    grid_data << "Time [day]\t";  ///File header;
    for (int i=0; i<cpoints; i++) {
