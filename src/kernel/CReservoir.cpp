@@ -65,7 +65,7 @@ CReservoir::CReservoir(CDataControl *_dcontrol)
   maxni = (int) data[5];
   erroni = data[6];
 
-  solver = new CTrid(cpoints, maxsolver, errorsolver); ///< Constructing Tridiagonal Solver.  It need to be changed when the 2D case will be implemented.
+  solver = new CSolMatTrid(cpoints, maxsolver, errorsolver); ///< Constructing Tridiagonal Solver.  It need to be changed when the 2D case will be implemented.
 
     delete [] data;
 

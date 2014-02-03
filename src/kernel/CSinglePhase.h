@@ -21,14 +21,14 @@
 #ifndef CSinglePhase_h
 #define CSinglePhase_h
 
-#include "CModelType.h"
+#include "CResModelType.h"
 
 /**
  * This class is an abstract class used to represent all single phase reservoir models.
  * The reservoir model is used to discretize differential equations, and to create a linear equations system.
  */
 
-class CSinglePhase : public CModelType
+class CSinglePhase : public CResModelType
 {
 	protected:
 

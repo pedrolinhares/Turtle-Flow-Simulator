@@ -1,4 +1,4 @@
-//** @file CModelType.cpp */
+//** @file CResModelType.cpp */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
@@ -18,17 +18,17 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-#include "CModelType.h"
+#include "CResModelType.h"
 
 using namespace std;
 
-CModelType::CModelType()
+CResModelType::CResModelType()
 {
 	/// Model constructor.
 
 }
 
-CModelType::~CModelType()
+CResModelType::~CResModelType()
 {
 	/// Model destructor.
 

@@ -20,7 +20,7 @@
 
 #include "fluid_definitions.h"
 
-int fluid_difinitions::getFluidCorrespondingInt(std::string fluidStr) {
+int fluid_definitions::getFluidCorrespondingInt(std::string fluidStr) {
   if (fluidStr == "Water")
     return static_cast<int>(FluidType::WATER);
   else if (fluidStr == "Oil")
@@ -29,7 +29,7 @@ int fluid_difinitions::getFluidCorrespondingInt(std::string fluidStr) {
   return static_cast<int>(FluidType::GAS);
 }
 
-std::string fluid_difinitions::getFluidCorrespondingStdString(FluidType fluid) {
+std::string fluid_definitions::getFluidCorrespondingStdString(FluidType fluid) {
   if (fluid == FluidType::WATER)
     return std::string("Water");
   else if (fluid == FluidType::OIL)

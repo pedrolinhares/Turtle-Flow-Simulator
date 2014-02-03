@@ -1,4 +1,4 @@
-//** @file CModelType.h */
+//** @file CSolverMatrix.cpp */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
@@ -18,32 +18,21 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-#ifndef CModelType_h
-#define CModelType_h
+#include "CSolverMatrix.h"
 
-#include <iostream>
+CSolverMatrix::CSolverMatrix(int nl) : nlines(nl)   {
+      /// Solver constructor.
 
-#include "CGrid.h"
-#include "CGrid1d.h"
+      maxiter = 50; ///< Default number for maximum iterations;
+      erro= 0.000001; ///< Default number for maximum error.
 
-/**
- * This class is an abstract class used to represent a reservoir model.
- * The reservoir model is used to discretize differential equations, and to create a linear equations system.
- */
 
-class CModelType
+}
+
+CSolverMatrix::CSolverMatrix(int nl, int _maxiter, double _erro) : nlines(nl),
+ maxiter(_maxiter) , erro(_erro) {} /// Overloaded Solver constructor.
+
+CSolverMatrix::~CSolverMatrix()
 {
-	protected:
-		CDataControl *dcontrol; ///< Pointer to the simulation data;
-
-	public:
-		CModelType(); ///< Model constructor;
-		virtual ~CModelType(); ///< Model destructor;
-
-		virtual void BuildMatrix(CGrid *grid, double **A, double deltat) = 0; ///< Builds the coefficient matrix "A";
-		virtual void BuildCoefVector(CGrid *grid, double *b, double deltat) = 0; ///< Builds the free vector "b";
-		virtual void BuildSolution(CGrid *grid, double *x) = 0; ///< Builds the solution "X";
-		virtual double Gamma( CGrid *grid, int i) = 0;	///< Calculates the Gamma factor of the reservoir.
-};
-
-#endif // CModelType_h
+	/// Solver destructor.
+}

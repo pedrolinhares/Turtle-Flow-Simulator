@@ -1,4 +1,4 @@
-//** @file CTrid.cpp */
+//** @file CSolMatTrid.cpp */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
@@ -18,23 +18,23 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-#include "CTrid.h"
+#include "CSolMatTrid.h"
 
 using namespace std;
 
-CTrid::CTrid(int nl) : CSolver(nl) {
+CSolMatTrid::CSolMatTrid(int nl) : CSolverMatrix(nl) {
 	/// Class constructor.
 
       verror = new double[nlines];  ///< Creating verror;
 }
 
-CTrid::CTrid(int nl, int _maxiter, double _erro) : CSolver(nl, _maxiter, _erro) {
+CSolMatTrid::CSolMatTrid(int nl, int _maxiter, double _erro) : CSolverMatrix(nl, _maxiter, _erro) {
 	/// Overloaded Class constructor.
 
 	  verror = new double[nlines];  ///< Creating verror;
 }
 
-CTrid::~CTrid()
+CSolMatTrid::~CSolMatTrid()
 {
 	/// Class destructor
 
@@ -42,7 +42,7 @@ CTrid::~CTrid()
 
 }
 
-void CTrid::GaussSeidel( double **a , double *b ,double *x)  {
+void CSolMatTrid::GaussSeidel( double **a , double *b ,double *x)  {
     /// This is the Gauss-Seidel algorithm, optimized for tri-diagonal systems.
     /// The matrix does not have zeros in its construction, saving memory.
 

@@ -1,4 +1,4 @@
-//** @file CSolver.h */
+//** @file CResModelType.h */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
@@ -18,31 +18,32 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-#ifndef CSolver_h
-#define CSolver_h
+#ifndef CResModelType_h
+#define CResModelType_h
+
+#include <iostream>
+
+#include "CGrid.h"
+#include "CGrid1d.h"
 
 /**
- * This class is an abstract class used to represent the numerical solver.
- * The solver can be used to solve tri-diagonal, penta-diagonal or hepta-diagonal systems.
- * Can be implemented different kinds of numerical algorithims for each solver.
+ * This class is an abstract class used to represent a reservoir model.
+ * The reservoir model is used to discretize differential equations, and to create a linear equations system.
  */
 
-class CSolver
+class CResModelType
 {
-    protected:
-
-        int nlines; ///< Number of lines in the linear equation system;
-        int maxiter; ///< Maximum number of iterations;
-        double erro; ///< Maximum error of solver.
+	protected:
+		CDataControl *dcontrol; ///< Pointer to the simulation data;
 
 	public:
+		CResModelType(); ///< Model constructor;
+		virtual ~CResModelType(); ///< Model destructor;
 
-		CSolver(int nl); ///< Solver constructor;
-		CSolver(int nl, int _maxiter, double _erro); ///< Overloaded Solver constructor;
-		virtual ~CSolver(); ///< Solver destructor;
-
-		virtual void GaussSeidel( double **a , double *b ,double *x) = 0; ///< Gauss-Seidel algorithm.
-
+		virtual void BuildMatrix(CGrid *grid, double **A, double deltat) = 0; ///< Builds the coefficient matrix "A";
+		virtual void BuildCoefVector(CGrid *grid, double *b, double deltat) = 0; ///< Builds the free vector "b";
+		virtual void BuildSolution(CGrid *grid, double *x) = 0; ///< Builds the solution "X";
+		virtual double Gamma( CGrid *grid, int i) = 0;	///< Calculates the Gamma factor of the reservoir.
 };
 
-#endif // CSolver_h
+#endif // CResModelType_h

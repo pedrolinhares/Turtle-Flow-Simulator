@@ -30,11 +30,11 @@
 #include "CGrid.h"
 #include "CGrid1d.h"
 
-#include "CModelType.h"
+#include "CResModelType.h"
 #include "CSinglePhase1d.h"
 
-#include "CSolver.h"
-#include "CTrid.h"
+#include "CSolverMatrix.h"
+#include "CSolMatTrid.h"
 
 /**
  * The CReservoir is the main class of the project, responsible of manage all the simulation.
@@ -48,13 +48,13 @@ private:
   CDataControl *dcontrol; ///< Pointer to the reservoir data;
   int dimtype; ///< Dimension of the problem: 1 - 1D, 2 - 2D, 3 - 3D, 4 - radial;
   CGrid *grid; ///< Pointer to the reservoir grid;
-  CModelType *model; ///< Pointer to the model that describes the reservoir behaviour;
+  CResModelType *model; ///< Pointer to the model that describes the reservoir behaviour;
   int cpoints; //Number of lines of linear equation system, and of cells in reservaoir;
 
   ///////////  Numerical Parameters  /////////
   /// "the solver is used to solve this equation system: A * Xni = B" ///
 
-  CSolver *solver; ///< Pointer to numerical solver;
+  CSolverMatrix *solver; ///< Pointer to numerical solver;
   double **A; ///< Coefficient Matrix
     double *B; ///< Free Vector
       double *Xni; ///< Solution Vector

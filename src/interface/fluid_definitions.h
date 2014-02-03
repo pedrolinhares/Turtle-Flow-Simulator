@@ -26,7 +26,7 @@
 
 #include <string>
 
-namespace fluid_difinitions {
+namespace fluid_definitions {
 
   /**************************************************************************//**
   ** \enum FluidType
