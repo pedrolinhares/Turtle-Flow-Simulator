@@ -6,3 +6,5 @@ html
 latex
 Documentacao/
 bin/
+build/
+images/

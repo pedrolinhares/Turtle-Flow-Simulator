@@ -63,6 +63,7 @@ private slots:
   void plot();
   void createPlotDialog();
   void generateConfigurationFiles();
+  void showAboutDialog();
   void changeLeftBoundaryValue(const QString&);
   void changeRightBoundaryValue(const QString&);
 
@@ -84,10 +85,12 @@ private:
   int nToolboxItems = 0;
   QMenu* fileMenu;
   QMenu* actionsMenu;
+  QMenu* helpMenu;
   QAction* newProjectAct;
   QAction* closeAct;
   QAction* runAction;
   QAction* plotAction;
+  QAction* aboutAction;
   QStackedWidget* tabedContent;
   QTabWidget* geometryTab;
   QTabWidget* rockTab;

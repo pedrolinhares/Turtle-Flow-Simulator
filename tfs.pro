@@ -10,6 +10,9 @@ DESTDIR = bin
 OBJECTS_DIR = src/interface/build
 MOC_DIR = src/interface/build
 
+RESOURCES = src/interface/resources.qrc
+RCC_DIR = src/interface/build
+
 SOURCES += src/interface/main.cpp \
         src/interface/kernel_configurator.cpp \
         src/interface/fluid_definitions.cpp \

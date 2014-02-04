@@ -80,9 +80,13 @@ void MainWindow::createActions() {
 
   //plot action
   plotAction = new QAction(tr("Plot results"), this);
-  plotAction->setStatusTip(tr("Plot resulto of the simulation"));
+  plotAction->setStatusTip(tr("Plot result of the simulation"));
   plotAction->setEnabled(false);
   connect(plotAction, SIGNAL(triggered()), this, SLOT(createPlotDialog()));
+
+  aboutAction = new QAction(tr("About"), this);
+  aboutAction->setStatusTip(tr("About the application"));
+  connect(aboutAction, SIGNAL(triggered()), this, SLOT(showAboutDialog()));
 }
 
 /**************************************************************************//**
@@ -97,6 +101,9 @@ void MainWindow::createMenus() {
   actionsMenu = menuBar()->addMenu(tr("&Actions"));
   actionsMenu->addAction(runAction);
   actionsMenu->addAction(plotAction);
+
+  helpMenu = menuBar()->addMenu(tr("&Help"));
+  helpMenu->addAction(aboutAction);
 }
 
 /**************************************************************************//**
@@ -958,6 +965,31 @@ void MainWindow::changeRightBoundaryValue(const QString& text) {
     rightBoudaryValueEdit->setText("");
     rightBoudaryValueEdit->setDisabled(false);
   }
+}
+
+/**************************************************************************//**
+** Shows the about dialog.
+**
+** \note private slot
+******************************************************************************/
+void MainWindow::showAboutDialog() {
+  QMessageBox msgBox;
+  msgBox.setTextFormat(Qt::RichText);
+  msgBox.setWindowTitle("About");
+  msgBox.setIconPixmap(QPixmap(":/images/oil_256.png"));
+  msgBox.setText("<center><h2><i>Turtle Flow Simulator (TFS)</i></h2></center>");
+  QString text("The TFS software is a reservoir simulator that is able to \
+                simulate the behaviour of an one-dimensional \
+                single phase petroleum reservoir under production conditions.");
+  text.append("<p><b>Authors:</b></p>");
+  text.append("<p>Pedro Henrique Linhares (pedrolmota@gmail.com) </p>");
+  text.append("<p>Wagner Queiroz (wagnerqb@gmail.com)</p>");
+  text.append("<p><b> Institution: </b></p>");
+  text.append("<p>Laboratório de Engenharia e Exploração de Petróleo (Lenep) </p>");
+  text.append("<p>Universidade Estadual do Norte Fluminense Darcy Ribeiro (UENF)");
+  text.append("<center><p> Copyright (C) 2014</p></center>");
+  msgBox.setInformativeText(text);
+  msgBox.exec();
 }
 
 /**************************************************************************//**
