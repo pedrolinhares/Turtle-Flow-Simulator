@@ -24,6 +24,7 @@ using namespace std;
 
 /// Constructor of CPlot;
 CPlot::CPlot() {
+  plot = nullptr;
   // Gnuplot::Terminal("wxt");
 
   time = 0.;  ///< time that will be plotted (only for pressure in cells);
@@ -34,7 +35,6 @@ CPlot::CPlot() {
   plabel = "";  ///< Plot Label;
   ptitle = "Graph1"; ///< Plot title;
   marksize = 1.2; ///< Size of markers;
-
 }
 
 CPlot::~CPlot()
@@ -42,24 +42,24 @@ CPlot::~CPlot()
 }
 
 int CPlot::PlotWellPressure(int welln) {
-    ///This function opens the Well "welln" output file,
-    ///and plots the data in GnuPlot grapher.
-    ///The well data contains a vector for time, pwf and for cumulative production.
+  ///This function opens the Well "welln" output file,
+  ///and plots the data in GnuPlot grapher.
+  ///The well data contains a vector for time, pwf and for cumulative production.
 
-    ifstream wellf;
+  ifstream wellf;
 
-    ostringstream wdn;
+  ostringstream wdn;
   wdn << "reservoir_data/Out_Well_" << welln;
   plabel = wdn.str();  ///< Plot label;
   wdn << ".out";
 
   wellf.open(wdn.str().c_str()); ///< Opning the well data
-  if (wellf.fail())
-       {
-            cerr << "There is no well data." << endl;
-            // cin.ignore();
-            return 1;
-       }
+
+  if (wellf.fail()) {
+    cerr << "There is no well data." << endl;
+    // cin.ignore();
+    return 1;
+  }
 
     /// Getting data
     double xvalue, yvalue;
@@ -68,72 +68,71 @@ int CPlot::PlotWellPressure(int welln) {
     x.clear();
     y.clear();
 
+  wellf.ignore(256,'\n');
+  while (!wellf.eof()) {
+    wellf >> xvalue;
+    wellf >> yvalue;
     wellf.ignore(256,'\n');
-    while (!wellf.eof()) {
-        wellf >> xvalue;
-        wellf >> yvalue;
-        wellf.ignore(256,'\n');
-        x.push_back(xvalue);
-        y.push_back(yvalue);
-    }
+    x.push_back(xvalue);
+    y.push_back(yvalue);
+  }
 
-   /// Setting plot
-   ptitle = "Well Pwf";
-   pstyle = "lines";
-   xlabel = "Time [days]";
-   ylabel = "Pressure [psia]";
+  /// Setting plot
+  ptitle = "Well Pwf";
+  pstyle = "lines";
+  xlabel = "Time [days]";
+  ylabel = "Pressure [psia]";
 
-   PlotGraph();
+  PlotGraph();
 
-   return 0;
+  return 0;
  }
 
 int CPlot::PlotWellProduction(int welln) {
-    ///This function opens the Well "welln" output file,
-    ///and plots the data in GnuPlot grapher.
-    ///The well data contains a vector for time, pwf and for cumulative production.
+  ///This function opens the Well "welln" output file,
+  ///and plots the data in GnuPlot grapher.
+  ///The well data contains a vector for time, pwf and for cumulative production.
 
-    ifstream wellf;
+  ifstream wellf;
 
-    ostringstream wdn;
+  ostringstream wdn;
   wdn << "reservoir_data/Out_Well_" << welln;
   plabel = wdn.str();  ///< Plot label;
   wdn << ".out";
 
   wellf.open(wdn.str().c_str()); ///< Opning the well data
-  if (wellf.fail())
-       {
-            cerr << "There is no well data." << endl;
-            // cin.ignore();
-            return 1;
-       }
+  if (wellf.fail()) {
+    cerr << "There is no well data." << endl;
+    // cin.ignore();
+    return 1;
+  }
 
-    /// Getting data
-    double xvalue, yvalue, trash;
+  /// Getting data
+  double xvalue, yvalue, trash;
 
-     //clears vectors
-    x.clear();
-    y.clear();
+   //clears vectors
+  x.clear();
+  y.clear();
 
-    wellf.ignore(256,'\n');
-    while (!wellf.eof()) {
-        wellf >> xvalue;
-        wellf >> trash;
-        wellf >> yvalue;
+  wellf.ignore(256,'\n');
+  while (!wellf.eof()) {
+    wellf >> xvalue;
+    wellf >> trash;
+    wellf >> yvalue;
 
-        x.push_back(xvalue);
-        y.push_back(yvalue);
-    }
+    x.push_back(xvalue);
+    y.push_back(yvalue);
+  }
 
-   /// Setting plot
-   ptitle = "Well Cumulative Production/Injection";
-   pstyle = "lines";
-   xlabel = "Time [days]";
-   ylabel = "Cumulative Flow [STB]";
+  /// Setting plot
+  ptitle = "Well Cumulative Production/Injection";
+  pstyle = "lines";
+  xlabel = "Time [days]";
+  ylabel = "Cumulative Flow [STB]";
 
-   PlotGraph();
+  PlotGraph();
 
-   return 0;
+  return 0;
 }
 
 int CPlot::PlotGridPressure(double time, int ncells){
@@ -144,50 +143,49 @@ int CPlot::PlotGridPressure(double time, int ncells){
   ifstream gridf;
 
   gridf.open("reservoir_data/Out_GridPressure.out"); ///< Opning the grid data
-  if (gridf.fail())
-       {
-            cerr << "There is no grid data." << endl;
-            // cin.ignore();
-            return 1;
-       }
+  if (gridf.fail()){
+    cerr << "There is no grid data." << endl;
+    // cin.ignore();
+    return 1;
+  }
 
   /// Getting data
-    double tvalue, yvalue, count;
-    tvalue = 0;
-    count = 1;
+  double tvalue, yvalue, count;
+  tvalue = 0;
+  count = 1;
 
-     //clears vectors
-    x.clear();
-    y.clear();
+   //clears vectors
+  x.clear();
+  y.clear();
 
-    gridf.ignore(256,'\n');
-    while ((!gridf.eof()) && (tvalue < time)) {
+  gridf.ignore(256,'\n');
+  while ((!gridf.eof()) && (tvalue < time)) {
 
-        gridf >> tvalue;
-        if (gridf.eof()) { return 0; } ///Time is out of simulated time;
+      gridf >> tvalue;
+      if (gridf.eof()) { return 0; } ///Time is out of simulated time;
 
-        if (tvalue < time) { gridf.ignore(256,'\n'); }
-        else {
+      if (tvalue < time) { gridf.ignore(256,'\n'); }
+      else {
+        gridf >> yvalue;
+        while ( count <= ncells) {
+          x.push_back(count);
+          y.push_back(yvalue);
+          count++;
           gridf >> yvalue;
-          while ( count <= ncells) {
-            x.push_back(count);
-            y.push_back(yvalue);
-            count++;
-            gridf >> yvalue;
-          }
         }
+      }
 
-    }
+  }
 
   /// Setting plot
-   xlabel = "Cell Id";
-   ylabel = "Pressure [psia]";
-   ptitle = "Reservoir Pressure";
-   pstyle = "lines";
+  xlabel = "Cell Id";
+  ylabel = "Pressure [psia]";
+  ptitle = "Reservoir Pressure";
+  pstyle = "lines";
 
-   PlotGraph();
+  PlotGraph();
 
-   return 0;
+  return 0;
 }
 
 int CPlot::PlotCellPressure(int celln) {
@@ -195,63 +193,62 @@ int CPlot::PlotCellPressure(int celln) {
   ///This function opens the grid output file,
     ///and plots the data in GnuPlot grapher.
 
-    ifstream gridf;
+  ifstream gridf;
 
   gridf.open("reservoir_data/Out_GridPressure.out"); ///< Opning the grid data
-  if (gridf.fail())
-       {
-            cerr << "There is no grid data." << endl;
-            // cin.ignore();
-            return 1;
-       }
+  if (gridf.fail()) {
+    cerr << "There is no grid data." << endl;
+    // cin.ignore();
+    return 1;
+  }
 
   /// Getting data
-    double xvalue, yvalue, trash;
-    int count;
+  double xvalue, yvalue, trash;
+  int count;
 
-    //clears vectors
-    x.clear();
-    y.clear();
+  //clears vectors
+  x.clear();
+  y.clear();
 
-    gridf.ignore(256,'\n');
-    while (!gridf.eof()) {
-        gridf >> xvalue;
-        count = 1;
-        while (count < celln) {
-          gridf >> trash;
-          count++;
-        }
-        gridf >> yvalue;
-        gridf.ignore(256,'\n');
-        x.push_back(xvalue);
-        y.push_back(yvalue);
-    }
+  gridf.ignore(256,'\n');
+  while (!gridf.eof()) {
+      gridf >> xvalue;
+      count = 1;
+      while (count < celln) {
+        gridf >> trash;
+        count++;
+      }
+      gridf >> yvalue;
+      gridf.ignore(256,'\n');
+      x.push_back(xvalue);
+      y.push_back(yvalue);
+  }
 
-   /// Setting plot
-   xlabel = "Time [days]";
-   ylabel = "Pressure [psia]";
-   ptitle = "Pressure Profile for a single cell";
-   pstyle = "lines";
+  /// Setting plot
+  xlabel = "Time [days]";
+  ylabel = "Pressure [psia]";
+  ptitle = "Pressure Profile for a single cell";
+  pstyle = "lines";
 
-   PlotGraph();
+  PlotGraph();
 
-   return 0;
+  return 0;
 }
 
 void CPlot::PlotGraph(){
-    /// Plots a graph using the class information;
-    if (plot != nullptr)
-      delete plot;
-    plot = new Gnuplot;
+  /// Plots a graph using the class information;
+  if (plot != nullptr)
+    delete plot;
+  plot = new Gnuplot;
 
-    plot->ResetAll();
-    plot->set_style(pstyle);
-    plot->set_grid();
-    plot->set_xlabel(xlabel);
-    plot->set_ylabel(ylabel);
-    plot->set_pointsize(marksize);
-    plot->set_title(ptitle);
+  plot->ResetAll();
+  plot->set_style(pstyle);
+  plot->set_grid();
+  plot->set_xlabel(xlabel);
+  plot->set_ylabel(ylabel);
+  plot->set_pointsize(marksize);
+  plot->set_title(ptitle);
 
-    plot->plot_xy(x, y, plabel);
+  plot->plot_xy(x, y, plabel);
 }
 

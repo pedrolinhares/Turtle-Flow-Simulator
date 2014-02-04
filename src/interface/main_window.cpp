@@ -923,7 +923,7 @@ void MainWindow::generateConfigurationFiles() {
   if (canRunSimulation()) {
     kernelConfigurator->generateKernelConfigurationFiles();
 
-    QPushButton* runKernelButton = new QPushButton(tr("run Simulation"));
+    QPushButton* runKernelButton = new QPushButton(tr("Run simulation"));
 
     QMessageBox msgBox;
     msgBox.setText("Configuration files have been generated.");
@@ -976,7 +976,7 @@ void MainWindow::showAboutDialog() {
   QMessageBox msgBox;
   msgBox.setTextFormat(Qt::RichText);
   msgBox.setWindowTitle("About");
-  msgBox.setIconPixmap(QPixmap(":/images/oil_256.png"));
+  msgBox.setIconPixmap(QPixmap(":/images/tfs_icon.png"));
   msgBox.setText("<center><h2><i>Turtle Flow Simulator (TFS)</i></h2></center>");
   QString text("The TFS software is a reservoir simulator that is able to \
                 simulate the behaviour of an one-dimensional \
@@ -985,6 +985,7 @@ void MainWindow::showAboutDialog() {
   text.append("<p>Pedro Henrique Linhares (pedrolmota@gmail.com) </p>");
   text.append("<p>Wagner Queiroz (wagnerqb@gmail.com)</p>");
   text.append("<p><b> Institution: </b></p>");
+  text.append("<p>Supervisor: André Duarte Bueno (PhD)</p>");
   text.append("<p>Laboratório de Engenharia e Exploração de Petróleo (Lenep) </p>");
   text.append("<p>Universidade Estadual do Norte Fluminense Darcy Ribeiro (UENF)");
   text.append("<center><p> Copyright (C) 2014</p></center>");

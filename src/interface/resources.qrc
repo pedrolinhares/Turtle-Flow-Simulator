@@ -2,5 +2,6 @@
  <qresource>
      <file>images/oil_128.png</file>
      <file>images/oil_256.png</file>
+     <file>images/tfs_icon.png</file>
  </qresource>
  </RCC>

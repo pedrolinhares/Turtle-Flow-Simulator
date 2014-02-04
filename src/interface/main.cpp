@@ -23,7 +23,7 @@
 
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
-  app.setWindowIcon(QIcon(":/images/oil_256.png"));
+  app.setWindowIcon(QIcon(":/images/tfs_icon.png"));
   MainWindow w;
   w.show();
 
