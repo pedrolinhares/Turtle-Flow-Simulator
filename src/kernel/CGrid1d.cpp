@@ -265,7 +265,9 @@ void CGrid1d::SetBoundConditions() {
         }
       case 1: {   ///Specified Pressure Case
 
-        CCell1d *rightcell;
+        CCell1d *rightcell = NULL;
+        rightcell = new CCell1d;
+
         *rightcell = cells[(cellnumber - 1)]; ///< Copying the properties of the last element;
 
         rightcell->Pressure(data[3]); /// Setting the specified pressure;
