@@ -1,5 +1,6 @@
 #!/bin/bash
 echo "**Building Interface**"
+qmake
 make -f ./Makefile
 sleep 1
 
@@ -8,5 +9,4 @@ cd ./src/kernel
 make -f Makefile
 cd -
 
-sleep 1
 echo "**Building Finnished**"
