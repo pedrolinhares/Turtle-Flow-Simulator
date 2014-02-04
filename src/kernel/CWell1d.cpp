@@ -18,6 +18,7 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
+#include <cstdlib>
 #include "CWell1d.h"
 
 CWell1d::CWell1d() : rate(0) , id(0) , cumulative_phase1(0)

@@ -49,7 +49,7 @@ int CPlot::PlotWellPressure(int welln) {
   ifstream wellf;
 
   ostringstream wdn;
-  wdn << "reservoir_data/Out_Well_" << welln;
+  wdn << "../reservoir_data/Out_Well_" << welln;
   plabel = wdn.str();  ///< Plot label;
   wdn << ".out";
 
@@ -96,7 +96,7 @@ int CPlot::PlotWellProduction(int welln) {
   ifstream wellf;
 
   ostringstream wdn;
-  wdn << "reservoir_data/Out_Well_" << welln;
+  wdn << "../reservoir_data/Out_Well_" << welln;
   plabel = wdn.str();  ///< Plot label;
   wdn << ".out";
 
@@ -142,7 +142,7 @@ int CPlot::PlotGridPressure(double time, int ncells){
 
   ifstream gridf;
 
-  gridf.open("reservoir_data/Out_GridPressure.out"); ///< Opning the grid data
+  gridf.open("../reservoir_data/Out_GridPressure.out"); ///< Opning the grid data
   if (gridf.fail()){
     cerr << "There is no grid data." << endl;
     // cin.ignore();
@@ -195,7 +195,7 @@ int CPlot::PlotCellPressure(int celln) {
 
   ifstream gridf;
 
-  gridf.open("reservoir_data/Out_GridPressure.out"); ///< Opning the grid data
+  gridf.open("../reservoir_data/Out_GridPressure.out"); ///< Opning the grid data
   if (gridf.fail()) {
     cerr << "There is no grid data." << endl;
     // cin.ignore();

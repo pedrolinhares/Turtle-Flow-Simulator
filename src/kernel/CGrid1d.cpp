@@ -18,6 +18,7 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
+#include <cstdlib>
 #include "filename_definitions.h"
 #include "CGrid1d.h"
 
