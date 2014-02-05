@@ -22,7 +22,7 @@
 #define KERNEL_CONFIGURATOR_H
 
 #include <thread>
-#include "../kernel/CPlot.h"
+#include "CPlot.h"
 
 class MainWindow;
 

@@ -20,8 +20,8 @@ SOURCES += src/interface/main.cpp \
         src/interface/fluid_dialog.cpp \
         src/interface/grid.cpp \
         src/interface/start_dialog.cpp \
-        src/kernel/CPlot.cpp \
-        src/kernel/CGnuplot.cpp
+        src/interface/CPlot.cpp \
+        src/interface/CGnuplot.cpp
 
 HEADERS  += src/interface/kernel_configurator.h \
             src/interface/main_window.h \
@@ -30,5 +30,5 @@ HEADERS  += src/interface/kernel_configurator.h \
             src/interface/grid.h \
             src/interface/start_dialog.h \
             src/interface/kernel_definitions.h \
-            src/kernel/CPlot.h \
-            src/kernel/CGnuplot.h
+            src/interface/CPlot.h \
+            src/interface/CGnuplot.h
