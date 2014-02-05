@@ -1,0 +1,14 @@
+1     --- Id Cell 1
+50     --- [ft] Thickness Cell 1
+1500  --- [ft] Deepth Cell 1
+1     --- ID of the Connected Block 
+
+2     --- Id Cell 2
+40     --- Thickness Cell 2
+1200  --- Deepth Cell 2
+2     --- ID of the Connected Block 
+
+3     --- Id Cell 3
+80     --- Thickness Cell 3
+2000  --- Deepth Cell 3
+3     --- ID of the Connected Block 

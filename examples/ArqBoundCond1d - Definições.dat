@@ -1,0 +1,6 @@
+1     --- Left Boundary Condition Type (0 - Constant Rate, 1 - Constant Pressure)
+6000     --- Value (Constant Rate = 0 - Closed System(Only this case is implemented at moment))
+
+0     --- Left Boundary Condition Type (0 - Constant Rate, 1 - Constant Pressure)
+0     --- Value (Constant Rate = 0 - Closed System)
+

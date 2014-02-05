@@ -1,0 +1,17 @@
+1        --- Identificador do Block
+0.000006 --- [-] Compressibilidade da Rocha no block 1
+0.1      --- [Darcy]Permeabilidade no block 1
+0.2      --- [-]Porosidade no block 1
+2000     --- [psi] Pressure de Referencia
+
+2        --- Identificador do Block
+0.000005 --- Compressibilidade da Rocha no block 2
+0.08       --- Permeabilidade no block 2
+0.3      --- Porosidade no block
+2000     --- [psi] Pressure de Referencia
+
+3
+0.000003
+0.2
+0.2
+2000
