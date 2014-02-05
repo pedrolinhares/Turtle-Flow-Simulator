@@ -1,0 +1,8 @@
+1      --- Identificador do Solver (Por Equanto só tem o Gauss-Seidel)
+30     --- Número de Iterações máximas do solver numérico
+0.001 - Precisão do solver numérica
+
+0.1   --- (deltat)delta t do problema
+10     --- (tfinal) tempo final de simulação
+50     --- (maxni) Número de Iterações máximas da linearização ni
+0.001  --- (erroni) Precisão relativa da linearização ni

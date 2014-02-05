@@ -1,0 +1,8 @@
+3  --- Número de Blocks
+3  --- Número de Cells
+80   -- [ft] Width das Cells
+1   -- Tipo de Fluido (1- water; 2- Oil; 3- Gas)
+
+380 -- [ft] Lenght da cell 1
+200 -- [ft] Lenght da cell 2
+250 -- [ft] Lenght da cell 3
