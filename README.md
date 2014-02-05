@@ -1,4 +1,4 @@
-=== TURTLE FLOW SIMULATOR (TFS) ===
++=== TURTLE FLOW SIMULATOR (TFS) ===+
 Developers: Pedro Henrique Linhares (pedrolmota@gmail.com)
             Wagner Queiroz (wagnerqb@gmail.com)
 Institution:
