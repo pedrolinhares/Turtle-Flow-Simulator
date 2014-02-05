@@ -15,6 +15,7 @@ $(TARGET): $(OBJECTS)
 
 # To obtain object files
 $(OBJSDIR)/%.o: %.cpp
+	mkdir -p build
 	$(CPP) -c $(CXXFLAGS) $< -o $@
 
 # To remove generated files
