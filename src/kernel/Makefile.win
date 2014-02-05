@@ -1,17 +1,17 @@
 # Project: ReservoirSoftware
 # Makefile created by Dev-C++ 5.5.3
 
-CPP      = g++.exe -D__DEBUG__
-CC       = gcc.exe -D__DEBUG__
+CPP      = g++.exe
+CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = CBlock.o CCell1d.o CDataControl.o CFluid.o CGas.o CGrid.o CGrid1d.o COil.o CReservoir.o CRock.o CSinglePhase.o CSinglePhase1d.o CWater.o CWell1d.o main.o CResModelType.o CSolMatTrid.o CSolverMatrix.o filename_definitions.o
-LINKOBJ  = CBlock.o CCell1d.o CDataControl.o CFluid.o CGas.o CGrid.o CGrid1d.o COil.o CReservoir.o CRock.o CSinglePhase.o CSinglePhase1d.o CWater.o CWell1d.o main.o CResModelType.o CSolMatTrid.o CSolverMatrix.o filename_definitions.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -std=c++11 -g3
+OBJ      = CBlock.o CCell1d.o CDataControl.o CFluid.o CGas.o CGrid.o CGrid1d.o COil.o CReservoir.o CResModelType.o CRock.o CSinglePhase.o CSinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
+LINKOBJ  = CBlock.o CCell1d.o CDataControl.o CFluid.o CGas.o CGrid.o CGrid1d.o COil.o CReservoir.o CResModelType.o CRock.o CSinglePhase.o CSinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -g  -std=c++11
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.7.2/include/c++"
 BIN      = ReservoirSoftware.exe
-CXXFLAGS = $(CXXINCS) -Wfatal-errors -g3 -std=c++11
-CFLAGS   = $(INCS) -Wfatal-errors -g3 -std=c++11
+CXXFLAGS = $(CXXINCS) -g  -std=c++11
+CFLAGS   = $(INCS) -g  -std=c++11
 RM       = rm -f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -51,6 +51,9 @@ COil.o: COil.cpp
 CReservoir.o: CReservoir.cpp
 	$(CPP) -c CReservoir.cpp -o CReservoir.o $(CXXFLAGS)
 
+CResModelType.o: CResModelType.cpp
+	$(CPP) -c CResModelType.cpp -o CResModelType.o $(CXXFLAGS)
+
 CRock.o: CRock.cpp
 	$(CPP) -c CRock.cpp -o CRock.o $(CXXFLAGS)
 
@@ -60,23 +63,20 @@ CSinglePhase.o: CSinglePhase.cpp
 CSinglePhase1d.o: CSinglePhase1d.cpp
 	$(CPP) -c CSinglePhase1d.cpp -o CSinglePhase1d.o $(CXXFLAGS)
 
-CWater.o: CWater.cpp
-	$(CPP) -c CWater.cpp -o CWater.o $(CXXFLAGS)
-
-CWell1d.o: CWell1d.cpp
-	$(CPP) -c CWell1d.cpp -o CWell1d.o $(CXXFLAGS)
-
-main.o: main.cpp
-	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
-
-CResModelType.o: CResModelType.cpp
-	$(CPP) -c CResModelType.cpp -o CResModelType.o $(CXXFLAGS)
-
 CSolMatTrid.o: CSolMatTrid.cpp
 	$(CPP) -c CSolMatTrid.cpp -o CSolMatTrid.o $(CXXFLAGS)
 
 CSolverMatrix.o: CSolverMatrix.cpp
 	$(CPP) -c CSolverMatrix.cpp -o CSolverMatrix.o $(CXXFLAGS)
 
+CWater.o: CWater.cpp
+	$(CPP) -c CWater.cpp -o CWater.o $(CXXFLAGS)
+
+CWell1d.o: CWell1d.cpp
+	$(CPP) -c CWell1d.cpp -o CWell1d.o $(CXXFLAGS)
+
 filename_definitions.o: filename_definitions.cpp
 	$(CPP) -c filename_definitions.cpp -o filename_definitions.o $(CXXFLAGS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)

@@ -27,6 +27,10 @@
 void onExit() {
   std::cout << "End of Execution" << std::endl;
   std::cout << "UENF - LENEP"  << std::endl;
+  #ifdef _win32 
+  	cin.ignore();
+  #endif
+  
 }
 
 int main() {

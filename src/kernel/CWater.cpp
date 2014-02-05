@@ -19,6 +19,7 @@
  *****************************************************************************/
 
 #include "CWater.h"
+#include <cstdlib>
 
 using namespace std;
 
