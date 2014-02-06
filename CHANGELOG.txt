@@ -1,0 +1,13 @@
+** CHANGELOG **
+
+v1.1.0
+
+*  Processing time added
+*  Closing windows bug fixed
+*  Print Functions Changed
+
+v1.0.0
+
+*  integrated kernel and interface 
+*  created user interface
+*  created kernel functions  
