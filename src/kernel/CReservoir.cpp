@@ -21,9 +21,9 @@
 #include <cstdlib>
 #include "CReservoir.h"
 
-#ifndef KERNEL_DEFINITIONS_H
+//#ifndef KERNEL_DEFINITIONS_H
 #include "filename_definitions.h"
-#endif
+//#endif
 
 using namespace std;
 using namespace filename_definitions;
@@ -40,7 +40,7 @@ CReservoir::CReservoir(CDataControl *_dcontrol)
 
   cpoints=grid->CellNumber(); ///< Getting the number of cells in domain.
 
-  model = new CSinglePhase1d(cpoints); ///< Constructing the Reservoir Model.
+  model = new CSISinglePhase1d(cpoints); ///< Constructing the Reservoir Model.
 
   /// Constructing the A matrix.
     A = new double*[cpoints];

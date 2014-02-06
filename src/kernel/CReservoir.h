@@ -31,7 +31,7 @@
 #include "CGrid1d.h"
 
 #include "CResModelType.h"
-#include "CSinglePhase1d.h"
+#include "CSISinglePhase1d.h"
 
 #include "CSolverMatrix.h"
 #include "CSolMatTrid.h"

@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = CBlock.o CCell1d.o CDataControl.o CFluid.o CGas.o CGrid.o CGrid1d.o COil.o CReservoir.o CResModelType.o CRock.o CSinglePhase.o CSinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
-LINKOBJ  = CBlock.o CCell1d.o CDataControl.o CFluid.o CGas.o CGrid.o CGrid1d.o COil.o CReservoir.o CResModelType.o CRock.o CSinglePhase.o CSinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
+OBJ      = CBlock.o CCell1d.o CDataControl.o CFluid.o CGas.o CGrid.o CGrid1d.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
+LINKOBJ  = CBlock.o CCell1d.o CDataControl.o CFluid.o CGas.o CGrid.o CGrid1d.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -g  -std=c++11
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.7.2/include/c++"
@@ -57,11 +57,8 @@ CResModelType.o: CResModelType.cpp
 CRock.o: CRock.cpp
 	$(CPP) -c CRock.cpp -o CRock.o $(CXXFLAGS)
 
-CSinglePhase.o: CSinglePhase.cpp
-	$(CPP) -c CSinglePhase.cpp -o CSinglePhase.o $(CXXFLAGS)
-
-CSinglePhase1d.o: CSinglePhase1d.cpp
-	$(CPP) -c CSinglePhase1d.cpp -o CSinglePhase1d.o $(CXXFLAGS)
+CSISinglePhase1d.o: CSISinglePhase1d.cpp
+	$(CPP) -c CSISinglePhase1d.cpp -o CSISinglePhase1d.o $(CXXFLAGS)
 
 CSolMatTrid.o: CSolMatTrid.cpp
 	$(CPP) -c CSolMatTrid.cpp -o CSolMatTrid.o $(CXXFLAGS)
