@@ -53,7 +53,7 @@ class CCell1d
 		CCell1d(CCell1d & _cell); ///< Copy constructor;
 		~CCell1d(); ///< Cell 1d destructor;
 
-		void PrintCell(); ///< Function used to print all cell parameters on screen;
+		void Print(); ///< Function used to print all cell parameters on screen;
 
 		//////////  Fluid Functions  /////////
 		inline double FVF() { return fluid->FVF(pressure); }; ///< Return the FVF of the fluid inside this cell, at atual time of simulation.

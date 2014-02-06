@@ -52,7 +52,7 @@ class CFluid
 		virtual double Viscosity(double pressure) = 0; ///< Returns the Viscosity of a specific pressure;
 		virtual double AveragePVTPressure() = 0; ///< Returns the average pressure of the PVT test;
 
-		virtual void PrintFluid() = 0; ///< Prints all fluid data.
+		virtual void Print() = 0; ///< Prints all fluid data.
 };
 
 #endif // CFluid_h

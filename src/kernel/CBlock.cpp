@@ -43,7 +43,7 @@ CBlock::~CBlock()
 
 }
 
-void CBlock::PrintBlock() {
+void CBlock::Print() {
 	/// This function prints all block parameters on screen. It is used to debug the code,
 	/// during programing, but it won't be used when the final code is ready.
 

@@ -42,7 +42,7 @@ class CGas : public CFluid
 		virtual double Viscosity(double pres); ///< Returns the Viscosity of a specific pressure;
 		virtual double AveragePVTPressure(); ///< Returns the average pressure of the PVT test;
 
-		virtual void PrintFluid(); ///< Prints all fluid data.
+		virtual void Print(); ///< Prints all fluid data.
 
 };
 

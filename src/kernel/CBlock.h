@@ -47,7 +47,7 @@ class CBlock
 
 		///////////  Block Functions  //////////
 		inline int Blockid() {return blockid;}; ///< Returns the Block Id;
-		void PrintBlock(); ///< Prints the Block proprieties on screen.
+		void Print(); ///< Prints the Block proprieties on screen.
 
 		///////////  Rock Functions  //////////
 		inline double Permeability() {	return rock.Permeability();	}; ///< Returns the Rock permeability;

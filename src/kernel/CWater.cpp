@@ -120,7 +120,7 @@ double CWater::AveragePVTPressure() {
   return (pressure[0]+pressure[pvtpoints-1])/2;
 }
 
-void CWater::PrintFluid() {
+void CWater::Print() {
   /// This function prints all the fluid data on screen. It is used to debug the code, and it is not
   /// necessary in the final program.
 

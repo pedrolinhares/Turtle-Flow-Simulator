@@ -84,7 +84,7 @@ CCell1d::~CCell1d()
 
 }
 
-void CCell1d::PrintCell()
+void CCell1d::Print()
 {
 	/// This function prints all the cell data on screen. It is used to debuge the code, and it is not
 	/// necessary in the final program.
