@@ -129,7 +129,7 @@ double COil::AveragePVTPressure() {
 
 }
 
-void COil::PrintFluid() {
+void COil::Print() {
   /// This function prints all the fluid data on screen. It is used to debug the code, and it is not
   /// necessary in the final program.
 

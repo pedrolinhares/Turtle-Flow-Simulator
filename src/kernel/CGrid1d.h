@@ -46,7 +46,7 @@ class CGrid1d : public CGrid
 		CGrid1d(CDataControl *_dcontrol); ///< One-Dimensional Grid Constructor
 		virtual ~CGrid1d(); ///< One-Dimensional Grid Destructor
 
-		virtual void PrintData(); ///< Function used to print all the reservoir data on screen.
+		virtual void Print(); ///< Function used to print all the reservoir data on screen.
 		virtual void SaveGridSolution(std::ofstream *fout, double time); ///< Function used to save the grid solution in disk.
 		virtual void SaveWellSolution(std::ofstream *fout, int welln, double time);///< Function used to save the well solution in disk.
 

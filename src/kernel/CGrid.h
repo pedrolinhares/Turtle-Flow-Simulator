@@ -54,7 +54,7 @@ class CGrid
 		CGrid(CDataControl *_dcontrol); ///< Grid constructor;
 		virtual ~CGrid(); ///< Grid destructor;
 
-		virtual void PrintData() = 0; ///< Function used to print all the reservoir data on screen;
+		virtual void Print() = 0; ///< Function used to print all the reservoir data on screen;
 		virtual void SaveGridSolution(std::ofstream *fout, double time) = 0; ///< Function used to save the solution in disk.
 		virtual void SaveWellSolution(std::ofstream *fout, int welln, double time) = 0; ///< Function used to save the well solution in disk.
 

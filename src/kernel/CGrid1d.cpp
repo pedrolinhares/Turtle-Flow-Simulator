@@ -167,7 +167,7 @@ CGrid1d::~CGrid1d()
 
 }
 
-void CGrid1d::PrintData() {
+void CGrid1d::Print() {
   /// This function prints all the reservoir data on screen. It is used to debug the code, and it is not
   /// necessary in the final program.
 
@@ -182,16 +182,16 @@ void CGrid1d::PrintData() {
 
   /// Printing all the Rock proprieties, for all Blocks in domain;
     for (int j=0; j < blknumber ; j++ ) {
-     block[j].PrintBlock();
+     block[j].Print();
     }
 
   /// Printing all the cell proprieties, for all cells in domain;
   for (int j=0; j < cellnumber; j++) {
-    cells[j].PrintCell();
+    cells[j].Print();
       cout << endl;
   }
 
-  fluid->PrintFluid(); ///< Printing the fluid proprieties.
+  fluid->Print(); ///< Printing the fluid proprieties.
 
 }
 

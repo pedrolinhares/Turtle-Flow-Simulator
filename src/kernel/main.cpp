@@ -20,6 +20,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <ctime>
 
 #include "CReservoir.h"
 #include "CDataControl.h"
@@ -27,14 +28,22 @@
 void onExit() {
   std::cout << "End of Execution" << std::endl;
   std::cout << "UENF - LENEP"  << std::endl;
+  #ifdef _WIN32
+  	std::cin.ignore();
+  #endif
+  
 }
 
 int main() {
+  clock_t timer; ///< Timer used to calculate the processing time.
+  timer = clock(); ///< Getting the current time.
   std::atexit(onExit);
 
   CDataControl dcontrol; ///< Class created to manage the variables input.
   CReservoir reservoir(&dcontrol); ///< Reservoir Constructor
   reservoir.Run(); ///< Running the simulation. This is the main code of the program.
-
+  
+  timer = clock() - timer; ///< Updating timer;
+  std::cout << "Processing time in seconds: " <<((float) timer)/1000 << std::endl; ///< Display the processing time.
   return 0;
 }
