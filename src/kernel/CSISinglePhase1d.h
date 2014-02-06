@@ -32,17 +32,23 @@
 class CSISinglePhase1d : public CResModelType
 {
 	protected:
-
+		
+		double **A; ///< Coefficient Matrix
+  		double *b; ///< Free Vector
+  		double *Xni; ///< Solution Vector
 		int cpoints; ///< Number of cells in the reservoir. It is the same number of the linear equation system lines.
+	 	int maxni; ///< Max number of iterations in linearization
+  		double erroni; ///< Precision of linearization
 
 	public:
 
-		CSISinglePhase1d(int _cpoints); ///< Single Phase 1d constructor;
-		~CSISinglePhase1d(); ///< Single Phase 1d destructor;
-
-		virtual void BuildMatrix(CGrid *grid, double **A, double deltat); ///< Builds the coefficient matrix "A";
-		virtual void BuildCoefVector(CGrid *grid, double *b, double deltat); ///< Builds the free vector "b";
-		virtual void BuildSolution(CGrid *grid, double *x);	///< Builds the solution "X";
+		CSISinglePhase1d(int _cpoints, int _maxni, double _erroni); ///< Single Phase 1d constructor;
+		virtual ~CSISinglePhase1d(); ///< Single Phase 1d destructor;
+		
+		virtual void Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat); ///< Makes a time iteration for the problem;
+		virtual void BuildMatrix(CGrid *grid, double deltat); ///< Builds the coefficient matrix "A";
+		virtual void BuildCoefVector(CGrid *grid, double deltat); ///< Builds the free vector "b";
+		virtual void BuildInitialSolution(CGrid *grid);	///< Builds the solution "X";
 		virtual double Gamma( CGrid *grid, int i); ///< Calculates the Gamma factor of the reservoir.
 
 };

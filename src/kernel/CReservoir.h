@@ -55,14 +55,9 @@ private:
   /// "the solver is used to solve this equation system: A * Xni = B" ///
 
   CSolverMatrix *solver; ///< Pointer to numerical solver;
-  double **A; ///< Coefficient Matrix
-    double *B; ///< Free Vector
-      double *Xni; ///< Solution Vector
 
   double deltat; ///< Delta time of simulation
   double finalt; ///< Final simulation time
-  int maxni; ///< Max number of iterations in linearization
-  double erroni; ///< Precision of linearization
 
   ///////////  Output Parameters  /////////
   std::ofstream grid_data; ///< Out put file for the pressure in all cell points;

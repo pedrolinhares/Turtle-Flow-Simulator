@@ -40,31 +40,27 @@ CReservoir::CReservoir(CDataControl *_dcontrol)
 
   cpoints=grid->CellNumber(); ///< Getting the number of cells in domain.
 
-  model = new CSISinglePhase1d(cpoints); ///< Constructing the Reservoir Model.
+  
 
-  /// Constructing the A matrix.
-    A = new double*[cpoints];
-    for (int i=0 ; i < (cpoints) ; i++ ) {
-        A[i] = new double[3];
-    }
-
-    B = new double[cpoints]; ///< Constructing the Free Vector
-    Xni = new double[cpoints]; ///< Constructing the Solution Vector
-
-  //////////  Constructing Solver  //////////
+  //////////  Constructing Solver and Model //////////
   double *data;
   data = dcontrol->DataNumeric(ARQ_NUMERICS_FILE); ///< Getting solver parameters
 
   int maxsolver;
   double errorsolver;
+  
+  int maxni;
+  double erroni;
 
-    maxsolver = (int) data[1];
-    errorsolver = data[2];
+  maxsolver = (int) data[1];
+  errorsolver = data[2];
   deltat = data[3];
   finalt = data[4];
   maxni = (int) data[5];
   erroni = data[6];
-
+  
+  model = new CSISinglePhase1d(cpoints, maxni, erroni); ///< Constructing the Reservoir Model.
+  
   solver = new CSolMatTrid(cpoints, maxsolver, errorsolver); ///< Constructing Tridiagonal Solver.  It need to be changed when the 2D case will be implemented.
 
     delete [] data;
@@ -76,22 +72,15 @@ CReservoir::~CReservoir() {
 
   delete grid;
 
-  for(int i = 0; i < cpoints; i++)
-    delete A[i];
-
-  delete [] A;
-  delete [] B;
-  delete [] Xni;
+  
 }
 
 void CReservoir::Run() {
   ///This function manages all the simulation. The loops used to advance time are implemented here.
 
      //grid->PrintData(); ///< Printing the grid data on screen, Only for debugging.
-     //cin.ignore();
 
-
-     model->BuildSolution(grid, Xni); ///< Constructing an initial solution, according to the grid data.
+     model->BuildInitialSolution(grid); ///< Constructing an initial solution, according to the grid data.
 
      /////////  Time Iteration  //////////
 
@@ -106,52 +95,24 @@ void CReservoir::Run() {
          grid->SaveWellSolution(&well_data[i], (i + 1), tme);
      }
 
+
      while ( (finalt - tme + deltat) > deltat) {
 
-     tme = tme + deltat;
+     	tme = tme + deltat;
 
-       //////////  Iteration used for linearizate the problem  /////////
-       double er1, er1max;
-       int h = 0;
+    	cout.precision(4);
+    	cout << "\n Time - "<< tme << std::fixed;
+	   
+   		model->Iterationt(grid, solver, deltat); ///< Iterating the time in all cells;
+    	grid->Iterationt(deltat);  ///< Updating the back pressure in all reservoir;
 
-       do {
-
-         model->BuildMatrix(grid, A, deltat);  ///< Constructing the coeficient matrix, according to the grid data.
-         model->BuildCoefVector(grid, B, deltat); ///< Constructing the free vector, according to the grid data.
-         solver->GaussSeidel( A , B ,Xni); ///< Calling the solver used in this problem
-
-         /////////  Error Analyzing  /////////
-
-         for (int j=0 ; j<cpoints; j++) {
-          //er1 = abs(Xni[j] - grid->Pressure(j))/Xni[j];
-          er1 = abs(Xni[j] - grid->Pressure(j));
-          if (j == 0) {
-            er1max = er1;
-          } else {
-            if (er1 > er1max) { er1max = er1; }
-          }
-         }
-
-         grid->Iterationni(Xni);  ///< Updating the atual pressure in reservoir
-
-         h++;
-
-    } while ((h < maxni) && (er1max > erroni));
-
-    cout.precision(4);
-    cout << "\n Time - "<< tme << std::fixed;
-    cout << "     Linear Iterations - " << h;
-    cout << "     Linear Error - " << er1max << "\n";
-
-    grid->Iterationt(deltat);  ///< Updating the back pressure in all reservoir;
-
-    /// Saving the solution in disk;
-    grid->SaveGridSolution(&grid_data, tme);
-    for (int i = 0; i < grid->WellNumbers(); i++) {
-      grid->SaveWellSolution(&well_data[i], (i + 1), tme);
+    	/// Saving the solution in disk;
+    	grid->SaveGridSolution(&grid_data, tme);
+    	for (int i = 0; i < grid->WellNumbers(); i++) {
+      		grid->SaveWellSolution(&well_data[i], (i + 1), tme);
+    	}
     }
-   }
-}
+} 
 
 void CReservoir::OutPutInitiate() {
   /// This function is used to initiate the output files;

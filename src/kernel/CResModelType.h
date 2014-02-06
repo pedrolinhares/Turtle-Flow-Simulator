@@ -25,6 +25,7 @@
 
 #include "CGrid.h"
 #include "CGrid1d.h"
+#include "CSolverMatrix.h"
 
 /**
  * This class is an abstract class used to represent a reservoir model.
@@ -39,10 +40,11 @@ class CResModelType
 	public:
 		CResModelType(); ///< Model constructor;
 		virtual ~CResModelType(); ///< Model destructor;
-
-		virtual void BuildMatrix(CGrid *grid, double **A, double deltat) = 0; ///< Builds the coefficient matrix "A";
-		virtual void BuildCoefVector(CGrid *grid, double *b, double deltat) = 0; ///< Builds the free vector "b";
-		virtual void BuildSolution(CGrid *grid, double *x) = 0; ///< Builds the solution "X";
+		
+		virtual void Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat) = 0; ///< Makes a time iteration for the problem;
+		virtual void BuildMatrix(CGrid *grid, double deltat) = 0; ///< Builds the coefficient matrix "A";
+		virtual void BuildCoefVector(CGrid *grid, double deltat) = 0; ///< Builds the free vector "b";
+		virtual void BuildInitialSolution(CGrid *grid) = 0; ///< Builds the solution "X";
 		virtual double Gamma( CGrid *grid, int i) = 0;	///< Calculates the Gamma factor of the reservoir.
 };
 

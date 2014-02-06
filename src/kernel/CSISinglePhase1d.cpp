@@ -22,14 +22,32 @@
 
 using namespace std;
 
-CSISinglePhase1d::CSISinglePhase1d(int _cpoints)
+CSISinglePhase1d::CSISinglePhase1d(int _cpoints, int _maxni, double _erroni)
 {
 	/// Class constructor.
 	cpoints = _cpoints;
+	maxni = _maxni;
+	erroni = _erroni;
+	
+	/// Constructing the A matrix.
+    A = new double*[cpoints];
+    for (int i=0 ; i < (cpoints) ; i++ ) {
+        A[i] = new double[3];
+    }
+
+    b = new double[cpoints]; ///< Constructing the Free Vector
+    Xni = new double[cpoints]; ///< Constructing the Solution Vector
 }
 
 CSISinglePhase1d::~CSISinglePhase1d()
 {
+	for(int i = 0; i < cpoints; i++)
+    delete A[i];
+
+  	delete [] A;
+  	delete [] b;
+  	delete [] Xni;
+	
 	/// Class destructor.
 
 }
@@ -60,7 +78,7 @@ double CSISinglePhase1d::Gamma( CGrid *grid, int i) {
 	return GAMMA;
 }
 
-void CSISinglePhase1d::BuildMatrix(CGrid *grid, double **A, double deltat)
+void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 {
 	/// This function creates the coefficient matrix "A", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
@@ -86,7 +104,7 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double **A, double deltat)
     A[cpoints-1][2] = 0; ///< Right wall boundary condition;
 }
 
-void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double *b, double deltat){
+void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 	/// This function creates the free vector "b", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
@@ -126,14 +144,58 @@ void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double *b, double deltat){
 
 }
 
-void CSISinglePhase1d::BuildSolution(CGrid *grid, double *x) {
+void CSISinglePhase1d::BuildInitialSolution(CGrid *grid) {
 	 /// This function builds the initial solution for the first problem iteration.
 	 /// It is used to initiate the first solution.
 
 	 for (int i = 0 ; i < (cpoints) ; i++) {
 
-        x[i] =  grid->Pressure(i);
+        Xni[i] =  grid->Pressure(i);
 
     }
+
+}
+
+void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat) {
+	/// This function makes a time iteration in all cells of domain
+	/// using the semi-implicit linearization model.
+	
+	
+	
+	// Retirar do CReservoir
+	 
+	 
+	/////
+	//////////  Iteration used for linearizate the problem  /////////
+       double er1, er1max;
+       int h = 0;
+
+       do {
+
+         BuildMatrix(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.
+         BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
+         solver->GaussSeidel( A , b ,Xni); ///< Calling the solver used in this problem
+
+        	 /////////  Error Analyzing  /////////
+
+	         for (int j=0 ; j<cpoints; j++) {
+		          //er1 = abs(Xni[j] - grid->Pressure(j))/Xni[j];
+		          er1 = abs(Xni[j] - grid->Pressure(j));
+		          if (j == 0) {
+		            	er1max = er1;
+		          } else {
+		            	if (er1 > er1max) { er1max = er1; }
+		          }
+	         }
+
+         grid->Iterationni(Xni);  ///< Updating the atual pressure in reservoir
+
+         h++;
+
+       } while ((h < maxni) && (er1max > erroni));
+
+    cout.precision(4);
+    cout << "     Linear Iterations - " << h;
+    cout << "     Linear Error - " << er1max << "\n";
 
 }
