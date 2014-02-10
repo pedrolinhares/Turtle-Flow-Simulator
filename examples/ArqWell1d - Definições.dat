@@ -1,7 +1,0 @@
-1   ---   Número de Wells
-
-2   ---  Id da Cell que contém o bloco
-1   --- Id do well
-1   -- Tipo de Fluido (1- water; 2- Oil; 3- Gas)
--20 --  [STB/D] Rate do Well negativo de produção
-
