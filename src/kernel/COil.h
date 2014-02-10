@@ -33,7 +33,6 @@ class COil : public CFluid
 {
   public:
     COil();  ///< Oil constructor;
-    COil(double *data); ///< Overloaded Oil constructor;
     virtual ~COil();  ///< Oil destructor;
 
     virtual double FVF(double pres); ///< Returns the FVF of a specific pressure;

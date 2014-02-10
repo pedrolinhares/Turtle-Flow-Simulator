@@ -1,41 +1,45 @@
-2     # Blocks Number
+1     # Blocks Number
 
-1     # Block Id
-1e-6  # [-] Rock Compressibility in Block 1
-0.1   # [Darcy] Permeability in Block 1
-0.2   # [-] Porosity in block 1
-2000  # [psi] Reference Pressure
+1       # Block Id
+3.5e-6  # [-] Rock Compressibility in Block 1
+0.015   # [Darcy] Permeability in Block 1
+0.18    # [-] Porosity in block 1
+6000    # [psi] Reference Pressure
 
-2     # Block Id
-5e-6  # [-] Rock Compressibility in Block 2
-0.08  # [Darcy] Permeability in Block 2
-0.3   # [-] Porosity in block 2
-2000  # [psi] Reference Pressure
+5     # Cells Number
 
-3     # Cells Number
+1000  # [ft] Width of Cell 1
+1000  # [ft] Width of Cell 2
+1000  # [ft] Width of Cell 3
+1000  # [ft] Width of Cell 4
+1000  # [ft] Width of Cell 5
 
-80    # [ft] Width of Cell 1
-80    # [ft] Width of Cell 2
-80    # [ft] Width of Cell 3
+1000  # [ft] Lenght of cell 1
+1000  # [ft] Lenght of cell 2
+1000  # [ft] Lenght of cell 3
+1000  # [ft] Lenght of cell 4
+1000  # [ft] Lenght of cell 5
 
-380   # [ft] Lenght of cell 1
-200   # [ft] Lenght of cell 2
-250   # [ft] Lenght of cell 3
+75    # [ft] Thickness of Cell 1
+75    # [ft] Thickness of Cell 2
+75    # [ft] Thickness of Cell 3
+75    # [ft] Thickness of Cell 4
+75    # [ft] Thickness of Cell 5
 
-50    # [ft] Thickness of Cell 1
-40    # [ft] Thickness of Cell 2
-80    # [ft] Thickness of Cell 3
+0     # [ft] Deepth of Cell 1
+0     # [ft] Deepth of Cell 2
+0     # [ft] Deepth of Cell 3
+0     # [ft] Deepth of Cell 4
+0     # [ft] Deepth of Cell 5
 
-1500  # [ft] Deepth of Cell 1
-1200  # [ft] Deepth of Cell 2
-2000  # [ft] Deepth of Cell 3
+1     # ID of Block Connected to Cell 1
+1     # ID of Block Connected to Cell 2
+1     # ID of Block Connected to Cell 3
+1     # ID of Block Connected to Cell 4
+1     # ID of Block Connected to Cell 5
 
-1     # ID of the Connected Block 
-2     # ID of the Connected Block 
-2     # ID of the Connected Block 
+0     # Left BC Type (0 - Const Rate, 1 - Const Pressure)
+0     # Value
 
-1     # Left BC Type (0 - Const Rate, 1 - Const Pressure)
-6000  # Value
-
-1     # Right BC Type (0 - Const Rate, 1 - Const Pressure)
-6000  # Value
+0     # Right BC Type (0 - Const Rate, 1 - Const Pressure)
+0     # Value

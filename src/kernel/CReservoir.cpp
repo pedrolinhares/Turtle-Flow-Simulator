@@ -21,50 +21,112 @@
 #include <cstdlib>
 #include "CReservoir.h"
 
-//#ifndef KERNEL_DEFINITIONS_H
 #include "filename_definitions.h"
-//#endif
 
 using namespace std;
 using namespace filename_definitions;
 
-CReservoir::CReservoir(CDataControl *_dcontrol)
+CReservoir::CReservoir()
 {
   // class constructor
+  
+  ifstream fmodel(ARQ_MODEL_FILE.c_str());
+  
+    if (fmodel.fail())
+       {
+            cerr << "There is no model data." << endl;
+            exit(EXIT_FAILURE);
+       }
 
-  dcontrol = _dcontrol;
-
-    dimtype = 1; //Only the 1d case is implemented at this moment. It need to be changed when the 2D case will be implemented.
-
-    grid = new CGrid1d(dcontrol); ///< Constructing the grid.
-
+  int phase_number, fluid_type, dimensions;
+  
+  fmodel >> phase_number;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> fluid_type;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> dimensions;
+  fmodel.ignore(256, '\n');
+  
+  switch (phase_number) {
+  	case 1: {
+  		switch (dimensions) {
+  			case 1: {
+  				grid = new CGrid1d1p(fluid_type); ///< Constructing the grid.				
+  				break;
+  			}
+  		}
+  		
+  		break;
+  	}
+  }
+  
   cpoints=grid->CellNumber(); ///< Getting the number of cells in domain.
-
   
-
-  //////////  Constructing Solver and Model //////////
-  double *data;
-  data = dcontrol->DataNumeric(ARQ_NUMERICS_FILE); ///< Getting solver parameters
-
-  int maxsolver;
-  double errorsolver;
+  //////////  Constructing Model //////////
+  int model_type, model_maxni;
+  double model_errorni;
   
-  int maxni;
-  double erroni;
-
-  maxsolver = (int) data[1];
-  errorsolver = data[2];
-  deltat = data[3];
-  finalt = data[4];
-  maxni = (int) data[5];
-  erroni = data[6];
+  fmodel >> model_type;
+  fmodel.ignore(256, '\n');
   
-  model = new CSISinglePhase1d(cpoints, maxni, erroni); ///< Constructing the Reservoir Model.
+  fmodel >> model_maxni;
+  fmodel.ignore(256, '\n');
   
-  solver = new CSolMatTrid(cpoints, maxsolver, errorsolver); ///< Constructing Tridiagonal Solver.  It need to be changed when the 2D case will be implemented.
-
-    delete [] data;
-
+  fmodel >> model_errorni;
+  fmodel.ignore(256, '\n');
+  
+  switch (model_type) {
+  	case 1:  {
+  		model = new CSISinglePhase1d(cpoints, model_maxni, model_errorni); ///< Constructing the Reservoir Model.		
+  		break;
+  	}
+  }
+  
+  //////////  Constructing Solver //////////
+  int solverid, solver_maxit;
+  double solver_error;
+  
+  fmodel >> solverid;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> solver_maxit;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> solver_error;
+  fmodel.ignore(256, '\n');
+  
+  switch (solverid) {
+  	case 1: {
+  		switch (dimensions) {
+  			case 1: {
+  				solver = new CSolMatTrid(cpoints, solver_maxit, solver_error); ///< Constructing Solver.
+  				break;
+  			}
+  		}
+  		break;
+  	}
+  }
+  
+  ////////// Constructing time parameters /////////
+  fmodel >> deltat;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> finalt;
+  fmodel.ignore(256, '\n');
+  
+  ///////// Initiating Initial Solution //////////
+  double ref_press, ref_deepth;
+  
+  fmodel >> ref_press;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> ref_deepth;
+  fmodel.ignore(256, '\n');
+  
+  grid->InitiateSolution(ref_press, ref_deepth);
+  
 }
 
 CReservoir::~CReservoir() {
@@ -78,7 +140,7 @@ CReservoir::~CReservoir() {
 void CReservoir::Run() {
   ///This function manages all the simulation. The loops used to advance time are implemented here.
 
-  ///grid->PrintData(); ///< Printing the grid data on screen, Only for debugging.
+  grid->Print(); ///< Printing the grid data on screen, Only for debugging.
 
      model->BuildInitialSolution(grid); ///< Constructing an initial solution, according to the grid data.
 
@@ -115,7 +177,7 @@ void CReservoir::Run() {
 
 void CReservoir::OutPutInitiate() {
   /// This function is used to initiate the output files;
-   grid_data.open(OUT_GRIDS_FILE.c_str());
+   grid_data.open(OUT_GRID_FILE.c_str());
 
    grid_data << "Time [day]\t";  ///File header;
    for (int i=0; i<cpoints; i++) {

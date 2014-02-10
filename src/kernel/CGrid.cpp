@@ -23,7 +23,7 @@
 using namespace std;
 
 // class constructor
-CGrid::CGrid(CDataControl *_dcontrol) : dcontrol(_dcontrol)
+CGrid::CGrid()
 {
     betac = 1.127; ///< Conversion units factor.
 

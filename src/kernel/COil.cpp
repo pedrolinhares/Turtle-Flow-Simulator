@@ -21,34 +21,40 @@
 #include <cstdlib>
 #include "COil.h"
 
+#include "filename_definitions.h"
+using namespace filename_definitions;
 using namespace std;
 
-COil::COil()
-{
-  /// Oil constructor;
-}
+COil::COil() {
 
-COil::COil(double *data)
-{
-  /// Overloaded oil constructor.
-  /// This constructor constructs the oil class using the data array from DataControl.
+  /// This constructor constructs the oil class
 
-
-  pvtpoints = (int) data[0];
+ ifstream foil(ARQ_OIL_FILE.c_str());
+  
+  if (foil.fail())
+  {
+    cerr << "There is no oil data." << endl;
+    exit(EXIT_FAILURE);
+  }
+       
+  foil >> pvtpoints;
+  foil.ignore(256, '\n');
+  
+  foil.ignore(256, '#'); ///< Excluding file's header;
+  foil.ignore(256, '\n'); ///< Excluding file's header;
+  foil.ignore(256, '\n'); ///< Excluding file's header;
 
   pressure = new double[pvtpoints]; ///< Creating the pressure array from data;
   fvf = new double[pvtpoints]; ///< Creating the FVF array from data;
   weight = new double[pvtpoints]; ///< Creating the specific weight array from data;
   viscosity = new double[pvtpoints]; ///< Creating the viscosity array from data;
 
-
   for (int i=0 ; i < pvtpoints ; i++) {
-
-      pressure[i] = data[4*i+1];
-      fvf[i] = data[4*i+2];
-      weight[i] = data[4*i+3];
-      viscosity[i] = data[4*i+4];
-
+			
+      foil >> pressure[i];
+      foil >> fvf[i];
+      foil >> weight[i];
+      foil >> viscosity[i];
   }
 
 }

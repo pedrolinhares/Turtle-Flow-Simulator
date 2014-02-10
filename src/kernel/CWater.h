@@ -35,7 +35,6 @@ class CWater : public CFluid
 	public:
 
 		CWater(); ///< Water constructor;
-		CWater(double *data); ///< Overloaded Water constructor;
 		virtual ~CWater(); ///< Water destructor;
 
 		virtual double FVF(double pres); ///< Returns the FVF of a specific pressure;

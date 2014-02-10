@@ -24,7 +24,7 @@
 #include <iostream>
 
 #include "CGrid.h"
-#include "CGrid1d.h"
+#include "CGrid1d1p.h"
 #include "CSolverMatrix.h"
 
 /**
@@ -35,7 +35,6 @@
 class CResModelType
 {
 	protected:
-		CDataControl *dcontrol; ///< Pointer to the simulation data;
 
 	public:
 		CResModelType(); ///< Model constructor;

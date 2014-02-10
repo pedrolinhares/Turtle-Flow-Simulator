@@ -27,7 +27,6 @@ CCell1d::CCell1d()
 	/// CCell1d default constructor.
 
 	cellid = 0;
-	thickness = 0;
 	deepth = 0;
 	pressure = 0;
 	backpressure = 0;
@@ -39,16 +38,13 @@ CCell1d::CCell1d()
 
 }
 
-CCell1d::CCell1d(double *data, CBlock *blk, CFluid *fld)
-{
-
+CCell1d::CCell1d(int _cellid, double _deepth, CBlock *blk, CFluid *fld) {
 	/// Overloaded CCell1d constructor.
 	/// This cell is created with data from reservoir, and with pointers to the
 	/// block and fluid related to this cell.
 
-	cellid = (int) data[0];
-	thickness = data[1];
-	deepth = data[2];
+	cellid = _cellid;
+	deepth = _deepth;
 
 	block = blk;
 	fluid = fld;
@@ -65,7 +61,6 @@ CCell1d::CCell1d(CCell1d & _cell) {
 	/// CCell1d copy constructor.
 
 	cellid = _cell.CellId();
-	thickness = _cell.Thickness();
 	deepth = _cell.Deepth();
 	pressure = _cell.Pressure();
 	backpressure = _cell.BackPressure();
@@ -90,7 +85,6 @@ void CCell1d::Print()
 	/// necessary in the final program.
 
 	cout << "Cell ID - " << cellid << "\n";
-	cout << "Cell Thickness - " << thickness << "\n";
 	cout << "Cell Deepth - " << deepth << "\n";
 	cout << "Cell Conected to Block - " << block->Blockid() << "\n";
 	cout << "Cell Pressure - " << pressure << "\n";
@@ -169,6 +163,7 @@ int CCell1d::WellId() {
 
 }
 
+/*
 void CCell1d::WellRate(double _rate) {
 	/// This function sets the well flow rate of the well inside the cell.
 	/// If there is no well inside the cell, the function creates a well,
@@ -180,7 +175,7 @@ void CCell1d::WellRate(double _rate) {
 	else{
 		well->Rate(_rate);
 	}
-}
+}*/
 
 double CCell1d::WellCumulative_Phase1() {
 	/// This function returns the cumulative volume of the phase 1, produced or injected by the well inside the cell.
@@ -193,6 +188,8 @@ double CCell1d::WellCumulative_Phase1() {
 		return well->Cumulative_Phase1();
 	}
 }
+
+/*
 void CCell1d::WellRate(double _rate, int _id) {
 	/// This function sets the well flow rate and the well Id of the well inside the cell.
 	/// If there is no well inside the cell, the function creates a well,
@@ -205,7 +202,7 @@ void CCell1d::WellRate(double _rate, int _id) {
 		well->Rate(_rate, _id);
 	}
 }
-
+*/
 
 double CCell1d::WellRate() {
 	/// This function returns the well flow rate of the well inside the cell.

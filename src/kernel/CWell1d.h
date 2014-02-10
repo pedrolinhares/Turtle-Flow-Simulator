@@ -38,12 +38,12 @@ class CWell1d
 		CWell1d(); ///< Well constructor;
 		CWell1d(double _rate) : rate(_rate), cumulative_phase1(0) {}; ///< Overloaded well constructor;
 		CWell1d(double _rate, int _id) : rate(_rate), id(_id), cumulative_phase1(0) {}; ///< Overloaded well constructor;
+		void SetWell1d( double _rate, int _id); ///< Sets the well flow rate, and the well Id.
 		~CWell1d(); ///< Well destructor;
 
 		inline int Id() { return id; }; ///< Returns the well id;
 		inline double Rate() { return rate; }; ///< Returns the well flow rate;
 		inline void Rate( double _rate) { rate = _rate; }; ///< Sets the well flow rate.
-		void Rate( double _rate, int _id); ///< Sets the well flow rate, and the well Id.
 		double Cumulative_Phase1() { return cumulative_phase1; }; ///< Returns the cumulative volume of phase 1;
 		void IterationtWell(double deltat) { cumulative_phase1 += rate*deltat;} ///< Makes the well Iterationt for cumulative volume;
 

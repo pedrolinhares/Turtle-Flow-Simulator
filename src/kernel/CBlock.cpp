@@ -27,14 +27,14 @@ CBlock::CBlock() : blockid(0)
 	/// Class constructor
 
 }
-CBlock::CBlock(double *data) : blockid((int) data[0])
+
+CBlock::CBlock(int _blkid, double _comp, double _perm, double _por, double _ref_pres) : blockid(_blkid)
 {
 	/// Overloaded Class constructor
-
-	rock.Rockcomp(data[1]);
-    rock.Permeability(data[2]);
-	rock.Por0(data[3]);
-	rock.RefPressure(data[4]);
+	rock.Rockcomp(_comp);
+    rock.Permeability(_perm);
+	rock.Por0(_por);
+	rock.RefPressure(_ref_pres);
 }
 
 CBlock::~CBlock()

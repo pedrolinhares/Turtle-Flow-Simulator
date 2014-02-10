@@ -23,7 +23,6 @@
 #include <ctime>
 
 #include "CReservoir.h"
-#include "CDataControl.h"
 
 void onExit() {
   std::cout << "End of Execution" << std::endl;
@@ -39,8 +38,7 @@ int main() {
   timer = clock(); ///< Getting the current time.
   std::atexit(onExit);
 
-  CDataControl dcontrol; ///< Class created to manage the variables input.
-  CReservoir reservoir(&dcontrol); ///< Reservoir Constructor
+  CReservoir reservoir; ///< Reservoir Constructor
   reservoir.Run(); ///< Running the simulation. This is the main code of the program.
   
   timer = clock() - timer; ///< Updating timer;

@@ -42,7 +42,7 @@ class CBlock
 	public:
 
 		CBlock(); ///< Block constructor;
-		CBlock(double *data); ///< Overloaded Block constructor;
+		CBlock(int _blkid, double _comp, double _perm, double _por, double _ref_pres); ///< Overloaded Block constructor;
 		~CBlock(); ///< Block destructor;
 
 		///////////  Block Functions  //////////

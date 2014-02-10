@@ -21,16 +21,17 @@
 #ifndef CGrid_h
 #define CGrid_h
 
+#include <string>
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 
-#include "CDataControl.h"
 #include "CBlock.h"
 #include "CFluid.h"
 #include "CWater.h"
 #include "COil.h"
 #include "CGas.h"
+#include "CWell1d.h"
 
 /**
  * This class is an abstract class used to represent a grid.
@@ -44,14 +45,13 @@ class CGrid
 
     	CFluid *fluid; ///< Pointer to the fluid data;
     	int fluidtype1; ///< Type of simulated fluid;
-        CDataControl *dcontrol; ///< Pointer to the simulation data;
         int blknumber; ///< Number of blocks in domain;
 		CBlock *block; ///< Pointer to a block array;
 		double betac; ///< Conversion factor.
 
 	public:
 
-		CGrid(CDataControl *_dcontrol); ///< Grid constructor;
+		CGrid(); ///< Grid constructor;
 		virtual ~CGrid(); ///< Grid destructor;
 
 		virtual void Print() = 0; ///< Function used to print all the reservoir data on screen;
@@ -59,7 +59,7 @@ class CGrid
 		virtual void SaveWellSolution(std::ofstream *fout, int welln, double time) = 0; ///< Function used to save the well solution in disk.
 
 		//////////  Numerical Functions  //////////
-		virtual void InitiateSolution() = 0; ///< Initiate the solution in all reservoir;
+		virtual void InitiateSolution(double pref, double href) = 0; ///< Initiate the solution in all reservoir;
 		virtual void Iterationni(double *Xni) = 0; ///< Makes the linear iteration "ni" in all cells;
 		virtual void Iterationt(double deltat) = 0; ///< Makes the time iteration in all cells.
 
@@ -90,7 +90,7 @@ class CGrid
 		virtual int WellNumbers() = 0; ///< Return the number of wells in domain.
 
 		////////// Boundary Conditions //////////
-		virtual void SetBoundConditions() = 0; ///< Sets the boundary condition for the problem.
+		virtual void SetBoundConditions(std::ifstream * fgrid) = 0; ///< Sets the boundary condition for the problem.
 
 };
 

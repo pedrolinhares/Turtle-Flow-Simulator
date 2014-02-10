@@ -21,19 +21,28 @@
 #include <cstdlib>
 #include "CGas.h"
 
+#include "filename_definitions.h"
+using namespace filename_definitions;
+
 using namespace std;
 
-CGas::CGas()
-{
-  /// Oil constructor;
-}
-
-CGas::CGas(double *data)
-{
-  /// Overloaded oil constructor.
-  /// This constructor constructs the gas class using the data array from DataControl.
-
-  pvtpoints = (int) data[0];
+CGas::CGas() {
+  /// This constructor constructs the gas class
+  
+  ifstream fgas(ARQ_GAS_FILE.c_str());
+  
+  if (fgas.fail())
+  {
+    cerr << "There is no gas data." << endl;
+    exit(EXIT_FAILURE);
+  }
+       
+  fgas >> pvtpoints;
+  fgas.ignore(256, '\n');
+  
+  fgas.ignore(256, '#'); ///< Excluding file's header;
+  fgas.ignore(256, '\n'); ///< Excluding file's header;
+  fgas.ignore(256, '\n'); ///< Excluding file's header;
 
   pressure = new double[pvtpoints]; ///< Creating the pressure array from data;
   fvf = new double[pvtpoints]; ///< Creating the FVF array from data;
@@ -43,11 +52,10 @@ CGas::CGas(double *data)
 
   for (int i=0 ; i < pvtpoints ; i++) {
 
-      pressure[i] = data[4*i+1];
-      fvf[i] = data[4*i+2];
-      weight[i] = data[4*i+3];
-      viscosity[i] = data[4*i+4];
-
+      fgas >> pressure[i];
+      fgas >> fvf[i];
+      fgas >> weight[i];
+      fgas >> viscosity[i];
   }
 
 }

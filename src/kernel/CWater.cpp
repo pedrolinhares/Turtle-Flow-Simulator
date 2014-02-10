@@ -21,31 +21,43 @@
 #include "CWater.h"
 #include <cstdlib>
 
+#include "filename_definitions.h"
+using namespace filename_definitions;
 using namespace std;
 
 CWater::CWater() {
-  /// Water constructor;
-}
-
-CWater::CWater(double *data) {
-  /// Overloaded water constructor.
-  /// This constructor constructs the water class using the data array from DataControl.
-
-  pvtpoints = (int) data[0];
+  /// This constructor constructs the water class
+ 
+ 
+ ifstream fwater(ARQ_WATER_FILE.c_str());
+  
+  if (fwater.fail())
+  {
+    cerr << "There is no water data." << endl;
+    exit(EXIT_FAILURE);
+  }
+       
+  fwater >> pvtpoints;
+  fwater.ignore(256, '\n');
+  
+  fwater.ignore(256, '#'); ///< Excluding file's header;
+  fwater.ignore(256, '\n'); ///< Excluding file's header;
+  fwater.ignore(256, '\n'); ///< Excluding file's header;
 
   pressure = new double[pvtpoints]; ///< Creating the pressure array from data;
   fvf = new double[pvtpoints]; ///< Creating the FVF array from data;
   weight = new double[pvtpoints]; ///< Creating the specific weight array from data;
   viscosity = new double[pvtpoints]; ///< Creating the viscosity array from data;
 
+
   for (int i=0 ; i < pvtpoints ; i++) {
 
-      pressure[i] = data[4*i+1];
-      fvf[i] = data[4*i+2];
-      weight[i] = data[4*i+3];
-      viscosity[i] = data[4*i+4];
-
+      fwater >> pressure[i];
+      fwater >> fvf[i];
+      fwater >> weight[i];
+      fwater >> viscosity[i];
   }
+
 
 }
 CWater::~CWater() {

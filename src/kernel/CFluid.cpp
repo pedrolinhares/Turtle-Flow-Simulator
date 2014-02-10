@@ -26,12 +26,6 @@ CFluid::CFluid() {
 
 }
 
-CFluid::CFluid(CDataControl *_dcontrol) {
-	/// Overloaded fluid constructor.
-
-
-}
-
 CFluid::~CFluid() {
 	/// Fluid destructor.
 

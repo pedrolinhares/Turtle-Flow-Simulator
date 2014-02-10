@@ -21,9 +21,11 @@
 #ifndef CFluid_h
 #define CFluid_h
 
+#include <string>
 #include <iostream>
-
-#include "CDataControl.h"
+#include <iomanip>
+#include <fstream>
+#include <sstream>
 
 /**
  * This class is an abstract class used to represent a fluid.
@@ -34,7 +36,6 @@ class CFluid
 {
 	protected:
 
-		CDataControl *dcontrol; ///< Pointer to the simulation data;
 		int pvtpoints; ///< Number of PVT points used to describe the fluid behaviour;
 		double *pressure; ///< Array containing all pressure points in PVT;
 		double *fvf; ///< Array containing all FVF points in PVT;
@@ -44,7 +45,6 @@ class CFluid
 	public:
 
 		CFluid(); ///< Fluid constructor;
-		CFluid(CDataControl *_dcontrol); ///< Overloaded Fluid constructor;
 		virtual ~CFluid(); ///< Fluid destructor;
 
 		virtual double FVF(double pressure) = 0; ///< Returns the FVF of a specific pressure;

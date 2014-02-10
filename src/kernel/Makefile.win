@@ -4,14 +4,14 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = CBlock.o CCell1d.o CDataControl.o CFluid.o CGas.o CGrid.o CGrid1d.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
-LINKOBJ  = CBlock.o CCell1d.o CDataControl.o CFluid.o CGas.o CGrid.o CGrid1d.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc
+OBJ      = CBlock.o CCell1d.o CFluid.o CGas.o CGrid.o CGrid1d1p.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
+LINKOBJ  = CBlock.o CCell1d.o CFluid.o CGas.o CGrid.o CGrid1d1p.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -g -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.7.2/include/c++"
 BIN      = ReservoirSoftware.exe
-CXXFLAGS = $(CXXINCS) 
-CFLAGS   = $(INCS) 
+CXXFLAGS = $(CXXINCS) -g3 -g
+CFLAGS   = $(INCS) -g3 -g
 RM       = rm -f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -30,9 +30,6 @@ CBlock.o: CBlock.cpp
 CCell1d.o: CCell1d.cpp
 	$(CPP) -c CCell1d.cpp -o CCell1d.o $(CXXFLAGS)
 
-CDataControl.o: CDataControl.cpp
-	$(CPP) -c CDataControl.cpp -o CDataControl.o $(CXXFLAGS)
-
 CFluid.o: CFluid.cpp
 	$(CPP) -c CFluid.cpp -o CFluid.o $(CXXFLAGS)
 
@@ -42,8 +39,8 @@ CGas.o: CGas.cpp
 CGrid.o: CGrid.cpp
 	$(CPP) -c CGrid.cpp -o CGrid.o $(CXXFLAGS)
 
-CGrid1d.o: CGrid1d.cpp
-	$(CPP) -c CGrid1d.cpp -o CGrid1d.o $(CXXFLAGS)
+CGrid1d1p.o: CGrid1d1p.cpp
+	$(CPP) -c CGrid1d1p.cpp -o CGrid1d1p.o $(CXXFLAGS)
 
 COil.o: COil.cpp
 	$(CPP) -c COil.cpp -o COil.o $(CXXFLAGS)

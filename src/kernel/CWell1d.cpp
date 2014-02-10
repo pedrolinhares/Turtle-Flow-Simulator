@@ -31,7 +31,7 @@ CWell1d::~CWell1d()
 	/// Well destructor.
 }
 
-void CWell1d::Rate( double _rate, int _id) {
+void CWell1d::SetWell1d( double _rate, int _id) {
 	 ///< Sets the well flow rate, and the well Id.
 
 	rate = _rate;

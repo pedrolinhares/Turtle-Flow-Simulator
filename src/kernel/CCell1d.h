@@ -35,7 +35,6 @@ class CCell1d
 	private:
 
 		int cellid; ///< Cell Id;
-		double thickness; ///< Cell thickess;
 		double deepth; ///< Cell deepth;
 		double pressure; ///< Pressure at atual time;
 		double backpressure; ///< Pressure at back iteration time;
@@ -49,7 +48,7 @@ class CCell1d
 	public:
 
 		CCell1d(); ///< Cell 1d constructor;
-		CCell1d(double *data, CBlock *blk, CFluid *fld); ///< Overloaded cell constructor;
+		CCell1d(int _cellid, double _deepth, CBlock *blk, CFluid *fld); ///< Overloaded cell constructor;
 		CCell1d(CCell1d & _cell); ///< Copy constructor;
 		~CCell1d(); ///< Cell 1d destructor;
 
@@ -77,7 +76,6 @@ class CCell1d
 		inline void RightCell( CCell1d *_rightcell) { rightcell = _rightcell; }; ///< Set a pointer to right cell;
 		CCell1d * LeftCell() { return leftcell; }; ///< Return a pointer to the right cell;
 		CCell1d * RightCell() { return rightcell; }; ///< Return a pointer to the right cell;
-		inline double Thickness() {	return thickness;	}; ///< Return the cell thickness;
 		inline double Weight() { return fluid->Weight(pressure); };  ///< Return the cell weight;
 		inline double Deepth()  { return deepth; }; ///< Return the cell deepth;
 
@@ -89,8 +87,9 @@ class CCell1d
 
 		//////////  Well Functions //////////
 		int WellId();
-		void WellRate(double _rate); ///< Set the well flow rate in this cell;
-		void WellRate(double _rate, int _id); ///< Set the well flow rate, and the well Id in this cell;
+		void SetWell(CWell1d *_well) { well = _well; }; ///< Set the well in this cell;
+		//void WellRate(double _rate); ///< Set the well flow rate in this cell;
+		//void WellRate(double _rate, int _id); ///< Set the well flow rate, and the well Id in this cell;
 		double WellRate(); ///< Return the well flow rate in this cell.
 		void IterationtWell(double deltat) { well->IterationtWell(deltat); }; ///< This function makes the cumulative volume Iteration for the well;
 		double WellCumulative_Phase1(); ///< This function returns the cumulative volume of the phase 1;

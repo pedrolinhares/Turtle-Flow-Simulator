@@ -34,7 +34,6 @@ class CGas : public CFluid
 {
 	public:
 		CGas();  ///< Gas constructor;
-		CGas(double *data); ///< Overloaded Gas constructor;
 		virtual ~CGas();  ///< Gas destructor;
 
 		virtual double FVF(double pres); ///< Returns the FVF of a specific pressure;

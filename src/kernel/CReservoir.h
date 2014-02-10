@@ -21,14 +21,14 @@
 #ifndef CReservoir_h
 #define CReservoir_h
 
+#include <string>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <sstream>
 
-#include "CDataControl.h"
 #include "CGrid.h"
-#include "CGrid1d.h"
+#include "CGrid1d1p.h"
 
 #include "CResModelType.h"
 #include "CSISinglePhase1d.h"
@@ -43,19 +43,14 @@
 
 class CReservoir {
 private:
-    //////////  Reservoir Parameters  //////////
-
-  CDataControl *dcontrol; ///< Pointer to the reservoir data;
-  int dimtype; ///< Dimension of the problem: 1 - 1D, 2 - 2D, 3 - 3D, 4 - radial;
+	
+  //////////  Reservoir Parameters  //////////
   CGrid *grid; ///< Pointer to the reservoir grid;
   CResModelType *model; ///< Pointer to the model that describes the reservoir behaviour;
   int cpoints; //Number of lines of linear equation system, and of cells in reservaoir;
 
   ///////////  Numerical Parameters  /////////
-  /// "the solver is used to solve this equation system: A * Xni = B" ///
-
   CSolverMatrix *solver; ///< Pointer to numerical solver;
-
   double deltat; ///< Delta time of simulation
   double finalt; ///< Final simulation time
 
@@ -65,7 +60,7 @@ private:
   void OutPutInitiate(); ///< This function is used to initiate the output files;
 
 public:
-  CReservoir(CDataControl *_dcontrol);
+  CReservoir();
   ~CReservoir();
   void Run(); ///< Function used to manage the reservoir simulation
 
