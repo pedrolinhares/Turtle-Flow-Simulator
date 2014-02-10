@@ -78,12 +78,11 @@ CReservoir::~CReservoir() {
 void CReservoir::Run() {
   ///This function manages all the simulation. The loops used to advance time are implemented here.
 
-     //grid->PrintData(); ///< Printing the grid data on screen, Only for debugging.
+  ///grid->PrintData(); ///< Printing the grid data on screen, Only for debugging.
 
      model->BuildInitialSolution(grid); ///< Constructing an initial solution, according to the grid data.
 
-     /////////  Time Iteration  //////////
-
+     
      double tme = 0;
 
      OutPutInitiate(); ///< Initiating output files;
@@ -95,7 +94,7 @@ void CReservoir::Run() {
          grid->SaveWellSolution(&well_data[i], (i + 1), tme);
      }
 
-
+		/////////  Time Iteration  //////////
      while ( (finalt - tme + deltat) > deltat) {
 
      	tme = tme + deltat;
@@ -104,7 +103,6 @@ void CReservoir::Run() {
     	cout << "\n Time - "<< tme << std::fixed;
 	   
    		model->Iterationt(grid, solver, deltat); ///< Iterating the time in all cells;
-    	grid->Iterationt(deltat);  ///< Updating the back pressure in all reservoir;
 
     	/// Saving the solution in disk;
     	grid->SaveGridSolution(&grid_data, tme);
@@ -112,6 +110,7 @@ void CReservoir::Run() {
       		grid->SaveWellSolution(&well_data[i], (i + 1), tme);
     	}
     }
+    
 } 
 
 void CReservoir::OutPutInitiate() {

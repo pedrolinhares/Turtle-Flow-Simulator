@@ -160,12 +160,6 @@ void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double del
 	/// This function makes a time iteration in all cells of domain
 	/// using the semi-implicit linearization model.
 	
-	
-	
-	// Retirar do CReservoir
-	 
-	 
-	/////
 	//////////  Iteration used for linearizate the problem  /////////
        double er1, er1max;
        int h = 0;
@@ -193,6 +187,8 @@ void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double del
          h++;
 
        } while ((h < maxni) && (er1max > erroni));
+
+	grid->Iterationt(deltat);  ///< Updating the back pressure in all reservoir;
 
     cout.precision(4);
     cout << "     Linear Iterations - " << h;
