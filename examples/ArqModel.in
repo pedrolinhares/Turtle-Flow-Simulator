@@ -1,16 +1,16 @@
-1       ---  Número de Fases
-1       ---  Tipo de Fluido (1- water; 2- Oil; 3- Gas)
+1     # Phases Number
+1     # Fluid Type (1- water; 2- Oil; 3- Gas)
 
-1       ---  Modelo Linearização (1 - Semi-Implícito)
-50      ---  Número de Iterações máximas da linearização
-0.001   ---  Precisão relativa da linearização
+1     # Discretization Model (1 - Semi-Implícito)
+50    # Maximum Linear Iterations
+1e-3  # Relative Linear Precision
 
-1       ---  Identificador do Solver (Por Equanto só tem o Gauss-Seidel)
-30      ---  Número de Iterações máximas do solver numérico
-0.001   ---  Precisão do solver numérica
+1     # Solver Identificator
+30    # Maximum Solver Iterations
+1e-3  # Relative Solver Precision
 
-0.1     ---  delta t do problema
-10      ---  tempo final de simulação
+0.1   # Delta time
+10    # Final Simulation Time
 
-3000     --- Pressao de Referencia Inicial
-1500     --- Profundidade de Referencia Inicial
+3000  # Initial Reference Pressure
+1500  # Initial Reference Deepth

@@ -1,38 +1,34 @@
-2     # Número de Blocks
+2     # Blocks Number
 
-1     # Identificador do Block
-1e-6  # [-] Compressibilidade da Rocha no block 1
-0.1   # [Darcy]Permeabilidade no block 1
-0.2   # [-]Porosidade no block 1
-2000  # [psi] Pressure de Referencia
+1     # Block Id
+1e-6  # [-] Rock Compressibility in Block 1
+0.1   # [Darcy] Permeability in Block 1
+0.2   # [-] Porosity in block 1
+2000  # [psi] Reference Pressure
 
-2     # Identificador do Block
-5e-6  # Compressibilidade da Rocha no block 2
-0.08  # Permeabilidade no block 2
-0.3   # Porosidade no block
-2000  # [psi] Pressure de Referencia
+2     # Block Id
+5e-6  # [-] Rock Compressibility in Block 2
+0.08  # [Darcy] Permeability in Block 2
+0.3   # [-] Porosity in block 2
+2000  # [psi] Reference Pressure
 
-3     # Número de Cells
+3     # Cells Number
 
-80    # [ft] Width da Cell 1
-80    # [ft] Width da Cell 2
-80    # [ft] Width da Cell 3
+80    # [ft] Width of Cell 1
+80    # [ft] Width of Cell 2
+80    # [ft] Width of Cell 3
 
-380   # [ft] Lenght da cell 1
-200   # [ft] Lenght da cell 2
-250   # [ft] Lenght da cell 3
+380   # [ft] Lenght of cell 1
+200   # [ft] Lenght of cell 2
+250   # [ft] Lenght of cell 3
 
-50    # [ft] Thickness Cell 1
-40    # [ft] Thickness Cell 2
-80    # [ft] Thickness Cell 3
+50    # [ft] Thickness of Cell 1
+40    # [ft] Thickness of Cell 2
+80    # [ft] Thickness of Cell 3
 
-1500  # [ft] Deepth Cell 1
-1200  # [ft] Deepth Cell 2
-2000  # [ft] Deepth Cell 3
-
-1     # Id Cell 1
-2     # Id Cell 2
-3     # Id Cell 3
+1500  # [ft] Deepth of Cell 1
+1200  # [ft] Deepth of Cell 2
+2000  # [ft] Deepth of Cell 3
 
 1     # ID of the Connected Block 
 2     # ID of the Connected Block 

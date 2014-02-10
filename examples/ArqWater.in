@@ -1,7 +1,7 @@
 5     # PVT Pressure Points
 
-press     FVF      spec. weight    Viscosity
-psia     RB/bbl       psi/ft          cp
+#Press     FVF     spec. weight    Viscosity
+#psia     RB/bbl      psi/ft          cp
 
 1000     1.02827     0.43214         0.01
 2000     1.02224     0.43342         0.01
