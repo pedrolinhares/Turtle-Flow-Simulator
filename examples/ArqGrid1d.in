@@ -1,0 +1,45 @@
+2     # Número de Blocks
+
+1     # Identificador do Block
+1e-6  # [-] Compressibilidade da Rocha no block 1
+0.1   # [Darcy]Permeabilidade no block 1
+0.2   # [-]Porosidade no block 1
+2000  # [psi] Pressure de Referencia
+
+2     # Identificador do Block
+5e-6  # Compressibilidade da Rocha no block 2
+0.08  # Permeabilidade no block 2
+0.3   # Porosidade no block
+2000  # [psi] Pressure de Referencia
+
+3     # Número de Cells
+
+80    # [ft] Width da Cell 1
+80    # [ft] Width da Cell 2
+80    # [ft] Width da Cell 3
+
+380   # [ft] Lenght da cell 1
+200   # [ft] Lenght da cell 2
+250   # [ft] Lenght da cell 3
+
+50    # [ft] Thickness Cell 1
+40    # [ft] Thickness Cell 2
+80    # [ft] Thickness Cell 3
+
+1500  # [ft] Deepth Cell 1
+1200  # [ft] Deepth Cell 2
+2000  # [ft] Deepth Cell 3
+
+1     # Id Cell 1
+2     # Id Cell 2
+3     # Id Cell 3
+
+1     # ID of the Connected Block 
+2     # ID of the Connected Block 
+2     # ID of the Connected Block 
+
+1     # Left BC Type (0 - Const Rate, 1 - Const Pressure)
+6000  # Value
+
+1     # Right BC Type (0 - Const Rate, 1 - Const Pressure)
+6000  # Value
