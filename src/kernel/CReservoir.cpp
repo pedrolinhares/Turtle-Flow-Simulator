@@ -140,7 +140,7 @@ CReservoir::~CReservoir() {
 void CReservoir::Run() {
   ///This function manages all the simulation. The loops used to advance time are implemented here.
 
-  grid->Print(); ///< Printing the grid data on screen, Only for debugging.
+  //grid->Print(); ///< Printing the grid data on screen, Only for debugging.
 
      model->BuildInitialSolution(grid); ///< Constructing an initial solution, according to the grid data.
 

@@ -33,9 +33,9 @@ class CRock
 
     private:
 
-        double rockcomp; // Rock Compressibility
-        double permeability; //Rock Permeability
-        double por0; //Inicial Rock Porosity
+    double rockcomp; // Rock Compressibility
+    double permeability; //Rock Permeability
+    double por0; //Inicial Rock Porosity
 		double refpressure; //Reference Pressure
 	public:
 

@@ -72,25 +72,28 @@ CGrid1d1p::CGrid1d1p(int _fluidtype) :CGrid()
 	}
 	
 	//////////  Constructing CGrid1d  //////////
-	fgrid >> cellnumber;
-    fgrid.ignore(256, '\n');
+	  fgrid >> cellnumber;
+	  fgrid.ignore(256, '\n');
+		fgrid.ignore(256, '#');
+    fgrid.ignore(256, '#');
     
-    width = new double[cellnumber];
-    for (int i=0; i < cellnumber; i++) {
-        fgrid >> width[i];
-        fgrid.ignore(256, '\n');
-    }
-    
-    lenght = new double[cellnumber];
+		lenght = new double[cellnumber];
     for (int i=0; i < cellnumber; i++) {
         fgrid >> lenght[i];
-        fgrid.ignore(256, '\n');
+    }
+
+		fgrid.ignore(256, '#');
+    fgrid.ignore(256, '#');
+		width = new double[cellnumber];
+    for (int i=0; i < cellnumber; i++) {
+        fgrid >> width[i];
     }
     
+    fgrid.ignore(256, '#');
+    fgrid.ignore(256, '#');
     thickness = new double[cellnumber];
     for (int i=0; i < cellnumber; i++) {
         fgrid >> thickness[i];
-        fgrid.ignore(256, '\n');
     }
     
     //////////  Constructing CFluid  //////////
@@ -114,18 +117,20 @@ CGrid1d1p::CGrid1d1p(int _fluidtype) :CGrid()
     //////////  Constructing CCell  //////////
    cells = new CCell1d[cellnumber]; ///< constructing an array of cells;
 
+	 fgrid.ignore(256, '#');
+   fgrid.ignore(256, '#');
    double *deepth; ///< Temporary array of cells deepth;
    deepth = new double[cellnumber];
     for (int i=0; i < cellnumber; i++) {
         fgrid >> deepth[i];
-        fgrid.ignore(256, '\n');
     }
    
+   fgrid.ignore(256, '#');
+   fgrid.ignore(256, '#');
    int *block_cell_conection; ///< Temporary array of cenections between blocks and cells;
    block_cell_conection = new int[cellnumber];
     for (int i=0; i < cellnumber; i++) {
         fgrid >> block_cell_conection[i];
-        fgrid.ignore(256, '\n');
     }
    
    for( int i=0; i < cellnumber ; i++ ) {
