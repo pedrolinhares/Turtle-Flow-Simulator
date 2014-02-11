@@ -6,12 +6,12 @@ CC       = gcc.exe
 WINDRES  = windres.exe
 OBJ      = CBlock.o CCell1d.o CFluid.o CGas.o CGrid.o CGrid1d1p.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
 LINKOBJ  = CBlock.o CCell1d.o CFluid.o CGas.o CGrid.o CGrid1d1p.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolMatTrid.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -g  -std=c++11 -g3
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -g -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.7.2/include/c++"
 BIN      = ReservoirSoftware.exe
-CXXFLAGS = $(CXXINCS) -g3 -g  -std=c++11
-CFLAGS   = $(INCS) -g3 -g  -std=c++11
+CXXFLAGS = $(CXXINCS) -g3 -g
+CFLAGS   = $(INCS) -g3 -g
 RM       = rm -f
 
 .PHONY: all all-before all-after clean clean-custom

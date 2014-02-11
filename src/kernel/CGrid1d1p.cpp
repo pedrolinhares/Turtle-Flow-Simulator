@@ -289,12 +289,14 @@ void CGrid1d1p::SetBoundConditions(ifstream *fgrid) {
 	/// Left Boundary Condition ///
 	int leftbc_type;
 	double leftbc_value;
-	  
-	*fgrid >> leftbc_type;
-	fgrid->ignore(256, '\n');
 	
+	fgrid->ignore(256, '#');
+    fgrid->ignore(256, '#');  
+	*fgrid >> leftbc_type;
+	
+	fgrid->ignore(256, '#');
+    fgrid->ignore(256, '#');  
 	*fgrid >> leftbc_value;
-	fgrid->ignore(256, '\n');
     
     switch (leftbc_type) {
       case 0: {
@@ -332,11 +334,13 @@ void CGrid1d1p::SetBoundConditions(ifstream *fgrid) {
 	int rightbc_type;
 	double rightbc_value;
 	  
+	fgrid->ignore(256, '#');
+    fgrid->ignore(256, '#');  
 	*fgrid >> rightbc_type;
-	fgrid->ignore(256, '\n');
 	
+	fgrid->ignore(256, '#');
+    fgrid->ignore(256, '#');  
 	*fgrid >> rightbc_value;
-	fgrid->ignore(256, '\n');
   
   switch (rightbc_type) {
       case 0: {

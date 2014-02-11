@@ -36,11 +36,11 @@ class CGrid1d1p : public CGrid
 
     private:
 
-    int cellnumber; ///< Number of cells in domain
+    	int cellnumber; ///< Number of cells in domain
 		double *lenght; ///< Vector representing the lenght of each cell in domain
-    double *width;   ///< Vector representing the Width of each cell in domain.
+    	double *width;   ///< Vector representing the Width of each cell in domain.
 		double *thickness;  ///< Vector representing the Thickness of each cell in domain.
-    CCell1d *cells; ///< Array with all cells of domain
+    	CCell1d *cells; ///< Array with all cells of domain
 
 	public:
 
