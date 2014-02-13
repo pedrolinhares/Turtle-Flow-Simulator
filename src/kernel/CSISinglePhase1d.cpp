@@ -66,9 +66,9 @@ CSISinglePhase1d::CSISinglePhase1d(CGrid *grid, int _maxni, double _erroni) {
 	
 	/// Last Cell
 	Arow[cpoints] = 2;
-	Acol[colcount] = (cpoints - 1);
+	Acol[colcount] = (cpoints - 2);
 	colcount++;
-	Acol[colcount] = cpoints;
+	Acol[colcount] = (cpoints - 1);
 	colcount++;
 	
 	/// Cumulating the Arow array
@@ -138,7 +138,7 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
 
-    double Wi, Ci, Ei;
+  double Wi, Ci, Ei;
 	double deltap;
 	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
 	
@@ -244,7 +244,7 @@ void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double del
          BuildMatrix(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
          BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
          
-         Print();
+         //Print();
          
          solver->UMFPack( Acol, Arow, Aval, b, Xni, cpoints ); ///< Calling the solver used in this problem
 
