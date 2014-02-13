@@ -143,13 +143,13 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
 	
 	/// Filling the first line of matrix A
-	Wi = 0; ///< There is no west matrix element;
+	Wi = grid->RightTrasmx(-1); ///< There is no west matrix element;
 	Ei = grid->RightTrasmx(0); ///< Calculating the east matrix element;
 	Ci = - Gamma(grid, 0)/deltat - Ei - Wi;	///< Calculating the central matrix element;
 	
 		Aval[elemcount] = Ci;
 	    elemcount++;
-	    Aval[elemcount] = Ei;
+	  Aval[elemcount] = Ei;
 	    elemcount++;
 	
 	/// Filling the middle A Elements
@@ -169,10 +169,10 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
     
     /// Filling the last line of matrix A
     Wi = grid->RightTrasmx(cpoints - 2); ///< Calculating the west matrix element;
-    Ei = 0;	///< There is no east matrix element;
-	Ci = - Gamma(grid, (cpoints - 1))/deltat - Ei - Wi;	///< Calculating the central matrix element;
+    Ei = grid->RightTrasmx(cpoints - 1);	///< There is no east matrix element;
+	  Ci = - Gamma(grid, (cpoints - 1))/deltat - Ei - Wi;	///< Calculating the central matrix element;
 	
-		Aval[elemcount] = Wi;
+		    Aval[elemcount] = Wi;
         elemcount++;
         Aval[elemcount] = Ci;
         elemcount++;	
@@ -185,7 +185,8 @@ void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
 
 	double Eig, Wig, Cig, Qg;
-
+  double gama_dt, q;
+  
 
 	for (int i = 0 ; i < (cpoints) ; i++) {
 
@@ -196,8 +197,6 @@ void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
     	Cig = - Eig - Wig;  ///< Calculating the central transmissibility;
 
 		Qg =Wig*grid->Deepth(i-1) + Cig*grid->Deepth(i) + Eig*grid->Deepth(i+1); ///< Rate term;
-
-    	double gama_dt, q;
 
     	gama_dt = Gamma(grid, i)/deltat;
 
@@ -245,7 +244,7 @@ void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double del
          BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
          
          //Print();
-         
+
          solver->UMFPack( Acol, Arow, Aval, b, Xni, cpoints ); ///< Calling the solver used in this problem
 
         	 /////////  Error Analyzing  /////////
