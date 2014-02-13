@@ -21,6 +21,8 @@
 #ifndef CSolverMatrix_h
 #define CSolverMatrix_h
 
+#include "umfpack.h"
+
 /**
  * This class is an abstract class used to represent the numerical solver.
  * The solver can be used to solve tri-diagonal, penta-diagonal or hepta-diagonal systems.
@@ -30,19 +32,15 @@
 class CSolverMatrix
 {
     protected:
-
-        int nlines; ///< Number of lines in the linear equation system;
-        int maxiter; ///< Maximum number of iterations;
-        double erro; ///< Maximum error of solver.
+	
 
 	public:
 
-		CSolverMatrix(int nl); ///< Solver constructor;
-		CSolverMatrix(int nl, int _maxiter, double _erro); ///< Overloaded Solver constructor;
-		virtual ~CSolverMatrix(); ///< Solver destructor;
-
-		virtual void GaussSeidel( double **a , double *b ,double *x) = 0; ///< Gauss-Seidel algorithm.
-
+		CSolverMatrix(); ///< Solver constructor;
+		~CSolverMatrix(); ///< Solver destructor;
+		
+		void UMFPack( int *Acol, int *Arow,	double *Aval, double *b, double *x, int n ); ///< Uses the UMFPack to solve the matrix system A'x=b;
+		
 };
 
 #endif // CSolverMatrix_h

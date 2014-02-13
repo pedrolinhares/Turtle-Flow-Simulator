@@ -1,0 +1,678 @@
+#
+#  Beginning of user configuration 
+#
+
+# This library's version
+REVISION = -r1.26
+
+# Which C compiler do you prefer? Default is gcc.
+# C_COMPILER = GNU
+# C_COMPILER = INTEL
+# C_COMPILER = PGI
+
+# Now you don't need Fortran compiler to build library.
+# If you don't spcifly Fortran Compiler, GNU g77 compatible
+# interface will be used.
+# F_COMPILER = G77
+# F_COMPILER = G95
+F_COMPILER = GFORTRAN
+# F_COMPILER = INTEL
+# F_COMPILER = PGI
+# F_COMPILER = PATHSCALE
+# F_COMPILER = IBM
+# F_COMPILER = COMPAQ
+# F_COMPILER = SUN
+# F_COMPILER = F2C
+
+# If you need 64bit binary; some architecture can accept both 32bit and
+# 64bit binary(X86_64, SPARC, Power/PowerPC or WINDOWS).
+# BINARY64  = 1
+
+# If you want to build threaded BLAS
+# SMP = 1
+
+# You can define maximum number of threads. Basically it should be
+# less than actual number of cores. If you don't specify one, it's
+# automatically detected by script.
+# MAX_THREADS = 16
+
+# If you want to use legacy threaded Level 3 implementation.
+# Some architecture prefer this algorithm, but it's rare.
+# USE_SIMPLE_THREADED_LEVEL3 = 1
+
+# If you want to use GotoBLAS with accerelator like Cell or GPGPU
+# This is experimental and currently won't work well.
+# USE_ACCERELATOR = 1
+
+# Define accerelator type (won't work)
+# USE_CELL_SPU = 1
+
+# Theads are still working for a while after finishing BLAS operation
+# to reduce thread activate/deactivate overhead. You can determine
+# time out to improve performance. This number should be from 4 to 30
+# which corresponds to (1 << n) cycles. For example, if you set to 26,
+# thread will be running for (1 << 26) cycles(about 25ms on 3.0GHz
+# system). Also you can control this mumber by GOTO_THREAD_TIMEOUT
+# CCOMMON_OPT	+= -DTHREAD_TIMEOUT=26
+
+# If you need cross compiling
+# (you have to set architecture manually in getarch.c!)
+# Example : HOST ... G5 OSX,  TARGET = CORE2 OSX
+# CROSS_SUFFIX	= i686-apple-darwin8-
+# CROSS_VERSION	= -4.0.1
+# CROSS_BINUTILS	=
+
+# If you need Special memory management;
+# Using HugeTLB file system(Linux / AIX / Solaris)
+# HUGETLB_ALLOCATION = 1
+
+# Using bigphysarea memory instead of normal allocation to get
+# physically contiguous memory.
+# BIGPHYSAREA_ALLOCATION = 1
+
+# To get maxiumum performance with minimum impact to the system,
+# mixing memory allocation may be worth to try. In this case,
+# you have to define one of ALLOC_HUGETLB or BIGPHYSAREA_ALLOCATION.
+# Another allocation will be done by mmap or static allocation.
+# (Not implemented yet)
+# MIXED_MEMORY_ALLOCATION = 1
+
+# Using static allocation instead of dynamic allocation
+# You can't use it with ALLOC_HUGETLB
+# STATIC_ALLOCATION = 1
+
+# If you want to use CPU affinity
+# CCOMMON_OPT	+= -DUSE_CPU_AFFINITY
+
+# If you want to use memory affinity (NUMA)
+# You can't use it with ALLOC_STATIC
+# NUMA_AFFINITY	= 1
+
+# If you want to use interleaved memory allocation.
+# Default is local allocation(it only works with NUMA_AFFINITY).
+# CCOMMON_OPT	+= -DINTERLEAVED_MAPPING
+
+# If you want to drive whole 64bit region by BLAS. Not all Fortran
+# compiler supports this. It's safe to keep comment it out if you
+# are not sure.
+# INTERFACE64 = 1
+
+# If you have special compiler to run script to determine architecture.
+GETARCH_CC	 +=
+GETARCH_FLAGS	 +=
+
+#
+#  End of user configuration 
+#
+
+ifdef BINARY32
+BINARY64 =
+endif
+
+ifndef GOTOBLAS_MAKEFILE
+export GOTOBLAS_MAKEFILE = 1
+MACHINE =
+OSNAME  =
+PGCPATH =
+ARCH =
+SUBARCH =
+ARCHSUBDIR =
+CONFIG =
+FU =
+LIBSUBARCH =
+CORE =
+endif
+
+ifndef MACHINE
+MACHINE := $(shell uname -m | sed -e s/i.86/i386/)
+endif
+ifndef OSNAME
+OSNAME  := $(shell uname -s | sed -e s/\-.*//)
+endif
+
+ifneq ($(OSNAME), Darwin)
+ifneq ($(OSNAME), CYGWIN_NT)
+ifeq ($(MACHINE), i386)
+BINARY64	=
+NATIVEARCH	= YES
+endif
+endif
+endif
+
+ifeq ($(MACHINE), ia64)
+BINARY64	= YES
+NATIVEARCH	= YES
+endif
+
+ifeq ($(MACHINE), alpha)
+BINARY64	= YES
+NATIVEARCH	= YES
+endif
+
+ifeq ($(OSNAME), AIX)
+NATIVEARCH	= YES
+GETARCH_FLAGS	+= -maix64
+endif
+
+ifeq ($(OSNAME), Darwin)
+ifndef BINARY64
+NATIVEARCH	= YES
+endif
+EXTRALIB	+= -lSystemStubs
+endif
+
+# If you need to access over 4GB chunk on 64bit system.
+ifdef BINARY64
+CCOMMON_OPT	+= -D__64BIT__
+GETARCH_FLAGS	+= -D__64BIT__
+ifdef INTERFACE64
+CCOMMON_OPT	+= -DUSE64BITINT
+endif
+endif
+
+# If you need modified GEMV/GEMM to find best parameters;
+# CCOMMON_OPT	 += -DPARAMTEST
+# CCOMMON_OPT	 += -DPREFETCHTEST
+# USE_PAPI = 1
+
+# Common Optimization Flag; -O2 is enough.
+COMMON_OPT += -O2
+
+# Optimization Flag for C compiler
+CCOMMON_OPT += -D_GNU_SOURCE
+
+# Optimization Flag for Fortran Compiler
+FCOMMON_OPT +=
+
+# Profiling flags
+COMMON_PROF = -pg
+
+################## End of Main Configuration #####################
+
+# TO suppress recursive includes
+INCLUDED = 1
+
+ifdef CROSS_SUFFIX
+C_COMPILER    = GNU
+endif
+
+ifndef C_COMPILER
+C_COMPILER    = GNU
+endif
+
+ifndef F_COMPILER
+F_COMPILER = G77
+I_DONT_HAVE_FC = 1
+endif
+
+SUPPORTED_DYNLIB = YES
+
+ifeq ($(OSNAME), Interix)
+
+CCOMMON_OPT  += -DWINDOWS_ABI
+
+ifndef BINARY64
+GETARCH_FLAGS	+= -DNEED_FU
+endif
+
+INTERIX_TOOL_DIR = /opt/gcc.3.3/i586-pc-interix3/bin
+
+#AR      = $(INTERIX_TOOL_DIR)/ar
+#AS      = $(INTERIX_TOOL_DIR)/as
+#LD      = $(INTERIX_TOOL_DIR)/ld
+#DLLTOOL = $(INTERIX_TOOL_DIR)/dlltool
+endif
+
+ifeq ($(OSNAME), CYGWIN_NT)
+CCOMMON_OPT  += -DWINDOWS_ABI
+SUPPORTED_DYNLIB = NO
+ifndef BINARY64
+GETARCH_FLAGS	+= -DNEED_FU
+endif
+GETARCH_SCRIPT	 = ./getarch_NT
+ifeq ($(C_COMPILER), PGI)
+GETARCH_CC	 = pgcc
+GETARCH_FLAGS	+= -w
+
+USE_SIMPLE_THREADED_LEVEL3 = 1
+NOT_LD_RELOCATION = 1
+
+AR		  = $(TOPDIR)/microsoft_ar
+SUFFIX  = obj
+PSUFFIX = pobj
+LIBSUFFIX = lib
+endif
+endif
+
+ifeq ($(C_COMPILER), GNU)
+COMPILER     = gcc
+CCOMMON_OPT += -Wall
+ifeq ($(SUPPORTED_DYNLIB), YES)
+CCOMMON_OPT += -fPIC 
+endif
+ifndef NATIVEARCH
+ifdef BINARY64
+CCOMMON_OPT     += -m64
+else
+CCOMMON_OPT     += -m32
+endif
+endif
+COMMON_PROF += -fno-inline
+NO_UNINITIALIZED_WARN =  -Wno-uninitialized
+endif
+
+ifeq ($(C_COMPILER), INTEL)
+COMPILER     = icc
+ifeq ($(SUPPORTED_DYNLIB), YES)
+CCOMMON_OPT += -fPIC 
+endif
+endif
+
+ifeq ($(C_COMPILER), PGI)
+COMPILER     = pgcc
+ifeq ($(SUPPORTED_DYNLIB), YES)
+CCOMMON_OPT += -fPIC
+endif
+CCOMMON_OPT += -w
+ifeq ($(OSNAME), Linux)
+CCOMMON_OPT += -D__ELF__
+endif
+
+ifneq ($(OSNAME), CYGWIN_NT)
+ifndef BINARY64
+ifndef PGCPATH
+PGCPATH = $(shell which pgcc | sed -e 's/bin\/pgcc//;s/linux86-64/linux86/')
+endif
+FEXTRALIB    += -L$(PGCPATH)lib -Wl,-rpath,$(PGCPATH)lib -lpgc
+else
+ifndef PGCPATH
+PGCPATH = $(shell which pgcc | sed -e 's/bin\/pgcc//;s/linux86-64/linux86/')
+endif
+FEXTRALIB    += -L$(PGCPATH)lib -Wl,-rpath,$(PGCPATH)lib -lpgc
+endif
+endif
+endif
+
+ifeq ($(F_COMPILER), G77)
+COMPILER_F77 = g77
+BU	     = _
+CCOMMON_OPT += -DF_INTERFACE_F2C -DNEED_F2CCONV
+FCOMMON_OPT += -Wall
+ifeq ($(SUPPORTED_DYNLIB), YES)
+FCOMMON_OPT += -fPIC 
+endif
+ifndef NATIVEARCH
+ifdef BINARY64
+FCOMMON_OPT += -m64
+else
+FCOMMON_OPT += -m32
+endif
+endif
+endif
+
+ifeq ($(F_COMPILER), G95)
+COMPILER_F77 = g95
+BU	     = _
+CCOMMON_OPT += -DF_INTERFACE_F2C
+FCOMMON_OPT += -Wall #  -fno-underscoring
+ifeq ($(SUPPORTED_DYNLIB), YES)
+FCOMMON_OPT += -fPIC 
+endif
+ifndef NATIVEARCH
+ifdef BINARY64
+FCOMMON_OPT += -m64
+else
+FCOMMON_OPT += -m32
+endif
+endif
+endif
+
+ifeq ($(F_COMPILER), GFORTRAN)
+COMPILER_F77 = gfortran
+BU	     = _
+CCOMMON_OPT += -DF_INTERFACE_GFORT
+FCOMMON_OPT += -Wall
+ifeq ($(SUPPORTED_DYNLIB), YES)
+FCOMMON_OPT += -fPIC 
+endif
+ifndef NATIVEARCH
+ifdef BINARY64
+FCOMMON_OPT += -m64
+CCOMMON_OPT  += -DPACKED_RETURN
+ifdef INTERFACE64
+FCOMMON_OPT +=  -fdefault-integer-8
+endif
+else
+FCOMMON_OPT += -m32
+endif
+endif
+endif
+
+ifeq ($(F_COMPILER), INTEL)
+COMPILER_F77 = ifort
+BU	     = _
+CCOMMON_OPT += -DF_INTERFACE_F2C
+ifeq ($(SUPPORTED_DYNLIB), YES)
+FCOMMON_OPT += -fPIC
+endif
+ifdef INTERFACE64
+FCOMMON_OPT += -i8
+endif
+endif
+
+ifeq ($(F_COMPILER), IBM)
+COMPILER_F77 = xlf
+BU	     = 
+# FCOMMON_OPT	+= -qarch=440
+ifdef BINARY64
+FCOMMON_OPT += -q64
+ifdef INTERFACE64
+FCOMMON_OPT += -qintsize=8
+endif
+else
+FCOMMON_OPT += -q32
+endif
+endif
+
+ifeq ($(F_COMPILER), COMPAQ)
+ifeq ($(OSNAME), Linux)
+COMPILER_F77 = fort
+ifeq ($(SUPPORTED_DYNLIB), YES)
+FCOMMON_OPT += -fPIC 
+endif
+else
+COMPILER_F77 = f77
+endif
+BU	     = _
+endif
+
+ifeq ($(F_COMPILER), PGI)
+COMPILER_F77 = pgf77
+BU	      = _
+CCOMMON_OPT  += -DF_INTERFACE_F2C
+ifeq ($(SUPPORTED_DYNLIB), YES)
+FCOMMON_OPT += -fPIC 
+endif
+COMMON_PROF +=  -DPGICOMPILER
+
+ifdef BINARY64
+ifdef INTERFACE64
+FCOMMON_OPT += -i8
+endif
+endif
+endif
+
+ifneq ($(OSNAME), CYGWIN_NT)
+ifdef SMP
+EXTRALIB   += -lpthread
+endif
+endif
+
+ifeq ($(F_COMPILER), PATHSCALE)
+COMPILER_F77 = pathf90
+BU	= _
+CCOMMON_OPT  += -DPACKED_RETURN -DF_PATHSCALE
+ifeq ($(SUPPORTED_DYNLIB), YES)
+FCOMMON_OPT += -fPIC
+endif
+ifndef BINARY64
+CCOMMON_OPT  += -DF_INTERFACE_F2C
+FCOMMON_OPT += -m32
+else
+FCOMMON_OPT += -m64
+ifdef INTERFACE64
+FCOMMON_OPT += -i8
+endif
+endif
+endif
+
+ifeq ($(F_COMPILER), SUN)
+COMPILER_F77 = f90
+BU	     = _
+CCOMMON_OPT  += -DF_SUN
+FCOMMON_OPT  += -pic
+ifndef BINARY64
+CCOMMON_OPT  += -DF_INTERFACE_F2C
+else
+FCOMMON_OPT  += -m64
+endif
+endif
+
+ifeq ($(F_COMPILER), F2C)
+COMPILER_F77 = f2cf77
+BU	     = _
+CCOMMON_OPT += -DF_INTERFACE_F2C -DNEED_F2CCONV
+ifeq ($(SUPPORTED_DYNLIB), YES)
+FCOMMON_OPT += -Wall -fPIC
+endif
+endif
+
+ifdef SMP
+CCOMMON_OPT	+= -DSMP_SERVER
+ifeq ($(C_COMPILER), GCC)
+ifeq ($(OSNAME), Linux)
+CCOMMON_OPT	+=  -pthread
+endif
+endif
+endif
+
+ifdef USE_PAPI
+CCOMMON_OPT	 += -DUSE_PAPI
+EXTRALIB	 += -lpapi -lperfctr
+endif
+
+ifdef USE_ACCERELATOR
+CCOMMON_OPT	 += -DUSE_ACCERELATOR
+
+ifdef USE_CELL_SPU
+CCOMMON_OPT	 += -DUSE_CELL_SPU
+endif
+endif
+
+ifndef GETARCH_CC
+GETARCH_CC	 = gcc
+endif
+
+ifndef GETARCH_SCRIPT
+GETARCH_SCRIPT	 = ./getarch
+endif
+
+ifndef ARCH
+ARCH        := $(shell (cd $(TOPDIR); $(GETARCH_SCRIPT) 0 $(GETARCH_CC) $(GETARCH_FLAGS)))
+endif
+ifndef SUBARCH
+SUBARCH     := $(shell (cd $(TOPDIR); $(GETARCH_SCRIPT) 1 $(GETARCH_CC) $(GETARCH_FLAGS)))
+endif
+ifndef ARCHSUBDIR
+ARCHSUBDIR  := $(shell (cd $(TOPDIR); $(GETARCH_SCRIPT) 2 $(GETARCH_CC) $(GETARCH_FLAGS)))
+endif
+ifndef CONFIG
+CONFIG      := $(shell (cd $(TOPDIR); $(GETARCH_SCRIPT) 3 $(GETARCH_CC) $(GETARCH_FLAGS)))
+endif
+ifndef FU
+FU          := $(shell (cd $(TOPDIR); $(GETARCH_SCRIPT) 4 $(GETARCH_CC) $(GETARCH_FLAGS)))
+endif
+ifndef LIBSUBARCH
+LIBSUBARCH  := $(shell (cd $(TOPDIR); $(GETARCH_SCRIPT) 5 $(GETARCH_CC) $(GETARCH_FLAGS)))
+endif
+ifndef CORE
+CORE        := $(shell (cd $(TOPDIR); $(GETARCH_SCRIPT) 6 $(GETARCH_CC) $(GETARCH_FLAGS)))
+endif
+
+ifndef MAX_THREADS
+ifndef MAX_THREADS
+MAX_THREADS := $(shell (cd $(TOPDIR); $(GETARCH_SCRIPT) 7 $(GETARCH_CC) $(GETARCH_FLAGS)))
+endif
+endif
+
+CCOMMON_OPT	+= -DMAX_CPU_NUMBER=$(MAX_THREADS) -DNUM_BUFFERS=\(2*$(MAX_THREADS)\)
+
+ifdef USE_SIMPLE_THREADED_LEVEL3
+CCOMMON_OPT	+= -DUSE_SIMPLE_THREADED_LEVEL3
+endif
+
+ifeq ($(F_COMPILER), GFORTRAN)
+ifeq ($(ARCHSUBDIR), x86)
+EXPRECISION	= 1
+CCOMMON_OPT	+= -DEXPRECISION -m128bit-long-double
+FCOMMON_OPT	+= -m128bit-long-double
+endif
+
+ifeq ($(ARCHSUBDIR), x86_64)
+EXPRECISION	= 1
+CCOMMON_OPT	+= -DEXPRECISION -m128bit-long-double
+FCOMMON_OPT	+= -m128bit-long-double
+endif
+
+ifeq ($(ARCHSUBDIR), ia64)
+#EXPRECISION	= 1
+#CCOMMON_OPT	+= -DEXPRECISION
+endif
+endif
+
+LIBPREFIX = libgoto
+
+ARFLAGS	=
+CPP	= $(CROSS_SUFFIX)$(COMPILER)$(CROSS_VERSION) -E
+ifndef AR
+AR	= $(CROSS_BINUTILS)ar
+endif
+ifndef AS
+AS	= $(CROSS_BINUTILS)as
+endif
+ifndef LD
+LD	= $(CROSS_BINUTILS)ld
+endif
+ifndef RANLIB
+RANLIB	= $(CROSS_BINUTILS)ranlib
+endif
+
+include $(TOPDIR)/Makefile.$(ARCHSUBDIR)
+
+CCOMMON_OPT	+= -DASMNAME=$(FU)$(*F) -DASMFNAME=$(FU)$(*F)$(BU) -DNAME=$(*F)$(BU) -DCNAME=$(*F)
+
+ifeq ($(CORE), PPC440)
+CCOMMON_OPT	+= -DALLOC_QALLOC
+endif
+
+ifeq ($(CORE), PPC440FP2)
+STATIC_ALLOCATION = 1
+endif
+
+ifdef HUGETLB_ALLOCATION
+CCOMMON_OPT	+= -DALLOC_HUGETLB
+endif
+
+ifdef STATIC_ALLOCATION
+CCOMMON_OPT	+= -DALLOC_STATIC
+endif
+
+ifdef BIGPHYSAREA_ALLOCATION
+CCOMMON_OPT	+= -DALLOC_BIGPHYSAREA -DBIGPHYS_DEVICE_NAME=\"/dev/mapper\"
+endif
+
+ifdef MIXED_MEMORY_ALLOCATION
+CCOMMON_OPT	+= -DMIXED_MEMORY_ALLOCATION
+endif
+
+ifdef NUMA_AFFINITY
+CCOMMON_OPT	+= -DUSE_MEMORY_AFFINITY
+EXTRALIB	+= -lnuma
+endif
+
+ifneq ($(OSNAME), CYGWIN_NT)
+EXTRALIB	+= -lm
+endif
+
+ifeq ($(FU), _)
+CCOMMON_OPT	+= -DFUNDERSCORE=$(FU) -DNEEDFUNDERSCORE
+endif
+
+ifeq ($(BU), _)
+CCOMMON_OPT	+= -DBUNDERSCORE=$(BU) -DNEEDBUNDERSCORE
+endif
+
+CFLAGS     = $(COMMON_OPT) $(CCOMMON_OPT) -I$(TOPDIR) $(CONFIG)
+SPU_CFLAGS = $(COMMON_OPT) -I$(TOPDIR) $(CONFIG) -Wall
+PFLAGS     = $(COMMON_OPT) $(CCOMMON_OPT) -I$(TOPDIR) $(CONFIG) -DPROFILE $(COMMON_PROF)
+
+FFLAGS      = $(COMMON_OPT) $(FCOMMON_OPT)
+
+FPFLAGS    = $(COMMON_OPT) $(FCOMMON_OPT) $(COMMON_PROF)
+
+ifndef SUFFIX
+SUFFIX  = o
+endif
+
+ifndef PSUFFIX
+PSUFFIX = po
+endif
+
+ifndef LIBSUFFIX
+LIBSUFFIX = a
+endif
+
+ifndef SMP
+LIBNAME		= $(LIBPREFIX)_$(LIBSUBARCH)$(REVISION).$(LIBSUFFIX)
+LIBNAME_P	= $(LIBPREFIX)_$(LIBSUBARCH)$(REVISION)_p.$(LIBSUFFIX)
+else
+LIBNAME		= $(LIBPREFIX)_$(LIBSUBARCH)p$(REVISION).$(LIBSUFFIX)
+LIBNAME_P	= $(LIBPREFIX)_$(LIBSUBARCH)p$(REVISION)_p.$(LIBSUFFIX)
+endif
+
+LIBSONAME    = $(LIBNAME:.$(LIBSUFFIX)=.so)
+LIBDLLNAME   = $(LIBNAME:.$(LIBSUFFIX)=.dll)
+LIBDYNNAME   = $(LIBNAME:.$(LIBSUFFIX)=.dylib)
+LIBWIN2KNAME = $(LIBNAME:.$(LIBSUFFIX)=.lib)
+LIBDEFNAME   = $(LIBNAME:.$(LIBSUFFIX)=.def)
+LIBEXPNAME   = $(LIBNAME:.$(LIBSUFFIX)=.exp)
+LIBZIPNAME   = $(LIBNAME:.$(LIBSUFFIX)=.zip)
+
+LIBS		= $(TOPDIR)/$(LIBNAME)
+LIBS_P		= $(TOPDIR)/$(LIBNAME_P)
+
+CC	= $(CROSS_SUFFIX)$(COMPILER)$(CROSS_VERSION)
+FC	= $(CROSS_SUFFIX)$(COMPILER_F77)$(CROSS_VERSION)
+
+export MACHINE
+export OSNAME
+export PGCPATH
+export ARCH
+export SUBARCH
+export ARCHSUBDIR
+export CONFIG
+export FU
+export LIBSUBARCH
+export CORE
+
+.SUFFIXES: .$(PSUFFIX) .$(SUFFIX) .f
+
+.f.$(SUFFIX):
+	$(FC) $(FFLAGS) -c $<  -o $(@F)
+
+.f.$(PSUFFIX):
+	$(FC) $(FPFLAGS) -pg -c $<  -o $(@F)
+
+
+ifdef BINARY64
+PATHSCALEPATH	= /opt/pathscale/lib/3.1
+PGIPATH		= /opt/pgi/linux86-64/7.1-5/lib
+else
+PATHSCALEPATH	= /opt/pathscale/lib/3.1/32
+PGIPATH		= /opt/pgi/linux86/7.1-5/lib
+endif
+
+ACMLPATH	= /opt/acml/4.1.0
+ifneq ($(OSNAME), Darwin)
+# MKLPATH         = $(HOME)/misc/mkl/10.0.3.020/lib
+MKLPATH         = /opt/intel/mkl/10.0.3.020/lib
+else
+MKLPATH         = /Library/Frameworks/Intel_MKL.framework/Versions/10.0.1.014/lib
+endif
+ATLASPATH	= /opt/atlas/3.7.19
+FLAMEPATH	= $(HOME)/flame/lib
+ifneq ($(OSNAME), SunOS)
+SUNPATH		= /opt/sunstudio12
+else
+SUNPATH		= /opt/SUNWspro
+endif

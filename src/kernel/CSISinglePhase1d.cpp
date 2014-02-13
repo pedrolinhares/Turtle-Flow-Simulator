@@ -22,34 +22,88 @@
 
 using namespace std;
 
-CSISinglePhase1d::CSISinglePhase1d(int _cpoints, int _maxni, double _erroni)
-{
-	/// Class constructor.
-	cpoints = _cpoints;
+CSISinglePhase1d::CSISinglePhase1d(CGrid *grid, int _maxni, double _erroni) {
+	/// Class Constructor
+	
+	cpoints = grid->CellNumber();
 	maxni = _maxni;
 	erroni = _erroni;
 	
-	/// Constructing the A matrix.
-    A = new double*[cpoints];
-    for (int i=0 ; i < (cpoints) ; i++ ) {
-        A[i] = new double[3];
-    }
-
-    b = new double[cpoints]; ///< Constructing the Free Vector
-    Xni = new double[cpoints]; ///< Constructing the Solution Vector
+	elem_numb = MatrixElementsNumber(grid);
+	
+	/// Allovating the Matrix A ///
+	Acol = new int[elem_numb]; 
+	Arow = new int[cpoints + 1]; 
+	Aval = new double[elem_numb];
+	
+	/// Starting the Aval ///
+	for (int j = 0; j < elem_numb; j++) { Aval[j] = 0; }
+	
+	/// Starting Acol and Arow ///
+	/// For this is needed to access all cells in domain and verify their neighbours
+	/// For 1d case, the cells are accessed from left to right.
+	
+	int colcount = 0; ///< Counter used to fill the Acol;
+	
+	/// First Cell
+	Arow[0] = 0;
+	Arow[1] = 2;
+	Acol[colcount] = 0;
+	colcount++;
+	Acol[colcount] = 1;
+	colcount++;
+	
+	/// Middle Cells 
+	for (int i = 1 ; i < (cpoints - 1) ; i++ ) {
+		Arow[(i+1)] = 3;
+		Acol[colcount] = (i - 1);
+		colcount++;
+		Acol[colcount] = i;
+		colcount++;
+		Acol[colcount] = (i + 1);
+		colcount++;
+	}
+	
+	/// Last Cell
+	Arow[cpoints] = 2;
+	Acol[colcount] = (cpoints - 1);
+	colcount++;
+	Acol[colcount] = cpoints;
+	colcount++;
+	
+	/// Cumulating the Arow array
+	for (int g = 0; g < cpoints ; g++) {
+		Arow[g+1] = Arow[g] + Arow[g+1] ;
+	}
+	
+	/// Constructing the Free Vector
+	b = new double[cpoints]; 
+	
+	/// Constructing the Solution Vector
+    Xni = new double[cpoints]; 
+		  
 }
 
 CSISinglePhase1d::~CSISinglePhase1d()
 {
-	for(int i = 0; i < cpoints; i++)
-    delete A[i];
-
-  	delete [] A;
-  	delete [] b;
-  	delete [] Xni;
-	
 	/// Class destructor.
+	delete [] Acol;
+	Acol = NULL;
+	
+	delete [] Arow;
+	Arow = NULL;
+	
+	delete [] Aval;
+	Aval = NULL;
+	
+}
 
+int CSISinglePhase1d::MatrixElementsNumber(CGrid *grid) {
+ /// This function run over all cells in problem and returns the number of elements
+ ///that will be created in matrix A. It is used for pre-allocate memory for UMFPack matrix
+ 
+ return (3*grid->CellNumber() - 2); /// Each cell is connected to other two, but the firs and last not, so (3*cells - first - last)
+ 
 }
 
 double CSISinglePhase1d::Gamma( CGrid *grid, int i) {
@@ -86,22 +140,43 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 
     double Wi, Ci, Ei;
 	double deltap;
-
-    for (int i = 0 ; i < (cpoints) ; i++) {
-
-    	Wi = grid->RightTrasmx(i-1);  ///< Calculating the west matrix element;
-
-    	Ei = grid->RightTrasmx(i); ///< Calculating the east matrix element;
-
+	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
+	
+	/// Filling the first line of matrix A
+	Wi = 0; ///< There is no west matrix element;
+	Ei = grid->RightTrasmx(0); ///< Calculating the east matrix element;
+	Ci = - Gamma(grid, 0)/deltat - Ei - Wi;	///< Calculating the central matrix element;
+	
+		Aval[elemcount] = Ci;
+	    elemcount++;
+	    Aval[elemcount] = Ei;
+	    elemcount++;
+	
+	/// Filling the middle A Elements
+    for (int i = 1 ; i < (cpoints - 1) ; i++) {
+		
+		Wi = grid->RightTrasmx(i-1); ///< Calculating the west matrix element;
+		Ei = grid->RightTrasmx(i);	///< Calculating the east matrix element;	
     	Ci = - Gamma(grid, i)/deltat - Ei - Wi;	///< Calculating the central matrix element;
 
-        A[i][0] = Wi;
-        A[i][1] = Ci;
-        A[i][2] = Ei;
+	        Aval[elemcount] = Wi;
+	        elemcount++;
+	        Aval[elemcount] = Ci;
+	        elemcount++;
+	        Aval[elemcount] = Ei;
+	        elemcount++;
     }
+    
+    /// Filling the last line of matrix A
+    Wi = grid->RightTrasmx(cpoints - 2); ///< Calculating the west matrix element;
+    Ei = 0;	///< There is no east matrix element;
+	Ci = - Gamma(grid, (cpoints - 1))/deltat - Ei - Wi;	///< Calculating the central matrix element;
+	
+		Aval[elemcount] = Wi;
+        elemcount++;
+        Aval[elemcount] = Ci;
+        elemcount++;	
 
-    A[0][0] = 0; ///< Left wall boundary condition;
-    A[cpoints-1][2] = 0; ///< Right wall boundary condition;
 }
 
 void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
@@ -166,14 +241,16 @@ void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double del
 
        do {
 
-         BuildMatrix(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.
+         BuildMatrix(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
          BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
-         solver->GaussSeidel( A , b ,Xni); ///< Calling the solver used in this problem
+         
+         Print();
+         
+         solver->UMFPack( Acol, Arow, Aval, b, Xni, cpoints ); ///< Calling the solver used in this problem
 
         	 /////////  Error Analyzing  /////////
 
 	         for (int j=0 ; j<cpoints; j++) {
-		          //er1 = abs(Xni[j] - grid->Pressure(j))/Xni[j];
 		          er1 = abs(Xni[j] - grid->Pressure(j));
 		          if (j == 0) {
 		            	er1max = er1;
@@ -194,4 +271,24 @@ void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double del
     cout << "     Linear Iterations - " << h;
     cout << "     Linear Error - " << er1max << "\n";
 
+}
+
+void CSISinglePhase1d::Print() {
+	///This function prints on screen all the matrix. It is used to debug the code.
+	
+	cout << "\nCumulative Row Array (Arow):\n";
+	for (int i = 0; i < (cpoints + 1) ; i++ ) { cout << Arow[i] << endl; }
+	
+	cout << "\nColumn index for all elements (Acol):\n";
+	for (int i = 0; i < elem_numb ; i++ ) { cout << Acol[i] << endl; }
+	
+	cout << "\nValue for all elements (Aval):\n";
+	for (int i = 0; i < elem_numb ; i++ ) { cout << Aval[i] << endl; }
+	
+	cout << "\nValue of free vector (b):\n";
+	for (int i = 0; i < (cpoints) ; i++ ) { cout << b[i] << endl; }
+	
+	cout << "\nValue of solution x (Xni):\n";
+	for (int i = 0; i < (cpoints) ; i++ ) { cout << Xni[i] << endl; }
+	
 }

@@ -1,0 +1,14 @@
+#!/usr/bin/perl
+
+$path = "/cygdrive/c/Program\\ Files/PGI/Microsoft\\ Open\\ Tools\\ 8/bin/link.exe /lib";
+
+$option  = shift(@ARGV);
+$libname = shift(@ARGV);
+
+if (-e $libname) {
+    $command = $path . " " . $libname . " " . join(" ", @ARGV) . " /OUT:" . $libname . " /NOLOGO \n";
+} else {
+    $command = $path . " " . join(" ", @ARGV) . " /OUT:" . $libname . " /NOLOGO \n";
+}
+
+print `$command`;

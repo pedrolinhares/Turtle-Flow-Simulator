@@ -1,0 +1,21 @@
+#!/bin/bash
+
+BINARY=0
+
+source ./detect
+
+echo
+echo Done. This library is compiled with following conditions.
+echo
+echo -e Binary\\t... 32bit
+
+if [ -nz $F_COMPILER ]; then
+echo -e Fortran\\t... $FCOMPILER
+else
+echo -e Fortran\\t... I don\'t know.
+fi
+
+if [ $HAS_SMP -eq 1 ]; then
+echo -e SMP\\t... Enabled. You have to link library with -lpthread option.
+fi
+echo

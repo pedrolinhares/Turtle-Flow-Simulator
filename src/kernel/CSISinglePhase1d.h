@@ -32,24 +32,36 @@
 class CSISinglePhase1d : public CResModelType
 {
 	protected:
-		
-		double **A; ///< Coefficient Matrix
-  		double *b; ///< Free Vector
-  		double *Xni; ///< Solution Vector
-		int cpoints; ///< Number of cells in the reservoir. It is the same number of the linear equation system lines.
-	 	int maxni; ///< Max number of iterations in linearization
-  		double erroni; ///< Precision of linearization
+				
+  		int cpoints; ///< Number of cells in the reservoir. It is the same number of the linear equation system lines;
+  		int elem_numb; ///< Number of non-zeros elements in matrix A;
+	 	int maxni; ///< Max number of iterations in linearization;
+  		double erroni; ///< Precision of linearization.
 
+		/// The solver will be called to solve the linear system:
+		/// A' * Xni = b, Where A' = f(Acol, Arow, Aval)	
+		double *b; ///< Free Vector;
+  		double *Xni; ///< Solution Vector;
+		
+		/// The A matrix must be constructed using three arrays of data. More details are described in UMFPack user-guide.
+		int *Acol; ///< Column index for all non-zero elements in matrix A;
+		int *Arow; ///< Cumulative Row sum for the number of non-zeros elements;
+		double *Aval; ///< Value for all non-zero elements in matrix A.
+		
+		
 	public:
 
-		CSISinglePhase1d(int _cpoints, int _maxni, double _erroni); ///< Single Phase 1d constructor;
-		virtual ~CSISinglePhase1d(); ///< Single Phase 1d destructor;
+		CSISinglePhase1d(CGrid *grid, int _maxni, double _erroni); ///< Single Phase 1d Constructor; 
+		virtual ~CSISinglePhase1d(); ///< Single Phase 1d destructor;	
 		
+		/// Model Functions ///		
+		virtual int MatrixElementsNumber(CGrid *grid); ///< Returns the number of elements that will be created in matrix A;
 		virtual void Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat); ///< Makes a time iteration for the problem;
 		virtual void BuildMatrix(CGrid *grid, double deltat); ///< Builds the coefficient matrix "A";
 		virtual void BuildCoefVector(CGrid *grid, double deltat); ///< Builds the free vector "b";
 		virtual void BuildInitialSolution(CGrid *grid);	///< Builds the solution "X";
 		virtual double Gamma( CGrid *grid, int i); ///< Calculates the Gamma factor of the reservoir.
+		virtual void Print(); ///< This function prints on screen all the matrix. It is used to debug the code.
 
 };
 

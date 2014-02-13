@@ -36,7 +36,6 @@ class CGrid1d1p : public CGrid
 
     private:
 
-    	int cellnumber; ///< Number of cells in domain
 		double *lenght; ///< Vector representing the lenght of each cell in domain
     	double *width;   ///< Vector representing the Width of each cell in domain.
 		double *thickness;  ///< Vector representing the Thickness of each cell in domain.
@@ -66,7 +65,7 @@ class CGrid1d1p : public CGrid
 		double Porosity( int celln, double pressure) { return cells[celln].Porosity(pressure); }; ///< Return the atual porosity of a specific cell in domain.
 
 		//////////  Cell Functions  //////////
-		virtual int CellNumber() { return cellnumber; }; ///< Return the cell ID of a specific cell in domain;
+		virtual int CellNumber() { return cellnumber; }; ///< Return the number of cells in domain;
 		int CellId( int celln ) { return cells[celln].CellId(); }; ///< Return the cell ID of a specific cell in domain;
 		double Pressure( int celln ); ///< Return the atual pressure of a specific cell in domain;
 		double BackPressure( int celln ) { return cells[celln].BackPressure(); }; ///< Return the back pressure of a specific cell in domain;

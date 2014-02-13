@@ -1,0 +1,54 @@
+>03.29.2006 Version 1.0 released.
+03.29.2006 Fixed level1/iamin/x86/Makefile
+03.29.2006 Disabling SMP for GEMV
+03.29.2006 Fixed bug ZGEMV_T for Prescott
+03.29.2006 Changed blocking scheme for Level 3 functions except for TRSM/TRMM
+03.31.2006 Changed $(F77) to $(FC) in level1/rot*/Makefile
+03.31.2006 Fixed various Makefile for ia64 (iamax, iamin, max, min, ...)
+04.01.2006 Added rules for FreeBSD at exports/Makefile
+04.02.2006 Added copying function(trmm_??copy_1.c) in level3/trmm.
+04.03.2006 Fixed bug DGEMV_T for Prescott and Opteron
+04.03.2006 Improved performance for dot operation for Prescott
+04.04.2006 Improved performance for dot/axpy operation for Opteron
+04.05.2006 Modified prefetch timing for GEMM/Opteron
+04.18.2006 Fixed CPU detection routine for Pentium3 512kB L2
+04.25.2006 Modified cpuid_x86.c to get correct number of cores
+04.25.2006 level1/others/memory.c was fixed to work memory affinity on SLES
+04.26.2006 Modified link checking routine (added EXTRALIB variable)
+04.26.2006 Added some optimized Level 1 function for x86
+04.27.2006 Added multithread support for Windows
+05.30.2006 Improved some level 1 functions for x86
+05.31.2006 Initial fix for OSX/x86
+06.02.2006 Fixed scal for x86_64
+06.07.2006 Improved SGEMM for PPC970/AltiVec function
+06.08.2006 Modified CPU affinity prototype to use glibc's prototype.
+06.09.2006 Added SSE4 Instruction/CORONE detection routine in getarch.c
+06.15.2006 Fixed illegal instruction in level1/swap/x86_64/swap.S
+06.21.2006 Improved CGEMM for PPC970/AltiVec function
+06.23.2006 Added "quickbuild" script
+06.26.2006 moved all Woodcrest stuff to disclosed directory
+06.26.2006 modifed cpuid_x86.c to detect Woodcrest chip correctly
+07.08.2006 Change default of AIX to POWER5, Added HugeTLB detection
+07.10.2006 Added busy wait implementation in thread module
+07.10.2006 Now it works on Windows x64 edition (still 32bit mode)
+07.11.2006 modified level1/other/x86/staticbuffer.S to work on Windows
+07.14.2006 merged core2 architecture tree
+07.14.2006 merged some lapack functions(LU/Cholesky)
+07.16.2006 Improved Woodcrest Level 3 performance
+07.18.2006 Fixed scal kernel on IA64(result is wrong if n = 0)
+08.04.2006 Merged various improvement for Core2
+08.09.2006 Added "exit 1" in Makefile to stop correctly when error occurs
+08.17.2006 Wrote initial code for rest of Level 2 functions
+08.19.2006 Modified prefetch policy of POWER architecture.
+           Some early POWER5 won't accept DCBT extended format
+09.15.2006 Merged LAPACK/TRTRI functions
+09.15.2006 Merged various native TRSM kernels
+09.15.2006 The latest Cygwin don't generate '.exe' suffix under
+           special condition. Got rid of "." from script.
+10.02.2006 /dev/null will be deleted if symbol checking is running as root. Fixed.
+12.01.2006- Adding quad'(dache) precision BLAS. Currently works on only 32bit x86 architecture
+12.18.2006 Fixed serious bug in level2/gemv/x86_64/gemv_t_sse2.S and gemv_t_sse2_core2.S. It cause segmentation fault due to wrong jump address
+03.21.2007 level1/x86/axpy_sse.S is fixed. Thanks Ake Sandgren.
+05.07.2007 Added functions for PowerPC G4 processor(aka. PPC7450)
+07.23.2007 Fixed various bugs. Thanks Dr. Katsuki Fujisawa.
+05.12.2008 Suuport Windows 64bit environment

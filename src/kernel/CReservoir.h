@@ -34,7 +34,6 @@
 #include "CSISinglePhase1d.h"
 
 #include "CSolverMatrix.h"
-#include "CSolMatTrid.h"
 
 /**
  * The CReservoir is the main class of the project, responsible of manage all the simulation.
