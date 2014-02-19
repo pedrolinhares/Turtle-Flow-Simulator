@@ -91,12 +91,6 @@ CReservoir::CReservoir()
   fmodel >> solverid;
   fmodel.ignore(256, '\n');
   
-  fmodel >> solver_maxit;
-  fmodel.ignore(256, '\n');
-  
-  fmodel >> solver_error;
-  fmodel.ignore(256, '\n');
-  
   switch (solverid) {
   	case 1: {
   		switch (dimensions) {
@@ -143,7 +137,6 @@ void CReservoir::Run() {
   //grid->Print(); ///< Printing the grid data on screen, Only for debugging.
 
      model->BuildInitialSolution(grid); ///< Constructing an initial solution, according to the grid data.
-
      
      double tme = 0;
 

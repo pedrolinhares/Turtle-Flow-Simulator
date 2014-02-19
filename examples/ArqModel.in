@@ -7,8 +7,6 @@
 1e-3  #* Relative Linear Precision *#
 
 1     #* Solver Identificator *#
-100   #* Maximum Solver Iterations *#
-1e-3  #* Relative Solver Precision *#
 
 15    #* Delta time *#
 360   #* Final Simulation Time *#

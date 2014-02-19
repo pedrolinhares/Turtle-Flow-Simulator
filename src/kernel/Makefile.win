@@ -6,12 +6,12 @@ CC       = gcc.exe
 WINDRES  = windres.exe
 OBJ      = CBlock.o CCell1d.o CFluid.o CGas.o CGrid.o CGrid1d1p.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
 LINKOBJ  = CBlock.o CCell1d.o CFluid.o CGas.o CGrid.o CGrid1d1p.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -g -llibumfpack -llibamd -llibgoto -L../solver/GotoBLAS -L../solver/AMD/Lib -L../solver/UMFPACK/Lib -g3
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -g -L../solver/GotoBLAS -L../solver/AMD/Lib -L../solver/UMFPACK/Lib -llibumfpack -llibamd -llibgoto -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.7.2/include/c++"
 BIN      = ReservoirSoftware.exe
-CXXFLAGS = $(CXXINCS) -g3 -g -I../solver/UMFPACK/Include -I../solver/AMD/Include -I../solver/UFconfig
-CFLAGS   = $(INCS) -g3 -g -I../solver/UMFPACK/Include -I../solver/AMD/Include -I../solver/UFconfig
+CXXFLAGS = $(CXXINCS) -g3 -g -I../solver/UMFPACK/Include -I../solver/UFconfig -I../solver/AMD/Include -llibumfpack -llibamd -llibgoto
+CFLAGS   = $(INCS) -g3 -g -I../solver/UMFPACK/Include -I../solver/UFconfig -I../solver/AMD/Include -llibumfpack -llibamd -llibgoto
 RM       = rm -f
 
 .PHONY: all all-before all-after clean clean-custom
