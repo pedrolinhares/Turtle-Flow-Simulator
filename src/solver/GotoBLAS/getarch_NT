@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# if test getarch_cmd -ot getarch.c; then
+#     rm -f getarch_cmd
+# fi
+
+if test ! -x getarch_cmd.exe; then
+    rm -f getarch_cmd.exe
+    $2 $3 $4 -o getarch_cmd.exe getarch.c cpuid.S > /dev/null
+    if test ! -x getarch_cmd.exe; then
+	$2 $3 $4 -o getarch_cmd.exe getarch.c cpuid.S > /dev/null
+    fi
+fi
+
+./getarch_cmd.exe $1

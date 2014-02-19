@@ -1,0 +1,117 @@
+                Quick installation for GotoBLAS
+
+*************************************************************************
+                 For Linux / x86 or x86_64 user
+
+Please try "quickbuild" script. In this case, please keep "Makefile.rule"
+original.
+
+./quickbuild.32bit ... Generate 32bit library
+./quickbuild.64bit ... Generate 64bit library
+
+This script will check if your computer has SMP and commercial Fortran
+compiler. Priority order is PathScale, PGI, Intel, gfortran, g95 and g77.
+Note that this script is too simple to find Fotran compiler which is
+NOT in the PATH environment.
+
+*************************************************************************
+
+
+1. Edit and choose appropriate architecture at the top of "getarch.c" if
+   your architecture is POWERPC series, or you need cross compiling.
+   Also if you're going to generate libraries for Windows2000/XP, you
+   need Cygwin package.
+
+2. Edit top of Makefile.rule
+
+ 2-1. C_COMPILER ... You should choose GNU. Intel compiler may also
+                     work, but C code is only used for non performance
+                     critical part, and will be no difference.
+
+ 2-2. F_COMPILER ... Comment in that much up your FORTRAN compiler.
+                     Since each Fortran compiler has different
+                     interface, you need to specify Fortran compiler
+                     that you use.
+
+ 2-3. SMP = 1    ... If your machine has SMP or you need threaded
+                     library, you may specify it.
+                     If thread library is enabled, you can control
+                     number of threads by environment value
+                     "OMP_NUM_THREADS" or "GOTO_NUM_THREADS".
+
+ 2-4. MAX_TREADS ... Define maximum threads of this library. There is no
+                     upper limit, but larger number will consume extra
+                     resource. It should be minimum and may be equal
+                     number of cores that your computer has.
+
+ 2-5. BINARY64 = 1 ... If your machine supports both 32bit and 64bit,
+                       and you want to build 64bit binary. Default is
+                       32bit.
+
+ 2-6. INTERFACE64 = 1 ... This is for 64bit binary only.
+                          BLAS can use 64bit integer instead of 32bit
+                          integer and can drive over 8GB region. Notice
+                          you need a Fortran compiler that supports
+                          64bit integer interface(this is for -i8
+                          option of Fortran compiler).
+
+ 2-7. ALLOC_HUGETLB ... Normally, GotoBLAS tries to use mmaped memory
+                        region. If you can access hugeTLB file system
+                        on Linux/AIX, Soralis. you may specify it. 
+			Generally performance with HugeTLB fs is better.
+
+ 2-8. STATIC_ALLOCATION  ... Although default is dynamic allocation, some
+                             32bit OS will cause addressing problem. 
+                             I recommend you to specify it if your OS is
+                             32bit.
+
+3. Compile
+
+   You need GNU make to compile this library.
+
+   3-1. "make" or "make libs" ... generating normal library.
+
+   3-2. "make prof"           ... generating profile enabled library
+                                  (limited support. Linux only)
+
+   3-3. "make clean"          ... clean up
+
+
+4. Checking
+
+   If you want to make sure if GotoBLAS works or not, you may run some
+   checking routines which are provided by Netlib.
+
+   "cd test;make"
+
+   You can make sure it by checking *.SUMM file. Notice this checking
+   routines are minimum and not complete. If you want to check
+   gotoBLAS throughly, you may use checking routines that are provided
+   by LAPACK package.
+
+
+5. Generating dynamic library
+
+   5-1. Shared library (for Linux, FreeBSD, or other ELF based system)
+
+        "cd exports; make so"
+
+   5-2. Windows DLL
+
+        You need "lib.exe" which is contained in Microsoft Visual C.
+
+        "cd exports; make dll"
+
+   5-3. OSX dynamic library
+
+        "cd exports; make dyn"
+
+   5-4. AIX
+
+        For 32bit binary ... "cd exports; make goto32.o"
+        For 64bit binary ... "cd exports; make goto64.o"
+
+        If you want to combined library which supports both 32bit and
+        64bit,
+
+        ar -X32_64 -ruv libgoto.a goto32.o goto64.o

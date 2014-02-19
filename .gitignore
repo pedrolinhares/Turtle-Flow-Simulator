@@ -11,3 +11,4 @@ build/
 images/
 src/reservoir_data/
 teste/
+*.layout

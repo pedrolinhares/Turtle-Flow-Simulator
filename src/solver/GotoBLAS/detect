@@ -1,0 +1,94 @@
+rm -f getarch_cmd
+rm -f getarch_cmd.exe
+
+make clean
+
+FCOMPILER=NULL
+
+which g77 > /dev/null 2> /dev/null
+if [ 0 == $? ]; then
+FCOMPILER=G77
+fi
+
+which g95 > /dev/null 2> /dev/null
+if [ 0 == $? ]; then
+FCOMPILER=G95
+fi
+
+which gfortran > /dev/null 2> /dev/null
+if [ 0 == $? ]; then
+FCOMPILER=GFORTRAN
+fi
+
+which ifort > /dev/null 2> /dev/null
+if [ 0 == $? ]; then
+FCOMPILER=INTEL
+fi
+
+which pgf77 > /dev/null 2> /dev/null
+if [ 0 == $? ]; then
+FCOMPILER=PGI
+fi
+
+which pathf90 > /dev/null 2> /dev/null
+if [ 0 == $? ]; then
+FCOMPILER=PATHSCALE
+fi
+
+which xlf > /dev/null 2> /dev/null
+if [ 0 == $? ]; then
+FCOMPILER=IBM
+fi
+
+HAS_SMP=0
+
+NUM_CPU=`cat /proc/cpuinfo | grep -c processor`
+if [ $NUM_CPU -gt 1 ]; then
+HAS_SMP=1
+fi
+
+if [ $HAS_SMP -eq 1 ]; then
+COMPILER_OPTION="$COMPILER_OPTION SMP=1"
+fi
+
+if [ -nz $F_COMPILER ]; then
+COMPILER_OPTION="$COMPILER_OPTION F_COMPILER=$FCOMPILER"
+fi
+
+if [ $BINARY -eq 1 ]; then
+COMPILER_OPTION="$COMPILER_OPTION BINARY64=1"
+else
+COMPILER_OPTION="$COMPILER_OPTION BINARY32=1"
+fi
+
+echo "Building Library ..."
+
+if [ $HAS_SMP -eq 1 ]; then
+make $COMPILER_OPTION -j 2 libs
+else
+make $COMPILER_OPTION libs
+fi
+
+if [ $? -ne 0 ]; then
+echo Abort!!
+exit 255
+fi
+
+echo "Testing Library ..."
+
+(cd test; make $COMPILER_OPTION)
+
+if [ $? -ne 0 ]; then
+echo Abort!!
+exit 254
+fi
+
+echo "Creating Shared Library ..."
+
+(cd exports; make $COMPILER_OPTION so)
+
+if [ $? -ne 0 ]; then
+echo Abort!!
+exit 253
+fi
+

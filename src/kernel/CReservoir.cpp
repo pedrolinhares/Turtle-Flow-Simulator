@@ -79,7 +79,7 @@ CReservoir::CReservoir()
   
   switch (model_type) {
   	case 1:  {
-  		model = new CSISinglePhase1d(cpoints, model_maxni, model_errorni); ///< Constructing the Reservoir Model.		
+  		model = new CSISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the Reservoir Model.		
   		break;
   	}
   }
@@ -91,17 +91,11 @@ CReservoir::CReservoir()
   fmodel >> solverid;
   fmodel.ignore(256, '\n');
   
-  fmodel >> solver_maxit;
-  fmodel.ignore(256, '\n');
-  
-  fmodel >> solver_error;
-  fmodel.ignore(256, '\n');
-  
   switch (solverid) {
   	case 1: {
   		switch (dimensions) {
   			case 1: {
-  				solver = new CSolMatTrid(cpoints, solver_maxit, solver_error); ///< Constructing Solver.
+  				solver = new CSolverMatrix(); ///< Constructing Solver.
   				break;
   			}
   		}
@@ -140,10 +134,9 @@ CReservoir::~CReservoir() {
 void CReservoir::Run() {
   ///This function manages all the simulation. The loops used to advance time are implemented here.
 
-  grid->Print(); ///< Printing the grid data on screen, Only for debugging.
+  //grid->Print(); ///< Printing the grid data on screen, Only for debugging.
 
      model->BuildInitialSolution(grid); ///< Constructing an initial solution, according to the grid data.
-
      
      double tme = 0;
 

@@ -1,0 +1,171 @@
+#!/usr/bin/perl
+
+@blasobjs   = (
+	       caxpy,ccopy,cdotc,cdotu,cgbmv,cgemm,cgemv,cgerc,cgeru,
+	       chbmv,chemm,chemv,cher2,cher2k,cher,cherk,
+	       chpmv,chpr2,chpr,crotg,cscal,csrot,csscal,cswap,
+	       csymm,csyr2k,csyrk,ctbmv,ctbsv,ctpmv,ctpsv,ctrmm,ctrmv,ctrsm,
+	       ctrsv,
+	       damax,damin,dasum,daxpy,dcabs1,dcopy,ddot,dgbmv,dgemm,
+	       dgemv,dger,dmax,dmin,dnrm2,drot,drotg,drotm,drotmg,dsbmv,
+               dscal,dsdot,dspmv,dspr2,
+	       dspr,dswap,dsymm,dsymv,dsyr2,dsyr2k,dsyr,dsyrk,dtbmv,dtbsv,
+	       dtpmv,dtpsv,dtrmm,dtrmv,dtrsm,dtrsv,dzamax,dzamin,dzasum,dznrm2,
+	       icamax,icamin,idamax,idamin,idmax,idmin,isamax,isamin,ismax,ismin,
+	       izamax,izamin,lsame,samax,samin,sasum,saxpy,scabs1,scamax,
+	       scamin,scasum,scnrm2,scopy,sdot,sdsdot,sgbmv,sgemm,sgemv,sger,
+	       smax,smin,snrm2,
+	       srot,srotg,srotm,srotmg,ssbmv,sscal,sspmv,sspr2,sspr,sswap,
+	       ssymm,ssymv,ssyr2,ssyr2k,ssyr,ssyrk,stbmv,stbsv,stpmv,stpsv,
+	       strmm,strmv,strsm,strsv,zaxpy,zcopy,zdotc,zdotu,zdrot,
+	       zdscal,zgbmv,zgemm,zgemv,zgerc,zgeru,
+	       zhbmv,zhemm,zhemv,zher2,zher2k,zher,zherk,zhpmv,zhpr2,
+	       zhpr,zrotg,zscal,zswap,zsymm,zsyr2k,zsyrk,ztbmv,
+	       ztbsv,ztpmv,ztpsv,ztrmm,ztrmv,ztrsm,ztrsv,
+	       xerbla);
+
+@exblasobjs = (
+	       qamax,qamin,qasum,qaxpy,qcabs1,qcopy,qdot,qgbmv,qgemm,
+	       qgemv,qger,qmax,qmin,
+	       qnrm2,
+	       qsbmv,qscal,qspmv,qspr2,
+	       qspr,qswap,qsymm,qsymv,qsyr2,qsyr2k,qsyr,qsyrk,qtbmv,qtbsv,
+	       qtpmv,qtpsv,qtrmm,qtrmv,qtrsm,qtrsv,
+	       qxamax,qxamin,qxasum,qxnrm2,
+	       xaxpy,xcopy,xdotc,xdotu,
+	       xqscal,xgbmv,xgemm,xgemv,xgerc,xgeru,
+	       xhbmv,xhemm,xhemv,xher2,xher2k,xher,xherk,xhpmv,xhpr2,
+	       xhpr,xscal,xswap,xsymm,xsyr2k,xsyrk,xtbmv,
+	       xtbsv,xtpmv,xtpsv,xtrmm,xtrmv,xtrsm,xtrsv,
+#	       qrot,qrotg,qrotm,qrotmg,
+#	       xdrot,xrotg,
+	       );
+
+@gemm3mobjs = (
+	       zgemm3m, cgemm3m, zsymm3m, csymm3m, zhemm3m, chemm3m,
+	       );
+
+@lapackobjs = (
+	       sgesv,  dgesv,  cgesv,  zgesv, 
+	       sgetf2, dgetf2, cgetf2, zgetf2, 
+	       sgetrf, dgetrf, cgetrf, zgetrf, 
+	       slaswp, dlaswp, claswp, zlaswp, 
+	       sgetrs, dgetrs, cgetrs, zgetrs, 
+	       slauu2, dlauu2, clauu2, zlauu2, 
+	       slauum, dlauum, clauum, zlauum, 
+	       spotf2, dpotf2, cpotf2, zpotf2, 
+	       spotrf, dpotrf, cpotrf, zpotrf, 
+	       strti2, dtrti2, ctrti2, ztrti2, 
+	       strtri, dtrtri, ctrtri, ztrtri, 
+	       spotri, dpotri, cpotri, zpotri,
+	       );
+
+
+
+@objs = (@blasobjs, @lapackobjs);
+
+if ($ARGV[2] == 1){ @objs = (@objs, @exblasobjs); };
+
+if ($ARGV[3] eq "X86_64"){ @objs = (@objs, @gemm3mobjs); };
+
+if ($ARGV[3] eq "IA64"){ @objs = (@objs, @gemm3mobjs); };
+
+@linuxobjs = ('__strtol_internal', 'exit', 'free', 'getenv', 'malloc',
+	      'mmap', 'printf', 'sqrt',
+	      'pthread_cond_broadcast', 'pthread_cond_destroy',
+	      'pthread_cond_init', 'pthread_cond_signal', 'pthread_cond_wait',
+	      'pthread_create', 'pthread_exit', 'pthread_join',
+	      'pthread_mutex_destroy', 'pthread_mutex_init',
+	      'pthread_mutex_lock', 'pthread_mutex_unlock');
+
+@winobjs = ('HPL_dlaswp00N', 'HPL_dlaswp01N', 'HPL_dlaswp01T'); 
+
+
+if ($ARGV[0] eq "linux"){
+    foreach $objs (@objs) {
+	print $objs, "\n";
+    }
+    foreach $objs (@objs) {
+	print $objs, $ARGV[1], "\n";
+    }
+    foreach $objs (@linuxobjs) {
+	print $objs, "\n";
+    }
+    exit(0);
+} 
+
+if ($ARGV[0] eq "osx"){
+    foreach $objs (@objs) {
+	print "_", $objs, $ARGV[1], "\n"  if $objs ne "xerbla";
+    }
+    exit(0);
+} 
+
+if ($ARGV[0] eq "aix"){
+    foreach $objs (@objs) {
+	print $objs, $ARGV[1], "\n";
+    }
+    exit(0);
+} 
+
+if ($ARGV[0] eq "win2k"){
+    print "EXPORTS\n";
+    $count = 1;    
+    foreach $objs (@objs) {
+	$uppercase = $objs;
+	$uppercase =~ tr/[a-z]/[A-Z]/;
+   	print "\t$objs=$objs","_  \@", $count, "\n";
+	$count ++;
+   	print "\t",$objs, "_=$objs","_  \@", $count, "\n";
+	$count ++;
+	print "\t$uppercase=$objs", "_  \@", $count, "\n";
+	$count ++;
+    }
+    exit(0);
+}
+
+if ($ARGV[0] eq "microsoft"){
+    print "EXPORTS\n";
+    $count = 1;    
+    foreach $objs (@objs) {
+	$uppercase = $objs;
+	$uppercase =~ tr/[a-z]/[A-Z]/;
+   	print "\t$objs = $objs","_\n";
+	$count ++;
+   	print "\t$objs\_ = $objs","_\n";
+	$count ++;
+   	print "\t$uppercase = $objs","_\n";
+	$count ++;
+   	print "\t$uppercase\_ = $objs","_\n";
+	$count ++;
+    }
+
+#    foreach $objs (@winobjs) {
+#	print $objs, "\n";
+#    }
+
+    exit(0);
+}
+
+if ($ARGV[0] eq "win2kasm"){
+    print "\t.text\n";
+    foreach $objs (@objs) {
+	$uppercase = $objs;
+	$uppercase =~ tr/[a-z]/[A-Z]/;
+	print "\t.align 16\n";
+	print "\t.globl _", $uppercase, "_\n";
+	print "_", $uppercase, "_:\n";
+	print "\tjmp\t_", $objs, "_\n";
+    }
+    exit(0);
+}
+
+if ($ARGV[0] eq "linktest"){
+    print "int main(void){\n";
+    foreach $objs (@objs) {
+	print $objs, $ARGV[1], "();\n" if $objs ne "xerbla";
+    }
+    print "return 0;}\n";
+    exit(0);
+}
+

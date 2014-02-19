@@ -1,45 +1,54 @@
-1     # Blocks Number
+1     #* Blocks Number *#
 
-1       # Block Id
-3.5e-6  # [-] Rock Compressibility in Block 1
-0.015   # [Darcy] Permeability in Block 1
-0.18    # [-] Porosity in block 1
-6000    # [psi] Reference Pressure
+1       #* Block Id *#
+3.5e-6  #* [-] Rock Compressibility in Block 1 *#
+0.015   #* [Darcy] Permeability in Block 1 *#
+0.18    #* [-] Porosity in block 1 *#
+6000    #* [psi] Reference Pressure *#
 
-5     # Cells Number
+5     #* Cells Number *#
 
-1000  # [ft] Width of Cell 1
-1000  # [ft] Width of Cell 2
-1000  # [ft] Width of Cell 3
-1000  # [ft] Width of Cell 4
-1000  # [ft] Width of Cell 5
+#* Lenght of cell (dX) [ft] *# 
+1000  
+1000
+1000
+1000
+1000
 
-1000  # [ft] Lenght of cell 1
-1000  # [ft] Lenght of cell 2
-1000  # [ft] Lenght of cell 3
-1000  # [ft] Lenght of cell 4
-1000  # [ft] Lenght of cell 5
+#* Width of Cell (dY) [ft] *#
+1000
+1000
+1000
+1000
+1000
 
-75    # [ft] Thickness of Cell 1
-75    # [ft] Thickness of Cell 2
-75    # [ft] Thickness of Cell 3
-75    # [ft] Thickness of Cell 4
-75    # [ft] Thickness of Cell 5
+#* Thickness of Cell (dZ) [ft] *#
+75
+75
+75
+75
+75
 
-0     # [ft] Deepth of Cell 1
-0     # [ft] Deepth of Cell 2
-0     # [ft] Deepth of Cell 3
-0     # [ft] Deepth of Cell 4
-0     # [ft] Deepth of Cell 5
+#* Deepth of Cells (Z) [ft] *#
+0
+0
+0
+0
+0
 
-1     # ID of Block Connected to Cell 1
-1     # ID of Block Connected to Cell 2
-1     # ID of Block Connected to Cell 3
-1     # ID of Block Connected to Cell 4
-1     # ID of Block Connected to Cell 5
+#* ID of Block Connected to Cell *#
+1
+1
+1
+1
+1
 
-0     # Left BC Type (0 - Const Rate, 1 - Const Pressure)
-0     # Value
+#* Left BC Type/Value (0 - Const Rate / 1 - Const Pressure) *#
+0
+#* Left BC Value [STB/d / Psi] *#
+0
 
-0     # Right BC Type (0 - Const Rate, 1 - Const Pressure)
-0     # Value
+#* Right BC Type/Value (0 - Const Rate / 1 - Const Pressure) *#
+0
+#* Right BC Value [STB/d / Psi] *#
+0

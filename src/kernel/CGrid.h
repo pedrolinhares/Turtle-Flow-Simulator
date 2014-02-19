@@ -42,7 +42,8 @@ class CGrid
 {
 
     protected:
-
+		
+		int cellnumber; ///< Number of cells in domain
     	CFluid *fluid; ///< Pointer to the fluid data;
     	int fluidtype1; ///< Type of simulated fluid;
         int blknumber; ///< Number of blocks in domain;
@@ -57,7 +58,7 @@ class CGrid
 		virtual void Print() = 0; ///< Function used to print all the reservoir data on screen;
 		virtual void SaveGridSolution(std::ofstream *fout, double time) = 0; ///< Function used to save the solution in disk.
 		virtual void SaveWellSolution(std::ofstream *fout, int welln, double time) = 0; ///< Function used to save the well solution in disk.
-
+	
 		//////////  Numerical Functions  //////////
 		virtual void InitiateSolution(double pref, double href) = 0; ///< Initiate the solution in all reservoir;
 		virtual void Iterationni(double *Xni) = 0; ///< Makes the linear iteration "ni" in all cells;
@@ -73,7 +74,7 @@ class CGrid
 		virtual double Porosity( int celln, double pressure) = 0; ///< Return the atual porosity of a specific cell in domain.
 
 		//////////  Cell Functions  //////////
-		virtual int CellNumber() = 0; ///< Return the cell ID of a specific cell in domain;
+		virtual int CellNumber() = 0; ///< Return the number of cells in domain;
 		virtual int CellId( int celln ) = 0; ///< Return the cell ID of a specific cell in domain;
 		virtual double Pressure( int celln ) = 0; ///< Return the atual pressure of a specific cell in domain;
 		virtual double BackPressure( int celln ) = 0; ///< Return the back pressure of a specific cell in domain;

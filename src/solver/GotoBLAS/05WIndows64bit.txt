@@ -1,0 +1,27 @@
+Quick guide to build library for Windows 64bit.
+
+1. What you need
+
+ a. Windows Server 2003 or later
+ b. PGI compiler for Windows
+ c. Cygwin environment
+ d. Microsoft Visual Studio (lib.exe is required to create dll)
+
+2. Modifying Makefile.rule
+
+ You have to define "C_COMPILER = PGI" in Makefile.rule. You can customize
+ other options whichever you like.
+
+3. Do "make libs"
+
+ Since Cygwin shell script is extremely slow, compiling will take over
+ 2 hours.
+
+4. Making DLL
+
+ a. Go to exports directory
+ b. Type "make dll"
+
+Good luck
+
+

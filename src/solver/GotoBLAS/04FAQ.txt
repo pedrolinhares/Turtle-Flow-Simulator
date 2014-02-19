@@ -1,0 +1,169 @@
+	GotoBLAS FAQ
+
+1. General
+
+1.1  Q Can I find useful paper about GotoBLAS?
+
+     A You may check following URL.
+
+     http://www.cs.utexas.edu/users/flame/Publications/index.htm
+
+    11. Kazushige Goto and Robert A. van de Geijn, " Anatomy of
+	High-Performance Matrix Multiplication," ACM Transactions on
+	Mathematical Software, accepted.
+
+    15. Kazushige Goto and Robert van de Geijn, "High-Performance
+        Implementation of the Level-3 BLAS." ACM Transactions on
+        Mathematical Software, submitted.
+
+
+1.2  Q Does GotoBLAS work with Hyperthread (SMT)?
+
+     A Yes, it will work, but performance will be bad. Generally SMT
+       including Hyerthread won't perform well and you should disable
+       it to achieve maximum performance.
+
+
+1.3  Q When I type "make", following error occured. What's wrong?
+
+	$shell> make
+	./getarch: line 15: ./getarch.cmd: cannot execute binary file
+	./getarch: line 15: ./getarch.cmd: cannot execute binary file
+	...
+	Makefile.rule:310: Makefile.: No such file or directory
+	make: *** No rule to make target `Makefile.'.  Stop.
+
+     A This error occurs because binary script for auto configuring is
+       mismatched with your current architecture. In this case you need
+       to run following command before buiding library.
+
+	   "rm -f getarch.cmd && make clean"
+
+
+1.4  Q When I type "make", following error occured. What's wrong?
+
+	$shell> make
+	"./Makefile.rule", line 58: Missing dependency operator
+	"./Makefile.rule", line 61: Need an operator
+	...
+
+     A This error occurs because you didn't use GNU make. Some binary
+       packages install GNU make as "gmake" and it's worth to try.
+
+
+1.5  Q Function "xxx" is slow. Why?
+
+     A Generally GotoBLAS has many well optimized functions, but it's
+       far and far from complete. Especially Level 1/2 function
+       performance depends on how you call BLAS. You should understand
+       what occurs between your function and GotoBLAS by using profile
+       enabled version or hardware performance counter. Again, please
+       don't regard GotoBLAS as a black box.
+
+
+1.6  Q I have a commercial C compiler and want to compile GotoBLAS with
+       it. Is it possible?
+
+     A All function that affects performance is written in assembler
+       and C code is just used for wrapper of assembler functions or
+       complex functions. Also I use many inline assembler functions,
+       unfortunately most of commercial compiler can't handle inline
+       assembler. Therefore you need only gcc.
+
+
+1.7  Q I use OpenMP compiler. How can I use GotoBLAS with it?
+
+     A Please understand that OpenMP is a compromized method to use 
+       thread. Although GotoBLAS can detect automatically OpenMP
+       environment, performance is slightly worse. As you know,
+       you can control number of threads by "OMP_NUM_THREADS"
+       environment value. In addition, you can also control GotoBLAS
+       threads by "GOTO_NUM_THREADS". If GOTO_NUM_THREADS is set,
+       number of threads is always detemined by this environment.
+
+1.8  Q Could you tell me how to use profiled library?
+
+     A You need to build and link your application with -pg
+       option. After executing your application, "gmon.out" is
+       generated in your current directory.
+
+       $shell> gprof <your application name> gmon.out
+
+       Each sample counts as 0.01 seconds.
+	 %   cumulative   self              self     total
+	time   seconds   seconds    calls  Ks/call  Ks/call  name
+	89.86    975.02   975.02    79317     0.00     0.00  .dgemm_kernel
+	 4.19   1020.47    45.45       40     0.00     0.00  .dlaswp00N
+	 2.28   1045.16    24.69     2539     0.00     0.00  .dtrsm_kernel_LT
+	 1.19   1058.03    12.87    79317     0.00     0.00  .dgemm_otcopy
+	 1.05   1069.40    11.37     4999     0.00     0.00  .dgemm_oncopy
+       ....
+
+       I think profiled BLAS library is really useful for your
+       research. Please find bottleneck of your application and
+       improve it.
+
+1.9  Q Is number of thread limited?
+
+     A Basically, there is no limitation about number of threads. You
+       can specify number of threads as many as you want, but larger
+       number of threads will consume extra resource. I recommend you to
+       specify minimum number of threads.
+
+
+2. Architecture Specific issue or Implementation
+
+2.1 Q Could you tell me directory structure of GotoBLAS?
+
+    A It's not so complex.
+
+    root : various Makefile, common header file
+     |
+     +--- Level1 : BLAS level 1 functions
+     |      |
+     |      + axpy   : generic interface functions and wrapper to
+     |      |   |      assembler kernel
+     |      |   +---- x86    assembler implementations for x86
+     |      |   +---- x86_64
+     |      |   +---- ia64
+     |       ....              
+     |      |
+     |      + others : memory management routine
+     |                 pthread server implementation
+     |                 misc functions requried by g77
+     |
+     +--- Level2 : BLAS level 2 functions
+     |      |
+     |      ...
+     |
+     +--- Level3 : BLAS level 3 functions
+     |      |
+     |      ...
+     |
+     +--- LAPACK : will be added in the future
+
+
+2.2 Q GotoBLAS seems to support any combination with OS and
+      architecture. Is it possible?
+
+    A Combination is limited by current OS and architecture. For
+      examble, the combination OSX with SPARC is impossible. But it
+      will be possible with slight modification if these combination
+      appears in front of us.
+
+
+2.3 Q I have POWER architecture systems. Do I need extra work?
+
+    A Although POWER architecture defined special instruction
+      like CPUID to detect correct architecture, it's privileged
+      and can't be accessed by user process. So you have to set
+      the architecture that you have manually in getarch.c.
+
+
+2.4 Q I can't create DLL on Cygwin. What's wrong?
+
+    A You have to make sure if lib.exe and link.exe are in Microsoft
+    Studio PATH. The easiest way is to use 'which' command.
+
+    $shell> which lib.exe
+    /cygdrive/c/Program Files/Microsoft Visual Studio/VC98/bin/lib.exe

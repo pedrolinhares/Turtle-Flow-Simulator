@@ -20,19 +20,35 @@
 
 #include "CSolverMatrix.h"
 
-CSolverMatrix::CSolverMatrix(int nl) : nlines(nl)   {
+CSolverMatrix::CSolverMatrix()  {
       /// Solver constructor.
 
-      maxiter = 50; ///< Default number for maximum iterations;
-      erro= 0.000001; ///< Default number for maximum error.
-
-
 }
 
-CSolverMatrix::CSolverMatrix(int nl, int _maxiter, double _erro) : nlines(nl),
- maxiter(_maxiter) , erro(_erro) {} /// Overloaded Solver constructor.
-
-CSolverMatrix::~CSolverMatrix()
-{
+CSolverMatrix::~CSolverMatrix()  {
 	/// Solver destructor.
 }
+
+void CSolverMatrix::UMFPack( int *Acol, int *Arow,	double *Aval, double *b, double *x, int n )  {
+	/// Uses the UMFPack to solve the matrix system A'x=b.
+	/// This function returns the x vector with the correct solution of the problem.
+	
+	void *Symbolic, *Numeric;
+	
+	/// This function returns a Symbolic element if the matrix construction was successful
+	umfpack_di_symbolic(n, n, Arow, Acol, Aval, &Symbolic, NULL, NULL);
+	
+	/// This function returns a Numeric element if the matrix factoration was successful
+	umfpack_di_numeric(Arow, Acol, Aval, Symbolic, &Numeric, NULL, NULL);
+	
+	/// This function returns the x array with the solution af system A'x=b;
+	umfpack_di_solve(UMFPACK_At, Arow, Acol, Aval, x, b, Numeric, NULL, NULL);
+	
+	/// This function deallocates the Symbolic object and sets the Symbolic pointer to NULL.
+	umfpack_di_free_symbolic(&Symbolic);
+	
+	/// This function deallocates the Numeric object and sets the Numeric pointer to NULL.
+	umfpack_di_free_numeric(&Numeric);
+	
+}
+
