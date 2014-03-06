@@ -31,7 +31,7 @@ CSISinglePhase1d::CSISinglePhase1d(CGrid *grid, int _maxni, double _erroni) {
 	
 	elem_numb = MatrixElementsNumber(grid);
 	
-	/// Allovating the Matrix A ///
+	/// Allocating the Matrix A ///
 	Acol = new int[elem_numb]; 
 	Arow = new int[cpoints + 1]; 
 	Aval = new double[elem_numb];
@@ -138,7 +138,7 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
 
-  double Wi, Ci, Ei;
+    double Wi, Ci, Ei;
 	double deltap;
 	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
 	
@@ -149,7 +149,7 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 	
 		Aval[elemcount] = Ci;
 	    elemcount++;
-	  Aval[elemcount] = Ei;
+	    Aval[elemcount] = Ei;
 	    elemcount++;
 	
 	/// Filling the middle A Elements
@@ -170,9 +170,9 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
     /// Filling the last line of matrix A
     Wi = grid->RightTrasmx(cpoints - 2); ///< Calculating the west matrix element;
     Ei = grid->RightTrasmx(cpoints - 1);	///< There is no east matrix element;
-	  Ci = - Gamma(grid, (cpoints - 1))/deltat - Ei - Wi;	///< Calculating the central matrix element;
+	Ci = - Gamma(grid, (cpoints - 1))/deltat - Ei - Wi;	///< Calculating the central matrix element;
 	
-		    Aval[elemcount] = Wi;
+		Aval[elemcount] = Wi;
         elemcount++;
         Aval[elemcount] = Ci;
         elemcount++;	
@@ -185,7 +185,7 @@ void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
 
 	double Eig, Wig, Cig, Qg;
-  double gama_dt, q;
+    double gama_dt, q;
   
 
 	for (int i = 0 ; i < (cpoints) ; i++) {
