@@ -1,4 +1,4 @@
-//** @file CSinglePhase1d.cpp */
+//** @file CISinglePhase1d.cpp */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
@@ -18,11 +18,11 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-#include "CSISinglePhase1d.h"
+#include "CISinglePhase1d.h"
 
 using namespace std;
 
-CSISinglePhase1d::CSISinglePhase1d(CGrid *grid, int _maxni, double _erroni) {
+CISinglePhase1d::CISinglePhase1d(CGrid *grid, int _maxni, double _erroni) {
 	/// Class Constructor
 	
 	cpoints = grid->CellNumber();
@@ -84,7 +84,7 @@ CSISinglePhase1d::CSISinglePhase1d(CGrid *grid, int _maxni, double _erroni) {
 		  
 }
 
-CSISinglePhase1d::~CSISinglePhase1d()
+CISinglePhase1d::~CISinglePhase1d()
 {
 	/// Class destructor.
 	delete [] Acol;
@@ -98,7 +98,7 @@ CSISinglePhase1d::~CSISinglePhase1d()
 	
 }
 
-int CSISinglePhase1d::MatrixElementsNumber(CGrid *grid) {
+int CISinglePhase1d::MatrixElementsNumber(CGrid *grid) {
  /// This function run over all cells in problem and returns the number of elements
  ///that will be created in matrix A. It is used for pre-allocate memory for UMFPack matrix
  
@@ -106,7 +106,7 @@ int CSISinglePhase1d::MatrixElementsNumber(CGrid *grid) {
  
 }
 
-void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
+void CISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 {
 	/// This function creates the coefficient matrix "A", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
@@ -153,7 +153,7 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 
 }
 
-void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
+void CISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 	/// This function creates the free vector "b", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
@@ -192,7 +192,7 @@ void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 
 }
 
-void CSISinglePhase1d::BuildInitialSolution(CGrid *grid) {
+void CISinglePhase1d::BuildInitialSolution(CGrid *grid) {
 	 /// This function builds the initial solution for the first problem iteration.
 	 /// It is used to initiate the first solution.
 
@@ -204,7 +204,7 @@ void CSISinglePhase1d::BuildInitialSolution(CGrid *grid) {
 
 }
 
-void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat) {
+void CISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat) {
 	/// This function makes a time iteration in all cells of domain
 	/// using the semi-implicit linearization model.
 	
@@ -246,7 +246,7 @@ void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double del
 
 }
 
-void CSISinglePhase1d::Print() {
+void CISinglePhase1d::Print() {
 	///This function prints on screen all the matrix. It is used to debug the code.
 	
 	cout << "\nCumulative Row Array (Arow):\n";

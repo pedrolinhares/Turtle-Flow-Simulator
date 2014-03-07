@@ -32,6 +32,7 @@
 
 #include "CResModelType.h"
 #include "CSISinglePhase1d.h"
+#include "CISinglePhase1d.h"
 
 #include "CSolverMatrix.h"
 

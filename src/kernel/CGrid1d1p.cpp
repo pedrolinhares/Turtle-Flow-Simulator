@@ -462,6 +462,13 @@ double CGrid1d1p::RightGravityTransmx( int celln ){
     return cells[celln].RightGravityTransmx();
 }
 
+double CGrid1d1p::Gamma( int celln ) {
+	 ///This function returns the gamma factor of a specific cell in domain;
+	 
+	 return cells[celln].Gamma(Volume(celln));
+	 
+}
+
 double CGrid1d1p::Pressure( int celln ) {
     /// This function returns the atual pressure of a specific cell in domain;
     /// if celln == -1, Left Boundary condition case.

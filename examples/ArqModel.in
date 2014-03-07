@@ -2,7 +2,7 @@
 2     #* Fluid Type (1- water; 2- Oil; 3- Gas) *#
 1     #* Problem Dimension *#
 
-1     #* Discretization Model (1 - Semi-Implicit) *#
+1     #* Discretization Model (1 - Semi-Implicit, 2 - Implicit) *#
 500   #* Maximum Linear Iterations *#
 1e-3  #* Relative Linear Precision *#
 

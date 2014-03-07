@@ -33,7 +33,7 @@
 class CCell1d
 {
 	private:
-
+		double alphac; ///< Convertion units factor;
 		int cellid; ///< Cell Id;
 		double deepth; ///< Cell deepth;
 		double pressure; ///< Pressure at atual time;
@@ -84,6 +84,7 @@ class CCell1d
 		inline double GTransmx() { return gtransmx; }; ///< Get the geometric transmissibility;
 		double RightTransmx(); ///< Return the right transmissibility;
 		double RightGravityTransmx(); ///< Return the right gravitational transmissibility;
+		double Gamma(double CellVolume); ///< Return the gamma factor;
 
 		//////////  Well Functions //////////
 		int WellId();

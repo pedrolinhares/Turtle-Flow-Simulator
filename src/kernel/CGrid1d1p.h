@@ -76,6 +76,7 @@ class CGrid1d1p : public CGrid
 		virtual void SetGTransmx(); ///< Sets the Geometric transmissibility in all cells;
 		double RightTrasmx( int celln ); ///< Return the right transmissibility of a specific cell in ddomain;
 		double RightGravityTransmx( int celln ); ///< Return the right gravitational transmissibility of a specif cell.
+		double Gamma( int celln ); ///< Return the gamma factor of a specific cell;
 
 		//////////  Well Functions //////////
 		double WellRate( int celln ) { return cells[celln].WellRate(); }; ///< Return the flow rate of a well in a specific cell in domain.

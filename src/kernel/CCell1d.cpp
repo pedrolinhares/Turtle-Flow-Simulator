@@ -25,7 +25,9 @@ using namespace std;
 CCell1d::CCell1d()
 {
 	/// CCell1d default constructor.
-
+	
+	alphac = 5.614583; ///< Convertion units factor;
+	
 	cellid = 0;
 	deepth = 0;
 	pressure = 0;
@@ -43,6 +45,8 @@ CCell1d::CCell1d(int _cellid, double _deepth, CBlock *blk, CFluid *fld) {
 	/// This cell is created with data from reservoir, and with pointers to the
 	/// block and fluid related to this cell.
 
+	alphac = 5.614583; ///< Convertion units factor;
+	
 	cellid = _cellid;
 	deepth = _deepth;
 
@@ -59,7 +63,8 @@ CCell1d::CCell1d(int _cellid, double _deepth, CBlock *blk, CFluid *fld) {
 
 CCell1d::CCell1d(CCell1d & _cell) {
 	/// CCell1d copy constructor.
-
+	
+	alphac = 5.614583; ///< Convertion units factor;
 	cellid = _cell.CellId();
 	deepth = _cell.Deepth();
 	pressure = _cell.Pressure();
@@ -151,6 +156,24 @@ double CCell1d::RightGravityTransmx() {
 	return spcweight*rtransmx;
 }
 
+double CCell1d::Gamma(double CellVolume) {
+	/// This function returns the gamma factor for this cell, calculated as the compressible model.
+	
+	double  FVF, BackFVF, deltap;
+	
+	deltap = pressure - backpressure; ///< delta P between to time iterations;
+	FVF = fluid->FVF(pressure); ///< FVF in cell i;
+	BackFVF =  fluid->FVF(backpressure); ///< FVF in back iteration, at cell i;
+
+	if ( deltap == 0 )  {
+		return (CellVolume/alphac)*(block->Porosity()*block->RockComp()/FVF);
+	}
+    else {
+    	return (CellVolume/alphac)*((block->Porosity()*block->RockComp()/FVF) + ((1/FVF - 1/BackFVF)*block->Porosity(backpressure)/deltap));
+    }
+    
+}
+
 int CCell1d::WellId() {
 	///This function returns the Id of the well inside the cell.
 	///If there is no well inside the cell, return 0;
@@ -163,20 +186,6 @@ int CCell1d::WellId() {
 
 }
 
-/*
-void CCell1d::WellRate(double _rate) {
-	/// This function sets the well flow rate of the well inside the cell.
-	/// If there is no well inside the cell, the function creates a well,
-	/// else the funtion only sets the value of the flow rate.
-
-	if (well == NULL) {
-		well = new CWell1d(_rate);
-	}
-	else{
-		well->Rate(_rate);
-	}
-}*/
-
 double CCell1d::WellCumulative_Phase1() {
 	/// This function returns the cumulative volume of the phase 1, produced or injected by the well inside the cell.
 	/// If there is no well inside the cell, the function returns 0.
@@ -188,21 +197,6 @@ double CCell1d::WellCumulative_Phase1() {
 		return well->Cumulative_Phase1();
 	}
 }
-
-/*
-void CCell1d::WellRate(double _rate, int _id) {
-	/// This function sets the well flow rate and the well Id of the well inside the cell.
-	/// If there is no well inside the cell, the function creates a well,
-	/// else the funtion only sets the value of the flow rate.
-
-	if (well == NULL) {
-		well = new CWell1d(_rate, _id);
-	}
-	else{
-		well->Rate(_rate, _id);
-	}
-}
-*/
 
 double CCell1d::WellRate() {
 	/// This function returns the well flow rate of the well inside the cell.
