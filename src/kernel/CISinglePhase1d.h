@@ -55,13 +55,19 @@ class CISinglePhase1d : public CResModelType
 		virtual ~CISinglePhase1d(); ///< Single Phase 1d destructor;	
 		
 		/// Model Functions ///		
-		virtual int MatrixElementsNumber(CGrid *grid); ///< Returns the number of elements that will be created in matrix A;
+		int MatrixElementsNumber(CGrid *grid); ///< Returns the number of elements that will be created in matrix A;
 		virtual void Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat); ///< Makes a time iteration for the problem;
-		virtual void BuildMatrix(CGrid *grid, double deltat); ///< Builds the coefficient matrix "A";
-		virtual void BuildCoefVector(CGrid *grid, double deltat); ///< Builds the free vector "b";
+		void BuildJacobian(CGrid *grid, double deltat); ///< Builds the Jacobian matrix "A";
+		void BuildCoefVector(CGrid *grid, double deltat); ///< Builds the free vector "b";
 		virtual void BuildInitialSolution(CGrid *grid);	///< Builds the solution "X";
-		//virtual double Gamma( CGrid *grid, int i); ///< Calculates the Gamma factor of the reservoir.
 		virtual void Print(); ///< This function prints on screen all the matrix. It is used to debug the code.
+		
+		/// Implicit Residual Functions ///
+		double CellResidual(CGrid *grid, double deltat, int celln); ///< Returns the residual for the cell n in domain;
+		double RHSTerm(CGrid *grid, double deltat, int celln); ///< Returns the Qi term used for calculate the residual for cell n;
+		double LeftResDer(int celln); ///< Returns the left residual derivative for cell n;
+		double CentralResDer(int celln); ///< Returns the central residual derivative for cell n;
+		double RightResDer(int celln); ///< Returns the right residual derivative for cell n.
 
 };
 

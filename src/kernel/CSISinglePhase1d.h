@@ -55,12 +55,11 @@ class CSISinglePhase1d : public CResModelType
 		virtual ~CSISinglePhase1d(); ///< Single Phase 1d destructor;	
 		
 		/// Model Functions ///		
-		virtual int MatrixElementsNumber(CGrid *grid); ///< Returns the number of elements that will be created in matrix A;
+		int MatrixElementsNumber(CGrid *grid); ///< Returns the number of elements that will be created in matrix A;
 		virtual void Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat); ///< Makes a time iteration for the problem;
-		virtual void BuildMatrix(CGrid *grid, double deltat); ///< Builds the coefficient matrix "A";
-		virtual void BuildCoefVector(CGrid *grid, double deltat); ///< Builds the free vector "b";
+		void BuildMatrix(CGrid *grid, double deltat); ///< Builds the coefficient matrix "A";
+		void BuildCoefVector(CGrid *grid, double deltat); ///< Builds the free vector "b";
 		virtual void BuildInitialSolution(CGrid *grid);	///< Builds the solution "X";
-		//virtual double Gamma( CGrid *grid, int i); ///< Calculates the Gamma factor of the reservoir.
 		virtual void Print(); ///< This function prints on screen all the matrix. It is used to debug the code.
 
 };

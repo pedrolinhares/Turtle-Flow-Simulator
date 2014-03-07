@@ -41,12 +41,11 @@ class CResModelType
 		virtual ~CResModelType(); ///< Model destructor;
 				
 		/// Model Functions ///		
-		virtual int MatrixElementsNumber(CGrid *grid) = 0; ///< Returns the number of elements that will be created in matrix A;
+		//virtual int MatrixElementsNumber(CGrid *grid) = 0; ///< Returns the number of elements that will be created in matrix A;
 		virtual void Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat) = 0; ///< Makes a time iteration for the problem;
-		virtual void BuildMatrix(CGrid *grid, double deltat) = 0; ///< Builds the coefficient matrix "A";
-		virtual void BuildCoefVector(CGrid *grid, double deltat) = 0; ///< Builds the free vector "b";
+		//virtual void BuildMatrix(CGrid *grid, double deltat) = 0; ///< Builds the coefficient matrix "A";
+		//virtual void BuildCoefVector(CGrid *grid, double deltat) = 0; ///< Builds the free vector "b";
 		virtual void BuildInitialSolution(CGrid *grid) = 0; ///< Builds the solution "X";
-		//virtual double Gamma( CGrid *grid, int i) = 0;	///< Calculates the Gamma factor of the reservoir.
 		virtual void Print() = 0; ///< This function prints on screen all the matrix. It is used to debug the code.
 };
 

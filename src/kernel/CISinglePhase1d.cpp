@@ -76,11 +76,13 @@ CISinglePhase1d::CISinglePhase1d(CGrid *grid, int _maxni, double _erroni) {
 		Arow[g+1] = Arow[g] + Arow[g+1] ;
 	}
 	
-	/// Constructing the Free Vector
+	/// Constructing and Starting the Free Vector
 	b = new double[cpoints]; 
+	for (int j = 0; j < cpoints; j++) { b[j] = 0;}
 	
-	/// Constructing the Solution Vector
+	/// Constructing and Starting the Solution Vector
     Xni = new double[cpoints]; 
+	for (int j = 0; j < cpoints; j++) { Xni[j] = 0;}
 		  
 }
 
@@ -106,12 +108,92 @@ int CISinglePhase1d::MatrixElementsNumber(CGrid *grid) {
  
 }
 
-void CISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
-{
-	/// This function creates the coefficient matrix "A", using the grid data.
+double CISinglePhase1d::CellResidual(CGrid *grid, double deltat, int celln) {
+	/// This function returns the cell residual for the cell n. This residual is calculated using the single-phase
+	/// implicit model, for a one-dimensional reservoir.
+	
+	double Wi, Ci, Ei, Qi;
+	
+	/// Calculating the west transmissibility element:
+	if (celln == 0) { Wi = 0;}
+	else {
+		Wi = grid->RightTrasmx(celln-1)*grid->Pressure(celln-1); 
+	}
+	
+	/// Calculating the east transmissibility element:
+	if (celln == (cpoints - 1)) { Ei = 0; }
+	else {
+		Ei = grid->RightTrasmx(celln)*grid->Pressure(celln+1);
+	}
+	
+	/// Calculating the central transmissibility element:
+    Ci = - grid->Gamma(celln)/deltat - Ei - Wi;
+	Ci = Ci*grid->Pressure(celln); 
+	
+	/// Calculating the Qi element:
+	Qi = RHSTerm(grid, deltat, celln);
+	
+	return ( Wi + Ci + Ei - Qi );
+}
+
+double CISinglePhase1d::RHSTerm(CGrid *grid, double deltat, int celln){
+	/// This function returns the Right Hand Side term (Q_i) for the cell celln.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
+	
+	double Eig, Wig, Cig, Qg;
+    double gama_dt, q, RHS_Qi;
+  
 
+	Wig = grid->RightGravityTransmx(celln-1);  ///< Calculating the west transmissibility;
+
+	Eig = grid->RightGravityTransmx(celln);   ///< Calculating the east transmissibility;
+
+	Cig = - Eig - Wig;  ///< Calculating the central transmissibility;
+
+	Qg =Wig*grid->Deepth(celln-1) + Cig*grid->Deepth(celln) + Eig*grid->Deepth(celln+1); ///< Rate term;
+
+	gama_dt = grid->Gamma(celln)/deltat;
+
+	q = grid->WellRate(celln);  ///< Getting the well rate for cell i;
+
+	RHS_Qi = Qg - (gama_dt*grid->BackPressure(celln)) - q;  ///< Filling the b vector;
+
+	/// Left Boundary Condition ///
+	if (celln == 0) {
+		RHS_Qi  = RHS_Qi - grid->RightTrasmx(-1)*grid->Pressure(-1);
+	}
+
+	/// Right Boundary Condition ///
+	if (celln == (cpoints - 1)) {
+		RHS_Qi  = RHS_Qi - grid->RightTrasmx(cpoints)*grid->Pressure(cpoints);
+	}
+
+	return RHS_Qi;
+}
+
+
+double CISinglePhase1d::LeftResDer(int celln) {
+	/// This function returns the left residual derivative for de cell n. 
+	return 0;
+}
+
+double CISinglePhase1d::CentralResDer(int celln) {
+	/// This function returns the central residual derivative for de cell n. 
+	return 0;
+}
+
+double CISinglePhase1d::RightResDer(int celln) {
+	/// This function returns the right residual derivative for de cell n. 
+	return 0;
+}
+
+void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
+{
+	/// This function creates the jacobian matrix "A", using the grid data.
+	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
+	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
+	
     double Wi, Ci, Ei;
 	double deltap;
 	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
@@ -152,6 +234,7 @@ void CISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
         elemcount++;	
 
 }
+
 
 void CISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 	/// This function creates the free vector "b", using the grid data.
@@ -214,7 +297,7 @@ void CISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double delt
 
        do {
 
-         BuildMatrix(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
+         BuildJacobian(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
          BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
          
          //Print();
