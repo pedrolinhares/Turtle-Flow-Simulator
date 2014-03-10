@@ -174,6 +174,162 @@ double CCell1d::Gamma(double CellVolume) {
     
 }
 
+double CCell1d::GammaDer(double CellVolume) {
+	 ///This function returns the derivative of the gamma function in relation of the pressure in his block;
+	 /// It is d Gamma     
+	 ///       ----             dGamma/dP_(AtualBlock) 
+     ///       dP_(i)
+	 /// First  it will be implemented numerically, and then analyticaly.
+	 
+	double  FVF, BackFVF, deltap, gamma;
+	
+	deltap = pressure - backpressure; ///< delta P between to time iterations;
+	FVF = fluid->FVF(pressure); ///< FVF in cell i;
+	BackFVF =  fluid->FVF(backpressure); ///< FVF in back iteration, at cell i;
+
+	if ( deltap == 0 )  {
+		gamma = (CellVolume/alphac)*(block->Porosity()*block->RockComp()/FVF);
+	}
+    else {
+    	gamma = (CellVolume/alphac)*((block->Porosity()*block->RockComp()/FVF) + ((1/FVF - 1/BackFVF)*block->Porosity(backpressure)/deltap));
+    }
+    
+    
+    double epsilon = 0.1;
+    double  FVF_eps, BackFVF_eps, deltap_eps, gamma_eps;
+    
+    deltap_eps = pressure + epsilon - backpressure; ///< delta P between to time iterations;
+	FVF_eps = fluid->FVF(pressure + epsilon); ///< FVF in cell i;
+	BackFVF_eps =  fluid->FVF(backpressure); ///< FVF in back iteration, at cell i;
+
+	if ( deltap == 0 )  {
+		gamma_eps = (CellVolume/alphac)*(block->Porosity()*block->RockComp()/FVF_eps);
+	}
+    else {
+    	gamma_eps = (CellVolume/alphac)*((block->Porosity()*block->RockComp()/FVF_eps) + ((1/FVF_eps - 1/BackFVF_eps)*block->Porosity(backpressure)/deltap_eps));
+    }
+    
+	 return (gamma_eps - gamma)/epsilon;
+	 
+}
+double CCell1d::RightTransmxDer( ) {
+	 ///This function returns the derivative of the X transmissibility in relation of the pressure in the right block;
+	 /// It is d Txr     
+	 ///       ----             dTrx/dP_(RightBlock) 
+     ///       dP_(i+1)
+	 /// First  it will be implemented numerically, and then analyticaly.
+	 
+	if (gtransmx == 0) { return 0; }; ///< geometric transmissibility NULL means that the right block is NULL.
+	
+	/// Numerical Calculation ///
+	double epsilon = 0.1;
+	
+	double pright, pmed, pmed_epsilon; 
+	pright = rightcell->Pressure(); ///< Pressure in the adjacent cell;
+	
+	pmed = (pright + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+	
+	pmed_epsilon = (pright + epsilon + pressure) / 2.; ///< Average pressure with epsilon factor;
+	
+	double transmx, transmx_epsilon;
+	transmx =  gtransmx/(fluid->Viscosity(pmed) * fluid->FVF(pmed));
+	transmx_epsilon =  gtransmx/(fluid->Viscosity(pmed_epsilon) * fluid->FVF(pmed_epsilon));
+	 
+	return (transmx_epsilon - transmx)/epsilon;	/// Numerical derivative; 
+}
+
+double CCell1d::CenterTransmxDer( ) {
+	 ///This function returns the derivative of the X transmissibility in relation of the pressure in the center block;
+	 /// It is d Txr     
+	 ///       ----             dTrx/dP_(AtualBlock) 
+     ///       dP_(i)
+	 /// First  it will be implemented numerically, and then analyticaly.
+	 
+	if (gtransmx == 0) { return 0; }; ///< geometric transmissibility NULL means that the right block is NULL.
+	
+	/// Numerical Calculation ///
+	double epsilon = 0.1;
+	
+	double pright, pmed, pmed_epsilon; 
+	pright = rightcell->Pressure(); ///< Pressure in the adjacent cell;
+	
+	pmed = (pright + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+	
+	pmed_epsilon = (pright + pressure + epsilon) / 2.; ///< Average pressure with epsilon factor;
+	
+	double transmx, transmx_epsilon;
+	transmx =  gtransmx/(fluid->Viscosity(pmed) * fluid->FVF(pmed));
+	transmx_epsilon =  gtransmx/(fluid->Viscosity(pmed_epsilon) * fluid->FVF(pmed_epsilon));
+	 
+	return (transmx_epsilon - transmx)/epsilon;	/// Numerical derivative; 
+}
+
+double CCell1d::RightGravityTransmxDer( ) {
+	 ///This function returns the derivative of the Gravitational X transmissibility in relation of the pressure in the right block;
+	 /// It is d TGxr     
+	 ///       ----             dTGrx/dP_(RightBlock) 
+     ///       dP_(i+1)
+	 /// First  it will be implemented numerically, and then analyticaly.
+	 
+	if (gtransmx == 0) { return 0; }; ///< geometric transmissibility NULL means that the right block is NULL.
+	
+	/// Numerical Calculation ///
+	double epsilon = 0.1;
+	
+	double pright, pmed, pmed_epsilon; 
+	pright = rightcell->Pressure(); ///< Pressure in the adjacent cell;
+	
+	pmed = (pright + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+	
+	pmed_epsilon = (pright + epsilon + pressure) / 2.; ///< Average pressure with epsilon factor;
+	
+	double transmx, transmx_epsilon;
+	transmx =  gtransmx/(fluid->Viscosity(pmed) * fluid->FVF(pmed));
+	transmx_epsilon =  gtransmx/(fluid->Viscosity(pmed_epsilon) * fluid->FVF(pmed_epsilon));
+	
+	double gravtransmx;
+	gravtransmx = transmx*fluid->Weight(pmed);
+	
+	double gravtransmx_eps;
+	gravtransmx_eps = transmx_epsilon*fluid->Weight(pmed_epsilon);
+	
+	return (gravtransmx_eps - gravtransmx)/epsilon;	/// Numerical derivative;
+	
+}
+
+double CCell1d::CenterGravityTransmxDer( ) {
+	 ///This function returns the derivative of the Gravitational X transmissibility in relation of the pressure in the center block;
+	 /// It is d TGxr     
+	 ///       ----             dTGrx/dP_(RightBlock) 
+     ///       dP_(i+1)
+	 /// First  it will be implemented numerically, and then analyticaly.
+	 
+	if (gtransmx == 0) { return 0; }; ///< geometric transmissibility NULL means that the right block is NULL.
+	
+	/// Numerical Calculation ///
+	double epsilon = 0.1;
+	
+	double pright, pmed, pmed_epsilon; 
+	pright = rightcell->Pressure(); ///< Pressure in the adjacent cell;
+	
+	pmed = (pright + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+	
+	pmed_epsilon = (pright + pressure + epsilon) / 2.; ///< Average pressure with epsilon factor;
+	
+	double transmx, transmx_epsilon;
+	transmx =  gtransmx/(fluid->Viscosity(pmed) * fluid->FVF(pmed));
+	transmx_epsilon =  gtransmx/(fluid->Viscosity(pmed_epsilon) * fluid->FVF(pmed_epsilon));
+	
+	double gravtransmx;
+	gravtransmx = transmx*fluid->Weight(pmed);
+	
+	double gravtransmx_eps;
+	gravtransmx_eps = transmx_epsilon*fluid->Weight(pmed_epsilon);
+	
+	return (gravtransmx_eps - gravtransmx)/epsilon;	/// Numerical derivative;
+	
+}
+
 int CCell1d::WellId() {
 	///This function returns the Id of the well inside the cell.
 	///If there is no well inside the cell, return 0;

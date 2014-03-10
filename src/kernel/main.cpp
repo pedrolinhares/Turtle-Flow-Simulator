@@ -33,6 +33,21 @@ void onExit() {
   
 }
 
+/* ///
+	TO Do List:
+	
+	1- Every cell needs to have a pointer to his neighboor,
+	   so it is needed to implement the cells conections, left and right. 
+	   it will help in 2d case;
+	
+	2 - Every cell needs to have left and right transmissibility function, but only the right
+	    will be implemented. The left case is the access of the left cell and the right transmissibility calculation.
+	    Again, it will help in the future cases.
+	    
+	3 - Fix all de implicit derivative functions, it can be working but it is not easy to understand the derivatives relationship.
+		
+*/ /// 
+
 int main() {
   clock_t timer; ///< Timer used to calculate the processing time.
   timer = clock(); ///< Getting the current time.

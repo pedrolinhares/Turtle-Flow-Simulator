@@ -83,6 +83,10 @@ CISinglePhase1d::CISinglePhase1d(CGrid *grid, int _maxni, double _erroni) {
 	/// Constructing and Starting the Solution Vector
     Xni = new double[cpoints]; 
 	for (int j = 0; j < cpoints; j++) { Xni[j] = 0;}
+	
+	/// Constructing and Starting the Pressure Solution Vector
+	Xpress_ni = new double[cpoints];
+	for (int j = 0; j < cpoints; j++) { Xpress_ni[j] = 0;}
 		  
 }
 
@@ -173,19 +177,86 @@ double CISinglePhase1d::RHSTerm(CGrid *grid, double deltat, int celln){
 }
 
 
-double CISinglePhase1d::LeftResDer(int celln) {
+double CISinglePhase1d::LeftResDer(CGrid *grid, int celln) {
 	/// This function returns the left residual derivative for de cell n. 
-	return 0;
+	
+	double leftpress, centerpress;
+	leftpress = grid->Pressure(celln - 1);
+	centerpress = grid->Pressure(celln);
+	
+	double leftdeepth, centerdeepth;
+	leftdeepth = grid->Deepth(celln - 1);
+	centerdeepth = grid->Deepth(celln);
+	
+	double lefttransmderiv, leftgravitderiv;
+	lefttransmderiv = grid->CenterTransmxDer(celln - 1);
+	leftgravitderiv = grid->CenterGravityTransmxDer( celln - 1);
+	
+	double lefttransmx;
+	lefttransmx = grid->RightTrasmx(celln - 1);
+	return ( (leftpress - centerpress)*lefttransmderiv + lefttransmx + (centerdeepth - leftdeepth)*leftgravitderiv );
 }
 
-double CISinglePhase1d::CentralResDer(int celln) {
+double CISinglePhase1d::CentralResDer(CGrid *grid, double deltat, int celln) {
 	/// This function returns the central residual derivative for de cell n. 
-	return 0;
+	
+	double leftpress, centerpress, backcenterpress, rightpress;
+	leftpress = grid->Pressure(celln - 1);
+	centerpress = grid->Pressure(celln);
+	backcenterpress = grid->BackPressure(celln);
+	rightpress = grid->Pressure(celln + 1);
+	
+	double leftdeepth, centerdeepth, rightdeepth;
+	leftdeepth = grid->Deepth(celln - 1);
+	centerdeepth = grid->Deepth(celln);
+	rightdeepth = grid->Deepth(celln + 1);
+	
+	double lefttransmx, righttransmx;
+	lefttransmx = grid->RightTrasmx(celln - 1);
+	righttransmx = grid->RightTrasmx(celln);
+	
+	double gamma_dt;
+	gamma_dt = grid->Gamma(celln) / deltat;
+	
+	double lefttransmderiv, leftgravitderiv;
+	lefttransmderiv = grid->RightTransmxDer(celln - 1);
+	leftgravitderiv = grid->RightGravityTransmxDer(celln - 1);
+	
+	double righttransmderiv, rightgravitderiv;
+	righttransmderiv = grid->CenterTransmxDer(celln);
+	rightgravitderiv = grid->CenterGravityTransmxDer(celln);
+	
+	double gammaderiv;
+	gammaderiv = grid->GammaDer(celln);
+	
+	double centralres;
+	
+	centralres = (leftpress - centerpress)*lefttransmderiv - lefttransmx - righttransmx;
+	centralres = centralres - gamma_dt + (rightpress - centerpress)*righttransmderiv;
+	centralres = centralres - (centerpress - backcenterpress)*gammaderiv/deltat + (centerdeepth - leftdeepth)*leftgravitderiv;
+	centralres = centralres - (rightdeepth - centerdeepth)*rightgravitderiv;
+	
+	return centralres;
 }
 
-double CISinglePhase1d::RightResDer(int celln) {
-	/// This function returns the right residual derivative for de cell n. 
-	return 0;
+double CISinglePhase1d::RightResDer(CGrid *grid, int celln) {
+	/// This function returns the right residual derivative for de cell n.
+	
+	double rightpress, centerpress;
+	rightpress = grid->Pressure(celln + 1);
+	centerpress = grid->Pressure(celln);
+	
+	double rightdeepth, centerdeepth;
+	rightdeepth = grid->Deepth(celln + 1);
+	centerdeepth = grid->Deepth(celln);
+	
+	double righttransmderiv, rightgravitderiv;
+	righttransmderiv = grid->RightTransmxDer(celln);
+	rightgravitderiv = grid->RightGravityTransmxDer(celln);
+	
+	double righttransmx;
+	righttransmx = grid->RightTrasmx(celln);
+	return ( (rightpress - centerpress)*righttransmderiv + righttransmx + (rightdeepth - centerdeepth)*rightgravitderiv ); 
 }
 
 void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
@@ -195,13 +266,11 @@ void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
 	
     double Wi, Ci, Ei;
-	double deltap;
 	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
 	
 	/// Filling the first line of matrix A
-	Wi = grid->RightTrasmx(-1); ///< There is no west matrix element;
-	Ei = grid->RightTrasmx(0); ///< Calculating the east matrix element;
-	Ci = - grid->Gamma(0)/deltat - Ei - Wi;	///< Calculating the central matrix element;
+	Ei = CentralResDer(grid, deltat, 0); ///< Calculating the central Jacobian Residual term;
+	Ci = RightResDer(grid, 0); 	///< Calculating the east Jacobian Residual term;
 	
 		Aval[elemcount] = Ci;
 	    elemcount++;
@@ -211,9 +280,9 @@ void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
 	/// Filling the middle A Elements
     for (int i = 1 ; i < (cpoints - 1) ; i++) {
 		
-		Wi = grid->RightTrasmx(i-1); ///< Calculating the west matrix element;
-		Ei = grid->RightTrasmx(i);	///< Calculating the east matrix element;	
-    	Ci = - grid->Gamma(i)/deltat - Ei - Wi;	///< Calculating the central matrix element;
+		Wi = LeftResDer(grid,  i); ///< Calculating the west Jacobian Residual term;
+		Ei = RightResDer(grid, i);	///< Calculating the east Jacobian Residual term;
+    	Ci = CentralResDer(grid, deltat, i);	///< Calculating the central Jacobian Residual term;
 
 	        Aval[elemcount] = Wi;
 	        elemcount++;
@@ -224,54 +293,25 @@ void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
     }
     
     /// Filling the last line of matrix A
-    Wi = grid->RightTrasmx(cpoints - 2); ///< Calculating the west matrix element;
-    Ei = grid->RightTrasmx(cpoints - 1);	///< There is no east matrix element;
-	Ci = - grid->Gamma(cpoints - 1)/deltat - Ei - Wi;	///< Calculating the central matrix element;
+    Wi = LeftResDer(grid, (cpoints - 1)); ///< Calculating the west matrix element;
+	Ci = CentralResDer(grid, deltat, (cpoints - 1));	///< Calculating the central matrix element;
 	
 		Aval[elemcount] = Wi;
         elemcount++;
         Aval[elemcount] = Ci;
         elemcount++;	
-
 }
-
 
 void CISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 	/// This function creates the free vector "b", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
 
-	double Eig, Wig, Cig, Qg;
-    double gama_dt, q;
-  
-
 	for (int i = 0 ; i < (cpoints) ; i++) {
+		
+		b[i] = CellResidual(grid, deltat, i); ///< 
 
-		Wig = grid->RightGravityTransmx(i-1);  ///< Calculating the west transmissibility;
-
-    	Eig = grid->RightGravityTransmx(i);   ///< Calculating the east transmissibility;
-
-    	Cig = - Eig - Wig;  ///< Calculating the central transmissibility;
-
-		Qg =Wig*grid->Deepth(i-1) + Cig*grid->Deepth(i) + Eig*grid->Deepth(i+1); ///< Rate term;
-
-    	gama_dt = grid->Gamma(i)/deltat;
-
-    	q = grid->WellRate(i);  ///< Getting the well rate for cell i;
-
-    	b[i] = Qg - (gama_dt*grid->BackPressure(i)) - q;  ///< Filling the b vector;
-
-    	/// Left Boundary Condition ///
-    	if (i == 0) {
-    		b[i]  = b[i] - grid->RightTrasmx(-1)*grid->Pressure(-1);
-    	}
-
-    	/// Right Boundary Condition ///
-    	if (i == (cpoints - 1)) {
-    		b[i]  = b[i] - grid->RightTrasmx(cpoints)*grid->Pressure(cpoints);
-    	}
-
-    }
+	}
 
 }
 
@@ -281,7 +321,8 @@ void CISinglePhase1d::BuildInitialSolution(CGrid *grid) {
 
 	 for (int i = 0 ; i < (cpoints) ; i++) {
 
-        Xni[i] =  grid->Pressure(i);
+        Xni[i] =  grid->Pressure(i) - grid->BackPressure(i);
+        Xpress_ni[i] = grid->Pressure(i);
 
     }
 
@@ -300,14 +341,15 @@ void CISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double delt
          BuildJacobian(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
          BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
          
-         //Print();
+         Print();
 
          solver->UMFPack( Acol, Arow, Aval, b, Xni, cpoints ); ///< Calling the solver used in this problem
 
         	 /////////  Error Analyzing  /////////
 
 	         for (int j=0 ; j<cpoints; j++) {
-		          er1 = abs(Xni[j] - grid->Pressure(j));
+	         	  Xpress_ni[j] = Xpress_ni[j] + Xni[j];
+		          er1 = abs(Xni[j]);
 		          if (j == 0) {
 		            	er1max = er1;
 		          } else {
@@ -315,7 +357,7 @@ void CISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double delt
 		          }
 	         }
 
-         grid->Iterationni(Xni);  ///< Updating the atual pressure in reservoir
+         grid->Iterationni(Xpress_ni);  ///< Updating the atual pressure in reservoir
 
          h++;
 

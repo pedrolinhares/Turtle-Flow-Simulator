@@ -42,6 +42,8 @@ class CISinglePhase1d : public CResModelType
 		/// A' * Xni = b, Where A' = f(Acol, Arow, Aval)	
 		double *b; ///< Free Vector;
   		double *Xni; ///< Solution Vector;
+  		double *Xpress_ni; ///< Solution Vector;
+  		
 		
 		/// The A matrix must be constructed using three arrays of data. More details are described in UMFPack user-guide.
 		int *Acol; ///< Column index for all non-zero elements in matrix A;
@@ -65,9 +67,9 @@ class CISinglePhase1d : public CResModelType
 		/// Implicit Residual Functions ///
 		double CellResidual(CGrid *grid, double deltat, int celln); ///< Returns the residual for the cell n in domain;
 		double RHSTerm(CGrid *grid, double deltat, int celln); ///< Returns the Qi term used for calculate the residual for cell n;
-		double LeftResDer(int celln); ///< Returns the left residual derivative for cell n;
-		double CentralResDer(int celln); ///< Returns the central residual derivative for cell n;
-		double RightResDer(int celln); ///< Returns the right residual derivative for cell n.
+		double LeftResDer(CGrid *grid, int celln); ///< Returns the left residual derivative for cell n;
+		double CentralResDer(CGrid *grid, double deltat, int celln); ///< Returns the central residual derivative for cell n;
+		double RightResDer(CGrid *grid, int celln); ///< Returns the right residual derivative for cell n.
 
 };
 

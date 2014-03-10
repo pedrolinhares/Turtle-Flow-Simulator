@@ -422,6 +422,32 @@ void CGrid1d1p::InitiateSolution(double pref, double href) {
     } while (erromax > 0.1); ///< 0.1 is the precision of the initialization. Maybe it will be set by the user in future.
 }
 
+double CGrid1d1p::RightTransmxDer( int celln ) { 
+ 	///< Returns the derivative of the right transm. in relation of the right cell pressure for celln;
+ 	
+ 	/// Left Boudary Condition
+    if (celln == -1) {
+        if (cells[0].LeftCell() == NULL) { return 0; }
+        else{ return cells[0].LeftCell()->RightTransmxDer(); }
+    }
+ 
+	return cells[celln].RightTransmxDer(); 
+
+}
+
+double CGrid1d1p::RightGravityTransmxDer( int celln )  { 
+	/// Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
+	
+	/// Left Boudary Condition
+	  if (celln == -1) {
+	        if (cells[0].LeftCell() == NULL) { return 0; }
+	        else{ return cells[0].LeftCell()->RightGravityTransmxDer(); }
+	    }
+    
+	return cells[celln].RightGravityTransmxDer();
+	
+} 
+
 double CGrid1d1p::RightTrasmx( int celln ) {
   /// This function return the right transmissibility of a specif cell.
   /// if celln == -1, Left Boundary condition case.
@@ -467,6 +493,13 @@ double CGrid1d1p::Gamma( int celln ) {
 	 
 	 return cells[celln].Gamma(Volume(celln));
 	 
+}
+
+double CGrid1d1p::GammaDer( int celln ) {
+	  /// Returns the derivative of the gamma function in relation of the cell pressure;
+	  
+	  return cells[celln].GammaDer(Volume(celln));
+	  
 }
 
 double CGrid1d1p::Pressure( int celln ) {
