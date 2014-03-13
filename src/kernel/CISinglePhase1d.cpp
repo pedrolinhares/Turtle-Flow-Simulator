@@ -116,28 +116,37 @@ double CISinglePhase1d::CellResidual(CGrid *grid, double deltat, int celln) {
 	/// This function returns the cell residual for the cell n. This residual is calculated using the single-phase
 	/// implicit model, for a one-dimensional reservoir.
 	
-	double Wi, Ci, Ei, Qi;
+	double Wi, Wi_p, Ci, Ci_p,  Ei, Ei_p, Qi;
 	
 	/// Calculating the west transmissibility element:
-	if (celln == 0) { Wi = 0;}
+	if (celln == 0) { 
+		Wi = 0;
+		Wi_p = 0;	
+	}
 	else {
-		Wi = grid->RightTrasmx(celln-1)*grid->Pressure(celln-1); 
+		Wi = grid->RightTrasmx(celln-1);
+		Wi_p = Wi*grid->Pressure(celln-1);  
 	}
 	
 	/// Calculating the east transmissibility element:
-	if (celln == (cpoints - 1)) { Ei = 0; }
+	if (celln == (cpoints - 1)) { 
+		Ei = 0;
+		Ei_p = 0; 
+		
+	}
 	else {
-		Ei = grid->RightTrasmx(celln)*grid->Pressure(celln+1);
+		Ei = grid->RightTrasmx(celln);
+		Ei_p = Ei*grid->Pressure(celln+1);
 	}
 	
 	/// Calculating the central transmissibility element:
-    Ci = - grid->Gamma(celln)/deltat - Ei - Wi;
-	Ci = Ci*grid->Pressure(celln); 
+    Ci = - grid->Gamma(celln)/deltat - Ei - Wi;  
+    Ci_p = Ci*grid->Pressure(celln); 
 	
 	/// Calculating the Qi element:
 	Qi = RHSTerm(grid, deltat, celln);
-	
-	return ( Wi + Ci + Ei - Qi );
+		
+	return ( Wi_p + Ci_p + Ei_p - Qi );
 }
 
 double CISinglePhase1d::RHSTerm(CGrid *grid, double deltat, int celln){
@@ -269,8 +278,8 @@ void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
 	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
 	
 	/// Filling the first line of matrix A
-	Ei = CentralResDer(grid, deltat, 0); ///< Calculating the central Jacobian Residual term;
-	Ci = RightResDer(grid, 0); 	///< Calculating the east Jacobian Residual term;
+	Ci = CentralResDer(grid, deltat, 0); ///< Calculating the central Jacobian Residual term;
+	Ei = RightResDer(grid, 0); 	///< Calculating the east Jacobian Residual term;
 	
 		Aval[elemcount] = Ci;
 	    elemcount++;
@@ -309,7 +318,7 @@ void CISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 
 	for (int i = 0 ; i < (cpoints) ; i++) {
 		
-		b[i] = CellResidual(grid, deltat, i); ///< 
+		b[i] = - CellResidual(grid, deltat, i); ///< 
 
 	}
 
@@ -341,10 +350,10 @@ void CISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double delt
          BuildJacobian(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
          BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
          
-         Print();
+         //Print();
 
          solver->UMFPack( Acol, Arow, Aval, b, Xni, cpoints ); ///< Calling the solver used in this problem
-
+	
         	 /////////  Error Analyzing  /////////
 
 	         for (int j=0 ; j<cpoints; j++) {
