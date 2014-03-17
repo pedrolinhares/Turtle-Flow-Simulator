@@ -119,26 +119,13 @@ double CISinglePhase1d::CellResidual(CGrid *grid, double deltat, int celln) {
 	double Wi, Wi_p, Ci, Ci_p,  Ei, Ei_p, Qi;
 	
 	/// Calculating the west transmissibility element:
-	if (celln == 0) { 
-		Wi = 0;
-		Wi_p = 0;	
-	}
-	else {
 		Wi = grid->RightTrasmx(celln-1);
 		Wi_p = Wi*grid->Pressure(celln-1);  
-	}
-	
+
 	/// Calculating the east transmissibility element:
-	if (celln == (cpoints - 1)) { 
-		Ei = 0;
-		Ei_p = 0; 
-		
-	}
-	else {
 		Ei = grid->RightTrasmx(celln);
 		Ei_p = Ei*grid->Pressure(celln+1);
-	}
-	
+
 	/// Calculating the central transmissibility element:
     Ci = - grid->Gamma(celln)/deltat - Ei - Wi;  
     Ci_p = Ci*grid->Pressure(celln); 
@@ -173,14 +160,14 @@ double CISinglePhase1d::RHSTerm(CGrid *grid, double deltat, int celln){
 	RHS_Qi = Qg - (gama_dt*grid->BackPressure(celln)) - q;  ///< Filling the b vector;
 
 	/// Left Boundary Condition ///
-	if (celln == 0) {
-		RHS_Qi  = RHS_Qi - grid->RightTrasmx(-1)*grid->Pressure(-1);
-	}
+	//if (celln == 0) {
+	//	RHS_Qi  = RHS_Qi - grid->RightTrasmx(-1)*grid->Pressure(-1);
+	//}
 
 	/// Right Boundary Condition ///
-	if (celln == (cpoints - 1)) {
-		RHS_Qi  = RHS_Qi - grid->RightTrasmx(cpoints)*grid->Pressure(cpoints);
-	}
+	//if (celln == (cpoints - 1)) {
+	//	RHS_Qi  = RHS_Qi - grid->RightTrasmx(cpoints)*grid->Pressure(cpoints);
+	//}
 
 	return RHS_Qi;
 }
@@ -353,6 +340,8 @@ void CISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double delt
          //Print();
 
          solver->UMFPack( Acol, Arow, Aval, b, Xni, cpoints ); ///< Calling the solver used in this problem
+         
+         //Print();
 	
         	 /////////  Error Analyzing  /////////
 
