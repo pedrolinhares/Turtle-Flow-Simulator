@@ -106,32 +106,6 @@ int CSISinglePhase1d::MatrixElementsNumber(CGrid *grid) {
  
 }
 
-double CSISinglePhase1d::Gamma( CGrid *grid, int i) {
-	/// This function calculates de gamma value, for the Single-Phase Compressible-Flow model.
-
-	double alphac = 5.614583; ///< Convertion units factor;
-
-	double GAMMA, Vb, por0, rockcomp, FVF, BackFVF, deltap, backporosity, backpress;
-
-	Vb = grid->Volume(i); ///< Volume of cell i;
-
-    por0 = grid->Por0(i); ///< Inicial porosity in cell i;
-    backpress = grid->BackPressure(i); ///< Back Pressure in cell i;
-    backporosity = grid->Porosity( i, backpress ); ///< Porosity in back time iteration, at cell i;
-    rockcomp = grid->RockComp(i); ///< Rock Compressibility in cell i;
-    FVF = grid->FVF(i); ///< FVF in cell i;
-    BackFVF = grid->BackFVF(i); ///< FVF in back iteration, at cell i;
-    deltap = grid->Pressure(i) - grid->BackPressure(i); ///< delta P between to time iterations;
-
-    if ( deltap == 0 )  {
-	GAMMA = (Vb/alphac)*(por0*rockcomp/FVF);
-	}
-    else {
-    	GAMMA = (Vb/alphac)*((por0*rockcomp/FVF) + ((1/FVF - 1/BackFVF)*backporosity/deltap));
-    }
-	return GAMMA;
-}
-
 void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 {
 	/// This function creates the coefficient matrix "A", using the grid data.
@@ -145,7 +119,7 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 	/// Filling the first line of matrix A
 	Wi = grid->RightTrasmx(-1); ///< There is no west matrix element;
 	Ei = grid->RightTrasmx(0); ///< Calculating the east matrix element;
-	Ci = - Gamma(grid, 0)/deltat - Ei - Wi;	///< Calculating the central matrix element;
+	Ci = - grid->Gamma(0)/deltat - Ei - Wi;	///< Calculating the central matrix element;
 	
 		Aval[elemcount] = Ci;
 	    elemcount++;
@@ -157,7 +131,7 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 		
 		Wi = grid->RightTrasmx(i-1); ///< Calculating the west matrix element;
 		Ei = grid->RightTrasmx(i);	///< Calculating the east matrix element;	
-    	Ci = - Gamma(grid, i)/deltat - Ei - Wi;	///< Calculating the central matrix element;
+    	Ci = - grid->Gamma(i)/deltat - Ei - Wi;	///< Calculating the central matrix element;
 
 	        Aval[elemcount] = Wi;
 	        elemcount++;
@@ -170,7 +144,7 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
     /// Filling the last line of matrix A
     Wi = grid->RightTrasmx(cpoints - 2); ///< Calculating the west matrix element;
     Ei = grid->RightTrasmx(cpoints - 1);	///< There is no east matrix element;
-	Ci = - Gamma(grid, (cpoints - 1))/deltat - Ei - Wi;	///< Calculating the central matrix element;
+	Ci = - grid->Gamma(cpoints - 1)/deltat - Ei - Wi;	///< Calculating the central matrix element;
 	
 		Aval[elemcount] = Wi;
         elemcount++;
@@ -198,7 +172,7 @@ void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 
 		Qg =Wig*grid->Deepth(i-1) + Cig*grid->Deepth(i) + Eig*grid->Deepth(i+1); ///< Rate term;
 
-    	gama_dt = Gamma(grid, i)/deltat;
+    	gama_dt = grid->Gamma(i)/deltat;
 
     	q = grid->WellRate(i);  ///< Getting the well rate for cell i;
 

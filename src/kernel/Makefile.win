@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = CBlock.o CCell1d.o CFluid.o CGas.o CGrid.o CGrid1d1p.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
-LINKOBJ  = CBlock.o CCell1d.o CFluid.o CGas.o CGrid.o CGrid1d1p.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o
+OBJ      = CBlock.o CCell1d.o CFluid.o CGas.o CGrid.o CGrid1d1p.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o CISinglePhase1d.o
+LINKOBJ  = CBlock.o CCell1d.o CFluid.o CGas.o CGrid.o CGrid1d1p.o COil.o CReservoir.o CResModelType.o CRock.o CSISinglePhase1d.o CSolverMatrix.o CWater.o CWell1d.o filename_definitions.o main.o CISinglePhase1d.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -g -L../solver/GotoBLAS -L../solver/AMD/Lib -L../solver/UMFPACK/Lib -llibumfpack -llibamd -llibgoto -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.7.2/include/c++"
@@ -71,3 +71,6 @@ filename_definitions.o: filename_definitions.cpp
 
 main.o: main.cpp
 	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+CISinglePhase1d.o: CISinglePhase1d.cpp
+	$(CPP) -c CISinglePhase1d.cpp -o CISinglePhase1d.o $(CXXFLAGS)

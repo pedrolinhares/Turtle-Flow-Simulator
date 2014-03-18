@@ -85,6 +85,14 @@ class CGrid
 		virtual void SetGTransmx() = 0; ///< Sets the Geometric transmissibility in all cells;
 		virtual double RightTrasmx( int celln) = 0; ///< Return the right transmissibility of a specific cell in ddomain;
 		virtual double RightGravityTransmx( int celln ) = 0; ///< Return the right gravitational transmissibility of a specif cell.
+		virtual double Gamma( int celln ) = 0; ///< Return the gamma factor of a specific cell;
+		
+		//////////  Transmissibility Derivative Functions  //////////
+		virtual double GammaDer( int celln ) = 0;  ///< Returns the derivative of the gamma function in relation of the cell pressure;
+		virtual double RightTransmxDer( int celln ) = 0; ///< Returns the derivative of the right transm. in relation of the right cell pressure for celln;
+		virtual double CenterTransmxDer( int celln ) = 0; ///< Returns the derivative of the right transm. in relation of the cell press for celln;
+		virtual double RightGravityTransmxDer( int celln ) = 0; ///< Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
+		virtual double CenterGravityTransmxDer( int celln ) = 0; ///< Returns the derivative of the right gravitational transmissibility in relation of the center cell pressure;
 
 		//////////  Well Functions //////////
 		virtual double WellRate( int celln ) = 0; ///< Return the flow rate of a well in a specific cell in domain;

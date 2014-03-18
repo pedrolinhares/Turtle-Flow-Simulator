@@ -79,7 +79,11 @@ CReservoir::CReservoir()
   
   switch (model_type) {
   	case 1:  {
-  		model = new CSISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the Reservoir Model.		
+  		model = new CSISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the Reservoir Semi-Implicit Model.		
+  		break;
+  	}
+  	case 2: {
+  		model = new CISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the Reservoir Implicit Model.		
   		break;
   	}
   }

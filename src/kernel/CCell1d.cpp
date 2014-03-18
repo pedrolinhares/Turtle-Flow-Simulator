@@ -25,7 +25,9 @@ using namespace std;
 CCell1d::CCell1d()
 {
 	/// CCell1d default constructor.
-
+	
+	alphac = 5.614583; ///< Convertion units factor;
+	
 	cellid = 0;
 	deepth = 0;
 	pressure = 0;
@@ -43,6 +45,8 @@ CCell1d::CCell1d(int _cellid, double _deepth, CBlock *blk, CFluid *fld) {
 	/// This cell is created with data from reservoir, and with pointers to the
 	/// block and fluid related to this cell.
 
+	alphac = 5.614583; ///< Convertion units factor;
+	
 	cellid = _cellid;
 	deepth = _deepth;
 
@@ -59,7 +63,8 @@ CCell1d::CCell1d(int _cellid, double _deepth, CBlock *blk, CFluid *fld) {
 
 CCell1d::CCell1d(CCell1d & _cell) {
 	/// CCell1d copy constructor.
-
+	
+	alphac = 5.614583; ///< Convertion units factor;
 	cellid = _cell.CellId();
 	deepth = _cell.Deepth();
 	pressure = _cell.Pressure();
@@ -151,6 +156,158 @@ double CCell1d::RightGravityTransmx() {
 	return spcweight*rtransmx;
 }
 
+double CCell1d::Gamma(double CellVolume) {
+	/// This function returns the gamma factor for this cell, calculated as the compressible model.
+	
+	double  FVF, BackFVF, deltap;
+	
+	deltap = pressure - backpressure; ///< delta P between to time iterations;
+	FVF = fluid->FVF(pressure); ///< FVF in cell i;
+	BackFVF =  fluid->FVF(backpressure); ///< FVF in back iteration, at cell i;
+
+	if ( deltap == 0 )  {
+		return (CellVolume/alphac)*(block->Porosity()*block->RockComp()/FVF);
+	}
+    else {
+    	return (CellVolume/alphac)*((block->Porosity()*block->RockComp()/FVF) + ((1/FVF - 1/BackFVF)*block->Porosity(backpressure)/deltap));
+    }
+    
+}
+
+double CCell1d::GammaDer(double CellVolume) {
+	 ///This function returns the derivative of the gamma function in relation of the pressure in his block;
+	 /// It is d Gamma     
+	 ///       ----             dGamma/dP_(AtualBlock) 
+     ///       dP_(i)
+	
+	 double por_0, por_n;
+	 por_0 = block->Porosity();
+	 por_n = block->Porosity(backpressure);
+	 
+	 double deltap, BackFVF, FVF;
+	 BackFVF =  fluid->FVF(backpressure); ///< FVF in back iteration, at cell i;
+	 FVF = fluid->FVF(pressure); ///< FVF in cell i;
+	 deltap = pressure - backpressure; ///< delta P between to time iterations;
+	 
+	 double derFVF;
+	 derFVF = fluid->FVF_Derivative(pressure);
+	 
+	 double der_gamma;
+	
+	 
+	if ( deltap == 0 )  {
+	
+		der_gamma = - (CellVolume/alphac)*(por_0*block->RockComp()*derFVF)/(FVF*FVF);
+	}
+    else {
+   
+    	der_gamma = (CellVolume/alphac)*((por_n/BackFVF)*(FVF*FVF - BackFVF*FVF - BackFVF*deltap*derFVF)/(FVF*FVF*deltap*deltap) - (por_0*block->RockComp()*derFVF)/(FVF*FVF));
+   
+   	}
+    	 
+	 return der_gamma;
+}
+
+double CCell1d::RightTransmxDer( ) {
+	 ///This function returns the derivative of the X transmissibility in relation of the pressure in the right block;
+	 /// It is d Txr     
+	 ///       ----             dTrx/dP_(RightBlock) 
+     ///       dP_(i+1)
+	 
+	if (gtransmx == 0) { return 0; }; ///< geometric transmissibility NULL means that the right block is NULL.
+		
+	double pright, pmed; 
+	
+	pright = rightcell->Pressure(); ///< Pressure in the adjacent cell;
+	pmed = (pright + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+	
+	double visc_med, FVF_med;
+	visc_med = fluid->Viscosity(pmed);
+	FVF_med = fluid->FVF(pmed);
+	
+	double der_visc, der_FVF;
+	/// OBS: It is interesting that the numerical derivative calculetion is double of the interpolation case.
+	///der_visc = (fluid->Viscosity(pmed_epsilon) - fluid->Viscosity(pmed)) / epsilon;  
+	der_visc = fluid->Viscosity_Derivative(pmed);
+	der_FVF = fluid->FVF_Derivative(pmed);
+	
+	return  ( - gtransmx*(FVF_med*der_visc + visc_med*der_FVF) / (2. * (visc_med*FVF_med) * (visc_med*FVF_med)) ); /// Numerical derivative; 
+}
+
+double CCell1d::CenterTransmxDer( ) {
+	 ///This function returns the derivative of the X transmissibility in relation of the pressure in the center block;
+	 /// It is d Txr     
+	 ///       ----             dTrx/dP_(AtualBlock) 
+     ///       dP_(i)
+	 
+	if (gtransmx == 0) { return 0; }; ///< geometric transmissibility NULL means that the right block is NULL.
+		
+	double pright, pmed; 
+	
+	pright = rightcell->Pressure(); ///< Pressure in the adjacent cell;
+	pmed = (pright + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+	
+	double visc_med, FVF_med;
+	visc_med = fluid->Viscosity(pmed);
+	FVF_med = fluid->FVF(pmed);
+	
+	double der_visc, der_FVF;
+	/// OBS: It is interesting that the numerical derivative calculetion is double of the interpolation case.
+	///der_visc = (fluid->Viscosity(pmed_epsilon) - fluid->Viscosity(pmed)) / epsilon;  
+	der_visc = fluid->Viscosity_Derivative(pmed);
+	der_FVF = fluid->FVF_Derivative(pmed);
+		
+	return  ( - gtransmx*(FVF_med*der_visc + visc_med*der_FVF) / (2. * (visc_med*FVF_med) * (visc_med*FVF_med)) ); /// Numerical derivative; 
+}
+
+double CCell1d::RightGravityTransmxDer( ) {
+	 ///This function returns the derivative of the Gravitational X transmissibility in relation of the pressure in the right block;
+	 /// It is d TGxr     
+	 ///       ----             dTGrx/dP_(RightBlock) 
+     ///       dP_(i+1)
+	 
+	if (gtransmx == 0) { return 0; }; ///< geometric transmissibility NULL means that the right block is NULL.
+		
+	double pright, pmed; 
+	
+	pright = rightcell->Pressure(); ///< Pressure in the adjacent cell;
+	pmed = (pright + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+		
+	double  weight_med, right_transmx;
+	weight_med = fluid->Weight(pmed); ///< Specific Weight at average pressure;
+	right_transmx = RightTransmx(); ///< Right Transmissibility;
+	
+	double der_transmx, der_weight;
+	der_transmx = RightTransmxDer();  ///< Transmissibility Derivative at average pressure;
+	der_weight = fluid->Weight_Derivative(pmed);  ///< Specific weight derivative at average pressure;
+	
+	return  ( 0.5*( weight_med*der_transmx + right_transmx*der_weight) ); /// Analytical derivative; 
+}
+
+double CCell1d::CenterGravityTransmxDer( ) {
+	 ///This function returns the derivative of the Gravitational X transmissibility in relation of the pressure in the center block;
+	 /// It is d TGxr     
+	 ///       ----             dTGrx/dP_(AtualBlock) 
+     ///       dP_(i)
+	 
+	if (gtransmx == 0) { return 0; }; ///< geometric transmissibility NULL means that the right block is NULL.
+		
+	double pright, pmed; 
+	
+	pright = rightcell->Pressure(); ///< Pressure in the adjacent cell;
+	pmed = (pright + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+		
+	double  weight_med, right_transmx;
+	weight_med = fluid->Weight(pmed); ///< Specific Weight at average pressure;
+	right_transmx = RightTransmx(); ///< Right Transmissibility;
+	
+	double der_transmx, der_weight;
+	der_transmx = CenterTransmxDer();  ///< Transmissibility Derivative at average pressure;
+	der_weight = fluid->Weight_Derivative(pmed);  ///< Specific weight derivative at average pressure;
+	
+	return  ( 0.5*( weight_med*der_transmx + right_transmx*der_weight) ); /// Analytical derivative; 	
+}
+
 int CCell1d::WellId() {
 	///This function returns the Id of the well inside the cell.
 	///If there is no well inside the cell, return 0;
@@ -163,20 +320,6 @@ int CCell1d::WellId() {
 
 }
 
-/*
-void CCell1d::WellRate(double _rate) {
-	/// This function sets the well flow rate of the well inside the cell.
-	/// If there is no well inside the cell, the function creates a well,
-	/// else the funtion only sets the value of the flow rate.
-
-	if (well == NULL) {
-		well = new CWell1d(_rate);
-	}
-	else{
-		well->Rate(_rate);
-	}
-}*/
-
 double CCell1d::WellCumulative_Phase1() {
 	/// This function returns the cumulative volume of the phase 1, produced or injected by the well inside the cell.
 	/// If there is no well inside the cell, the function returns 0.
@@ -188,21 +331,6 @@ double CCell1d::WellCumulative_Phase1() {
 		return well->Cumulative_Phase1();
 	}
 }
-
-/*
-void CCell1d::WellRate(double _rate, int _id) {
-	/// This function sets the well flow rate and the well Id of the well inside the cell.
-	/// If there is no well inside the cell, the function creates a well,
-	/// else the funtion only sets the value of the flow rate.
-
-	if (well == NULL) {
-		well = new CWell1d(_rate, _id);
-	}
-	else{
-		well->Rate(_rate, _id);
-	}
-}
-*/
 
 double CCell1d::WellRate() {
 	/// This function returns the well flow rate of the well inside the cell.
