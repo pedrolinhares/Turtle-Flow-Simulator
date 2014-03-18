@@ -35,12 +35,18 @@ class CGas : public CFluid
 	public:
 		CGas();  ///< Gas constructor;
 		virtual ~CGas();  ///< Gas destructor;
-
+		
+		//////////  Interpolation Functions  //////////
 		virtual double FVF(double pres); ///< Returns the FVF of a specific pressure;
 		virtual double Weight(double pres); ///< Returns the Specific Weight of a specific pressure;
 		virtual double Viscosity(double pres); ///< Returns the Viscosity of a specific pressure;
 		virtual double AveragePVTPressure(); ///< Returns the average pressure of the PVT test;
-
+		
+		//////////  Derivative Functions  //////////
+    	double FVF_Derivative(double pres) { return 0; }; ///< Returns the FVF derivative of a specific pressure;
+    	double Weight_Derivative(double pres) { return 0; }; ///< Returns the Weight derivative of a specific pressure;
+    	double Viscosity_Derivative(double pres) { return 0; }; ///< Returns the Viscosity derivative of a specific pressure;
+		
 		virtual void Print(); ///< Prints all fluid data.
 
 };

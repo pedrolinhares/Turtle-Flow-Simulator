@@ -46,12 +46,18 @@ class CFluid
 
 		CFluid(); ///< Fluid constructor;
 		virtual ~CFluid(); ///< Fluid destructor;
-
+		
+		//////////  Interpolation Functions  //////////
 		virtual double FVF(double pressure) = 0; ///< Returns the FVF of a specific pressure;
 		virtual double Weight(double pressure) = 0; ///< Returns the Specific Weight of a specific pressure;
 		virtual double Viscosity(double pressure) = 0; ///< Returns the Viscosity of a specific pressure;
 		virtual double AveragePVTPressure() = 0; ///< Returns the average pressure of the PVT test;
-
+		
+		//////////  Derivative Functions  //////////
+    	virtual double FVF_Derivative(double pres) = 0; ///< Returns the FVF derivative of a specific pressure;
+    	virtual double Weight_Derivative(double pres) = 0; ///< Returns the Weight derivative of a specific pressure;
+   		virtual double Viscosity_Derivative(double pres) = 0; ///< Returns the Viscosity derivative of a specific pressure;
+		
 		virtual void Print() = 0; ///< Prints all fluid data.
 };
 
