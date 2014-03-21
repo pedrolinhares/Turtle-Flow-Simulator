@@ -1,4 +1,4 @@
-/** @file filename_definitions.h */
+//** @file CRock1d.cpp */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
@@ -18,28 +18,25 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-#ifndef FILENAME_DEFINITIONS_H
-#define FILENAME_DEFINITIONS_H
+#include "CRock1d.h"
 
-#include <string>
-
-/**
- * Namespace that contains the macros that represent the configuration filenames
- */
-namespace filename_definitions {
-
-extern std::string ARQ_MODEL_FILE;
-extern std::string ARQ_GRID1d_FILE;
-extern std::string ARQ_GRID2d_FILE;
-extern std::string ARQ_WELL1D_FILE;
-extern std::string ARQ_GAS_FILE;
-extern std::string ARQ_OIL_FILE;
-extern std::string ARQ_WATER_FILE;
-
-extern std::string OUT_GRID_FILE;
-extern std::string OUT_WELLS_FILE;
+CRock1d::CRock1d() : rockcomp(0), permeability_x(0), por0(0), refpressure(0)
+{
+	/// Class constructor
 
 }
 
 
-#endif // FILENAME_DEFINITIONS_H
+CRock1d::~CRock1d()
+{
+	/// Class destructor
+
+}
+
+double CRock1d::Porosity(double pressure) {
+	/// This function returns the porosity in function of the pressure variation. The rock porosity is
+	/// calculated based in an elastic compressibility.
+
+	return  por0*exp(rockcomp*(pressure-refpressure));
+
+}

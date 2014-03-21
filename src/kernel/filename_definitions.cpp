@@ -24,6 +24,7 @@
 
 std::string filename_definitions::ARQ_MODEL_FILE = "../reservoir_data/ArqModel.in";
 std::string filename_definitions::ARQ_GRID1d_FILE = "../reservoir_data/ArqGrid1d.in";
+std::string filename_definitions::ARQ_GRID2d_FILE = "../reservoir_data/ArqGrid2d.in";
 std::string filename_definitions::ARQ_WELL1D_FILE = "../reservoir_data/ArqWell1d.in";
 std::string filename_definitions::ARQ_GAS_FILE = "../reservoir_data/ArqGas.in";
 std::string filename_definitions::ARQ_OIL_FILE = "../reservoir_data/ArqOil.in";
@@ -38,6 +39,7 @@ std::string filename_definitions::OUT_WELLS_FILE = "../reservoir_data/Out_Well_"
 
 std::string filename_definitions::ARQ_MODEL_FILE = "../reservoir_data/ArqModel.in";
 std::string filename_definitions::ARQ_GRID1d_FILE = "../reservoir_data/ArqGrid1d.in";
+std::string filename_definitions::ARQ_GRID2d_FILE = "../reservoir_data/ArqGrid2d.in";
 std::string filename_definitions::ARQ_WELL1D_FILE = "../reservoir_data/ArqWell1d.in";
 std::string filename_definitions::ARQ_GAS_FILE = "../reservoir_data/ArqGas.in";
 std::string filename_definitions::ARQ_OIL_FILE = "../reservoir_data/ArqOil.in";

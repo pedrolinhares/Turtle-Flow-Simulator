@@ -1,8 +1,10 @@
-/** @file filename_definitions.h */
+//** @file CRock2d.h */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
- *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz.
+ *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
+ *  
+ *  Class Author: Wagner Queiroz Barros.
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,29 +19,32 @@
  *  You should have received a copy of the GNU General Public License
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
+ 
+#ifndef CRock2d_h
+#define CRock2d_h
 
-#ifndef FILENAME_DEFINITIONS_H
-#define FILENAME_DEFINITIONS_H
+#include "CRock1d.h"
 
-#include <string>
 
 /**
- * Namespace that contains the macros that represent the configuration filenames
+ * This Class is used to store the Two-Dimensional Rock parameters, and its object will be created inside the Blocks.
  */
-namespace filename_definitions {
 
-extern std::string ARQ_MODEL_FILE;
-extern std::string ARQ_GRID1d_FILE;
-extern std::string ARQ_GRID2d_FILE;
-extern std::string ARQ_WELL1D_FILE;
-extern std::string ARQ_GAS_FILE;
-extern std::string ARQ_OIL_FILE;
-extern std::string ARQ_WATER_FILE;
+class CRock2d : public CRock1d
+{
 
-extern std::string OUT_GRID_FILE;
-extern std::string OUT_WELLS_FILE;
+    protected:
 
-}
+    double permeability_y; //Rock Permeability in direction y;
+	
+	public:
 
+		CRock2d();
+		~CRock2d();
 
-#endif // FILENAME_DEFINITIONS_H
+		inline void Permeability_y(double _permeability_y) {permeability_y = _permeability_y;}; ///< Sets the Rock Permeability_y;
+		inline double Permeability_y() {return permeability_y;}; ///< Returns Rock Permeability_y;
+		
+};
+
+#endif // CRock2d_h

@@ -1,4 +1,4 @@
-/** @file filename_definitions.h */
+//** @file CBlock1d.cpp */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
@@ -18,28 +18,39 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-#ifndef FILENAME_DEFINITIONS_H
-#define FILENAME_DEFINITIONS_H
+#include "CBlock1d.h" // class's header file
 
-#include <string>
+using namespace std;
 
-/**
- * Namespace that contains the macros that represent the configuration filenames
- */
-namespace filename_definitions {
-
-extern std::string ARQ_MODEL_FILE;
-extern std::string ARQ_GRID1d_FILE;
-extern std::string ARQ_GRID2d_FILE;
-extern std::string ARQ_WELL1D_FILE;
-extern std::string ARQ_GAS_FILE;
-extern std::string ARQ_OIL_FILE;
-extern std::string ARQ_WATER_FILE;
-
-extern std::string OUT_GRID_FILE;
-extern std::string OUT_WELLS_FILE;
+CBlock1d::CBlock1d() : blockid(0)
+{
+	/// Class constructor
 
 }
 
+CBlock1d::CBlock1d(int _blkid, double _comp, double _perm, double _por, double _ref_pres) : blockid(_blkid)
+{
+	/// Overloaded Class constructor
+	rock.Rockcomp(_comp);
+    rock.Permeability_x(_perm);
+	rock.Por0(_por);
+	rock.RefPressure(_ref_pres);
 
-#endif // FILENAME_DEFINITIONS_H
+}
+
+CBlock1d::~CBlock1d()
+{
+	/// class destructor
+
+}
+
+void CBlock1d::Print() {
+	/// This function prints all block parameters on screen. It is used to debug the code,
+	/// during programing, but it won't be used when the final code is ready.
+
+        cout << "Block ID - " << blockid << endl;
+		cout << "Rock Compressibility - " << rock.Rockcomp() << "\n";
+        cout << "Rock Permeability - " << rock.Permeability_x() << "\n";
+		cout << "Rock Porosity - " << rock.Porosity() << "\n";
+  }
+

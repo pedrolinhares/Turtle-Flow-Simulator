@@ -21,7 +21,7 @@
 #ifndef CCell1d_h
 #define CCell1d_h
 
-#include "CBlock.h"
+#include "CBlock1d.h"
 #include "CFluid.h"
 #include "CWell1d.h"
 
@@ -39,7 +39,7 @@ class CCell1d
 		double pressure; ///< Pressure at atual time;
 		double backpressure; ///< Pressure at back iteration time;
 		double gtransmx; ///< Geometric transmissibility in x direction;
-		CBlock *block; ///< Pointer to the block containing this cell;
+		CBlock1d *block; ///< Pointer to the block containing this cell;
 		CFluid *fluid; ///< Pointer to the fluid;
 		CWell1d  *well; ///< Pointer to a well in this cell. If the cell doesn't have a well, this pointer is NULL;
 		CCell1d *leftcell; ///< Pointer to the left cell;
@@ -48,7 +48,7 @@ class CCell1d
 	public:
 
 		CCell1d(); ///< Cell 1d constructor;
-		CCell1d(int _cellid, double _deepth, CBlock *blk, CFluid *fld); ///< Overloaded cell constructor;
+		CCell1d(int _cellid, double _deepth, CBlock1d *blk, CFluid *fld); ///< Overloaded cell constructor;
 		CCell1d(CCell1d & _cell); ///< Copy constructor;
 		~CCell1d(); ///< Cell 1d destructor;
 
@@ -63,8 +63,8 @@ class CCell1d
 		inline double RockComp() { return block->RockComp(); }; ///< Return the rock compressibility at atual pressure;
 		inline double Porosity() { return block->Porosity(); }; ///< Return the initial rock porosity;
 		inline double Porosity(double pressure) { return block->Porosity(pressure); }; ///< Return the atual rock porosity;
-		inline double Permeability() { return block->Permeability();  }; ///< Return the rock permeability;
-		inline CBlock * Block() { return block; }; ///< Return a pointer to the block
+		inline double Permeability_x() { return block->Permeability_x();  }; ///< Return the rock permeability;
+		inline CBlock1d * Block() { return block; }; ///< Return a pointer to the block
 
 		//////////  Cell Functions  //////////
 		inline int CellId() { return cellid; }; ///< Return the cell identification;

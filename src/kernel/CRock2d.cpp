@@ -1,4 +1,4 @@
-/** @file filename_definitions.h */
+//** @file CRock2d.cpp */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
@@ -18,28 +18,17 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-#ifndef FILENAME_DEFINITIONS_H
-#define FILENAME_DEFINITIONS_H
+#include "CRock2d.h"
 
-#include <string>
-
-/**
- * Namespace that contains the macros that represent the configuration filenames
- */
-namespace filename_definitions {
-
-extern std::string ARQ_MODEL_FILE;
-extern std::string ARQ_GRID1d_FILE;
-extern std::string ARQ_GRID2d_FILE;
-extern std::string ARQ_WELL1D_FILE;
-extern std::string ARQ_GAS_FILE;
-extern std::string ARQ_OIL_FILE;
-extern std::string ARQ_WATER_FILE;
-
-extern std::string OUT_GRID_FILE;
-extern std::string OUT_WELLS_FILE;
+CRock2d::CRock2d() : CRock1d(), permeability_y(0)
+{
+	/// Class constructor
 
 }
 
 
-#endif // FILENAME_DEFINITIONS_H
+CRock2d::~CRock2d()
+{
+	/// Class destructor
+
+}

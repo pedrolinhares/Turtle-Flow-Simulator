@@ -24,12 +24,12 @@ HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
 CommandLine=
-Folders=
+Folders="Fluid Classes","Grid Classes","Grid Classes/One-Dimensional Grid","Grid Classes/Two-Dimensional Grid","Model Classes","Model Classes/One-Dimensional Model","Model Classes/Two-Dimensional Model","Solver Classes"
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=33
+UnitCount=39
 
 [VersionInfo]
 Major=1
@@ -51,9 +51,9 @@ AutoIncBuildNr=0
 SyncProduct=1
 
 [Unit1]
-FileName=CBlock.cpp
+FileName=CBlock1d.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/One-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -61,9 +61,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit2]
-FileName=CBlock.h
+FileName=CBlock1d.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/One-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -73,7 +73,7 @@ BuildCmd=
 [Unit3]
 FileName=CCell1d.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/One-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -83,7 +83,7 @@ BuildCmd=
 [Unit4]
 FileName=CCell1d.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/One-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -93,7 +93,7 @@ BuildCmd=
 [Unit6]
 FileName=CFluid.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Fluid Classes
 Compile=1
 Link=1
 Priority=1000
@@ -103,7 +103,7 @@ BuildCmd=
 [Unit7]
 FileName=CGas.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Fluid Classes
 Compile=1
 Link=1
 Priority=1000
@@ -113,7 +113,7 @@ BuildCmd=
 [Unit8]
 FileName=CGas.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Fluid Classes
 Compile=1
 Link=1
 Priority=1000
@@ -123,7 +123,7 @@ BuildCmd=
 [Unit9]
 FileName=CGrid.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes
 Compile=1
 Link=1
 Priority=1000
@@ -133,7 +133,7 @@ BuildCmd=
 [Unit10]
 FileName=CGrid.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes
 Compile=1
 Link=1
 Priority=1000
@@ -143,7 +143,7 @@ BuildCmd=
 [Unit11]
 FileName=CGrid1d1p.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/One-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -153,7 +153,7 @@ BuildCmd=
 [Unit12]
 FileName=CGrid1d1p.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/One-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -163,7 +163,7 @@ BuildCmd=
 [Unit13]
 FileName=COil.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Fluid Classes
 Compile=1
 Link=1
 Priority=1000
@@ -173,7 +173,7 @@ BuildCmd=
 [Unit14]
 FileName=COil.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Fluid Classes
 Compile=1
 Link=1
 Priority=1000
@@ -183,7 +183,7 @@ BuildCmd=
 [Unit15]
 FileName=CReservoir.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -193,7 +193,7 @@ BuildCmd=
 [Unit16]
 FileName=CReservoir.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -203,7 +203,7 @@ BuildCmd=
 [Unit17]
 FileName=CResModelType.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Model Classes
 Compile=1
 Link=1
 Priority=1000
@@ -213,7 +213,7 @@ BuildCmd=
 [Unit18]
 FileName=CResModelType.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Model Classes
 Compile=1
 Link=1
 Priority=1000
@@ -221,9 +221,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit19]
-FileName=CRock.cpp
+FileName=CRock1d.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/One-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -231,9 +231,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=CRock.h
+FileName=CRock1d.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/One-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -243,7 +243,7 @@ BuildCmd=
 [Unit21]
 FileName=CSISinglePhase1d.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Model Classes/One-Dimensional Model
 Compile=1
 Link=1
 Priority=1000
@@ -253,7 +253,7 @@ BuildCmd=
 [Unit22]
 FileName=CSISinglePhase1d.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Model Classes/One-Dimensional Model
 Compile=1
 Link=1
 Priority=1000
@@ -263,7 +263,7 @@ BuildCmd=
 [Unit25]
 FileName=CWater.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Fluid Classes
 Compile=1
 Link=1
 Priority=1000
@@ -273,7 +273,7 @@ BuildCmd=
 [Unit26]
 FileName=CWater.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Fluid Classes
 Compile=1
 Link=1
 Priority=1000
@@ -283,7 +283,7 @@ BuildCmd=
 [Unit27]
 FileName=CWell1d.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/One-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -293,7 +293,7 @@ BuildCmd=
 [Unit28]
 FileName=CWell1d.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/One-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -303,7 +303,7 @@ BuildCmd=
 [Unit29]
 FileName=filename_definitions.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -313,7 +313,7 @@ BuildCmd=
 [Unit30]
 FileName=filename_definitions.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -323,7 +323,7 @@ BuildCmd=
 [Unit31]
 FileName=main.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -333,7 +333,7 @@ BuildCmd=
 [Unit32]
 FileName=CISinglePhase1d.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Model Classes/One-Dimensional Model
 Compile=1
 Link=1
 Priority=1000
@@ -343,7 +343,7 @@ BuildCmd=
 [Unit33]
 FileName=CISinglePhase1d.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Model Classes/One-Dimensional Model
 Compile=1
 Link=1
 Priority=1000
@@ -351,9 +351,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit34]
-FileName=filename_definitions.h
+FileName=CGrid2d1p.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/Two-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -361,29 +361,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit35]
-FileName=main.cpp
+FileName=CGrid2d1p.h
 CompileCpp=1
-Folder=ReservoirSoftware
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit36]
-FileName=filename_definitions.h
-CompileCpp=1
-Folder=ReservoirSoftware
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit37]
-FileName=main.cpp
-CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Grid Classes/Two-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000
@@ -393,7 +373,7 @@ BuildCmd=
 [Unit24]
 FileName=CSolverMatrix.h
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Solver Classes
 Compile=1
 Link=1
 Priority=1000
@@ -403,7 +383,7 @@ BuildCmd=
 [Unit5]
 FileName=CFluid.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Fluid Classes
 Compile=1
 Link=1
 Priority=1000
@@ -413,7 +393,47 @@ BuildCmd=
 [Unit23]
 FileName=CSolverMatrix.cpp
 CompileCpp=1
-Folder=ReservoirSoftware
+Folder=Solver Classes
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit36]
+FileName=CRock2d.cpp
+CompileCpp=1
+Folder=Grid Classes/Two-Dimensional Grid
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit37]
+FileName=CRock2d.h
+CompileCpp=1
+Folder=Grid Classes/Two-Dimensional Grid
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit38]
+FileName=CBlock2d.cpp
+CompileCpp=1
+Folder=Grid Classes/Two-Dimensional Grid
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit39]
+FileName=CBlock2d.h
+CompileCpp=1
+Folder=Grid Classes/Two-Dimensional Grid
 Compile=1
 Link=1
 Priority=1000

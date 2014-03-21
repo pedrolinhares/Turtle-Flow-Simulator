@@ -44,9 +44,9 @@ class CWater : public CFluid
 		virtual double AveragePVTPressure(); ///< Returns the average pressure of the PVT test;
 		
 		//////////  Derivative Functions  //////////
-    	double FVF_Derivative(double pres) { return 0; }; ///< Returns the FVF derivative of a specific pressure;
-    	double Weight_Derivative(double pres) { return 0; }; ///< Returns the Weight derivative of a specific pressure;
-    	double Viscosity_Derivative(double pres) { return 0; }; ///< Returns the Viscosity derivative of a specific pressure;
+    	double FVF_Derivative(double pres); ///< Returns the FVF derivative of a specific pressure;
+    	double Weight_Derivative(double pres); ///< Returns the Weight derivative of a specific pressure;
+    	double Viscosity_Derivative(double pres); ///< Returns the Viscosity derivative of a specific pressure;
 
 		virtual void Print(); ///< Prints all fluid data.
 };

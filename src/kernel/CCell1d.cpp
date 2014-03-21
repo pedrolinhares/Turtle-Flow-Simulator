@@ -40,7 +40,7 @@ CCell1d::CCell1d()
 
 }
 
-CCell1d::CCell1d(int _cellid, double _deepth, CBlock *blk, CFluid *fld) {
+CCell1d::CCell1d(int _cellid, double _deepth, CBlock1d *blk, CFluid *fld) {
 	/// Overloaded CCell1d constructor.
 	/// This cell is created with data from reservoir, and with pointers to the
 	/// block and fluid related to this cell.

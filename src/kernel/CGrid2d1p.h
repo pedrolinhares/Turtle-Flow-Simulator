@@ -2,7 +2,9 @@
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
- *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz.
+ *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
+ *  
+ *  Class Author: Wagner Queiroz Barros.
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,20 +20,22 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-#ifndef CGrid1d_h
-#define CGrid1d_h
+#ifndef CGrid2d_h
+#define CGrid2d_h
 
 #include <cmath>
 
 #include "CGrid.h"
+#include "CGrid1d1p.h"
 #include "CCell1d.h"
+#include "CBlock2d.h"
 
 /**
- * This class represents a One-Dimensional single-phase Grid. It inherits from CGrid.h that is a abstract class.
- * This class has a array with one-dimensional cells.
+ * This class represents a Two-Dimensional single-phase Grid. It inherits from CGrid.h that is a abstract class.
+ * This class has a array with two-dimensional cells.
  */
 
-class CGrid1d1p : public CGrid
+class CGrid2d1p : public CGrid1d1p
 {
 
     private:
@@ -39,15 +43,15 @@ class CGrid1d1p : public CGrid
 		double *lenght; ///< Vector representing the lenght of each cell in domain
     	double *width;   ///< Vector representing the Width of each cell in domain.
 		double *thickness;  ///< Vector representing the Thickness of each cell in domain.
-		CBlock1d *block; ///< Pointer to a block array;
     	CCell1d *cells; ///< Array with all cells of domain
+    	CBlock2d *block; ///< Pointer to a block array;
 
 	public:
 
-		CGrid1d1p(int _fluidtype); ///< One-Dimensional Grid Constructor
-		CGrid1d1p(); ///< Overloaded One-Dimensional Grid Constructor
-		virtual ~CGrid1d1p(); ///< One-Dimensional Grid Destructor
+		CGrid2d1p(int _fluidtype); ///< One-Dimensional Grid Constructor
+		virtual ~CGrid2d1p(); ///< One-Dimensional Grid Destructor
 
+/*
 		virtual void Print(); ///< Function used to print all the reservoir data on screen.
 		virtual void SaveGridSolution(std::ofstream *fout, double time); ///< Function used to save the grid solution in disk.
 		virtual void SaveWellSolution(std::ofstream *fout, int welln, double time);///< Function used to save the well solution in disk.
@@ -93,7 +97,9 @@ class CGrid1d1p : public CGrid
 
 		////////// Boundary Conditions //////////
 		void SetBoundConditions(std::ifstream * fgrid); ///< Sets the boundary condition for the problem.
+		
+*/
 
 };
 
-#endif // CGrid1d_h
+#endif // CGrid2d_h

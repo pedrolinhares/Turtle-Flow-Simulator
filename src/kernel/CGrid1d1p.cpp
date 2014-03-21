@@ -41,7 +41,7 @@ CGrid1d1p::CGrid1d1p(int _fluidtype) :CGrid()
     fgrid >> blknumber;
     fgrid.ignore(256, '\n');
     
-    block = new CBlock[blknumber];
+    block = new CBlock1d[blknumber];
 	
 	{
 	    int blkid;
@@ -64,7 +64,7 @@ CGrid1d1p::CGrid1d1p(int _fluidtype) :CGrid()
 	       fgrid >> refpres;	
 	       fgrid.ignore(256, '\n');
 	       
-	       CBlock blk(blkid, rockcomp, rockperm, rockpor, refpres); ///< Constructing a block;
+	       CBlock1d blk(blkid, rockcomp, rockperm, rockpor, refpres); ///< Constructing a block;
 	
 	       block[i]=blk; ///< adding the constructed block in the block array;
 	     }
@@ -197,11 +197,15 @@ CGrid1d1p::CGrid1d1p(int _fluidtype) :CGrid()
   
 }
 
+CGrid1d1p::CGrid1d1p() : CGrid() {}
 
 CGrid1d1p::~CGrid1d1p()
 {
   ///< Class destructor
 
+  delete [] block;
+  block = NULL;
+	
   delete [] lenght;
   lenght = NULL;
   
@@ -321,7 +325,7 @@ void CGrid1d1p::SetBoundConditions(ifstream *fgrid) {
         double Ai0, perm0, gtr;
         
         Ai0 = thickness[0]*width[0];
-        perm0 = cells[0].Permeability();
+        perm0 = cells[0].Permeability_x();
         gtr = 2*betac*Ai0*Ai0*perm0*perm0/(Ai0*perm0*lenght[0]);
         leftcell->GTransmx(gtr);
 
@@ -364,7 +368,7 @@ void CGrid1d1p::SetBoundConditions(ifstream *fgrid) {
         double Ai0, perm0, gtr;
         
         Ai0 = thickness[(cellnumber - 1)]*width[(cellnumber - 1)];
-        perm0 = cells[(cellnumber - 1)].Permeability();
+        perm0 = cells[(cellnumber - 1)].Permeability_x();
         gtr = 2*betac*Ai0*Ai0*perm0*perm0/(Ai0*perm0*lenght[(cellnumber - 1)]);
         cells[(cellnumber - 1)].GTransmx(gtr);
 
@@ -388,8 +392,8 @@ void CGrid1d1p::SetGTransmx() {
       Ai0 = thickness[j]*width[j];
       Ai1 = thickness[j+1]*width[j+1];
       
-      perm0 = cells[j].Permeability();
-      perm1 = cells[j].RightCell()->Permeability();
+      perm0 = cells[j].Permeability_x();
+      perm1 = cells[j].RightCell()->Permeability_x();
       
       gtr = 2*betac*Ai1*Ai0*perm1*perm0/(Ai0*perm0*lenght[j+1]+Ai1*perm1*lenght[j]);
       cells[j].GTransmx(gtr);

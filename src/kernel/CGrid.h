@@ -26,7 +26,7 @@
 #include <fstream>
 #include <iomanip>
 
-#include "CBlock.h"
+#include "CBlock1d.h"
 #include "CFluid.h"
 #include "CWater.h"
 #include "COil.h"
@@ -47,7 +47,6 @@ class CGrid
     	CFluid *fluid; ///< Pointer to the fluid data;
     	int fluidtype1; ///< Type of simulated fluid;
         int blknumber; ///< Number of blocks in domain;
-		CBlock *block; ///< Pointer to a block array;
 		double betac; ///< Conversion factor.
 
 	public:

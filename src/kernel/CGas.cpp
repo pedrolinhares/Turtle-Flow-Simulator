@@ -91,6 +91,33 @@ double CGas::FVF(double pres) {
   return fvf[imin]+(pres-pressure[imin])*(fvf[imin+1]-fvf[imin])/(pressure[imin+1]-pressure[imin]);
 }
 
+double CGas::FVF_Derivative(double pres) {
+	/// Function that returns the derivative of FVF at pressure pres.
+	/// This function uses Forward Differences Finites Method and the linear interpolation model.
+	
+	if ((pres < pressure[0]) || (pres > pressure[pvtpoints-1])) { ///< If the reservoir pressure is out of PVT test, the user will be warned.
+    cerr << "Error - Pressure out of PVT range \n";
+    // cin.ignore();
+    exit(EXIT_FAILURE);
+    }
+
+   int imin=0;
+
+   while (pres > pressure[imin]) { imin++; } ///< Searching the position of the pressure in the PVT tabble;
+   imin--;
+   
+   if (imin == (pvtpoints - 1)) { 
+   	/// This case is used when the pressure is the last pressure of the PVT tabble.
+   	/// Using Backward DFM.
+       return (fvf[imin] - fvf[imin - 1]) / (pressure[imin] - pressure[imin - 1 ] );	
+   } 
+   else {
+   	 /// Using Forward DFM.
+       return (fvf[imin+1] - fvf[imin]) / (pressure[imin+1] - pressure[imin]);	
+   }
+   
+}
+
 double CGas::Weight(double pres) {
   /// Function that interpolates Specific Weight from de PVT data.
   /// This function uses the linear interpolation model.
@@ -110,6 +137,32 @@ double CGas::Weight(double pres) {
   return weight[imin]+(pres-pressure[imin])*(weight[imin+1]-weight[imin])/(pressure[imin+1]-pressure[imin]);
 }
 
+double CGas::Weight_Derivative(double pres) {
+	/// Function that returns the derivative of Weight at pressure pres.
+	/// This function uses Forward Differences Finites Method and the linear interpolation model.
+	
+	if ((pres < pressure[0]) || (pres > pressure[pvtpoints-1])) { ///< If the reservoir pressure is out of PVT test, the user will be warned.
+    cerr << "Error - Pressure out of PVT range \n";
+    // cin.ignore();
+    exit(EXIT_FAILURE);
+    }
+
+   int imin=0;
+
+   while (pres > pressure[imin]) { imin++; } ///< Searching the position of the pressure in the PVT tabble;
+   imin--;
+   
+   if (imin == (pvtpoints - 1)) { 
+   	/// This case is used when the pressure is the last pressure of the PVT tabble.
+   	/// Using Backward DFM.
+       return (weight[imin] - weight[imin - 1]) / (pressure[imin] - pressure[imin - 1] );	
+   } 
+   else {
+   	 /// Using Forward DFM.
+       return (weight[imin+1] - weight[imin]) / (pressure[imin+1] - pressure[imin]);	
+   }
+}
+
 double CGas::Viscosity(double pres) {
   /// Function that interpolates Viscosity from de PVT data.
   /// This function uses the linear interpolation model.
@@ -127,6 +180,33 @@ double CGas::Viscosity(double pres) {
   if (imin == (pvtpoints - 1)) { return viscosity[imin]; } ///< This case is used when the pressure is the last pressure of the PVT tabble.
 
   return viscosity[imin]+(pres-pressure[imin])*(viscosity[imin+1]-viscosity[imin])/(pressure[imin+1]-pressure[imin]);
+}
+
+double CGas::Viscosity_Derivative(double pres) {
+	/// Function that returns the derivative of Viscosity at pressure pres.
+	/// This function uses Forward Differences Finites Method and the linear interpolation model.
+	
+	if ((pres < pressure[0]) || (pres > pressure[pvtpoints-1])) { ///< If the reservoir pressure is out of PVT test, the user will be warned.
+    cerr << "Error - Pressure out of PVT range \n";
+    // cin.ignore();
+    exit(EXIT_FAILURE);
+    }
+
+   int imin=0;
+
+   while (pres > pressure[imin]) { imin++; } ///< Searching the position of the pressure in the PVT tabble;
+   imin--;
+   
+   if (imin == (pvtpoints - 1)) { 
+   	/// This case is used when the pressure is the last pressure of the PVT tabble.
+   	/// Using Backward DFM.
+       return (viscosity[imin] - viscosity[imin - 1]) / (pressure[imin] - pressure[imin - 1] );	
+   } 
+   else {
+   	 /// Using Forward DFM.
+       return (viscosity[imin+1] - viscosity[imin]) / (pressure[imin+1] - pressure[imin]);	
+   }
+	
 }
 
 double CGas::AveragePVTPressure() {

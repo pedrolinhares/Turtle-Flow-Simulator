@@ -114,6 +114,7 @@ double COil::FVF_Derivative(double pres) {
    }
    
 }
+
 double COil::Weight(double pres) {
   /// Function that interpolates Specific Weight from de PVT data.
   /// This function uses the linear interpolation model.
@@ -158,7 +159,6 @@ double COil::Weight_Derivative(double pres) {
    	 /// Using Forward DFM.
        return (weight[imin+1] - weight[imin]) / (pressure[imin+1] - pressure[imin]);	
    }
-	
 	
 }
 double COil::Viscosity(double pres) {
@@ -206,6 +206,7 @@ double COil::Viscosity_Derivative(double pres) {
    }
 	
 }
+
 double COil::AveragePVTPressure() {
   /// This function returns the average pressure of the PVT test.
   /// The function uses the linear averaging model.

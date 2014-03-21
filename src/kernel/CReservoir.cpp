@@ -53,7 +53,11 @@ CReservoir::CReservoir()
   	case 1: {
   		switch (dimensions) {
   			case 1: {
-  				grid = new CGrid1d1p(fluid_type); ///< Constructing the grid.				
+  				grid = new CGrid1d1p(fluid_type); ///< Constructing 1d grid.				
+  				break;
+  			}
+  			case 2: {
+  				grid = new CGrid2d1p(fluid_type); ///< Constructing 2d grid.
   				break;
   			}
   		}

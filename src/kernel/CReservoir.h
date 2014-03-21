@@ -29,6 +29,7 @@
 
 #include "CGrid.h"
 #include "CGrid1d1p.h"
+#include "CGrid2d1p.h"
 
 #include "CResModelType.h"
 #include "CSISinglePhase1d.h"

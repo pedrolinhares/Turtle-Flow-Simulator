@@ -32,8 +32,6 @@ CGrid::CGrid()
 // class destructor
 CGrid::~CGrid()
 {
-	delete [] block;
-	block = NULL;
 	delete fluid;
 	fluid = NULL;
 }
