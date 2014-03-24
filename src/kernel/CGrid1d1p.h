@@ -36,11 +36,15 @@ class CGrid1d1p : public CGrid
 
     private:
 
-		double *lenght; ///< Vector representing the lenght of each cell in domain
-    	double *width;   ///< Vector representing the Width of each cell in domain.
-		double *thickness;  ///< Vector representing the Thickness of each cell in domain.
 		CBlock1d *block; ///< Pointer to a block array;
     	CCell1d *cells; ///< Array with all cells of domain
+    	
+    protected:
+    	
+    	int xcells; ///< Number of cells in x direction;
+    	double *lenght; ///< Vector representing the lenght of each cell in domain
+    	double *width;   ///< Vector representing the Width of each cell in domain.
+		double *thickness;  ///< Vector representing the Thickness of each cell in domain.
 
 	public:
 
@@ -68,6 +72,7 @@ class CGrid1d1p : public CGrid
 
 		//////////  Cell Functions  //////////
 		virtual int CellNumber() { return cellnumber; }; ///< Return the number of cells in domain;
+		double XCells() { return xcells; }; ///< Retunr the number of cells in x direction;
 		int CellId( int celln ) { return cells[celln].CellId(); }; ///< Return the cell ID of a specific cell in domain;
 		double Pressure( int celln ); ///< Return the atual pressure of a specific cell in domain;
 		double BackPressure( int celln ) { return cells[celln].BackPressure(); }; ///< Return the back pressure of a specific cell in domain;
@@ -92,7 +97,8 @@ class CGrid1d1p : public CGrid
 		virtual int WellNumbers(); ///< Return the number of wells in domain.
 
 		////////// Boundary Conditions //////////
-		void SetBoundConditions(std::ifstream * fgrid); ///< Sets the boundary condition for the problem.
+		void SetBoundConditions(std::ifstream * fgrid); ///< Sets the boundary condition for the problem;
+		void SetCellConnections(); ///< Sets the connections between neighbooring cells.
 
 };
 

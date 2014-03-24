@@ -1,6 +1,6 @@
 1     #* Phases Number *#
 2     #* Fluid Type (1- water; 2- Oil; 3- Gas) *#
-1     #* Problem Dimension *#
+2     #* Problem Dimension *#
 
 1     #* Discretization Model (1 - Semi-Implicit, 2 - Implicit) *#
 500   #* Maximum Linear Iterations *#

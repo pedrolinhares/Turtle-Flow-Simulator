@@ -1,0 +1,5 @@
+1     #* Wells Number *#
+
+4     #* Id of cell that well is inserted *#
+1     #* Well Id *#
+-150  #* [STB/D] Well Flow Rate (Negative = Production || Positive = Injection) *#

@@ -72,11 +72,12 @@ CGrid1d1p::CGrid1d1p(int _fluidtype) :CGrid()
 	}
 	
 	//////////  Constructing CGrid1d  //////////
-	  fgrid >> cellnumber;
-	  fgrid.ignore(256, '\n');
-		fgrid.ignore(256, '#');
+	fgrid >> cellnumber;
+	fgrid.ignore(256, '\n');
+	fgrid.ignore(256, '#');
     fgrid.ignore(256, '#');
     
+    xcells = cellnumber;
 		lenght = new double[cellnumber];
     for (int i=0; i < cellnumber; i++) {
         fgrid >> lenght[i];
@@ -182,12 +183,7 @@ CGrid1d1p::CGrid1d1p(int _fluidtype) :CGrid()
    }
 
   ////////// Setting connections between neighbooring cells //////////
-  for( int i = 1; i < (cellnumber - 1) ; i++ ) {
-    cells[i].LeftCell(&cells[i-1]);
-    cells[i].RightCell(&cells[i+1]);
-  }
-  cells[0].RightCell(&cells[1]);
-  cells[cellnumber-1].LeftCell(&cells[cellnumber-2]);
+  SetCellConnections();
 
   ////////// Setting Geometric Transmissibility in all cells //////////
   SetGTransmx();
@@ -285,6 +281,19 @@ void CGrid1d1p::SaveWellSolution(std::ofstream *fout, int welln, double time) {
       *fout << cells[i].WellCumulative_Phase1() << endl;
     }
   }
+}
+
+void CGrid1d1p::SetCellConnections() {
+	///< Sets the connections between neighbooring cells.
+	
+	for( int i = 1; i < (cellnumber - 1) ; i++ ) {
+    cells[i].LeftCell(&cells[i-1]);
+    cells[i].RightCell(&cells[i+1]);
+   }
+   
+  cells[0].RightCell(&cells[1]);
+  cells[cellnumber-1].LeftCell(&cells[cellnumber-2]);
+	
 }
 
 void CGrid1d1p::SetBoundConditions(ifstream *fgrid) {

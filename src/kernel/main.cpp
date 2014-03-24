@@ -35,12 +35,16 @@ void onExit() {
 
 /* ///
 	TO Do List:
+	
+	1 - Review of all henritance in the code. Some functions are declared twice.
+	
+	2 - Consertar o construtor de cópia da célula;
 		
-	1 - Every cell needs to have left and right transmissibility function, but only the right
+	3 - Every cell needs to have left and right transmissibility function, but only the right
 	    will be implemented. The left case is the access of the left cell and the right transmissibility calculation.
 	    Again, it will help in the future cases.
 	    
-	2 - Fix all de implicit derivative functions, it can be working but it is not easy to understand the derivatives relationship.
+	4 - Fix all de implicit derivative functions, it can be working but it is not easy to understand the derivatives relationship.
 		
 */ /// 
 

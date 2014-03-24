@@ -33,17 +33,21 @@
 class CCell1d
 {
 	private:
+		
+		CBlock1d *block; ///< Pointer to the block containing this cell;
+		CWell1d  *well; ///< Pointer to a well in this cell. If the cell doesn't have a well, this pointer is NULL;
+		CCell1d *leftcell; ///< Pointer to the left cell;
+		CCell1d *rightcell; ///< Pointer to the right cell.
+		
+	protected:
+		
 		double alphac; ///< Convertion units factor;
 		int cellid; ///< Cell Id;
 		double deepth; ///< Cell deepth;
 		double pressure; ///< Pressure at atual time;
 		double backpressure; ///< Pressure at back iteration time;
 		double gtransmx; ///< Geometric transmissibility in x direction;
-		CBlock1d *block; ///< Pointer to the block containing this cell;
 		CFluid *fluid; ///< Pointer to the fluid;
-		CWell1d  *well; ///< Pointer to a well in this cell. If the cell doesn't have a well, this pointer is NULL;
-		CCell1d *leftcell; ///< Pointer to the left cell;
-		CCell1d *rightcell; ///< Pointer to the right cell.
 
 	public:
 

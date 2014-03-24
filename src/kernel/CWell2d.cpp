@@ -1,4 +1,4 @@
-/** @file filename_definitions.h */
+//** @file CWell2d.cpp */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
@@ -18,29 +18,22 @@
  *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
 
-#ifndef FILENAME_DEFINITIONS_H
-#define FILENAME_DEFINITIONS_H
+#include <cstdlib>
+#include "CWell2d.h"
 
-#include <string>
-
-/**
- * Namespace that contains the macros that represent the configuration filenames
- */
-namespace filename_definitions {
-
-extern std::string ARQ_MODEL_FILE;
-extern std::string ARQ_GRID1d_FILE;
-extern std::string ARQ_GRID2d_FILE;
-extern std::string ARQ_WELL1D_FILE;
-extern std::string ARQ_WELL2D_FILE;
-extern std::string ARQ_GAS_FILE;
-extern std::string ARQ_OIL_FILE;
-extern std::string ARQ_WATER_FILE;
-
-extern std::string OUT_GRID_FILE;
-extern std::string OUT_WELLS_FILE;
-
+CWell2d::CWell2d() : rate(0) , id(0) , cumulative_phase1(0)
+{
+	/// Well constructor.
 }
 
+CWell2d::~CWell2d()
+{
+	/// Well destructor.
+}
 
-#endif // FILENAME_DEFINITIONS_H
+void CWell2d::SetWell2d( double _rate, int _id) {
+	 ///< Sets the well flow rate, and the well Id.
+
+	rate = _rate;
+	id = _id;
+}

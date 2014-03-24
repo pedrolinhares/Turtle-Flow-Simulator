@@ -27,7 +27,7 @@
 
 #include "CGrid.h"
 #include "CGrid1d1p.h"
-#include "CCell1d.h"
+#include "CCell2d.h"
 #include "CBlock2d.h"
 
 /**
@@ -40,18 +40,18 @@ class CGrid2d1p : public CGrid1d1p
 
     private:
 
-		double *lenght; ///< Vector representing the lenght of each cell in domain
-    	double *width;   ///< Vector representing the Width of each cell in domain.
-		double *thickness;  ///< Vector representing the Thickness of each cell in domain.
-    	CCell1d *cells; ///< Array with all cells of domain
+    	CCell2d *cells; ///< Array with all cells of domain
     	CBlock2d *block; ///< Pointer to a block array;
+    	
+    protected:
+    	
+    	int ycells; ///< Number of cells in y direction;
 
 	public:
 
 		CGrid2d1p(int _fluidtype); ///< One-Dimensional Grid Constructor
 		virtual ~CGrid2d1p(); ///< One-Dimensional Grid Destructor
 
-/*
 		virtual void Print(); ///< Function used to print all the reservoir data on screen.
 		virtual void SaveGridSolution(std::ofstream *fout, double time); ///< Function used to save the grid solution in disk.
 		virtual void SaveWellSolution(std::ofstream *fout, int welln, double time);///< Function used to save the well solution in disk.
@@ -72,6 +72,7 @@ class CGrid2d1p : public CGrid1d1p
 
 		//////////  Cell Functions  //////////
 		virtual int CellNumber() { return cellnumber; }; ///< Return the number of cells in domain;
+		double YCells() { return xcells; }; ///< Retunr the number of cells in y direction;
 		int CellId( int celln ) { return cells[celln].CellId(); }; ///< Return the cell ID of a specific cell in domain;
 		double Pressure( int celln ); ///< Return the atual pressure of a specific cell in domain;
 		double BackPressure( int celln ) { return cells[celln].BackPressure(); }; ///< Return the back pressure of a specific cell in domain;
@@ -79,7 +80,8 @@ class CGrid2d1p : public CGrid1d1p
 		double Deepth( int celln ); ///< Return the Deepth of a specific cell in domain.
 
 		//////////  Transmissibility Functions //////////
-		virtual void SetGTransmx(); ///< Sets the Geometric transmissibility in all cells;
+		virtual void SetGTransmx(); ///< Sets the Geometric transmissibility in all cells, in x direction;
+		virtual void SetGTransmy(); ///< Sets the Geometric transmissibility in all cells, in y direction;
 		double RightTrasmx( int celln ); ///< Return the right transmissibility of a specific cell in ddomain;
 		double RightGravityTransmx( int celln ); ///< Return the right gravitational transmissibility of a specif cell.
 		double Gamma( int celln ); ///< Return the gamma factor of a specific cell;
@@ -96,9 +98,9 @@ class CGrid2d1p : public CGrid1d1p
 		virtual int WellNumbers(); ///< Return the number of wells in domain.
 
 		////////// Boundary Conditions //////////
-		void SetBoundConditions(std::ifstream * fgrid); ///< Sets the boundary condition for the problem.
+		void SetBoundConditions(std::ifstream * fgrid); ///< Sets the boundary condition for the problem;
+		void SetCellConnections(); ///< Sets the connections between neighbooring cells.
 		
-*/
 
 };
 
