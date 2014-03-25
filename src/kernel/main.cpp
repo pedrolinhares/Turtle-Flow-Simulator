@@ -38,13 +38,15 @@ void onExit() {
 	
 	1 - Review of all henritance in the code. Some functions are declared twice.
 	
-	2 - Consertar o construtor de cópia da célula;
+	2 - Converter um string the células para uma matriz de células;
+	
+	OK! - Consertar o construtor de cópia da célula;
 		
-	3 - Every cell needs to have left and right transmissibility function, but only the right
+	4 - Every cell needs to have left and right transmissibility function, but only the right
 	    will be implemented. The left case is the access of the left cell and the right transmissibility calculation.
 	    Again, it will help in the future cases.
 	    
-	4 - Fix all de implicit derivative functions, it can be working but it is not easy to understand the derivatives relationship.
+	5 - Fix all de implicit derivative functions, it can be working but it is not easy to understand the derivatives relationship.
 		
 */ /// 
 

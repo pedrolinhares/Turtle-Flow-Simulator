@@ -69,66 +69,72 @@ CReservoir::CReservoir()
   cpoints=grid->CellNumber(); ///< Getting the number of cells in domain.
   
   //////////  Constructing Model //////////
-  int model_type, model_maxni;
-  double model_errorni;
-  
-  fmodel >> model_type;
-  fmodel.ignore(256, '\n');
-  
-  fmodel >> model_maxni;
-  fmodel.ignore(256, '\n');
-  
-  fmodel >> model_errorni;
-  fmodel.ignore(256, '\n');
-  
-  switch (model_type) {
-  	case 1:  {
-  		model = new CSISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the Reservoir Semi-Implicit Model.		
-  		break;
-  	}
-  	case 2: {
-  		model = new CISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the Reservoir Implicit Model.		
-  		break;
-  	}
-  }
-  
-  //////////  Constructing Solver //////////
-  int solverid, solver_maxit;
-  double solver_error;
-  
-  fmodel >> solverid;
-  fmodel.ignore(256, '\n');
-  
-  switch (solverid) {
-  	case 1: {
-  		switch (dimensions) {
-  			case 1: {
-  				solver = new CSolverMatrix(); ///< Constructing Solver.
-  				break;
-  			}
-  		}
-  		break;
-  	}
-  }
-  
-  ////////// Constructing time parameters /////////
-  fmodel >> deltat;
-  fmodel.ignore(256, '\n');
-  
-  fmodel >> finalt;
-  fmodel.ignore(256, '\n');
-  
-  ///////// Initiating Initial Solution //////////
-  double ref_press, ref_deepth;
-  
-  fmodel >> ref_press;
-  fmodel.ignore(256, '\n');
-  
-  fmodel >> ref_deepth;
-  fmodel.ignore(256, '\n');
-  
-  grid->InitiateSolution(ref_press, ref_deepth);
-  
+//  
+//  int model_type, model_maxni;
+//  double model_errorni;
+//  
+//  fmodel >> model_type;
+//  fmodel.ignore(256, '\n');
+//  
+//  fmodel >> model_maxni;
+//  fmodel.ignore(256, '\n');
+//  
+//  fmodel >> model_errorni;
+//  fmodel.ignore(256, '\n');
+//  
+//  //model_errorni = 0.001;
+//  
+//  cout << model_maxni << "\n";
+//  cout << model_errorni << "\n";
+//  
+//  switch (model_type) {
+//  	case 1:  {
+//  		model = new CSISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the Reservoir Semi-Implicit Model.		
+//  		break;
+//  	}
+//  	case 2: {
+//  		model = new CISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the Reservoir Implicit Model.		
+//  		break;
+//  	}
+//  }
+//  
+//  //////////  Constructing Solver //////////
+//  int solverid, solver_maxit;
+//  double solver_error;
+//  
+//  fmodel >> solverid;
+//  fmodel.ignore(256, '\n');
+//  
+//  switch (solverid) {
+//  	case 1: {
+//  		switch (dimensions) {
+//  			case 1: {
+//  				solver = new CSolverMatrix(); ///< Constructing Solver.
+//  				break;
+//  			}
+//  		}
+//  		break;
+//  	}
+//  }
+//  
+//  ////////// Constructing time parameters /////////
+//  fmodel >> deltat;
+//  fmodel.ignore(256, '\n');
+//  
+//  fmodel >> finalt;
+//  fmodel.ignore(256, '\n');
+//  
+//  ///////// Initiating Initial Solution //////////
+//  double ref_press, ref_deepth;
+//  
+//  fmodel >> ref_press;
+//  fmodel.ignore(256, '\n');
+//  
+//  fmodel >> ref_deepth;
+//  fmodel.ignore(256, '\n');
+//  
+//  grid->InitiateSolution(ref_press, ref_deepth);
+//  
 }
 
 CReservoir::~CReservoir() {
@@ -142,7 +148,7 @@ CReservoir::~CReservoir() {
 void CReservoir::Run() {
   ///This function manages all the simulation. The loops used to advance time are implemented here.
 
-  //grid->Print(); ///< Printing the grid data on screen, Only for debugging.
+  grid->Print(); ///< Printing the grid data on screen, Only for debugging.
 
      model->BuildInitialSolution(grid); ///< Constructing an initial solution, according to the grid data.
      

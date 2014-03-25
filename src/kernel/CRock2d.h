@@ -35,13 +35,13 @@ class CRock2d : public CRock1d
 
     protected:
 
-    double permeability_y; //Rock Permeability in direction y;
+    	double permeability_y; //Rock Permeability in direction y;
 	
 	public:
 
 		CRock2d();
 		~CRock2d();
-
+				
 		inline void Permeability_y(double _permeability_y) {permeability_y = _permeability_y;}; ///< Sets the Rock Permeability_y;
 		inline double Permeability_y() {return permeability_y;}; ///< Returns Rock Permeability_y;
 		

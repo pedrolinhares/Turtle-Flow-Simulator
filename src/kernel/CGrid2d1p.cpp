@@ -75,7 +75,7 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
 	     }
 	     
 	}
-	
+		
 	//////////  Constructing CGrid2d  //////////
 	fgrid >> xcells;
 	fgrid.ignore(256, '#');
@@ -85,8 +85,11 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
 	fgrid.ignore(256, '#');
     fgrid.ignore(256, '#');
     
-    cellnumber = xcells*ycells;
-    
+    int gridsize;
+	gridsize = xcells*ycells; /// Size of grid;
+	        
+    fgrid.ignore(256, '#');
+    fgrid.ignore(256, '#');
 	lenght = new double[xcells];
     for (int i=0; i < xcells; i++) {
         fgrid >> lenght[i];
@@ -101,12 +104,28 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
     
     fgrid.ignore(256, '#');
     fgrid.ignore(256, '#');
-    thickness = new double[cellnumber];
-    for (int i=0; i < cellnumber; i++) {
+    thickness = new double[gridsize];
+    for (int i=0; i < gridsize; i++) {
         fgrid >> thickness[i];
     }
-    
-    
+   
+   fgrid.ignore(256, '#');
+   fgrid.ignore(256, '#'); 
+   cellsID = new int * [xcells];
+   for (int h=0; h < xcells; h++) {
+   		cellsID[h] = new int [ycells];
+   }
+   
+   int auxcount = 0;
+   for (int j=0; j<ycells; j++) {
+   		for (int i=0; i<xcells; i++) {
+   				fgrid >> cellsID[i][j]; /// Storing the connection between adjacent cells;
+   				if (cellsID[i][j] != 0) { auxcount++;} /// Counting the number of non-NULL cells; 
+   		}
+   }
+   
+   cellnumber = auxcount;
+   
     //////////  Constructing CFluid  //////////
     fluidtype1 = _fluidtype;
    
@@ -125,85 +144,59 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
      }
     }
     
-    //////////  Constructing CCell  //////////
-   cells = new CCell2d[cellnumber]; ///< constructing an array of cells;
-
+   //////////  Constructing CCell  //////////
+   
    fgrid.ignore(256, '#');
    fgrid.ignore(256, '#');
    double *deepth; ///< Temporary array of cells deepth;
-   deepth = new double[cellnumber];
-    for (int i=0; i < cellnumber; i++) {
+   deepth = new double[gridsize];  
+    for (int i=0; i < gridsize; i++) {
         fgrid >> deepth[i];
     }
    
    fgrid.ignore(256, '#');
    fgrid.ignore(256, '#');
    int *block_cell_conection; ///< Temporary array of cenections between blocks and cells;
-   block_cell_conection = new int[cellnumber];
-    for (int i=0; i < cellnumber; i++) {
+   block_cell_conection = new int[gridsize];
+    for (int i=0; i < gridsize; i++) {
         fgrid >> block_cell_conection[i];
     }
    
-   for( int i=0; i < cellnumber ; i++ ) {
-       CCell2d c2d((i+1), deepth[i], &block[block_cell_conection[i]-1], fluid); ///< Constructing a cell, and connecting this cell with the matching block and fluid;
-       cells[i] = c2d; ///< adding the cell in the cell arrray.
+   cells = new CCell2d [cellnumber]; ///< constructing an array of cells
+   int cellcount = 0;
+    
+   for (int j=0; j<ycells; j++) {
+   		for (int i=0; i<xcells; i++) {
+   				if (cellsID[i][j] != 0) {
+   						/// It means a non-NULL cell
+   						CCell2d c2d(cellsID[i][j], deepth[(xcells*j + i)], &block[block_cell_conection[(xcells*j + i)]-1], fluid); ///< Constructing a cell, and connecting this cell with the matching block and fluid;
+       					cells[cellcount] = c2d; ///< adding the cell in the cell arrray.
+       					cellcount++;
+   				}
+   		}
    }
-   
+     
+   /// Destructing Temporary files
    delete [] deepth;
    deepth = NULL;
        
    delete [] block_cell_conection;
    block_cell_conection = NULL;
    
-   
-   //////////  Constructing CWell1d  //////////
-    ifstream fwell2d(ARQ_WELL2D_FILE.c_str());
-  
-    if (fwell2d.fail())
-       {
-            cerr << "There is no well data." << endl;
-            exit(EXIT_FAILURE);
-       }
-   
-   int wellsnumber;
-   fwell2d >> wellsnumber;
-   fwell2d.ignore(256, '\n');
-   
-   for (int j = 0 ; j < wellsnumber ; j++) {  ///< Loop for all wells in problem;
-   
-	   int wellid, cell_wellid, wellfluidtype;
-	   double wellrate;
-	   
-	   fwell2d >> cell_wellid;
-	   fwell2d.ignore(256, '\n');
-	   
-	   fwell2d >> wellid;
-	   fwell2d.ignore(256, '\n');
-	   
-	   fwell2d >> wellrate;
-	   fwell2d.ignore(256, '\n');
-	   
-	   fwell2d >> wellfluidtype;
-	   fwell2d.ignore(256, '\n');
-	   
-	   CWell2d * tempwell; ///< Temporary Well;
-	   tempwell = new CWell2d(wellrate, wellid);
-	   
-	   cells[(cell_wellid - 1)].SetWell(tempwell);
-	   tempwell = NULL;
-   }
-
+  //////////  Constructing CWell2d  //////////
+  //ConstructingCWell();
 
   ////////// Setting connections between neighbooring cells //////////
   SetCellConnections();
   
   ////////// Setting Geometric Transmissibility in all cells //////////
-  SetGTransmx();
+  //SetGTransmx();
+  //SetGTransmy();
   
-  /*
   ////////// Setting Boundary Conditions //////////
-  SetBoundConditions(&fgrid);
-  */
+  //SetBoundConditions(&fgrid);
+  fgrid.close();
+  
 }
 
 
@@ -222,6 +215,11 @@ CGrid2d1p::~CGrid2d1p()
   
   delete [] thickness;
   thickness = NULL;
+  
+  for (int h=0; h < xcells; h++) {
+   		delete cellsID[h];
+   }
+   delete [] cellsID;
 
 }
 
@@ -231,14 +229,16 @@ void CGrid2d1p::Print() {
 
     cout << "Number of Blocks in Domain: " << blknumber << "\n";
     cout << "Number of Cells in Domain: " << cellnumber << "\n";
+    cout << "Number of Cells in x Direction: " << xcells << "\n";
+    cout << "Number of Cells in y Direction: " << ycells << "\n";
 
     /// Printing the cells width of all cells in domain.
-    for (int j=0; j < cellnumber ; j++ ){
+    for (int j=0; j < ycells ; j++ ){
         cout << "Cell Width: " << width[j] << "\n";
     }
 
     /// Printing the cells lenght of all cells in domain.
-    for (int j=0; j < cellnumber ; j++ ){
+    for (int j=0; j < xcells ; j++ ){
         cout << "Cell Lenght: " << lenght[j] << "\n";
     }
     
@@ -249,7 +249,7 @@ void CGrid2d1p::Print() {
 
   /// Printing all the Rock proprieties, for all Blocks in domain;
     for (int j=0; j < blknumber ; j++ ) {
-     block[j].Print();
+    	block[j].Print();
     }
 
   /// Printing all the cell proprieties, for all cells in domain;
@@ -295,32 +295,44 @@ void CGrid2d1p::SaveWellSolution(std::ofstream *fout, int welln, double time) {
 void CGrid2d1p::SetCellConnections() {
 	/// Function that sets the connections between neighbooring cells.
 	
-	int cont = 0;
-	
-	for( int j = 0; j < ycells ; j++ ) {
-		for( int i = 0; i < xcells ; i++ ) {
-			
-			if ( i != 0) {
-				cells[cont].LeftCell(&cells[cont - 1]);
-			}
-			if ( i != (xcells - 1)) {
-				cells[cont].RightCell(&cells[cont + 1]);
-			}	
-		    cont++;
-		}
-   }
+   int cont = 0;
+   int auxcellid;
    
-   cont = 0;
-   for( int i = 0; i < xcells ; i++ ) {
-		for( int j = 0; j < ycells ; j++ ) {
+   for( int j = 0; j < ycells ; j++ ) {
+		for( int i = 0; i < xcells ; i++ ) {
+			///Setting the Left Cell
+			if ( (i-1) >= 0 ) {
+				auxcellid = cellsID[i-1][j];
+				cells[cont].LeftCell( Cell(auxcellid) );
+			} else {
+				cells[cont].LeftCell( NULL );
+			}
 			
-			if ( j != 0) {
-				cells[cont].BackCell(&cells[cont - xcells]);				
+			///Setting the Right Cell
+			if ( (i+1) < xcells ) {
+				auxcellid = cellsID[i+1][j];
+				cells[cont].RightCell( Cell(auxcellid) );
+			} else {
+				cells[cont].RightCell( NULL );
 			}
-			if ( j != (ycells - 1)) {
-				cells[cont].FrontCell(&cells[cont + xcells]);
+			
+			///Setting the Back Cell
+			if ( (j-1) >= 0 ) {
+				auxcellid = cellsID[i][j-1];
+				cells[cont].BackCell( Cell(auxcellid) );
+			} else {
+				cells[cont].BackCell( NULL );
 			}
-			cont++;	
+			
+			///Setting the Front Cell
+			if ( (j+1) < ycells ) {
+				auxcellid = cellsID[i][j+1];
+				cells[cont].FrontCell( Cell(auxcellid) );
+			} else {
+				cells[cont].FrontCell( NULL );
+			}
+			
+		cont++;
 		}
    }
     
@@ -329,93 +341,26 @@ void CGrid2d1p::SetCellConnections() {
 void CGrid2d1p::SetBoundConditions(ifstream *fgrid) {
   /// Function used to set the boundary condition to all boundary cells in grid.
   
-	/// Left Boundary Condition ///
-	int leftbc_type;
-	double leftbc_value;
-	
-	fgrid->ignore(256, '#');
-    fgrid->ignore(256, '#');  
-	*fgrid >> leftbc_type;
-	
-	fgrid->ignore(256, '#');
-    fgrid->ignore(256, '#');  
-	*fgrid >> leftbc_value;
-    
-    switch (leftbc_type) {
-      case 0: {
-      if (leftbc_value == 0) { ///Closed system case
-        cells[0].LeftCell(NULL);
-        }
-      break;
-      }
-      
-      case 1: {   ///Specified Pressure Case
-
-        CCell2d *leftcell;
-        leftcell = new CCell2d;
-
-        *leftcell = cells[0]; ///< Copying the properties of the first element;
-
-        leftcell->Pressure(leftbc_value); /// Setting the specified pressure;
-        leftcell->RightCell(&cells[0]); /// Conecting the boundary condition with the left block;
-        leftcell->LeftCell(NULL);
-        
-        /// Setting the left transmissibility ///
-        double Ai0, perm0, gtr;
-        
-        Ai0 = thickness[0]*width[0];
-        perm0 = cells[0].Permeability_x();
-        gtr = 2*betac*Ai0*Ai0*perm0*perm0/(Ai0*perm0*lenght[0]);
-        leftcell->GTransmx(gtr);
-
-        cells[0].LeftCell(leftcell);
-        break;
-      }
-    }
-
-	/// Right Boundary Condition ///
-	int rightbc_type;
-	double rightbc_value;
-	  
-	fgrid->ignore(256, '#');
-    fgrid->ignore(256, '#');  
-	*fgrid >> rightbc_type;
-	
-	fgrid->ignore(256, '#');
-    fgrid->ignore(256, '#');  
-	*fgrid >> rightbc_value;
-  
-  switch (rightbc_type) {
-      case 0: {
-      if (rightbc_value == 0) { ///Closed system case
-        cells[(cellnumber - 1)].RightCell(NULL);
-      }
-        break;
-        }
-      case 1: {   ///Specified Pressure Case
-
-        CCell2d *rightcell;
-        rightcell = new CCell2d;
-
-        *rightcell = cells[(cellnumber - 1)]; ///< Copying the properties of the last element;
-
-        rightcell->Pressure(rightbc_value); /// Setting the specified pressure;
-        rightcell->RightCell(NULL); /// Conecting the boundary condition with the right block;
-        rightcell->LeftCell(&cells[(cellnumber - 1)]);
-        
-        /// Setting the right transmissibility ///
-        double Ai0, perm0, gtr;
-        
-        Ai0 = thickness[(cellnumber - 1)]*width[(cellnumber - 1)];
-        perm0 = cells[(cellnumber - 1)].Permeability_x();
-        gtr = 2*betac*Ai0*Ai0*perm0*perm0/(Ai0*perm0*lenght[(cellnumber - 1)]);
-        cells[(cellnumber - 1)].GTransmx(gtr);
-
-        cells[(cellnumber - 1)].RightCell(rightcell);
-        break;
-      }
-    }
-
+	/// Setting Down Boundary Condition
+	for( int i = 0; i < xcells ; i++ ) {
+        cells[i].FrontCell(NULL);        
+ 	}
+ 	
+ 	/// Setting Left Boundary Condition
+ 	for ( int j = 0; j < ycells; j++ ) {
+ 		cells[(j*xcells)].LeftCell(NULL);
+ 	}
+ 	
+ 	/// Setting Up Boundary Condition
+ 	for( int i = 0; i < xcells ; i++ ) {
+        cells[(cellnumber - i - 1)].BackCell(NULL);        
+ 	}
+ 	
+ 	/// Setting Right Boundary Condition
+ 	for ( int j = 1; j <= ycells; j++ ) {
+ 		cells[(xcells)*j - 1].RightCell(NULL);	
+ 	}
+ 	
 }
 
 void CGrid2d1p::SetGTransmx() {
@@ -463,7 +408,7 @@ void CGrid2d1p::SetGTransmy() {
       		Ai1 = thickness[cont+xcells]*width[j+1];
       		
       		perm0 = cells[cont].Permeability_y();
-		    perm1 = cells[cont].RightCell()->Permeability_y();
+		    perm1 = cells[cont].FrontCell()->Permeability_y();
 		      
 		    gtr = 2*betac*Ai1*Ai0*perm1*perm0/(Ai0*perm0*lenght[i]+Ai1*perm1*lenght[i]);
 		    cells[cont].GTransmy(gtr);
@@ -652,6 +597,44 @@ void CGrid2d1p::Iterationt(double deltat) {
   }
 }
 
+void CGrid2d1p::ConstructingCWell() {
+	/// This function construct and connects all wells in domain.
+	
+	ifstream fwell2d(ARQ_WELL2D_FILE.c_str());
+  
+    if (fwell2d.fail())
+       {
+            cerr << "There is no well data." << endl;
+            exit(EXIT_FAILURE);
+       }
+   
+   int wellsnumber;
+   fwell2d >> wellsnumber;
+   fwell2d.ignore(256, '\n');
+   
+   for (int j = 0 ; j < wellsnumber ; j++) {  ///< Loop for all wells in problem;
+   
+	   int wellid, cell_wellid;
+	   double wellrate;
+	   
+	   fwell2d >> cell_wellid;
+	   fwell2d.ignore(256, '\n');
+	   
+	   fwell2d >> wellid;
+	   fwell2d.ignore(256, '\n');
+	   
+	   fwell2d >> wellrate;
+	   fwell2d.ignore(256, '\n');
+	   	   
+	   CWell2d * tempwell; ///< Temporary Well;
+	   tempwell = new CWell2d(wellrate, wellid);
+	   
+	   cells[(cell_wellid - 1)].SetWell(tempwell);
+	   tempwell = NULL;
+   }
+	
+}
+
  int CGrid2d1p::WellNumbers() {
   ///< Return the number of wells in domain.
 
@@ -662,5 +645,15 @@ void CGrid2d1p::Iterationt(double deltat) {
   }
 
   return cont;
+}
+
+CCell2d * CGrid2d1p::Cell( int cellid )  {
+    ///< Return a pointer to the cell which cell ID is cellid;
+    for (int i=0; i<cellnumber; i++) {
+    	if (cells[i].CellId() == cellid) { return &cells[i]; }
+    }
+    
+    return NULL;
+ 
 }
 

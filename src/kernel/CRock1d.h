@@ -35,10 +35,10 @@ class CRock1d
 
     protected:
 
-    double rockcomp; // Rock Compressibility;
-    double permeability_x; //Rock Permeability in direction x;
-    double por0; //Inicial Rock Porosity;
-	double refpressure; //Reference Pressure;
+	    double rockcomp; // Rock Compressibility;
+	    double permeability_x; //Rock Permeability in direction x;
+	    double por0; //Inicial Rock Porosity;
+		double refpressure; //Reference Pressure;
 	
 	public:
 

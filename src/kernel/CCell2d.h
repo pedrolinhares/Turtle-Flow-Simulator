@@ -74,14 +74,17 @@ class CCell2d : public CCell1d
 		inline void FrontCell( CCell2d *_frontcell) { frontcell = _frontcell; }; ///< Set a pointer to front cell;
 		inline void BackCell( CCell2d *_backcell) { backcell = _backcell; }; ///< Set a pointer to back cell;
 		
+		CCell2d * LeftCell() { return leftcell; }; ///< Return a pointer to the right cell;
+		CCell2d * RightCell() { return rightcell; }; ///< Return a pointer to the right cell;
+		CCell2d * FrontCell() { return frontcell; }; ///< Return a pointer to the front cell;
+		CCell2d * BackCell() { return backcell; }; ///< Return a pointer to the back cell;
+		
 		//////////  Cell Functions  //////////
 		inline int CellId() { return cellid; }; ///< Return the cell identification;
 		inline double Pressure() { return pressure; }; ///< Return the cell pressure;
 		inline void Pressure(double _pressure) { pressure = _pressure; }; ///< Set the cell pressure;
 		inline double BackPressure() { return backpressure; }; ///< Return the cell pressure in the back time iteration;
 		inline void BackPressure( double _backpressure) { backpressure = _backpressure; }; ///< Set the pressure of the back time iteration;
-		CCell2d * LeftCell() { return leftcell; }; ///< Return a pointer to the right cell;
-		CCell2d * RightCell() { return rightcell; }; ///< Return a pointer to the right cell;
 		inline double Weight() { return fluid->Weight(pressure); };  ///< Return the cell weight;
 		inline double Deepth()  { return deepth; }; ///< Return the cell deepth;
 
@@ -92,6 +95,8 @@ class CCell2d : public CCell1d
 		inline double GTransmy() { return gtransmy; }; ///< Get the geometric transmissibility in y direction;
 		double RightTransmx(); ///< Return the right transmissibility;
 		double RightGravityTransmx(); ///< Return the right gravitational transmissibility;
+		double FrontTransmy(); ///< Return the front transmissibility;
+		double FrontGravityTransmy(); ///< Return the front gravitational transmissibility;
 		double Gamma(double CellVolume); ///< Return the gamma factor;
 		
 		//////////  Transmissibility Derivative Functions  //////////

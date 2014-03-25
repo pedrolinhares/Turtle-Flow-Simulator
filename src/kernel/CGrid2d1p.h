@@ -45,6 +45,7 @@ class CGrid2d1p : public CGrid1d1p
     	
     protected:
     	
+    	int **cellsID; ///< Matrix storing the connections between the neighbooring cells;
     	int ycells; ///< Number of cells in y direction;
 
 	public:
@@ -72,7 +73,9 @@ class CGrid2d1p : public CGrid1d1p
 
 		//////////  Cell Functions  //////////
 		virtual int CellNumber() { return cellnumber; }; ///< Return the number of cells in domain;
-		double YCells() { return xcells; }; ///< Retunr the number of cells in y direction;
+		double XCells() { return xcells; }; ///< Return the number of cells in x direction;
+		double YCells() { return ycells; }; ///< Return the number of cells in y direction;
+		CCell2d * Cell( int cellid ); ///< Return a pointer to the cell which cell ID is cellid;
 		int CellId( int celln ) { return cells[celln].CellId(); }; ///< Return the cell ID of a specific cell in domain;
 		double Pressure( int celln ); ///< Return the atual pressure of a specific cell in domain;
 		double BackPressure( int celln ) { return cells[celln].BackPressure(); }; ///< Return the back pressure of a specific cell in domain;
@@ -94,6 +97,7 @@ class CGrid2d1p : public CGrid1d1p
 		double CenterGravityTransmxDer( int celln )  { return cells[celln].CenterGravityTransmxDer(); }; ///< Returns the derivative of the right gravitational transmissibility in relation of the center cell pressure;
 
 		//////////  Well Functions //////////
+		void ConstructingCWell(); ///< Construct all wells in domain;
 		double WellRate( int celln ) { return cells[celln].WellRate(); }; ///< Return the flow rate of a well in a specific cell in domain.
 		virtual int WellNumbers(); ///< Return the number of wells in domain.
 
