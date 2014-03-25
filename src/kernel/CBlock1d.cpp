@@ -28,6 +28,13 @@ CBlock1d::CBlock1d() : blockid(0)
 
 }
 
+CBlock1d::CBlock1d(int _blkid) : blockid(_blkid){
+	
+/// Overloaded Block constructor;	
+
+}
+ 
+
 CBlock1d::CBlock1d(int _blkid, double _comp, double _perm, double _por, double _ref_pres) : blockid(_blkid)
 {
 	/// Overloaded Class constructor

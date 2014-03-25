@@ -33,6 +33,7 @@ CCell2d::CCell2d()
 	pressure = 0;
 	backpressure = 0;
 	gtransmx = 0;
+	gtransmy = 0;
 
 	well = NULL;
 	rightcell = NULL;
@@ -58,6 +59,8 @@ CCell2d::CCell2d(int _cellid, double _deepth, CBlock2d *blk, CFluid *fld) {
 
 	pressure = fluid->AveragePVTPressure(); ///< It is only starting the cell pressure, this value will be changed according to simulation
 	gtransmx = 0; ///< This value will be calculated after;
+	gtransmy = 0; ///< This value will be calculated after;
+	
 
 	leftcell = NULL; ///< The Reservoir is responsible to conect all the cells in domain.
 	rightcell = NULL; ///< The Reservoir is responsible to conect all the cells in domain.

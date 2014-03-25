@@ -22,13 +22,13 @@
 
 using namespace std;
 
-CBlock2d::CBlock2d() : blockid(0)
+CBlock2d::CBlock2d() : CBlock1d()
 {
 	/// Class constructor
 
 }
 
-CBlock2d::CBlock2d(int _blkid, double _comp, double _permx, double _permy, double _por, double _ref_pres) : blockid(_blkid)
+CBlock2d::CBlock2d(int _blkid, double _comp, double _permx, double _permy, double _por, double _ref_pres) : CBlock1d(_blkid)
 {
 	/// Overloaded Class constructor
 	

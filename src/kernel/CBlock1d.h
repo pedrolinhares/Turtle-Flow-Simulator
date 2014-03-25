@@ -36,14 +36,19 @@
 
 class CBlock1d
 {
+	
     private:
 
-        int blockid; ///< Id of Block;
         CRock1d rock; ///< Rock object stored in this block;
+        
+    protected:
+    	
+    	int blockid; ///< Id of Block;    	
 
 	public:
 
 		CBlock1d(); ///< Block constructor;
+		CBlock1d(int _blkid); ///< Overloaded Block constructor;
 		CBlock1d(int _blkid, double _comp, double _perm, double _por, double _ref_pres); ///< Overloaded Block constructor;
 		~CBlock1d(); ///< Block destructor;
 

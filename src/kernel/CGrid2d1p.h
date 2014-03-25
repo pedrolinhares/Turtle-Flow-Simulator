@@ -63,6 +63,7 @@ class CGrid2d1p : public CGrid1d1p
 		virtual void Iterationt(double deltat); ///< Makes the time iteration in all cells.
 
 		//////////  Fluid Functions  /////////
+		void ConstructingCFluid(); ///< Construct the fluid in grid in domain;
 		double FVF( int celln ) { return cells[celln].FVF(); }; ///< Return the FVF of a specific cell in domain;
 		double BackFVF( int celln ) { return cells[celln].BackFVF(); }; ///< Return the back FVF of a specific cell in domain.
 

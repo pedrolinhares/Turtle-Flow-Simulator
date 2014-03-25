@@ -87,6 +87,26 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
     
     int gridsize;
 	gridsize = xcells*ycells; /// Size of grid;
+    
+    fgrid.ignore(256, '#');
+    fgrid.ignore(256, '#'); 
+    cellsID = new int * [xcells];
+    for (int h=0; h < xcells; h++) {
+        cellsID[h] = new int [ycells];
+    }
+   
+   int auxcount = 0;
+   for (int j=0; j<ycells; j++) {
+   		for (int i=0; i<xcells; i++) {
+   				fgrid >> cellsID[i][j]; /// Storing the connection between adjacent cells;
+   				if (cellsID[i][j] != 0) { 
+				    auxcount++; /// Counting the number of non-NULL cells; 
+				    cellsID[i][j] = auxcount; /// Replacing the number 1 with the cell ID
+				} 
+   		}
+   }
+   
+   cellnumber = auxcount;
 	        
     fgrid.ignore(256, '#');
     fgrid.ignore(256, '#');
@@ -94,6 +114,7 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
     for (int i=0; i < xcells; i++) {
         fgrid >> lenght[i];
     }
+    
 
 	fgrid.ignore(256, '#');
     fgrid.ignore(256, '#');
@@ -104,63 +125,61 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
     
     fgrid.ignore(256, '#');
     fgrid.ignore(256, '#');
-    thickness = new double[gridsize];
-    for (int i=0; i < gridsize; i++) {
-        fgrid >> thickness[i];
-    }
-   
-   fgrid.ignore(256, '#');
-   fgrid.ignore(256, '#'); 
-   cellsID = new int * [xcells];
-   for (int h=0; h < xcells; h++) {
-   		cellsID[h] = new int [ycells];
-   }
-   
-   int auxcount = 0;
-   for (int j=0; j<ycells; j++) {
+    double trash;
+    int thicknesscount = 0;
+        
+    thickness = new double[cellnumber];
+    for (int j=0; j<ycells; j++) {
    		for (int i=0; i<xcells; i++) {
-   				fgrid >> cellsID[i][j]; /// Storing the connection between adjacent cells;
-   				if (cellsID[i][j] != 0) { auxcount++;} /// Counting the number of non-NULL cells; 
+   			if (cellsID[i][j] != 0) {
+   				fgrid >> thickness[thicknesscount];
+   				thicknesscount++;
+   			} else {
+   				fgrid >> trash;
+   			}
    		}
-   }
-   
-   cellnumber = auxcount;
-   
+   	}
+       
     //////////  Constructing CFluid  //////////
     fluidtype1 = _fluidtype;
-   
-    switch (fluidtype1) {
-     case 1: { ///< Case 1 represents a water simulation
-         fluid = new CWater; ///< Constructing the water object;
-     break;
-     }
-     case 2: {
-         fluid = new COil; ///< Constructing the oil object;
-     break;
-     }
-     case 3: {
-         fluid = new CGas; ///< Constructing the gas object;
-     break;
-     }
-    }
+    ConstructingCFluid();    
     
    //////////  Constructing CCell  //////////
-   
    fgrid.ignore(256, '#');
    fgrid.ignore(256, '#');
    double *deepth; ///< Temporary array of cells deepth;
-   deepth = new double[gridsize];  
-    for (int i=0; i < gridsize; i++) {
-        fgrid >> deepth[i];
-    }
-   
+   deepth = new double[cellnumber];  
+      
+   int deepthcount = 0;
+   for (int j=0; j<ycells; j++) {
+   		for (int i=0; i<xcells; i++) {
+   			if (cellsID[i][j] != 0) {
+   				fgrid >> deepth[deepthcount];
+   				deepthcount++;
+   			} else {
+   				fgrid >> trash;
+   			}
+   		}
+   	} 
+	
    fgrid.ignore(256, '#');
    fgrid.ignore(256, '#');
    int *block_cell_conection; ///< Temporary array of cenections between blocks and cells;
-   block_cell_conection = new int[gridsize];
-    for (int i=0; i < gridsize; i++) {
-        fgrid >> block_cell_conection[i];
-    }
+   block_cell_conection = new int[cellnumber];
+   int inttrash;
+
+   int blkcellcount = 0;
+   for (int j=0; j<ycells; j++) {
+   		for (int i=0; i<xcells; i++) {
+   			if (cellsID[i][j] != 0) {
+   				fgrid >> block_cell_conection[blkcellcount];
+   				blkcellcount++;
+   			} else {
+   				fgrid >> inttrash;
+   			}
+   		}
+   	}
+   
    
    cells = new CCell2d [cellnumber]; ///< constructing an array of cells
    int cellcount = 0;
@@ -169,7 +188,7 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
    		for (int i=0; i<xcells; i++) {
    				if (cellsID[i][j] != 0) {
    						/// It means a non-NULL cell
-   						CCell2d c2d(cellsID[i][j], deepth[(xcells*j + i)], &block[block_cell_conection[(xcells*j + i)]-1], fluid); ///< Constructing a cell, and connecting this cell with the matching block and fluid;
+   						CCell2d c2d(cellsID[i][j], deepth[cellcount], &block[block_cell_conection[cellcount]-1], fluid); ///< Constructing a cell, and connecting this cell with the matching block and fluid;
        					cells[cellcount] = c2d; ///< adding the cell in the cell arrray.
        					cellcount++;
    				}
@@ -185,7 +204,7 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
    
   //////////  Constructing CWell2d  //////////
   //ConstructingCWell();
-
+  
   ////////// Setting connections between neighbooring cells //////////
   SetCellConnections();
   
@@ -234,7 +253,7 @@ void CGrid2d1p::Print() {
 
     /// Printing the cells width of all cells in domain.
     for (int j=0; j < ycells ; j++ ){
-        cout << "Cell Width: " << width[j] << "\n";
+       cout << "Cell Width: " << width[j] << "\n";
     }
 
     /// Printing the cells lenght of all cells in domain.
@@ -300,39 +319,42 @@ void CGrid2d1p::SetCellConnections() {
    
    for( int j = 0; j < ycells ; j++ ) {
 		for( int i = 0; i < xcells ; i++ ) {
-			///Setting the Left Cell
-			if ( (i-1) >= 0 ) {
-				auxcellid = cellsID[i-1][j];
-				cells[cont].LeftCell( Cell(auxcellid) );
-			} else {
-				cells[cont].LeftCell( NULL );
-			}
 			
-			///Setting the Right Cell
-			if ( (i+1) < xcells ) {
-				auxcellid = cellsID[i+1][j];
-				cells[cont].RightCell( Cell(auxcellid) );
-			} else {
-				cells[cont].RightCell( NULL );
+			if (cellsID[i][j] != 0) {			
+				///Setting the Left Cell
+				if ( (i-1) >= 0 ) {
+					auxcellid = cellsID[i-1][j];
+					cells[cont].LeftCell( Cell(auxcellid) );
+				} else {
+					cells[cont].LeftCell( NULL );
+				}
+				
+				///Setting the Right Cell
+				if ( (i+1) < xcells ) {
+					auxcellid = cellsID[i+1][j];
+					cells[cont].RightCell( Cell(auxcellid) );
+				} else {
+					cells[cont].RightCell( NULL );
+				}
+				
+				///Setting the Back Cell
+				if ( (j-1) >= 0 ) {
+					auxcellid = cellsID[i][j-1];
+					cells[cont].BackCell( Cell(auxcellid) );
+				} else {
+					cells[cont].BackCell( NULL );
+				}
+				
+				///Setting the Front Cell
+				if ( (j+1) < ycells ) {
+					auxcellid = cellsID[i][j+1];
+					cells[cont].FrontCell( Cell(auxcellid) );
+				} else {
+					cells[cont].FrontCell( NULL );
+				}
+				
+			cont++;
 			}
-			
-			///Setting the Back Cell
-			if ( (j-1) >= 0 ) {
-				auxcellid = cellsID[i][j-1];
-				cells[cont].BackCell( Cell(auxcellid) );
-			} else {
-				cells[cont].BackCell( NULL );
-			}
-			
-			///Setting the Front Cell
-			if ( (j+1) < ycells ) {
-				auxcellid = cellsID[i][j+1];
-				cells[cont].FrontCell( Cell(auxcellid) );
-			} else {
-				cells[cont].FrontCell( NULL );
-			}
-			
-		cont++;
 		}
    }
     
@@ -560,6 +582,26 @@ double CGrid2d1p::Deepth( int celln ) {
     }
 
     return cells[celln].Deepth();
+}
+
+void CGrid2d1p::ConstructingCFluid() {
+    /// Construct the fluid in grid in domain;
+    
+    switch (fluidtype1) {
+        case 1: { ///< Case 1 represents a water simulation
+            fluid = new CWater; ///< Constructing the water object;
+            break;
+        }
+        case 2: {
+            fluid = new COil; ///< Constructing the oil object;
+        break;
+        }
+         case 3: {
+             fluid = new CGas; ///< Constructing the gas object;
+         break;
+        }
+    }
+    
 }
 
 double CGrid2d1p::Volume( int celln) {
