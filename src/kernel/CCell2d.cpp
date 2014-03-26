@@ -81,8 +81,8 @@ CCell2d::CCell2d(CCell2d & _cell) {
 	fluid = _cell.Fluid();
 	well = _cell.Well();
 	
-	gtransmx = _cell.GTransmx();
-	gtransmy = _cell.GTransmy();
+	gtransmx = _cell.GTransmX();
+	gtransmy = _cell.GTransmY();
 	
 	leftcell = _cell.LeftCell();
 	rightcell = _cell.RightCell();
@@ -136,8 +136,8 @@ void CCell2d::Print()
 
 	}
 
-	cout << "Right Transmissibility - " << RightTransmx() << "\n";	
-	cout << "Front Transmissibility - " << FrontTransmy() << "\n";
+	cout << "Right Transmissibility - " << RightTransmX() << "\n";	
+	cout << "Front Transmissibility - " << FrontTransmY() << "\n";
 	
 	if (well != NULL) {
 		cout << "Well Rate - " << well->Rate() << "\n";
@@ -145,7 +145,7 @@ void CCell2d::Print()
 
 }
 
-double CCell2d::RightTransmx() {
+double CCell2d::RightTransmX() {
 	/// This function calculates the right transmissibility between adjacent cells in domain.
 	/// the transmissibility is calculated as a product between the geometric transmissibility and
 	/// the fluid properties inside the cell.
@@ -165,14 +165,14 @@ double CCell2d::RightTransmx() {
 	return gtransmx/(visc*fvf);
 }
 
-double CCell2d::RightGravityTransmx() {
+double CCell2d::RightGravityTransmX() {
 	/// This function calculates the right gravitational transmissibility between adjacent cells in domain.
 	/// the gravitational transmissibility is calculated as a product between the transmissibility and
 	/// the specific weight of the fluid inside the cell.
 
 	double rtransmx;
 
-	rtransmx = RightTransmx(); ///< Calculating the transmissibility between adjacent cells in domain;
+	rtransmx = RightTransmX(); ///< Calculating the transmissibility between adjacent cells in domain;
 	if (rtransmx == 0 ) { return 0; } ///< Right Block is NULL.
 	double pright, pmed, spcweight;
 
@@ -184,7 +184,7 @@ double CCell2d::RightGravityTransmx() {
 	return spcweight*rtransmx;
 }
 
-double CCell2d::FrontTransmy() {
+double CCell2d::FrontTransmY() {
 	/// This function calculates the front transmissibility between adjacent cells in domain.
 	/// the transmissibility is calculated as a product between the geometric transmissibility and
 	/// the fluid properties inside the cell.
@@ -204,14 +204,14 @@ double CCell2d::FrontTransmy() {
 	return gtransmy/(visc*fvf);
 }
 
-double CCell2d::FrontGravityTransmy() {
+double CCell2d::FrontGravityTransmY() {
 	/// This function calculates the front gravitational transmissibility between adjacent cells in domain.
 	/// the gravitational transmissibility is calculated as a product between the transmissibility and
 	/// the specific weight of the fluid inside the cell.
 
 	double rtransmy;
 
-	rtransmy = FrontTransmy(); ///< Calculating the transmissibility between adjacent cells in domain;
+	rtransmy = FrontTransmY(); ///< Calculating the transmissibility between adjacent cells in domain;
 	if (rtransmy == 0 ) { return 0; } ///< Front Block is NULL.
 	double pfront, pmed, spcweight;
 
@@ -275,7 +275,7 @@ double CCell2d::GammaDer(double CellVolume) {
 	 return der_gamma;
 }
 
-double CCell2d::RightTransmxDer( ) {
+double CCell2d::RightTransmXDer( ) {
 	 ///This function returns the derivative of the X transmissibility in relation of the pressure in the right block;
 	 /// It is d Txr     
 	 ///       ----             dTrx/dP_(RightBlock) 
@@ -298,10 +298,10 @@ double CCell2d::RightTransmxDer( ) {
 	der_visc = fluid->Viscosity_Derivative(pmed);
 	der_FVF = fluid->FVF_Derivative(pmed);
 	
-	return  ( - gtransmx*(FVF_med*der_visc + visc_med*der_FVF) / (2. * (visc_med*FVF_med) * (visc_med*FVF_med)) ); /// Numerical derivative; 
+	return  ( - gtransmx*(FVF_med*der_visc + visc_med*der_FVF) / (2. * (visc_med*FVF_med) * (visc_med*FVF_med)) ); /// Analytical derivative; 
 }
 
-double CCell2d::CenterTransmxDer( ) {
+double CCell2d::CenterTransmXDer( ) {
 	 ///This function returns the derivative of the X transmissibility in relation of the pressure in the center block;
 	 /// It is d Txr     
 	 ///       ----             dTrx/dP_(AtualBlock) 
@@ -318,16 +318,70 @@ double CCell2d::CenterTransmxDer( ) {
 	visc_med = fluid->Viscosity(pmed);
 	FVF_med = fluid->FVF(pmed);
 	
-	double der_visc, der_FVF;
 	/// OBS: It is interesting that the numerical derivative calculetion is double of the interpolation case.
 	///der_visc = (fluid->Viscosity(pmed_epsilon) - fluid->Viscosity(pmed)) / epsilon;  
+	
+	double der_visc, der_FVF;
 	der_visc = fluid->Viscosity_Derivative(pmed);
 	der_FVF = fluid->FVF_Derivative(pmed);
 		
 	return  ( - gtransmx*(FVF_med*der_visc + visc_med*der_FVF) / (2. * (visc_med*FVF_med) * (visc_med*FVF_med)) ); /// Numerical derivative; 
 }
 
-double CCell2d::RightGravityTransmxDer( ) {
+double CCell2d::FrontTransmYDer( ) {
+	 ///This function returns the derivative of the Y transmissibility in relation of the pressure in the front block;
+	 /// It is d Try     
+	 ///       ----             dTry/dP_(FrontBlock) 
+     ///       dP_(j+1)
+	 
+	if (gtransmy == 0) { return 0; }; ///< geometric transmissibility NULL means that the front block is NULL.
+		
+	double pfront, pmed; 
+	
+	pfront = frontcell->Pressure(); ///< Pressure in the adjacent cell;
+	pmed = (pfront + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+	
+	double visc_med, FVF_med;
+	visc_med = fluid->Viscosity(pmed);
+	FVF_med = fluid->FVF(pmed);
+	
+	/// OBS: It is interesting that the numerical derivative calculetion is double of the interpolation case.
+	///der_visc = (fluid->Viscosity(pmed_epsilon) - fluid->Viscosity(pmed)) / epsilon;  
+	double der_visc, der_FVF;
+	der_visc = fluid->Viscosity_Derivative(pmed);
+	der_FVF = fluid->FVF_Derivative(pmed);
+	
+	return  ( - gtransmy*(FVF_med*der_visc + visc_med*der_FVF) / (2. * (visc_med*FVF_med) * (visc_med*FVF_med)) ); /// Analytical derivative; 
+}
+
+double CCell2d::CenterTransmYDer( ) {
+	 ///This function returns the derivative of the Y transmissibility in relation of the pressure in the center block;
+	 /// It is d Try     
+	 ///       ----             dTry/dP_(AtualBlock) 
+     ///       dP_(i)
+	 
+	if (gtransmy == 0) { return 0; }; ///< geometric transmissibility NULL means that the front block is NULL.
+		
+	double pfront, pmed; 
+	
+	pfront = frontcell->Pressure(); ///< Pressure in the adjacent cell;
+	pmed = (pfront + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+	
+	double visc_med, FVF_med;
+	visc_med = fluid->Viscosity(pmed);
+	FVF_med = fluid->FVF(pmed);
+	
+	/// OBS: It is interesting that the numerical derivative calculetion is double of the interpolation case.
+	///der_visc = (fluid->Viscosity(pmed_epsilon) - fluid->Viscosity(pmed)) / epsilon;  
+	double der_visc, der_FVF;
+	der_visc = fluid->Viscosity_Derivative(pmed);
+	der_FVF = fluid->FVF_Derivative(pmed);
+		
+	return  ( - gtransmy*(FVF_med*der_visc + visc_med*der_FVF) / (2. * (visc_med*FVF_med) * (visc_med*FVF_med)) ); /// Numerical derivative; 
+}
+
+
+double CCell2d::RightGravityTransmXDer( ) {
 	 ///This function returns the derivative of the Gravitational X transmissibility in relation of the pressure in the right block;
 	 /// It is d TGxr     
 	 ///       ----             dTGrx/dP_(RightBlock) 
@@ -342,16 +396,16 @@ double CCell2d::RightGravityTransmxDer( ) {
 		
 	double  weight_med, right_transmx;
 	weight_med = fluid->Weight(pmed); ///< Specific Weight at average pressure;
-	right_transmx = RightTransmx(); ///< Right Transmissibility;
+	right_transmx = RightTransmX(); ///< Right Transmissibility;
 	
 	double der_transmx, der_weight;
-	der_transmx = RightTransmxDer();  ///< Transmissibility Derivative at average pressure;
+	der_transmx = RightTransmXDer();  ///< Transmissibility Derivative at average pressure;
 	der_weight = fluid->Weight_Derivative(pmed);  ///< Specific weight derivative at average pressure;
 	
 	return  ( 0.5*( weight_med*der_transmx + right_transmx*der_weight) ); /// Analytical derivative; 
 }
 
-double CCell2d::CenterGravityTransmxDer( ) {
+double CCell2d::CenterGravityTransmXDer( ) {
 	 ///This function returns the derivative of the Gravitational X transmissibility in relation of the pressure in the center block;
 	 /// It is d TGxr     
 	 ///       ----             dTGrx/dP_(AtualBlock) 
@@ -366,14 +420,63 @@ double CCell2d::CenterGravityTransmxDer( ) {
 		
 	double  weight_med, right_transmx;
 	weight_med = fluid->Weight(pmed); ///< Specific Weight at average pressure;
-	right_transmx = RightTransmx(); ///< Right Transmissibility;
+	right_transmx = RightTransmX(); ///< Right Transmissibility;
 	
 	double der_transmx, der_weight;
-	der_transmx = CenterTransmxDer();  ///< Transmissibility Derivative at average pressure;
+	der_transmx = CenterTransmXDer();  ///< Transmissibility Derivative at average pressure;
 	der_weight = fluid->Weight_Derivative(pmed);  ///< Specific weight derivative at average pressure;
 	
 	return  ( 0.5*( weight_med*der_transmx + right_transmx*der_weight) ); /// Analytical derivative; 	
 }
+
+double CCell2d::FrontGravityTransmYDer( ) {
+	 ///This function returns the derivative of the Gravitational Y transmissibility in relation of the pressure in the front block;
+	 /// It is d TrGy     
+	 ///       ----             dTrGy/dP_(FrontBlock) 
+     ///       dP_(j+1)
+	 
+	if (gtransmy == 0) { return 0; }; ///< geometric transmissibility NULL means that the front block is NULL.
+		
+	double pfront, pmed; 
+	
+	pfront = frontcell->Pressure(); ///< Pressure in the adjacent cell;
+	pmed = (pfront + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+		
+	double  weight_med, front_transmy;
+	weight_med = fluid->Weight(pmed); ///< Specific Weight at average pressure;
+	front_transmy = FrontTransmY(); ///< Right Transmissibility;
+	
+	double der_transmy, der_weight;
+	der_transmy = FrontTransmYDer();  ///< Transmissibility Derivative at average pressure;
+	der_weight = fluid->Weight_Derivative(pmed);  ///< Specific weight derivative at average pressure;
+	
+	return  ( 0.5*( weight_med*der_transmy + front_transmy*der_weight) ); /// Analytical derivative; 
+}
+
+double CCell2d::CenterGravityTransmYDer( ) {
+	 ///This function returns the derivative of the Gravitational Y transmissibility in relation of the pressure in the center block;
+	 /// It is d TrGy     
+	 ///       ----             dTrGy/dP_(AtualBlock) 
+     ///       dP_(i)
+	 
+	if (gtransmy == 0) { return 0; }; ///< geometric transmissibility NULL means that the front block is NULL.
+		
+	double pfront, pmed; 
+	
+	pfront = frontcell->Pressure(); ///< Pressure in the adjacent cell;
+	pmed = (pfront + pressure) / 2.;  ///< Average pressure calculated as arithmetic average.
+		
+	double  weight_med, front_transmy;
+	weight_med = fluid->Weight(pmed); ///< Specific Weight at average pressure;
+	front_transmy = FrontTransmY(); ///< Right Transmissibility;
+	
+	double der_transmy, der_weight;
+	der_transmy = CenterTransmYDer();  ///< Transmissibility Derivative at average pressure;
+	der_weight = fluid->Weight_Derivative(pmed);  ///< Specific weight derivative at average pressure;
+	
+	return  ( 0.5*( weight_med*der_transmy + front_transmy*der_weight) ); /// Analytical derivative; 	
+}
+
 
 int CCell2d::WellId() {
 	///This function returns the Id of the well inside the cell.

@@ -89,22 +89,27 @@ class CCell2d : public CCell1d
 		//inline double Deepth()  { return deepth; }; ///< Return the cell deepth;
 
 		//////////  Transmissibility Functions //////////
-		//inline void GTransmx( double _gtransmx) { gtransmx = _gtransmx; }; ///< Set the geometric transmissibility in x direction;
-		inline void GTransmy( double _gtransmy) { gtransmy = _gtransmy; }; ///< Set the geometric transmissibility in y direction;
-		//inline double GTransmx() { return gtransmx; }; ///< Get the geometric transmissibility in x direction;
-		inline double GTransmy() { return gtransmy; }; ///< Get the geometric transmissibility in y direction;
-		double RightTransmx(); ///< Return the right transmissibility;
-		double RightGravityTransmx(); ///< Return the right gravitational transmissibility;
-		double FrontTransmy(); ///< Return the front transmissibility;
-		double FrontGravityTransmy(); ///< Return the front gravitational transmissibility;
+		//inline void GTransmX( double _gtransmx) { gtransmx = _gtransmx; }; ///< Set the geometric transmissibility in x direction;
+		inline void GTransmY( double _gtransmy) { gtransmy = _gtransmy; }; ///< Set the geometric transmissibility in y direction;
+		//inline double GTransmX() { return gtransmx; }; ///< Get the geometric transmissibility in x direction;
+		inline double GTransmY() { return gtransmy; }; ///< Get the geometric transmissibility in y direction;
+		double RightTransmX(); ///< Return the right transmissibility;
+		double RightGravityTransmX(); ///< Return the right gravitational transmissibility;
+		double FrontTransmY(); ///< Return the front transmissibility;
+		double FrontGravityTransmY(); ///< Return the front gravitational transmissibility;
 		double Gamma(double CellVolume); ///< Return the gamma factor;
 		
 		//////////  Transmissibility Derivative Functions  //////////
 		double GammaDer(double CellVolume); ///< Returns the derivative of the gamma function in relation of the cell pressure;
-		double RightTransmxDer( ); ///< Returns the derivative of the right transmissibility in relation of the right cell pressure;
-		double CenterTransmxDer( ); ///< Returns the derivative of the right transmissibility in relation of the cell pressure;
-		double RightGravityTransmxDer( ); ///< Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
-		double CenterGravityTransmxDer( ); ///< Returns the derivative of the right gravitational transmissibility in relation of the center cell pressure;
+		double RightTransmXDer( ); ///< Returns the derivative of the right transmissibility in relation of the right cell pressure;
+		double CenterTransmXDer( ); ///< Returns the derivative of the right transmissibility in relation of the cell pressure;
+		double RightGravityTransmXDer( ); ///< Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
+		double CenterGravityTransmXDer( ); ///< Returns the derivative of the right gravitational transmissibility in relation of the center cell pressure;
+		
+		double FrontTransmYDer( ); ///< Returns the derivative of the front transmissibility in relation of the front cell pressure;
+		double CenterTransmYDer( ); ///< Returns the derivative of the front transmissibility in relation of the cell pressure;
+		double FrontGravityTransmYDer( ); ///< Returns the derivative of the front gravitational transmissibility in relation of the front cell pressure;
+		double CenterGravityTransmYDer( ); ///< Returns the derivative of the front gravitational transmissibility in relation of the center cell pressure;
 
 		//////////  Well Functions //////////
 		int WellId();

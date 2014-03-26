@@ -80,17 +80,17 @@ class CGrid1d1p : public CGrid
 		double Deepth( int celln ); ///< Return the Deepth of a specific cell in domain.
 
 		//////////  Transmissibility Functions //////////
-		virtual void SetGTransmx(); ///< Sets the Geometric transmissibility in all cells;
-		double RightTrasmx( int celln ); ///< Return the right transmissibility of a specific cell in ddomain;
-		double RightGravityTransmx( int celln ); ///< Return the right gravitational transmissibility of a specif cell.
+		virtual void SetGTransmX(); ///< Sets the Geometric transmissibility in all cells;
+		double RightTrasmX( int celln ); ///< Return the right transmissibility of a specific cell in ddomain;
+		double RightGravityTransmX( int celln ); ///< Return the right gravitational transmissibility of a specif cell.
 		double Gamma( int celln ); ///< Return the gamma factor of a specific cell;
 		
 		//////////  Transmissibility Derivative Functions  //////////
 		double GammaDer( int celln );  ///< Returns the derivative of the gamma function in relation of the cell pressure;
-		double RightTransmxDer( int celln ); ///< Returns the derivative of the right transm. in relation of the right cell pressure for celln;
-		double CenterTransmxDer( int celln ) { return cells[celln].CenterTransmxDer(); }; ///< Returns the derivative of the right transm. in relation of the cell press for celln;
-		double RightGravityTransmxDer( int celln ); ///< Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
-		double CenterGravityTransmxDer( int celln )  { return cells[celln].CenterGravityTransmxDer(); }; ///< Returns the derivative of the right gravitational transmissibility in relation of the center cell pressure;
+		double RightTransmXDer( int celln ); ///< Returns the derivative of the right transm. in relation of the right cell pressure for celln;
+		double CenterTransmXDer( int celln ) { return cells[celln].CenterTransmXDer(); }; ///< Returns the derivative of the right transm. in relation of the cell press for celln;
+		double RightGravityTransmXDer( int celln ); ///< Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
+		double CenterGravityTransmXDer( int celln )  { return cells[celln].CenterGravityTransmXDer(); }; ///< Returns the derivative of the right gravitational transmissibility in relation of the center cell pressure;
 
 		//////////  Well Functions //////////
 		double WellRate( int celln ) { return cells[celln].WellRate(); }; ///< Return the flow rate of a well in a specific cell in domain.

@@ -119,11 +119,11 @@ double CISinglePhase1d::CellResidual(CGrid *grid, double deltat, int celln) {
 	double Wi, Wi_p, Ci, Ci_p,  Ei, Ei_p, Qi;
 	
 	/// Calculating the west transmissibility element:
-		Wi = grid->RightTrasmx(celln-1);
+		Wi = grid->RightTrasmX(celln-1);
 		Wi_p = Wi*grid->Pressure(celln-1);  
 
 	/// Calculating the east transmissibility element:
-		Ei = grid->RightTrasmx(celln);
+		Ei = grid->RightTrasmX(celln);
 		Ei_p = Ei*grid->Pressure(celln+1);
 
 	/// Calculating the central transmissibility element:
@@ -145,9 +145,9 @@ double CISinglePhase1d::RHSTerm(CGrid *grid, double deltat, int celln){
     double gama_dt, q, RHS_Qi;
   
 
-	Wig = grid->RightGravityTransmx(celln-1);  ///< Calculating the west transmissibility;
+	Wig = grid->RightGravityTransmX(celln-1);  ///< Calculating the west transmissibility;
 
-	Eig = grid->RightGravityTransmx(celln);   ///< Calculating the east transmissibility;
+	Eig = grid->RightGravityTransmX(celln);   ///< Calculating the east transmissibility;
 
 	Cig = - Eig - Wig;  ///< Calculating the central transmissibility;
 
@@ -185,11 +185,11 @@ double CISinglePhase1d::LeftResDer(CGrid *grid, int celln) {
 	centerdeepth = grid->Deepth(celln);
 	
 	double lefttransmderiv, leftgravitderiv;
-	lefttransmderiv = grid->CenterTransmxDer(celln - 1);
-	leftgravitderiv = grid->CenterGravityTransmxDer( celln - 1);
+	lefttransmderiv = grid->CenterTransmXDer(celln - 1);
+	leftgravitderiv = grid->CenterGravityTransmXDer( celln - 1);
 	
 	double lefttransmx;
-	lefttransmx = grid->RightTrasmx(celln - 1);
+	lefttransmx = grid->RightTrasmX(celln - 1);
 	return ( (leftpress - centerpress)*lefttransmderiv + lefttransmx + (centerdeepth - leftdeepth)*leftgravitderiv );
 }
 
@@ -208,19 +208,19 @@ double CISinglePhase1d::CentralResDer(CGrid *grid, double deltat, int celln) {
 	rightdeepth = grid->Deepth(celln + 1);
 	
 	double lefttransmx, righttransmx;
-	lefttransmx = grid->RightTrasmx(celln - 1);
-	righttransmx = grid->RightTrasmx(celln);
+	lefttransmx = grid->RightTrasmX(celln - 1);
+	righttransmx = grid->RightTrasmX(celln);
 	
 	double gamma_dt;
 	gamma_dt = grid->Gamma(celln) / deltat;
 	
 	double lefttransmderiv, leftgravitderiv;
-	lefttransmderiv = grid->RightTransmxDer(celln - 1);
-	leftgravitderiv = grid->RightGravityTransmxDer(celln - 1);
+	lefttransmderiv = grid->RightTransmXDer(celln - 1);
+	leftgravitderiv = grid->RightGravityTransmXDer(celln - 1);
 	
 	double righttransmderiv, rightgravitderiv;
-	righttransmderiv = grid->CenterTransmxDer(celln);
-	rightgravitderiv = grid->CenterGravityTransmxDer(celln);
+	righttransmderiv = grid->CenterTransmXDer(celln);
+	rightgravitderiv = grid->CenterGravityTransmXDer(celln);
 	
 	double gammaderiv;
 	gammaderiv = grid->GammaDer(celln);
@@ -247,11 +247,11 @@ double CISinglePhase1d::RightResDer(CGrid *grid, int celln) {
 	centerdeepth = grid->Deepth(celln);
 	
 	double righttransmderiv, rightgravitderiv;
-	righttransmderiv = grid->RightTransmxDer(celln);
-	rightgravitderiv = grid->RightGravityTransmxDer(celln);
+	righttransmderiv = grid->RightTransmXDer(celln);
+	rightgravitderiv = grid->RightGravityTransmXDer(celln);
 	
 	double righttransmx;
-	righttransmx = grid->RightTrasmx(celln);
+	righttransmx = grid->RightTrasmX(celln);
 	return ( (rightpress - centerpress)*righttransmderiv + righttransmx + (rightdeepth - centerdeepth)*rightgravitderiv ); 
 }
 

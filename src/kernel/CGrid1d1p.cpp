@@ -186,7 +186,7 @@ CGrid1d1p::CGrid1d1p(int _fluidtype) :CGrid()
   SetCellConnections();
 
   ////////// Setting Geometric Transmissibility in all cells //////////
-  SetGTransmx();
+  SetGTransmX();
   
   ////////// Setting Boundary Conditions //////////
   SetBoundConditions(&fgrid);
@@ -336,7 +336,7 @@ void CGrid1d1p::SetBoundConditions(ifstream *fgrid) {
         Ai0 = thickness[0]*width[0];
         perm0 = cells[0].Permeability_x();
         gtr = 2*betac*Ai0*Ai0*perm0*perm0/(Ai0*perm0*lenght[0]);
-        leftcell->GTransmx(gtr);
+        leftcell->GTransmX(gtr);
 
         cells[0].LeftCell(leftcell);
         break;
@@ -379,7 +379,7 @@ void CGrid1d1p::SetBoundConditions(ifstream *fgrid) {
         Ai0 = thickness[(cellnumber - 1)]*width[(cellnumber - 1)];
         perm0 = cells[(cellnumber - 1)].Permeability_x();
         gtr = 2*betac*Ai0*Ai0*perm0*perm0/(Ai0*perm0*lenght[(cellnumber - 1)]);
-        cells[(cellnumber - 1)].GTransmx(gtr);
+        cells[(cellnumber - 1)].GTransmX(gtr);
 
         cells[(cellnumber - 1)].RightCell(rightcell);
         break;
@@ -388,7 +388,7 @@ void CGrid1d1p::SetBoundConditions(ifstream *fgrid) {
 
 }
 
-void CGrid1d1p::SetGTransmx() {
+void CGrid1d1p::SetGTransmX() {
   /// Setting the Geometric Transmissibilities, for all cells in domain.
   /// The Geometric Transmissibilities are calculated only once, and are stored in all cells,
   /// avoiding waste of processing time. They are calculated based on an harmonic media between
@@ -405,7 +405,7 @@ void CGrid1d1p::SetGTransmx() {
       perm1 = cells[j].RightCell()->Permeability_x();
       
       gtr = 2*betac*Ai1*Ai0*perm1*perm0/(Ai0*perm0*lenght[j+1]+Ai1*perm1*lenght[j]);
-      cells[j].GTransmx(gtr);
+      cells[j].GTransmX(gtr);
   }
 }
 
@@ -435,33 +435,33 @@ void CGrid1d1p::InitiateSolution(double pref, double href) {
     } while (erromax > 0.1); ///< 0.1 is the precision of the initialization. Maybe it will be set by the user in future.
 }
 
-double CGrid1d1p::RightTransmxDer( int celln ) { 
+double CGrid1d1p::RightTransmXDer( int celln ) { 
  	///< Returns the derivative of the right transm. in relation of the right cell pressure for celln;
  	
  	/// Left Boudary Condition
     if (celln == -1) {
         if (cells[0].LeftCell() == NULL) { return 0; }
-        else{ return cells[0].LeftCell()->RightTransmxDer(); }
+        else{ return cells[0].LeftCell()->RightTransmXDer(); }
     }
  
-	return cells[celln].RightTransmxDer(); 
+	return cells[celln].RightTransmXDer(); 
 
 }
 
-double CGrid1d1p::RightGravityTransmxDer( int celln )  { 
+double CGrid1d1p::RightGravityTransmXDer( int celln )  { 
 	/// Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
 	
 	/// Left Boudary Condition
 	  if (celln == -1) {
 	        if (cells[0].LeftCell() == NULL) { return 0; }
-	        else{ return cells[0].LeftCell()->RightGravityTransmxDer(); }
+	        else{ return cells[0].LeftCell()->RightGravityTransmXDer(); }
 	    }
     
-	return cells[celln].RightGravityTransmxDer();
+	return cells[celln].RightGravityTransmXDer();
 	
 } 
 
-double CGrid1d1p::RightTrasmx( int celln ) {
+double CGrid1d1p::RightTrasmX( int celln ) {
   /// This function return the right transmissibility of a specif cell.
   /// if celln == -1, Left Boundary condition case.
     /// if celln == cellnumber, Right Boundary condition case.
@@ -469,19 +469,19 @@ double CGrid1d1p::RightTrasmx( int celln ) {
   /// Left Boudary Condition
   if (celln == -1) {
         if (cells[0].LeftCell() == NULL) { return 0; }
-        else{ return cells[0].LeftCell()->RightTransmx(); }
+        else{ return cells[0].LeftCell()->RightTransmX(); }
     }
 
   /// Right Boudary Condition
     if (celln == cellnumber) {
         if (cells[cellnumber - 1].RightCell() == NULL) { return 0; }
-        else{ return cells[cellnumber - 1].RightTransmx(); }
+        else{ return cells[cellnumber - 1].RightTransmX(); }
     }
 
-    return cells[celln].RightTransmx();
+    return cells[celln].RightTransmX();
 }
 
-double CGrid1d1p::RightGravityTransmx( int celln ){
+double CGrid1d1p::RightGravityTransmX( int celln ){
   /// This function return the right gravitational transmissibility of a specif cell.
   /// if celln == -1, Left Boundary condition case.
     /// if celln == cellnumber, Right Boundary condition case.
@@ -489,16 +489,16 @@ double CGrid1d1p::RightGravityTransmx( int celln ){
   /// Left Boudary Condition
   if (celln == -1) {
         if (cells[0].LeftCell() == NULL) { return 0; }
-        else{ return cells[0].LeftCell()->RightGravityTransmx(); }
+        else{ return cells[0].LeftCell()->RightGravityTransmX(); }
     }
 
   /// Right Boudary Condition
     if (celln == cellnumber) {
         if (cells[cellnumber - 1].RightCell() == NULL) { return 0; }
-        else{ return cells[cellnumber - 1].RightGravityTransmx(); }
+        else{ return cells[cellnumber - 1].RightGravityTransmX(); }
     }
 
-    return cells[celln].RightGravityTransmx();
+    return cells[celln].RightGravityTransmX();
 }
 
 double CGrid1d1p::Gamma( int celln ) {
