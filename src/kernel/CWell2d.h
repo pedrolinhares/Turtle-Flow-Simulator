@@ -31,24 +31,14 @@
 class CWell2d : public CWell1d
 {
 	protected:
-		int id; ///< Well Identificator;
-		double rate; ///< Well flow rate. Positive is an injective well and negative is a producer one;
-		double cumulative_phase1; ///< Cumulative produced or injeted of phase 1;
-
+		
 	public:
 
 		CWell2d(); ///< Well constructor;
-		CWell2d(double _rate) : rate(_rate), cumulative_phase1(0) {}; ///< Overloaded well constructor;
-		CWell2d(double _rate, int _id) : rate(_rate), id(_id), cumulative_phase1(0) {}; ///< Overloaded well constructor;
+		CWell2d(double _rate); ///< Overloaded well constructor;
+		CWell2d(double _rate, int _id); ///< Overloaded well constructor;
 		void SetWell2d( double _rate, int _id); ///< Sets the well flow rate, and the well Id.
 		~CWell2d(); ///< Well destructor;
-
-		inline int Id() { return id; }; ///< Returns the well id;
-		inline double Rate() { return rate; }; ///< Returns the well flow rate;
-		inline void Rate( double _rate) { rate = _rate; }; ///< Sets the well flow rate.
-		double Cumulative_Phase1() { return cumulative_phase1; }; ///< Returns the cumulative volume of phase 1;
-		void IterationtWell(double deltat) { cumulative_phase1 += rate*deltat;} ///< Makes the well Iterationt for cumulative volume;
-
 };
 
 #endif // CWell2d_h

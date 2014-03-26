@@ -90,14 +90,14 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
     
     fgrid.ignore(256, '#');
     fgrid.ignore(256, '#'); 
-    cellsID = new int * [xcells];
-    for (int h=0; h < xcells; h++) {
-        cellsID[h] = new int [ycells];
+    cellsID = new int * [ycells];
+    for (int h=0; h < ycells; h++) {
+        cellsID[h] = new int [xcells];
     }
    
    int auxcount = 0;
-   for (int j=0; j<ycells; j++) {
-   		for (int i=0; i<xcells; i++) {
+   for (int i=0; i<ycells; i++) {
+   		for (int j=0; j<xcells; j++) {
    				fgrid >> cellsID[i][j]; /// Storing the connection between adjacent cells;
    				if (cellsID[i][j] != 0) { 
 				    auxcount++; /// Counting the number of non-NULL cells; 
@@ -105,7 +105,7 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
 				} 
    		}
    }
-   
+      
    cellnumber = auxcount;
 	        
     fgrid.ignore(256, '#');
@@ -129,8 +129,8 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
     int thicknesscount = 0;
         
     thickness = new double[cellnumber];
-    for (int j=0; j<ycells; j++) {
-   		for (int i=0; i<xcells; i++) {
+    for (int i=0; i<ycells; i++) {
+   		for (int j=0; j<xcells; j++) {
    			if (cellsID[i][j] != 0) {
    				fgrid >> thickness[thicknesscount];
    				thicknesscount++;
@@ -151,8 +151,8 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
    deepth = new double[cellnumber];  
       
    int deepthcount = 0;
-   for (int j=0; j<ycells; j++) {
-   		for (int i=0; i<xcells; i++) {
+   for (int i=0; i<ycells; i++) {
+   		for (int j=0; j<xcells; j++) {
    			if (cellsID[i][j] != 0) {
    				fgrid >> deepth[deepthcount];
    				deepthcount++;
@@ -169,8 +169,8 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
    int inttrash;
 
    int blkcellcount = 0;
-   for (int j=0; j<ycells; j++) {
-   		for (int i=0; i<xcells; i++) {
+   for (int i=0; i<ycells; i++) {
+   		for (int j=0; j<xcells; j++) {
    			if (cellsID[i][j] != 0) {
    				fgrid >> block_cell_conection[blkcellcount];
    				blkcellcount++;
@@ -184,8 +184,8 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
    cells = new CCell2d [cellnumber]; ///< constructing an array of cells
    int cellcount = 0;
     
-   for (int j=0; j<ycells; j++) {
-   		for (int i=0; i<xcells; i++) {
+   for (int i=0; i<ycells; i++) {
+   		for (int j=0; j<xcells; j++) {
    				if (cellsID[i][j] != 0) {
    						/// It means a non-NULL cell
    						CCell2d c2d(cellsID[i][j], deepth[cellcount], &block[block_cell_conection[cellcount]-1], fluid); ///< Constructing a cell, and connecting this cell with the matching block and fluid;
@@ -202,15 +202,15 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
    delete [] block_cell_conection;
    block_cell_conection = NULL;
    
-  //////////  Constructing CWell2d  //////////
-  //ConstructingCWell();
+  //////////  Constructing CWell2d  //////////  
+  ConstructingCWell();
   
   ////////// Setting connections between neighbooring cells //////////
   SetCellConnections();
   
   ////////// Setting Geometric Transmissibility in all cells //////////
-  //SetGTransmx();
-  //SetGTransmy();
+  SetGTransmx();
+  SetGTransmy();
   
   ////////// Setting Boundary Conditions //////////
   //SetBoundConditions(&fgrid);
@@ -250,6 +250,15 @@ void CGrid2d1p::Print() {
     cout << "Number of Cells in Domain: " << cellnumber << "\n";
     cout << "Number of Cells in x Direction: " << xcells << "\n";
     cout << "Number of Cells in y Direction: " << ycells << "\n";
+    
+    cout << "Cells ID: \n";
+    
+    for (int i=0; i<ycells; i++) {
+   		for (int j=0; j<xcells; j++) {
+   			cout << cellsID[i][j] << "\t";
+   		}
+   		cout << endl;
+   	}
 
     /// Printing the cells width of all cells in domain.
     for (int j=0; j < ycells ; j++ ){
@@ -317,37 +326,37 @@ void CGrid2d1p::SetCellConnections() {
    int cont = 0;
    int auxcellid;
    
-   for( int j = 0; j < ycells ; j++ ) {
-		for( int i = 0; i < xcells ; i++ ) {
+   for( int i = 0; i < ycells ; i++ ) {
+		for( int j = 0; j < xcells ; j++ ) {
 			
 			if (cellsID[i][j] != 0) {			
 				///Setting the Left Cell
-				if ( (i-1) >= 0 ) {
-					auxcellid = cellsID[i-1][j];
+				if ( (j-1) >= 0 ) {
+					auxcellid = cellsID[i][j-1];
 					cells[cont].LeftCell( Cell(auxcellid) );
 				} else {
 					cells[cont].LeftCell( NULL );
 				}
 				
 				///Setting the Right Cell
-				if ( (i+1) < xcells ) {
-					auxcellid = cellsID[i+1][j];
+				if ( (j+1) < xcells ) {
+					auxcellid = cellsID[i][j+1];
 					cells[cont].RightCell( Cell(auxcellid) );
 				} else {
 					cells[cont].RightCell( NULL );
 				}
 				
 				///Setting the Back Cell
-				if ( (j-1) >= 0 ) {
-					auxcellid = cellsID[i][j-1];
+				if ( (i-1) >= 0 ) {
+					auxcellid = cellsID[i-1][j];
 					cells[cont].BackCell( Cell(auxcellid) );
 				} else {
 					cells[cont].BackCell( NULL );
 				}
 				
 				///Setting the Front Cell
-				if ( (j+1) < ycells ) {
-					auxcellid = cellsID[i][j+1];
+				if ( (i+1) < ycells ) {
+					auxcellid = cellsID[i+1][j];
 					cells[cont].FrontCell( Cell(auxcellid) );
 				} else {
 					cells[cont].FrontCell( NULL );
@@ -391,26 +400,32 @@ void CGrid2d1p::SetGTransmx() {
   /// avoiding waste of processing time. They are calculated based on an harmonic media between
   /// adjacent cells.
 	
-   int cont = 0;
    double Ai1, Ai0, perm1, perm0, gtr;
+   int xpos, ypos;
    
-   for( int j = 0; j < ycells ; j++ ) {
-		for( int i = 0; i < (xcells - 1) ; i++ ) {
+	for( int i = 0; i < cellnumber ; i++ ) {
 			
-			Ai0 = thickness[cont]*width[j];
-      		Ai1 = thickness[cont+1]*width[j];
-      		
-      		perm0 = cells[cont].Permeability_x();
-		    perm1 = cells[cont].RightCell()->Permeability_x();
-		      
-		    gtr = 2*betac*Ai1*Ai0*perm1*perm0/(Ai0*perm0*lenght[i+1]+Ai1*perm1*lenght[i]);
-		    cells[cont].GTransmx(gtr);
-      		
-      		cont++;
+		if (cells[i].RightCell() == NULL) {
+			cells[i].GTransmx(0);
 		}
-		cont++;
-	}
-
+		else {
+			
+			xpos = CellXPosition(cells[i].CellId()); ///< Getting the x position of the cell;
+			ypos = CellYPosition(cells[i].CellId()); ///< Getting the y position of the cell;
+		
+			Ai0 = thickness[i]*width[ypos];
+	    	Ai1 = thickness[i+1]*width[ypos];
+	    	
+	    	perm0 = cells[i].Permeability_x();
+		    perm1 = cells[i].RightCell()->Permeability_x();
+		
+		    gtr = 2*betac*Ai1*Ai0*perm1*perm0/(Ai0*perm0*lenght[xpos+1]+Ai1*perm1*lenght[xpos]);
+		    cells[i].GTransmx(gtr);
+				
+		}
+			
+    }
+				
 }
 
 void CGrid2d1p::SetGTransmy() {
@@ -418,27 +433,37 @@ void CGrid2d1p::SetGTransmy() {
   /// The Geometric Transmissibilities are calculated only once, and are stored in all cells,
   /// avoiding waste of processing time. They are calculated based on an harmonic media between
   /// adjacent cells.
-	
-   int cont = 0;
+  
    double Ai1, Ai0, perm1, perm0, gtr;
+   int xpos, ypos, frontcellid, frontposition;
    
-   
-   for( int i = 0; i < (xcells - 1) ; i++ ) {
-   		for( int j = 0; j < ycells ; j++ ) {
+	for( int i = 0; i < cellnumber ; i++ ) {
 			
-			Ai0 = thickness[cont]*width[j];
-      		Ai1 = thickness[cont+xcells]*width[j+1];
-      		
-      		perm0 = cells[cont].Permeability_y();
-		    perm1 = cells[cont].FrontCell()->Permeability_y();
-		      
-		    gtr = 2*betac*Ai1*Ai0*perm1*perm0/(Ai0*perm0*lenght[i]+Ai1*perm1*lenght[i]);
-		    cells[cont].GTransmy(gtr);
-      		
-      		cont++;
+		if (cells[i].FrontCell() == NULL) {
+			cells[i].GTransmy(0);
 		}
-		cont++;
-	}
+		else {
+			
+			frontcellid = cells[i].FrontCell()->CellId();  ///< Getting the ID of the front cell;
+			frontposition = CellPositioninGrid(frontcellid); ///< Getting the position of the front cell;
+						
+			xpos = CellXPosition(cells[i].CellId()); ///< Getting the x position of the cell;
+			ypos = CellYPosition(cells[i].CellId()); ///< Getting the y position of the cell;
+		
+	    	Ai0 = thickness[i]*lenght[xpos];
+	    	Ai1 = thickness[frontposition]*lenght[xpos];
+	    	
+	    	perm0 = cells[i].Permeability_y();
+		    perm1 = cells[i].FrontCell()->Permeability_y();
+		
+		    gtr = 2*betac*Ai1*Ai0*perm1*perm0/(Ai0*perm0*width[ypos+1]+Ai1*perm1*width[ypos]);
+		    cells[i].GTransmy(gtr);
+				
+		}
+			
+    }
+	
+   
 
 }
 
@@ -656,10 +681,13 @@ void CGrid2d1p::ConstructingCWell() {
    
    for (int j = 0 ; j < wellsnumber ; j++) {  ///< Loop for all wells in problem;
    
-	   int wellid, cell_wellid;
+	   int wellid, rowid, columnid;
 	   double wellrate;
 	   
-	   fwell2d >> cell_wellid;
+	   fwell2d >> rowid;
+	   fwell2d.ignore(256, '\n');
+	   
+	   fwell2d >> columnid;
 	   fwell2d.ignore(256, '\n');
 	   
 	   fwell2d >> wellid;
@@ -671,7 +699,14 @@ void CGrid2d1p::ConstructingCWell() {
 	   CWell2d * tempwell; ///< Temporary Well;
 	   tempwell = new CWell2d(wellrate, wellid);
 	   
-	   cells[(cell_wellid - 1)].SetWell(tempwell);
+	   int tempcellid;
+	   tempcellid = cellsID[rowid - 1][columnid - 1];
+	   if (tempcellid == 0) {
+            cerr << "Cannot be sent a well in a NULL cell." << endl;
+            exit(EXIT_FAILURE);
+       }
+       
+       Cell(tempcellid)->SetWell(tempwell);
 	   tempwell = NULL;
    }
 	
@@ -699,3 +734,47 @@ CCell2d * CGrid2d1p::Cell( int cellid )  {
  
 }
 
+int CGrid2d1p::CellXPosition(int _cellid) {
+	///this function returns the x position of the cell _cellid
+	///in the grid of cell connections.
+	///if the cellid does not exist, this function returns -1.
+	///NOTE: the first position starts with 0 in c++.
+	
+	for (int i=0; i<ycells; i++) {
+		for (int j=0; j<xcells; j++) {
+			if(cellsID[i][j] == _cellid) { return j;}
+		}
+	}
+	
+	return -1;
+}
+
+int CGrid2d1p::CellYPosition(int _cellid) {
+	///this function returns the y position of the cell _cellid
+	///in the grid of cell connections.
+	///if the cellid does not exist, this function returns -1.
+	///NOTE: the first position starts with 0 in c++.
+	
+	for (int i=0; i<ycells; i++) {
+		for (int j=0; j<xcells; j++) {
+			if(cellsID[i][j] == _cellid) { return i;}
+		}
+	}
+	
+	return -1;
+}
+
+int CGrid2d1p::CellPositioninGrid(int _cellid) {
+	 ///Returns the cell position of the cell with _cellid;
+	 ///Renember that this software allocates all cells in an array, 
+	 ///so this function returns this arra index.
+	 ///if the cellid does not exist, this function returns -1.
+	 ///NOTE: the first position starts with 0 in c++.
+	 
+	 for (int index=0; index<cellnumber; index++) {
+	 	if (cells[index].CellId() == _cellid) { return index; }
+	 }
+	 
+	 return -1;
+	 
+}

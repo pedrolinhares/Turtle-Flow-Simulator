@@ -21,9 +21,19 @@
 #include <cstdlib>
 #include "CWell2d.h"
 
-CWell2d::CWell2d() : rate(0) , id(0) , cumulative_phase1(0)
+CWell2d::CWell2d() : CWell1d()
 {
 	/// Well constructor.
+}
+
+CWell2d::CWell2d(double _rate) : CWell1d(_rate)
+{
+	/// Overloaded Well constructor.
+}
+
+CWell2d::CWell2d(double _rate, int _id) : CWell1d(_rate, _id)
+{
+	/// Overloaded Well constructor.
 }
 
 CWell2d::~CWell2d()

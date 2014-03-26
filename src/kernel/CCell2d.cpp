@@ -107,7 +107,8 @@ void CCell2d::Print()
 	cout << "Cell Conected to Block - " << block->Blockid() << "\n";
 	cout << "Cell Pressure - " << pressure << "\n";
 	cout << "Cell Back Pressure - " << backpressure << "\n";
-	cout << "Cell Geometric Transmissibility - " << gtransmx << "\n";
+	cout << "Cell Geometric Transmissibility in x - " << gtransmx << "\n";
+	cout << "Cell Geometric Transmissibility in y - " << gtransmy << "\n";
 	cout << "Inicial Cell Porosity - " << Porosity() << "\n";
 	cout << "Atual Cell Porosity - " << Porosity(backpressure) << "\n";
 

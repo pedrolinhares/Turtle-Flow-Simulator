@@ -39,25 +39,23 @@ class CBlock2d  :  public CBlock1d
 {
     private:
 
-        //int blockid; ///< Id of Block;
         CRock2d rock; ///< Rock object stored in this block;
-
+		
 	public:
-
+	
 		CBlock2d(); ///< Block constructor;
 		CBlock2d(int _blkid, double _comp, double _permx, double _permy, double _por, double _ref_pres); ///< Overloaded Block constructor;
 		~CBlock2d(); ///< Block destructor;
 
 		///////////  Block Functions  //////////
-		//inline int Blockid() {return blockid;}; ///< Returns the Block Id;
 		void Print(); ///< Prints the Block proprieties on screen.
 
 		///////////  Rock Functions  //////////
-		//inline double Permeability_x() {	return rock.Permeability_x();	}; ///< Returns the Rock permeability in x direction;
+		inline double Permeability_x() {	return rock.Permeability_x();	}; ///< Returns the Rock permeability in x direction;
 		inline double Permeability_y() {	return rock.Permeability_y();	}; ///< Returns the Rock permeability in y direction;
-		//inline double Porosity() { return rock.Porosity(); }; ///< Returns the initial Rock porosity;
-		//inline double Porosity(double pressure) { return rock.Porosity(pressure); }; ///< Returns the atual Rock porosity;
-		//inline double RockComp() { return rock.Rockcomp(); }; ///< Returns the Rock compressibility;
+		inline double Porosity() { return rock.Porosity(); }; ///< Returns the initial Rock porosity;
+		inline double Porosity(double pressure) { return rock.Porosity(pressure); }; ///< Returns the atual Rock porosity;
+		inline double RockComp() { return rock.Rockcomp(); }; ///< Returns the Rock compressibility;
 
 };
 

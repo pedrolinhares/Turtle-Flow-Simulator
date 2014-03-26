@@ -62,6 +62,7 @@ class CCell1d
 		inline double FVF() { return fluid->FVF(pressure); }; ///< Return the FVF of the fluid inside this cell, at atual time of simulation.
 		inline double BackFVF() { return fluid->FVF(backpressure); }; ///< Return the FVF of the fluid inside this cell, at back time of simulation.
 		inline CFluid * Fluid() { return fluid; }; ///< Return a pointer to the fluid;
+		inline double Weight() { return fluid->Weight(pressure); };  ///< Return the weight of the fluid inside the cell ;
 
 		//////////  Rock Functions  //////////
 		inline double RockComp() { return block->RockComp(); }; ///< Return the rock compressibility at atual pressure;
@@ -80,7 +81,6 @@ class CCell1d
 		inline void RightCell( CCell1d *_rightcell) { rightcell = _rightcell; }; ///< Set a pointer to right cell;
 		CCell1d * LeftCell() { return leftcell; }; ///< Return a pointer to the right cell;
 		CCell1d * RightCell() { return rightcell; }; ///< Return a pointer to the right cell;
-		inline double Weight() { return fluid->Weight(pressure); };  ///< Return the cell weight;
 		inline double Deepth()  { return deepth; }; ///< Return the cell deepth;
 
 		//////////  Transmissibility Functions //////////
@@ -100,8 +100,6 @@ class CCell1d
 		//////////  Well Functions //////////
 		int WellId();
 		void SetWell(CWell1d *_well) { well = _well; }; ///< Set the well in this cell;
-		//void WellRate(double _rate); ///< Set the well flow rate in this cell;
-		//void WellRate(double _rate, int _id); ///< Set the well flow rate, and the well Id in this cell;
 		double WellRate(); ///< Return the well flow rate in this cell.
 		void IterationtWell(double deltat) { well->IterationtWell(deltat); }; ///< This function makes the cumulative volume Iteration for the well;
 		double WellCumulative_Phase1(); ///< This function returns the cumulative volume of the phase 1;

@@ -42,7 +42,7 @@ class CBlock1d
         CRock1d rock; ///< Rock object stored in this block;
         
     protected:
-    	
+
     	int blockid; ///< Id of Block;    	
 
 	public:

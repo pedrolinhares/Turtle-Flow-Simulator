@@ -56,9 +56,9 @@ class CCell2d : public CCell1d
 		void Print(); ///< Function used to print all cell parameters on screen;
 
 		//////////  Fluid Functions  /////////
-		inline double FVF() { return fluid->FVF(pressure); }; ///< Return the FVF of the fluid inside this cell, at atual time of simulation.
-		inline double BackFVF() { return fluid->FVF(backpressure); }; ///< Return the FVF of the fluid inside this cell, at back time of simulation.
-		inline CFluid * Fluid() { return fluid; }; ///< Return a pointer to the fluid;
+		//inline double FVF() { return fluid->FVF(pressure); }; ///< Return the FVF of the fluid inside this cell, at atual time of simulation.
+		//inline double BackFVF() { return fluid->FVF(backpressure); }; ///< Return the FVF of the fluid inside this cell, at back time of simulation.
+		//inline CFluid * Fluid() { return fluid; }; ///< Return a pointer to the fluid;
 
 		//////////  Rock Functions  //////////
 		inline double RockComp() { return block->RockComp(); }; ///< Return the rock compressibility at atual pressure;
@@ -80,18 +80,18 @@ class CCell2d : public CCell1d
 		CCell2d * BackCell() { return backcell; }; ///< Return a pointer to the back cell;
 		
 		//////////  Cell Functions  //////////
-		inline int CellId() { return cellid; }; ///< Return the cell identification;
-		inline double Pressure() { return pressure; }; ///< Return the cell pressure;
-		inline void Pressure(double _pressure) { pressure = _pressure; }; ///< Set the cell pressure;
-		inline double BackPressure() { return backpressure; }; ///< Return the cell pressure in the back time iteration;
-		inline void BackPressure( double _backpressure) { backpressure = _backpressure; }; ///< Set the pressure of the back time iteration;
-		inline double Weight() { return fluid->Weight(pressure); };  ///< Return the cell weight;
-		inline double Deepth()  { return deepth; }; ///< Return the cell deepth;
+		//inline int CellId() { return cellid; }; ///< Return the cell identification;
+		//inline double Pressure() { return pressure; }; ///< Return the cell pressure;
+		//inline void Pressure(double _pressure) { pressure = _pressure; }; ///< Set the cell pressure;
+		//inline double BackPressure() { return backpressure; }; ///< Return the cell pressure in the back time iteration;
+		//inline void BackPressure( double _backpressure) { backpressure = _backpressure; }; ///< Set the pressure of the back time iteration;
+		//inline double Weight() { return fluid->Weight(pressure); };  ///< Return the cell weight;
+		//inline double Deepth()  { return deepth; }; ///< Return the cell deepth;
 
 		//////////  Transmissibility Functions //////////
-		inline void GTransmx( double _gtransmx) { gtransmx = _gtransmx; }; ///< Set the geometric transmissibility in x direction;
+		//inline void GTransmx( double _gtransmx) { gtransmx = _gtransmx; }; ///< Set the geometric transmissibility in x direction;
 		inline void GTransmy( double _gtransmy) { gtransmy = _gtransmy; }; ///< Set the geometric transmissibility in y direction;
-		inline double GTransmx() { return gtransmx; }; ///< Get the geometric transmissibility in x direction;
+		//inline double GTransmx() { return gtransmx; }; ///< Get the geometric transmissibility in x direction;
 		inline double GTransmy() { return gtransmy; }; ///< Get the geometric transmissibility in y direction;
 		double RightTransmx(); ///< Return the right transmissibility;
 		double RightGravityTransmx(); ///< Return the right gravitational transmissibility;

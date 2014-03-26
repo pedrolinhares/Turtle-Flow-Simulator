@@ -36,17 +36,17 @@ void onExit() {
 /* ///
 	TO Do List:
 	
-	1 - Review of all henritance in the code. Some functions are declared twice.
+	1 - URGENTE: Implementar uma rotina para o usuário escolher o tempo que será salva a simulação;
 	
-	2 - Converter um string the células para uma matriz de células;
-	
-	OK! - Consertar o construtor de cópia da célula;
+	2 - Retirar o fluid type do poço e o solver type do model.
 		
-	4 - Every cell needs to have left and right transmissibility function, but only the right
+	3 - Every cell needs to have left and right transmissibility function, but only the right
 	    will be implemented. The left case is the access of the left cell and the right transmissibility calculation.
 	    Again, it will help in the future cases.
-	    
-	5 - Fix all de implicit derivative functions, it can be working but it is not easy to understand the derivatives relationship.
+	
+	4 - Implementar a Boundary Condition de Vazão prescrita no caso 1D;    
+	
+	(REVIEW) - Fix all de implicit derivative functions, it can be working but it is not easy to understand the derivatives relationship.
 		
 */ /// 
 

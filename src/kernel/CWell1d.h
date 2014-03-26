@@ -29,6 +29,7 @@
 class CWell1d
 {
 	protected:
+		
 		int id; ///< Well Identificator;
 		double rate; ///< Well flow rate. Positive is an injective well and negative is a producer one;
 		double cumulative_phase1; ///< Cumulative produced or injeted of phase 1;

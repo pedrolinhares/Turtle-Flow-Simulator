@@ -71,13 +71,18 @@ class CGrid2d1p : public CGrid1d1p
 		double RockComp( int celln ) { return cells[celln].RockComp(); }; ///< Return the rock compressibility of a specific cell in domain;
 		double Por0( int celln ) { return cells[celln].Porosity(); }; ///< Return the initial porosity of a specific cell in domain;
 		double Porosity( int celln, double pressure) { return cells[celln].Porosity(pressure); }; ///< Return the atual porosity of a specific cell in domain.
+		
+		//////////  Grid Functions  //////////
+		double XCells() { return xcells; }; ///< Return the number of cells in x direction;
+		double YCells() { return ycells; }; ///< Return the number of cells in y direction;
+		int CellXPosition(int _cellid); ///Returns the x position of the cell in the grid;
+		int CellYPosition(int _cellid); ///Returns the y position of the cell in the grid;
+		int CellPositioninGrid(int _cellid); ///Returns the cell position of the cell with _cellid;
+		int CellId( int celln ) { return cells[celln].CellId(); }; ///< Return the cell ID of a specific cell in domain;
 
 		//////////  Cell Functions  //////////
 		virtual int CellNumber() { return cellnumber; }; ///< Return the number of cells in domain;
-		double XCells() { return xcells; }; ///< Return the number of cells in x direction;
-		double YCells() { return ycells; }; ///< Return the number of cells in y direction;
 		CCell2d * Cell( int cellid ); ///< Return a pointer to the cell which cell ID is cellid;
-		int CellId( int celln ) { return cells[celln].CellId(); }; ///< Return the cell ID of a specific cell in domain;
 		double Pressure( int celln ); ///< Return the atual pressure of a specific cell in domain;
 		double BackPressure( int celln ) { return cells[celln].BackPressure(); }; ///< Return the back pressure of a specific cell in domain;
 		double Volume( int celln ); ///< Return the volume of a specific cell in domain;
