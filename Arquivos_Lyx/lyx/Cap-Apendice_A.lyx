@@ -1,0 +1,546 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage {graphicx}
+\usepackage {longtable}
+\usepackage {indentfirst}
+\renewenvironment{center}{\par\centering}{\par}
+
+% Comentar linhas abaixo se não estiver usando pacote abntex
+% ou se o pacote ainda não foi instalado.
+% neste caso sugere-se usar citações no padrão apalike (lembra o da anbt).
+%\usepackage[alf ,abnt-etal-cite=2 , abnt-year-extra-label=yes , abnt-etal-list=0]{abntcite}
+%\usepackage {helvet}
+%\renewcommand {\familydefault}{\sfdefault}
+
+% Para uso de listagens de código
+\usepackage{color}
+\definecolor{azulclaro}{rgb}{0.6,1,1}%   rgb color model
+% Informa que vai usar o pacote listings, 
+% disponibilizado em /usr/share/texmf/doc/latex/styles/listings.dvi
+\usepackage{listings}
+\end_preamble
+\options normaltoc, sumarioincompleto
+\use_default_options false
+\master DocumentoMestre-Trabalho-ProgramacaoPratica.lyx
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding latin1
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref true
+\pdf_title "Título da Monografia - Dissertação - Tese"
+\pdf_author "Nome do Autor"
+\pdf_subject "Descrever assunto"
+\pdf_keywords "Copiar do resumo"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref page
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\paperwidth 210mm
+\paperheight 297mm
+\leftmargin 30mm
+\topmargin 25mm
+\rightmargin 20mm
+\bottommargin 20mm
+\secnumdepth 2
+\tocdepth 1
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Arquivos de inicialização da simulação
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Apêndice-Arquivos"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lhead{Apêndice 
+\backslash
+thechapter}
+\backslash
+rhead{
+\backslash
+thepage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Estão descritas nesse apêndice o padrão de escrita utilizada nos arquivos
+ de inicialização da simulação.
+\end_layout
+
+\begin_layout Section
+ArqBlock.in
+\end_layout
+
+\begin_layout Standard
+Esse arquivo descreve as propriedades de rocha utilizadas na simulação.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo ArqBlock.in}, label={arqblock-in},extendedchars
+=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/ArqBlock_D.in}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+ArqBoundCond1d.in
+\end_layout
+
+\begin_layout Standard
+Esse arquivo descreve as condições de contorno utilizadas na simulação do
+ problema unidimensional.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo ArqBoundCond1d.in}, label={ArqBoundCond1d-in},e
+xtendedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/ArqBoundCond1d_D.in}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+ArqCell1d.in
+\end_layout
+
+\begin_layout Standard
+Esse arquivo descreve as propriedades armazenadas em uma célula unidimensional.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo ArqCell1d.in}, label={ArqCell1d-in},extendedcha
+rs=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/ArqCell1d_D.in}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+ArqGas.in, ArqOil.in e ArqWater.in
+\end_layout
+
+\begin_layout Standard
+Os arquivos para gás, óleo e água possuem o mesmo padrão de escrita, mudando
+ apenas o nome do arquivo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo ArqGas.in, ArqOil.in ou ArqWater.in}, label={ArqG
+as-in},extendedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/ArqGas_D.in}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+ArqInit1d.in
+\end_layout
+
+\begin_layout Standard
+Esse arquivo possui as configurações para se inicializar a pressão em um
+ reservatório unidimensional.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo ArqInit1d.in}, label={ArqInit1d-in},extendedcha
+rs=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/ArqInit1d_D.in}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+ArqNumeric.in
+\end_layout
+
+\begin_layout Standard
+Esse arquivo possui as configurações numéricas para a solução do problema.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo ArqNumeric.in}, label={ArqNumeric-in},extendedc
+hars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/ArqNumeric_D.in}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+ArqRes1d.in
+\end_layout
+
+\begin_layout Standard
+Arquivo de configuração da geometria do reservatório.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo ArqRes1d.in}, label={ArqRes1d-in},extendedchars
+=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/ArqRes1d_D.in}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+ArqWell1d.in
+\end_layout
+
+\begin_layout Standard
+Arquivo com as configurações dos poços do problema.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo ArqWell1d.in}, label={ArqWell1d-in},extendedcha
+rs=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/ArqWell1d_D.in}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

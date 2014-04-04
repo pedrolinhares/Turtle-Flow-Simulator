@@ -1,0 +1,1603 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage {graphicx}
+\usepackage {longtable}
+\usepackage {indentfirst}
+\renewenvironment{center}{\par\centering}{\par}
+
+% Comentar linhas abaixo se não estiver usando pacote abntex
+% ou se o pacote ainda não foi instalado.
+% neste caso sugere-se usar citações no padrão apalike (lembra o da anbt).
+%\usepackage[alf ,abnt-etal-cite=2 , abnt-year-extra-label=yes , abnt-etal-list=0]{abntcite}
+%\usepackage {helvet}
+%\renewcommand {\familydefault}{\sfdefault}
+
+% Para uso de listagens de código
+\usepackage{color}
+\definecolor{azulclaro}{rgb}{0.6,1,1}%   rgb color model
+% Informa que vai usar o pacote listings, 
+% disponibilizado em /usr/share/texmf/doc/latex/styles/listings.dvi
+\usepackage{listings}
+\end_preamble
+\use_default_options false
+\master DocumentoMestre-Trabalho-ProgramacaoPratica.lyx
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding latin1
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\paperwidth 210mm
+\paperheight 297mm
+\leftmargin 30mm
+\topmargin 25mm
+\rightmargin 20mm
+\bottommargin 20mm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Documentação 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lhead{Documentação do uso do TFS}
+\backslash
+rhead{
+\backslash
+thepage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A presente documentação refere-se ao uso do software TFS.
+\end_layout
+
+\begin_layout Section
+Interface gráfica inicial
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8 - Interface-inicial-do-TFS"
+
+\end_inset
+
+ mostra uma captura de tela do TFS quando iniciado.
+ É possível ver a presença de duas abas superiores que são utilizadas para
+ se iniciar a simulação e para executar a simulação (
+\emph on
+kernel
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Interface_Inicial.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Interface inicial do TFS
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8 - Interface-inicial-do-TFS"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Configurações iniciais
+\end_layout
+
+\begin_layout Standard
+Clicando no menu arquivo (
+\emph on
+File
+\emph default
+) é possível ver a opção de configurações do simulador com as informações
+ necessárias para iniciar a interface gráfica.
+ Um diálogo como na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Janela-com-configuraçao-inicial"
+
+\end_inset
+
+ se abrirá e será possível escolher as primeiras informações a serem preenchidas
+ sobre a simulação.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Conf_Inicial.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Janela com as configurações iniciais da simulação
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8-Janela-com-configuraçao-inicial"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+O modelo do grid (
+\emph on
+Grid
+\emph default
+ 
+\emph on
+model
+\emph default
+) poderá ser de uma dimensão (
+\emph on
+One-Dimensional
+\emph default
+), duas dimensões (
+\emph on
+Two-Dimensional
+\emph default
+) ou Três dimensões (
+\emph on
+Three-Dimensional
+\emph default
+).
+ O grid em duas e três dimensões não se encontram disponíveis nessa etapa
+ de desenvolvimento do software, devendo então ser escolhida a opção de
+ uma dimensão.
+\end_layout
+
+\begin_layout Standard
+Agora é possível se escolher a configuração do grid, determinando quantas
+ colunas (
+\emph on
+Columns
+\emph default
+) o grid terá.
+ Ainda no mesmo diálogo pode-se definir o modelo de fluído que será utilizado,
+ uma fase (
+\emph on
+Single-Phase
+\emph default
+), duas fases (
+\emph on
+Two-Phase
+\emph default
+) ou três fases (
+\emph on
+Three-Phase
+\emph default
+).
+ Atualmente a única opção disponível é a de uma fase.
+\end_layout
+
+\begin_layout Standard
+Para finalizar as configurações iniciais do modelo é necessário se escolher
+ o tipo do fluído de cada fase, como só tem a opção de uma única fase implementa
+da, só poderá modificar o tipo do fluído para a fase 1 (
+\emph on
+Phase
+\emph default
+ 1), este poderá ser Água (
+\emph on
+Water
+\emph default
+), Óleo (
+\emph on
+Oil
+\emph default
+) ou Gás (
+\emph on
+Gas
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
+Após configuradas as informações iniciais, o botão Ok avança para a próxima
+ etapa da simulação.
+\end_layout
+
+\begin_layout Section
+Determinando os valores da simulação
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Tela-apresentada-depois-conf-inicial"
+
+\end_inset
+
+ mostra a tela apresentada após feita as configurações iniciais.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Tela_apos_Conf_Iniciais.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Tela apresentada após as configurações iniciais
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8-Tela-apresentada-depois-conf-inicial"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A interface é composta por uma série de guias verticais localizadas a esquerda,
+ e abas horizontais localizadas na parte superior da janela.
+ Um conjunto de grids representam os valores correspondentes a aba ativa.
+\end_layout
+
+\begin_layout Standard
+As guias representam um fluxo de informação na sequência em que devem ser
+ preenchidas, portanto inicia-se a simulação na primeira guia, Geometria
+ (
+\emph on
+Geometry
+\emph default
+) e finaliza o preenchimento na guia Condições de contorno (
+\emph on
+Boundary
+\emph default
+ 
+\emph on
+Condition
+\emph default
+).
+ 
+\end_layout
+
+\begin_layout Subsection
+Guia 
+\begin_inset Quotes eld
+\end_inset
+
+Geometry
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A guia geometria (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Tela-apresentada-depois-conf-inicial"
+
+\end_inset
+
+) tem um único valor a ser preenchido correspondente a largura das células
+ (
+\emph on
+Width
+\emph default
+).
+ Esse valor é preenchido conforme os dados da simulação.
+ Essa guia possui três abas horizontais, sendo respectivamente, comprimento
+ (
+\emph on
+Lenght
+\emph default
+), espessura (
+\emph on
+Thickness
+\emph default
+) e profundidade (
+\emph on
+Depth
+\emph default
+) relativos a cada célula.
+\end_layout
+
+\begin_layout Subsection
+Guia 
+\begin_inset Quotes eld
+\end_inset
+
+Rock
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8 - Aba-Rock-ativada."
+
+\end_inset
+
+ mostra a guia 
+\emph on
+Rock
+\emph default
+ aberta.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Aba_Rock_Inicial.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aba Rock ativada
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8 - Aba-Rock-ativada."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+O primeiro dado que deve ser fornecido é o número de blocos (conjunto de
+ células com propriedades de rochas iguais) existente na simulação.
+ Após clicar em Ok essa guia é modificada como mostrada na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Aba-Rock-modificada"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Aba_Rock_Modificada.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aba Rock após a definição do número de blocos do sistema
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8-Aba-Rock-modificada"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Conforme visto na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Aba-Rock-modificada"
+
+\end_inset
+
+, novas opções apareceram para o preencimento das propriedades de rocha
+ do problema.
+ O seletor (
+\emph on
+combo
+\emph default
+ 
+\emph on
+box
+\emph default
+) que apareceu na parte superior da guia 
+\emph on
+rock
+\emph default
+ identifica o bloco ao qual está sendo configurado.
+ As propriedades de cada bloco são: compressibilidade (
+\emph on
+compressibility
+\emph default
+), permeabilidade (
+\emph on
+permeability
+\emph default
+) e porosidade (
+\emph on
+porosity
+\emph default
+).
+ Esses campos devem ser preenchidos para cada bloco.
+\end_layout
+
+\begin_layout Standard
+A correlação entre célula e bloco é feita no grid identificado pela aba
+ Células (
+\emph on
+Cells
+\emph default
+).
+ Na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Aba-Rock-modificada"
+
+\end_inset
+
+ pode ver que o bloco 1 está relacionado com a célula 2 enquanto o bloco
+ 2 está relacionado com a célula 6.
+ Todas as células devem possuir um número indicando o bloco ao qual ela
+ faz parte
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+O Bloco foi criado com o intuito de se agrupar células com as mesmas propriedade
+s de rocha, diminuindo a repetição dessa informação em cada célula.
+ Assim é possível, e desejável, que mais de uma célula esteja relacionada
+ com o mesmo bloco.
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Guia 
+\begin_inset Quotes eld
+\end_inset
+
+Fluid
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Nesta guia é possível se configurar as propriedades do fluído conforme visto
+ na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Aba-Fluid-ativada."
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Aba_Fluid.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aba Fluid ativada 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8-Aba-Fluid-ativada."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Utiliza-se o seletor para se escolher o tipo de fluído a configurar e em
+ seguida determina-se o número de pontos PVT para esse fluído.
+ No grid central é fornecido os valores de pressão (
+\emph on
+Pressure
+\emph default
+), FVF, densidade (
+\emph on
+Density
+\emph default
+) e viscosidade (
+\emph on
+Viscosity
+\emph default
+) para cada ponto obtido no ensaio PVT.
+\end_layout
+
+\begin_layout Subsection
+Guia 
+\begin_inset Quotes eld
+\end_inset
+
+Wells
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Na guia 
+\emph on
+wells
+\emph default
+ (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Aba-Wells-ativada."
+
+\end_inset
+
+) é possível se configurar os poços existentes no reservatório.
+ O primeiro dado a ser fornecido é o número de poços a serem configurados.
+ Cada poço necessita o Id da célula onde o mesmo está localizado, o tipo
+ de fluído, e a vazão do poço, sendo que vazões negativas indicam poços
+ produtores e vazões positivas indicam injetores.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Aba_Wells.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aba Wells ativada
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8-Aba-Wells-ativada."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Guia 
+\begin_inset Quotes eld
+\end_inset
+
+Numeric Properties
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A guia 
+\emph on
+numeric
+\emph default
+ 
+\emph on
+properties
+\emph default
+ (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8--Aba-Numeric-Properties"
+
+\end_inset
+
+) é utilizada para se fornecer os dados numéricos para o simulador, esses
+ dados são: o tipo de solver (somente o Gauss-Seidel está disponível), número
+ de iterações (
+\emph on
+Iterations
+\emph default
+), precisão do solver (
+\emph on
+Solver
+\emph default
+ 
+\emph on
+Precision
+\emph default
+), o passo de tempo da simulação (
+\begin_inset Formula $\Delta t$
+\end_inset
+
+), tempo final da simulação (
+\emph on
+Final
+\emph default
+ 
+\emph on
+simulation
+\emph default
+ 
+\emph on
+time
+\emph default
+), número máximo de iterações para a linearização (
+\emph on
+Linear
+\emph default
+ 
+\emph on
+Max
+\emph default
+ 
+\emph on
+Iteractions
+\emph default
+) e a precisão relativa da linearização (
+\emph on
+Thresholding
+\emph default
+ 
+\emph on
+Relative
+\emph default
+ 
+\emph on
+Precision
+\emph default
+).
+ Essa guia não possui um 
+\emph on
+widget
+\emph default
+ central, visto que manipula somente dados numéricos.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Aba_Numeric_Prop.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aba Numeric Properties ativada
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8--Aba-Numeric-Properties"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Guia 
+\begin_inset Quotes eld
+\end_inset
+
+Initialize Solution
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Aba-Initialize-Solution."
+
+\end_inset
+
+ mostra a guia 
+\emph on
+Initialize
+\emph default
+ 
+\emph on
+Solution
+\emph default
+.
+ Nessa guia são fornecidos os dados de pressão de referência (
+\emph on
+Reference
+\emph default
+ 
+\emph on
+Pressure
+\emph default
+) e profundidade de referência (
+\emph on
+Reference
+\emph default
+ 
+\emph on
+Deepth
+\emph default
+) para que o simulador possa calcular a hidrostática inicial do reservatório.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Aba_Initialize_Sol.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aba Initialize Solution
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8-Aba-Initialize-Solution."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Guia 
+\begin_inset Quotes eld
+\end_inset
+
+Boundary Condition
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Aba-Boundary-Condition."
+
+\end_inset
+
+ mostra a guia 
+\emph on
+Boundary
+\emph default
+ 
+\emph on
+Condition
+\emph default
+, onde são fornecidos os dados a respeito das condições de contorno do problema
+ a ser resolvido pelo simulador.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Aba_Boundary_Condition.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aba Boundary Condition
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8-Aba-Boundary-Condition."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+É possível se fornecer diferentes condições de contorno para a fronteira
+ esquerda (
+\emph on
+Left
+\emph default
+ 
+\emph on
+Boundary
+\emph default
+) e para a fronteira direita (
+\emph on
+Right
+\emph default
+ 
+\emph on
+Boundary
+\emph default
+) do problema.
+ Os dados fornecidos são o tipo de fronteira (
+\emph on
+Boundary
+\emph default
+ 
+\emph on
+Type
+\emph default
+) que pode assumir os seguintes valores, fluxo específico (
+\emph on
+Specified
+\emph default
+ 
+\emph on
+Flow
+\emph default
+ Rate), sistema fechado (
+\emph on
+Closed
+\emph default
+ 
+\emph on
+System
+\emph default
+) e pressão constante na fronteira (
+\emph on
+Specified
+\emph default
+ 
+\emph on
+Pressure
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
+Após o preenchimento de todas as guias com as propriedades da simulação,
+ é necessário a criação dos arquivos de configuração.
+ O botão criar arquivos (
+\emph on
+Create
+\emph default
+ 
+\emph on
+Files
+\emph default
+) na guia 
+\emph on
+boundary
+\emph default
+ 
+\emph on
+conditions
+\emph default
+ é utilizado para se criar esses arquivos.
+ Após a geração dos arquivos de simulação, abrirá uma janela informando
+ que os arquivos foram devidamente criados (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Informe-mostrando-exito"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_exito_Criacao_Arquivos.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Janela mostrando que os arquivos da simulação foram gerados com êxito
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8-Informe-mostrando-exito"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Executando a simulação
+\end_layout
+
+\begin_layout Standard
+A opção rodar simulação (
+\emph on
+Run
+\emph default
+ 
+\emph on
+Simulation
+\emph default
+) localizada no menu Ações (
+\emph on
+Actions
+\emph default
+) é utilizada para se iniciar o 
+\emph on
+kernel
+\emph default
+ numérico, conforme visto na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Opção-rodar-simulação"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Opcao_Run_Simulation.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Opção rodar simulação do menu ações
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8-Opção-rodar-simulação"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Abrirá uma janela informando que a simulação será executada (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8-Janela-informando-oiniciao_sim"
+
+\end_inset
+
+) e após isso se abrirá um terminal na tela com o fluxo de execução da simulação
+ (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8_Simulação-de-reservatórios-executando"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Informe_Inicio_Simulacao.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Janela informando o início da simulação
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8-Janela-informando-oiniciao_sim"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Simulation_in_Execution.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Simulação de reservatórios em execução
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8_Simulação-de-reservatórios-executando"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Plotando gráficos
+\end_layout
+
+\begin_layout Standard
+Após a simulação ser executada é possível a geração de gráficos mostrando
+ os resultados da simulação, clicando na opção plotar resultados (
+\emph on
+Plot
+\emph default
+ 
+\emph on
+Results
+\emph default
+) localizada no menu ações (
+\emph on
+Actions
+\emph default
+).
+ Uma janela se abrirá pedindo informações sobre o tipo de gráfico que o
+ usuário deseja gerar (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8_Escolha-do-tipo-grafico"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Escolha_Grafico.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Escolha do tipo do gráfico resultado
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8_Escolha-do-tipo-grafico"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Após a confirmação, uma janela com o gráfico plotado aparecerá na tela,
+ como pode ser visto na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap8_Exemplo-de-gráfico"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap8_Exemplo_Grafico.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Exemplo de gráfico de pressão no fundo do poço, gerado após simulação
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap8_Exemplo-de-gráfico"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se desejável é possível se acessar a pasta 
+\emph on
+kernel
+\emph default
+ situada no diretório do programa para se acessar diretamente os arquivos
+ com os resultados da simulação.
+\end_layout
+
+\end_body
+\end_document

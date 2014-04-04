@@ -1,0 +1,14 @@
+1     --- [-] Identificador da Célula 1
+50    --- [ft] Espessura da Célula 1
+1500  --- [ft] Profundidade da Célula 1
+1     --- [-] Identificador do Bloco conectado a Célula
+
+2     --- [-] Identificador da Célula 2
+30    --- [ft] Espessura da Célula 2
+1600  --- [ft] Profundidade da Célula 2
+1     --- [-] Identificador do Bloco conectado a Célula
+
+3     --- [-] Identificador da Célula 3
+40    --- [ft] Espessura da Célula 3
+1500  --- [ft] Profundidade da Célula 3
+2     --- [-] Identificador do Bloco conectado a Célula

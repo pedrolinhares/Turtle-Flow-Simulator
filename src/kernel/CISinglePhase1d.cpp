@@ -119,12 +119,12 @@ double CISinglePhase1d::CellResidual(CGrid *grid, double deltat, int celln) {
 	double Wi, Wi_p, Ci, Ci_p,  Ei, Ei_p, Qi;
 	
 	/// Calculating the west transmissibility element:
-		Wi = grid->RightTrasmX(celln-1);
-		Wi_p = Wi*grid->Pressure(celln-1);  
+		Wi = grid->LeftTrasmX(celln);
+		Wi_p = Wi*grid->LeftPressure(celln);  
 
 	/// Calculating the east transmissibility element:
 		Ei = grid->RightTrasmX(celln);
-		Ei_p = Ei*grid->Pressure(celln+1);
+		Ei_p = Ei*grid->RightPressure(celln);
 
 	/// Calculating the central transmissibility element:
     Ci = - grid->Gamma(celln)/deltat - Ei - Wi;  
@@ -145,29 +145,19 @@ double CISinglePhase1d::RHSTerm(CGrid *grid, double deltat, int celln){
     double gama_dt, q, RHS_Qi;
   
 
-	Wig = grid->RightGravityTransmX(celln-1);  ///< Calculating the west transmissibility;
+	Wig = grid->LeftGravityTransmX(celln);  ///< Calculating the west transmissibility;
 
 	Eig = grid->RightGravityTransmX(celln);   ///< Calculating the east transmissibility;
 
 	Cig = - Eig - Wig;  ///< Calculating the central transmissibility;
 
-	Qg =Wig*grid->Deepth(celln-1) + Cig*grid->Deepth(celln) + Eig*grid->Deepth(celln+1); ///< Rate term;
+	Qg =Wig*grid->LeftDeepth(celln) + Cig*grid->Deepth(celln) + Eig*grid->RightDeepth(celln); ///< Rate term;
 
 	gama_dt = grid->Gamma(celln)/deltat;
 
 	q = grid->WellRate(celln);  ///< Getting the well rate for cell i;
 
 	RHS_Qi = Qg - (gama_dt*grid->BackPressure(celln)) - q;  ///< Filling the b vector;
-
-	/// Left Boundary Condition ///
-	//if (celln == 0) {
-	//	RHS_Qi  = RHS_Qi - grid->RightTrasmx(-1)*grid->Pressure(-1);
-	//}
-
-	/// Right Boundary Condition ///
-	//if (celln == (cpoints - 1)) {
-	//	RHS_Qi  = RHS_Qi - grid->RightTrasmx(cpoints)*grid->Pressure(cpoints);
-	//}
 
 	return RHS_Qi;
 }
@@ -177,16 +167,16 @@ double CISinglePhase1d::LeftResDer(CGrid *grid, int celln) {
 	/// This function returns the left residual derivative for de cell n. 
 	
 	double leftpress, centerpress;
-	leftpress = grid->Pressure(celln - 1);
+	leftpress = grid->LeftPressure(celln);
 	centerpress = grid->Pressure(celln);
 	
 	double leftdeepth, centerdeepth;
-	leftdeepth = grid->Deepth(celln - 1);
+	leftdeepth = grid->LeftDeepth(celln);
 	centerdeepth = grid->Deepth(celln);
 	
 	double lefttransmderiv, leftgravitderiv;
-	lefttransmderiv = grid->CenterTransmXDer(celln - 1);
-	leftgravitderiv = grid->CenterGravityTransmXDer( celln - 1);
+	lefttransmderiv = grid->LeftTransmXDer(celln);
+	leftgravitderiv = grid->LeftGravityTransmXDer(celln);
 	
 	double lefttransmx;
 	lefttransmx = grid->RightTrasmX(celln - 1);
@@ -197,26 +187,26 @@ double CISinglePhase1d::CentralResDer(CGrid *grid, double deltat, int celln) {
 	/// This function returns the central residual derivative for de cell n. 
 	
 	double leftpress, centerpress, backcenterpress, rightpress;
-	leftpress = grid->Pressure(celln - 1);
+	leftpress = grid->LeftPressure(celln);
 	centerpress = grid->Pressure(celln);
 	backcenterpress = grid->BackPressure(celln);
-	rightpress = grid->Pressure(celln + 1);
+	rightpress = grid->RightPressure(celln);
 	
 	double leftdeepth, centerdeepth, rightdeepth;
-	leftdeepth = grid->Deepth(celln - 1);
+	leftdeepth = grid->LeftDeepth(celln);
 	centerdeepth = grid->Deepth(celln);
-	rightdeepth = grid->Deepth(celln + 1);
+	rightdeepth = grid->RightDeepth(celln);
 	
 	double lefttransmx, righttransmx;
-	lefttransmx = grid->RightTrasmX(celln - 1);
+	lefttransmx = grid->LeftTrasmX(celln);
 	righttransmx = grid->RightTrasmX(celln);
 	
 	double gamma_dt;
 	gamma_dt = grid->Gamma(celln) / deltat;
 	
 	double lefttransmderiv, leftgravitderiv;
-	lefttransmderiv = grid->RightTransmXDer(celln - 1);
-	leftgravitderiv = grid->RightGravityTransmXDer(celln - 1);
+	lefttransmderiv = grid->LeftTransmXDer(celln);
+	leftgravitderiv = grid->LeftGravityTransmXDer(celln);
 	
 	double righttransmderiv, rightgravitderiv;
 	righttransmderiv = grid->CenterTransmXDer(celln);
@@ -239,11 +229,11 @@ double CISinglePhase1d::RightResDer(CGrid *grid, int celln) {
 	/// This function returns the right residual derivative for de cell n.
 	
 	double rightpress, centerpress;
-	rightpress = grid->Pressure(celln + 1);
+	rightpress = grid->RightPressure(celln);
 	centerpress = grid->Pressure(celln);
 	
 	double rightdeepth, centerdeepth;
-	rightdeepth = grid->Deepth(celln + 1);
+	rightdeepth = grid->RightDeepth(celln);
 	centerdeepth = grid->Deepth(celln);
 	
 	double righttransmderiv, rightgravitderiv;

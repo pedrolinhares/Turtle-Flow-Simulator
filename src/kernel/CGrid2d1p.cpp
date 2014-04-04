@@ -101,7 +101,7 @@ CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
    				fgrid >> cellsID[i][j]; /// Storing the connection between adjacent cells;
    				if (cellsID[i][j] != 0) { 
 				    auxcount++; /// Counting the number of non-NULL cells; 
-				    cellsID[i][j] = auxcount; /// Replacing the number 1 with the cell ID
+				    //cellsID[i][j] = auxcount; /// Replacing the number 1 with the cell ID "Only if the cells number is not given by user"
 				} 
    		}
    }
@@ -250,6 +250,7 @@ void CGrid2d1p::Print() {
     cout << "Number of Cells in Domain: " << cellnumber << "\n";
     cout << "Number of Cells in x Direction: " << xcells << "\n";
     cout << "Number of Cells in y Direction: " << ycells << "\n";
+    cout << "Number od Cells Connections in Domain: " << ConnectionsNumber() << "\n";
     
     cout << "Cells ID: \n";
     
@@ -475,89 +476,97 @@ void CGrid2d1p::InitiateSolution(double pref, double href) {
 
     do {
 
-      for (int i=0 ; i<cellnumber ; i++) {
+        for (int i=0 ; i<cellnumber ; i++) {
 
-        press = pref +  cells[i].Weight()*(cells[i].Deepth() - href); ///< Setting the hydrostatic pressure;
+            press = pref +  cells[i].Weight()*(cells[i].Deepth() - href); ///< Setting the hydrostatic pressure;
 
-        erro=abs(cells[i].Pressure() - press)/(press);  ///< Calculating the error in the pressure variation.
+            erro=abs(cells[i].Pressure() - press)/(press);  ///< Calculating the error in the pressure variation.
 
-        if (i==0) { erromax = erro; }
-        else {
-          if (erromax < erro) { erromax = erro;};
+            if (i==0) { erromax = erro; }
+            else {
+                if (erromax < erro) { erromax = erro;};
+            }
+
+            cells[i].Pressure(press); ///< Setting the initial pressure in all cells;
+            cells[i].BackPressure(press); ///< Setting the initial back pressure in all cells;
         }
 
-        cells[i].Pressure(press); ///< Setting the initial pressure in all cells;
-        cells[i].BackPressure(press); ///< Setting the initial back pressure in all cells;
-      }
-
     } while (erromax > 0.1); ///< 0.1 is the precision of the initialization. Maybe it will be set by the user in future.
+}
+
+
+double CGrid2d1p::RightTrasmX( int celln ) {
+  /// This function return the right transmissibility of a specif cell.
+
+  if (cells[celln].RightCell() == NULL) { return 0; }
+  
+  return cells[celln].RightTransmX();
+    
+}
+
+double CGrid2d1p::LeftTrasmX( int celln ) {
+  /// This function return the right transmissibility of a specif cell.
+
+  if (cells[celln].LeftCell() == NULL) { return 0; }
+  
+  return cells[celln].LeftCell()->RightTransmX();
+    
+}
+
+
+double CGrid2d1p::RightGravityTransmX( int celln ){
+  /// This function return the right gravitational transmissibility of a specif cell.
+  
+  if (cells[celln].RightCell() == NULL) { return 0; }
+  
+  return cells[celln].RightGravityTransmX();
+    
+}
+
+double CGrid2d1p::LeftGravityTransmX( int celln ){
+  /// This function return the right gravitational transmissibility of a specif cell.
+  
+  if (cells[celln].LeftCell() == NULL) { return 0; }
+  
+  return cells[celln].LeftCell()->RightGravityTransmX();
+    
 }
 
 double CGrid2d1p::RightTransmXDer( int celln ) { 
  	///< Returns the derivative of the right transm. in relation of the right cell pressure for celln;
  	
- 	/// Left Boudary Condition
-    if (celln == -1) {
-        if (cells[0].LeftCell() == NULL) { return 0; }
-        else{ return cells[0].LeftCell()->RightTransmXDer(); }
-    }
- 
-	return cells[celln].RightTransmXDer(); 
+ 	if (cells[celln].RightCell() == NULL) { return 0; }
+ 	
+ 	return cells[celln].RightTransmXDer(); 
 
+}
+
+double CGrid2d1p::LeftTransmXDer( int celln ) { 
+ 	///< Returns the derivative of the right transm. in relation of the right cell pressure for celln;
+ 	
+ 	if (cells[celln].LeftCell() == NULL) { return 0; }
+ 	
+    return cells[celln].LeftCell()->RightTransmXDer(); 
+    
 }
 
 double CGrid2d1p::RightGravityTransmXDer( int celln )  { 
 	/// Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
 	
-	/// Left Boudary Condition
-	  if (celln == -1) {
-	        if (cells[0].LeftCell() == NULL) { return 0; }
-	        else{ return cells[0].LeftCell()->RightGravityTransmXDer(); }
-	    }
-    
+	if (cells[celln].RightCell() == NULL) { return 0; }
+	
 	return cells[celln].RightGravityTransmXDer();
 	
 } 
 
-double CGrid2d1p::RightTrasmX( int celln ) {
-  /// This function return the right transmissibility of a specif cell.
-  /// if celln == -1, Left Boundary condition case.
-    /// if celln == cellnumber, Right Boundary condition case.
-
-  /// Left Boudary Condition
-  if (celln == -1) {
-        if (cells[0].LeftCell() == NULL) { return 0; }
-        else{ return cells[0].LeftCell()->RightTransmX(); }
-    }
-
-  /// Right Boudary Condition
-    if (celln == cellnumber) {
-        if (cells[cellnumber - 1].RightCell() == NULL) { return 0; }
-        else{ return cells[cellnumber - 1].RightTransmX(); }
-    }
-
-    return cells[celln].RightTransmX();
-}
-
-double CGrid2d1p::RightGravityTransmX( int celln ){
-  /// This function return the right gravitational transmissibility of a specif cell.
-  /// if celln == -1, Left Boundary condition case.
-    /// if celln == cellnumber, Right Boundary condition case.
-
-  /// Left Boudary Condition
-  if (celln == -1) {
-        if (cells[0].LeftCell() == NULL) { return 0; }
-        else{ return cells[0].LeftCell()->RightGravityTransmX(); }
-    }
-
-  /// Right Boudary Condition
-    if (celln == cellnumber) {
-        if (cells[cellnumber - 1].RightCell() == NULL) { return 0; }
-        else{ return cells[cellnumber - 1].RightGravityTransmX(); }
-    }
-
-    return cells[celln].RightGravityTransmX();
-}
+double CGrid2d1p::LeftGravityTransmXDer( int celln )  { 
+	/// Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
+	
+	if (cells[celln].LeftCell() == NULL) { return 0; }
+	
+	return cells[celln].LeftCell()->RightGravityTransmXDer(); 
+	
+} 
 
 double CGrid2d1p::Gamma( int celln ) {
 	 ///This function returns the gamma factor of a specific cell in domain;
@@ -575,39 +584,44 @@ double CGrid2d1p::GammaDer( int celln ) {
 
 double CGrid2d1p::Pressure( int celln ) {
     /// This function returns the atual pressure of a specific cell in domain;
-    /// if celln == -1, Left Boundary condition case.
-    /// if celln == cellnumber, Right Boundary condition case.
-
-    if (celln == -1) {
-        if (cells[0].LeftCell() == NULL) { return 0; }
-        else{ return cells[0].LeftCell()->Pressure(); }
-    }
-
-    if (celln == cellnumber) {
-        if (cells[cellnumber - 1].RightCell() == NULL) { return 0; }
-        else{ return cells[cellnumber - 1].RightCell()->Pressure(); }
-    }
 
     return cells[celln].Pressure();
 }
 
+double CGrid2d1p::RightPressure( int celln ) {
+    /// This function returns the atual pressure of a right cell in relation of a specific cell in domain;
+
+    if (cells[celln].RightCell() == NULL ) { return 0; }
+	return cells[celln].RightCell()->Pressure();
+}
+
+double CGrid2d1p::LeftPressure( int celln ) {
+    /// This function returns the atual pressure of a left cell in relation of a specific cell in domain;
+
+    if (cells[celln].LeftCell() == NULL ) { return 0; }
+	return cells[celln].LeftCell()->Pressure();
+}
+
 double CGrid2d1p::Deepth( int celln ) {
     /// This function returns the Deepth of a specific cell in domain;
-    /// if celln == -1, Left Boundary condition case.
-    /// if celln == cellnumber, Right Boundary condition case.
-
-    if (celln == -1) {
-        if (cells[0].LeftCell() == NULL) { return 0; }
-        else{ return cells[0].LeftCell()->Deepth(); }
-    }
-
-    if (celln == cellnumber) {
-        if (cells[cellnumber - 1].RightCell() == NULL) { return 0; }
-        else{ return cells[cellnumber - 1].RightCell()->Deepth(); }
-    }
-
+    
     return cells[celln].Deepth();
 }
+
+double CGrid2d1p::RightDeepth( int celln ) {
+    /// This function returns the deepth of a right cell in relation of a specific cell in domain;
+
+    if (cells[celln].RightCell() == NULL ) { return 0; }
+	return cells[celln].RightCell()->Deepth();
+}
+
+double CGrid2d1p::LeftDeepth( int celln ) {
+    /// This function returns the deepth of a left cell in relation of a specific cell in domain;
+
+    if (cells[celln].LeftCell() == NULL ) { return 0; }
+	return cells[celln].LeftCell()->Deepth();
+}
+
 
 void CGrid2d1p::ConstructingCFluid() {
     /// Construct the fluid in grid in domain;
@@ -777,4 +791,38 @@ int CGrid2d1p::CellPositioninGrid(int _cellid) {
 	 
 	 return -1;
 	 
+}
+
+int CGrid2d1p::ConnectionsNumber() {
+	///< This Function returns the number of connections among cells in the grid.
+	
+	int connections = 0; /// Connection counter;
+	
+	for (int i=0; i<ycells; i++) {
+		for (int j=0; j<xcells; j++) {
+			if (cellsID[i][j] != 0) {
+				///Left Connection
+				if (j>0) {
+					if(cellsID[i][j-1] != 0) { connections++;}		
+				}
+				
+				///Right Connection
+				if (j<(xcells-1)) {
+					if(cellsID[i][j+1] != 0) { connections++;}		
+				}
+				
+				///Back Connection
+				if (i>0) {
+					if(cellsID[i-1][j] != 0) { connections++;}		
+				}
+				
+				///Front Connection
+				if (i<(ycells-1)) {
+					if(cellsID[i+1][j] != 0) { connections++;}		
+				}
+			}
+		}
+	}
+	
+	return connections/2;  ///< The connections were counted twice;
 }

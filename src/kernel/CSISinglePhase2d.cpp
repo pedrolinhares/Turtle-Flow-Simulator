@@ -1,0 +1,270 @@
+//** @file CSinglePhase2d.cpp */
+/******************************************************************************
+ *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
+ *  simulator.
+ *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
+ *  
+ *  Class Author: Wagner Queiroz Barros.
+ *
+ *  TFS is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  TFS is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with TFS.  If not, see <http://www.gnu.org/licenses/>.
+ *****************************************************************************/
+
+#include "CSISinglePhase2d.h"
+
+using namespace std;
+
+CSISinglePhase2d::CSISinglePhase2d(CGrid *grid, int _maxni, double _erroni) {
+	/// Class Constructor
+	
+	cpoints = grid->CellNumber();
+	maxni = _maxni;
+	erroni = _erroni;
+	
+	elem_numb = MatrixElementsNumber(grid);
+	
+	/// Allocating the Matrix A ///
+	Acol = new int[elem_numb]; 
+	Arow = new int[cpoints + 1]; 
+	Aval = new double[elem_numb];
+	
+	/// Starting the Aval ///
+	for (int j = 0; j < elem_numb; j++) { Aval[j] = 0; }
+	
+	/// Starting Acol and Arow ///
+	/// For this is needed to access all cells in domain and verify their neighbours
+	/// For 1d case, the cells are accessed from left to right.
+	
+	int colcount = 0; ///< Counter used to fill the Acol;
+	
+	/// First Cell
+	Arow[0] = 0;
+	Arow[1] = 2;
+	Acol[colcount] = 0;
+	colcount++;
+	Acol[colcount] = 1;
+	colcount++;
+	
+	/// Middle Cells 
+	for (int i = 1 ; i < (cpoints - 1) ; i++ ) {
+		Arow[(i+1)] = 3;
+		Acol[colcount] = (i - 1);
+		colcount++;
+		Acol[colcount] = i;
+		colcount++;
+		Acol[colcount] = (i + 1);
+		colcount++;
+	}
+	
+	/// Last Cell
+	Arow[cpoints] = 2;
+	Acol[colcount] = (cpoints - 2);
+	colcount++;
+	Acol[colcount] = (cpoints - 1);
+	colcount++;
+	
+	/// Cumulating the Arow array
+	for (int g = 0; g < cpoints ; g++) {
+		Arow[g+1] = Arow[g] + Arow[g+1] ;
+	}
+	
+	/// Constructing the Free Vector
+	b = new double[cpoints]; 
+	
+	/// Constructing the Solution Vector
+    Xni = new double[cpoints]; 
+		  
+}
+
+CSISinglePhase2d::~CSISinglePhase2d()
+{
+	/// Class destructor.
+	delete [] Acol;
+	Acol = NULL;
+	
+	delete [] Arow;
+	Arow = NULL;
+	
+	delete [] Aval;
+	Aval = NULL;
+	
+}
+
+int CSISinglePhase2d::MatrixElementsNumber(CGrid *grid) {
+ /// This function run over all cells in problem and returns the number of elements
+ ///that will be created in matrix A. It is used for pre-allocate memory for UMFPack matrix
+ /// The elements un matrix A is the number of connections in domain;
+ 
+ return (2*grid->ConnectionsNumber() + grid->CellNumber());  ///<The matrix number is the the cell number + the connections of each cell, so 2*connections.
+ 
+}
+
+void CSISinglePhase2d::BuildMatrix(CGrid *grid, double deltat)
+{
+	/// This function creates the coefficient matrix "A", using the grid data.
+	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
+	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
+
+    double Wi, Ci, Ei;
+	double deltap;
+	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
+	
+	/// Filling the first line of matrix A
+	Wi = grid->LeftTrasmX(0); ///< There is no west matrix element;
+	Ei = grid->RightTrasmX(0); ///< Calculating the east matrix element;
+	Ci = - grid->Gamma(0)/deltat - Wi - Ei;	///< Calculating the central matrix element;
+	
+		Aval[elemcount] = Ci;
+	    elemcount++;
+	    Aval[elemcount] = Ei;
+	    elemcount++;
+	
+	/// Filling the middle A Elements
+    for (int i = 1 ; i < (cpoints - 1) ; i++) {
+		
+		Wi = grid->LeftTrasmX(i); ///< Calculating the west matrix element;
+		Ei = grid->RightTrasmX(i);	///< Calculating the east matrix element;	
+    	Ci = - grid->Gamma(i)/deltat - Ei - Wi;	///< Calculating the central matrix element;
+
+	        Aval[elemcount] = Wi;
+	        elemcount++;
+	        Aval[elemcount] = Ci;
+	        elemcount++;
+	        Aval[elemcount] = Ei;
+	        elemcount++;
+    }
+    
+    /// Filling the last line of matrix A
+    Wi = grid->LeftTrasmX(cpoints - 1); ///< Calculating the west matrix element;
+    Ei = grid->RightTrasmX(cpoints - 1);	///< There is no east matrix element;
+	Ci = - grid->Gamma(cpoints - 1)/deltat - Wi - Ei;	///< Calculating the central matrix element;
+	
+		Aval[elemcount] = Wi;
+        elemcount++;
+        Aval[elemcount] = Ci;
+        elemcount++;	
+
+}
+
+void CSISinglePhase2d::BuildCoefVector(CGrid *grid, double deltat){
+	/// This function creates the free vector "b", using the grid data.
+	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
+	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
+
+	double Eig, Wig, Cig, Qg;
+    double gama_dt, q;
+  
+
+	for (int i = 0 ; i < (cpoints) ; i++) {
+
+		Wig = grid->LeftGravityTransmX(i);  ///< Calculating the west transmissibility;
+
+    	Eig = grid->RightGravityTransmX(i);   ///< Calculating the east transmissibility;
+
+    	Cig = - Eig - Wig;  ///< Calculating the central transmissibility;
+
+		Qg =Wig*grid->LeftDeepth(i) + Cig*grid->Deepth(i) + Eig*grid->RightDeepth(i); ///< Rate term;
+
+    	gama_dt = grid->Gamma(i)/deltat;
+
+    	q = grid->WellRate(i);  ///< Getting the well rate for cell i;
+
+    	b[i] = Qg - (gama_dt*grid->BackPressure(i)) - q;  ///< Filling the b vector;
+
+    	/// Left Boundary Condition ///
+    	if (i == 0) {
+    		b[i]  = b[i] - grid->LeftTrasmX(0)*grid->LeftPressure(0);
+    	}
+
+    	/// Right Boundary Condition ///
+    	if (i == (cpoints - 1)) {
+    		b[i]  = b[i] - grid->RightTrasmX(cpoints - 1)*grid->RightPressure(cpoints - 1);
+    	}
+
+    }
+
+}
+
+void CSISinglePhase2d::BuildInitialSolution(CGrid *grid) {
+	 /// This function builds the initial solution for the first problem iteration.
+	 /// It is used to initiate the first solution.
+
+	 for (int i = 0 ; i < (cpoints) ; i++) {
+
+        Xni[i] =  grid->Pressure(i);
+
+    }
+
+}
+
+void CSISinglePhase2d::Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat) {
+	/// This function makes a time iteration in all cells of domain
+	/// using the semi-implicit linearization model.
+	
+	//////////  Iteration used for linearizate the problem  /////////
+       double er1, er1max;
+       int h = 0;
+
+       do {
+
+         BuildMatrix(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
+         BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
+         
+         //Print();
+
+         solver->UMFPack( Acol, Arow, Aval, b, Xni, cpoints ); ///< Calling the solver used in this problem
+
+        	 /////////  Error Analyzing  /////////
+
+	         for (int j=0 ; j<cpoints; j++) {
+		          er1 = abs(Xni[j] - grid->Pressure(j));
+		          if (j == 0) {
+		            	er1max = er1;
+		          } else {
+		            	if (er1 > er1max) { er1max = er1; }
+		          }
+	         }
+
+         grid->Iterationni(Xni);  ///< Updating the atual pressure in reservoir
+
+         h++;
+
+       } while ((h < maxni) && (er1max > erroni));
+
+	grid->Iterationt(deltat);  ///< Updating the back pressure in all reservoir;
+
+    cout.precision(4);
+    cout << "     Linear Iterations - " << h;
+    cout << "     Linear Error - " << er1max << "\n";
+
+}
+
+void CSISinglePhase2d::Print() {
+	///This function prints on screen all the matrix. It is used to debug the code.
+	
+	cout << "\nCumulative Row Array (Arow):\n";
+	for (int i = 0; i < (cpoints + 1) ; i++ ) { cout << Arow[i] << endl; }
+	
+	cout << "\nColumn index for all elements (Acol):\n";
+	for (int i = 0; i < elem_numb ; i++ ) { cout << Acol[i] << endl; }
+	
+	cout << "\nValue for all elements (Aval):\n";
+	for (int i = 0; i < elem_numb ; i++ ) { cout << Aval[i] << endl; }
+	
+	cout << "\nValue of free vector (b):\n";
+	for (int i = 0; i < (cpoints) ; i++ ) { cout << b[i] << endl; }
+	
+	cout << "\nValue of solution x (Xni):\n";
+	for (int i = 0; i < (cpoints) ; i++ ) { cout << Xni[i] << endl; }
+	
+}

@@ -1,0 +1,8 @@
+1      --- [-] Identificador do Solver (1 = Gauss-Seidel);
+30     --- [-] Número de Iterações máximas do solver numérico;
+0.001  --- [-] Precisão do solver numérico;
+
+0.1    --- [dias] delta t do problema;
+10     --- [dias] tempo final de simulação;
+50     --- [-] Número de Iterações máximas da linearização ni;
+0.001  --- [-] Precisão relativa da linearização ni.

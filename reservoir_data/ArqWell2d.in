@@ -1,0 +1,11 @@
+2     #* Wells Number *#
+
+2     #* Grid Row that well is inserted *#
+4     #* Grid Column that well is inserted *#
+1     #* Well Id *#
+-150  #* [STB/D] Well Flow Rate (Negative = Production || Positive = Injection) *#
+
+1     #* Grid Row that well is inserted *#
+1     #* Grid Column that well is inserted *#
+2     #* Well Id *#
+50  #* [STB/D] Well Flow Rate (Negative = Production || Positive = Injection) *#

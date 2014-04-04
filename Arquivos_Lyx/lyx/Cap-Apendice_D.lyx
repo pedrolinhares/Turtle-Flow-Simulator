@@ -1,0 +1,1611 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage {graphicx}
+\usepackage {longtable}
+\usepackage {indentfirst}
+\renewenvironment{center}{\par\centering}{\par}
+
+% Comentar linhas abaixo se não estiver usando pacote abntex
+% ou se o pacote ainda não foi instalado.
+% neste caso sugere-se usar citações no padrão apalike (lembra o da anbt).
+%\usepackage[alf ,abnt-etal-cite=2 , abnt-year-extra-label=yes , abnt-etal-list=0]{abntcite}
+%\usepackage {helvet}
+%\renewcommand {\familydefault}{\sfdefault}
+
+% Para uso de listagens de código
+\usepackage{color}
+\definecolor{azulclaro}{rgb}{0.6,1,1}%   rgb color model
+% Informa que vai usar o pacote listings, 
+% disponibilizado em /usr/share/texmf/doc/latex/styles/listings.dvi
+\usepackage{listings}
+\end_preamble
+\options normaltoc, sumarioincompleto
+\use_default_options false
+\master DocumentoMestre-Trabalho-ProgramacaoPratica.lyx
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding latin1
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref true
+\pdf_title "Título da Monografia - Dissertação - Tese"
+\pdf_author "Nome do Autor"
+\pdf_subject "Descrever assunto"
+\pdf_keywords "Copiar do resumo"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref page
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\paperwidth 210mm
+\paperheight 297mm
+\leftmargin 30mm
+\topmargin 25mm
+\rightmargin 20mm
+\bottommargin 20mm
+\secnumdepth 2
+\tocdepth 1
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Códigos
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Apêndice-Códigos"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lhead{Apêndice 
+\backslash
+thechapter}
+\backslash
+rhead{
+\backslash
+thepage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Códigos Kernel
+\end_layout
+
+\begin_layout Standard
+Estão listados abaixo os códigos utilizados pelo 
+\emph on
+kernel
+\emph default
+ numérico.
+\end_layout
+
+\begin_layout Subsection
+CBlock.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CBlock.h.}, label={CBlock-h},extendedchars=true,
+breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CBlock.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CBlock.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CBlock.cpp.}, label={CBlock-cpp},extendedchars=t
+rue,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CBlock.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CCell1d.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CCell1d.h.}, label={CCell1d-h},extendedchars=tru
+e,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CCell1d.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CCell1d.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CCell1d.cpp.}, label={CCell1d-cpp},extendedchars
+=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CCell1d.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CDataControl.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CDataControl.h.}, label={CDataControl-h},extende
+dchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CDataControl.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CDataControl.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CDataControl.cpp.}, label={CDataControl-cpp},ext
+endedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CDataControl.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CFluid.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CFluid.h.}, label={CFluid-h},extendedchars=true,
+breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CFluid.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CFluid.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CFluid.cpp.}, label={CFluid-cpp},extendedchars=t
+rue,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CFluid.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CGas.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CGas.h.}, label={CGas-h},extendedchars=true,brea
+klines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CGas.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CGas.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CGas.cpp.}, label={CGas-cpp},extendedchars=true,
+breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CGas.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CGrid.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CGrid.h.}, label={CGrid-h},extendedchars=true,br
+eaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CGrid.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CGrid.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CGrid.cpp.}, label={CGrid-cpp},extendedchars=tru
+e,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CGrid.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CGrid1d.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CGrid1d.h.}, label={CGrid1d-h},extendedchars=tru
+e,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CGrid1d.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CGrid1d.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CGrid1d.cpp.}, label={CGrid1d-cpp},extendedchars
+=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CGrid1d.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CModelType.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CModelType.h.}, label={CModelType-h},extendedcha
+rs=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CModelType.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CModelType.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CModelType.cpp.}, label={CModelType-cpp},extende
+dchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CModelType.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+COil.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo COil.h.}, label={COil-h},extendedchars=true,brea
+klines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/COil.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+COil.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo COil.cpp.}, label={COil-cpp},extendedchars=true,
+breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/COil.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CReservoir.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CReservoir.h.}, label={CReservoir-h},extendedcha
+rs=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CReservoir.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CReservoir.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CReservoir.cpp.}, label={CReservoir-cpp},extende
+dchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CReservoir.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CRock.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CRock.h.}, label={CRock-h},extendedchars=true,br
+eaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CRock.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CRock.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CRock.cpp.}, label={CRock-cpp},extendedchars=tru
+e,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CRock.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CSinglePhase.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CSinglePhase.h.}, label={CSinglePhase-h},extende
+dchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CSinglePhase.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CSinglePhase.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CSinglePhase.cpp.}, label={CSinglePhase-cpp},ext
+endedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CSinglePhase.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CSinglePhase1d.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CSinglePhase1d.h.}, label={CSinglePhase1d-h},ext
+endedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CSinglePhase1d.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CSinglePhase1d.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CSinglePhase1d.cpp.}, label={CSinglePhase1d-cpp}
+,extendedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CSinglePhase1d.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CSolver.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CSolver.h.}, label={CSolver-h},extendedchars=tru
+e,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CSolver.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CSolver.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CSolver.cpp.}, label={CSolver-cpp},extendedchars
+=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CSolver.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CTrid.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CTrid.h.}, label={CTrid-h},extendedchars=true,br
+eaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CTrid.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CTrid.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CTrid.cpp.}, label={CTrid-cpp},extendedchars=tru
+e,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CTrid.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CWater.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CWater.h.}, label={CWater-h},extendedchars=true,
+breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CWater.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CWater.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CWater.cpp.}, label={CWater-cpp},extendedchars=t
+rue,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CWater.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CWell1d.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CWell1d.h.}, label={CWell1d-h},extendedchars=tru
+e,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CWell1d.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CWell1d.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CWell1d.cpp.}, label={CWell1d-cpp},extendedchars
+=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CWell1d.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+main.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo main.cpp.}, label={main-cpp},extendedchars=true,
+breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/main.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Códigos Plot
+\end_layout
+
+\begin_layout Standard
+Estão listados abaixo os códigos utilizados para se plotar as soluções do
+ simulador.
+\end_layout
+
+\begin_layout Subsection
+CPlot.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CPlot.h.}, label={CPlot-h},extendedchars=true,br
+eaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CPlot.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CPlot.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CPlot.cpp.}, label={CPlot-cpp},extendedchars=tru
+e,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CPlot.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CGnuplot.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CGnuplot.h.}, label={CGnuplot-h},extendedchars=t
+rue,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CGnuplot.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+CGnuplot.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo CGnuplot.cpp.}, label={CGnuplot-cpp},extendedcha
+rs=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/CGnuplot.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Códigos Interface Gráfica
+\end_layout
+
+\begin_layout Standard
+Estão listados abaixo os códigos utilizados na interface gráfica.
+\end_layout
+
+\begin_layout Subsection
+fluid_definitions.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo fluid definitions.h.}, label={fluid_def-h},exten
+dedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/fluid_definitions.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+fluid_definitions.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo fluid definitions.cpp.}, label={fluid_definition
+s-cpp},extendedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/fluid_definitions.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+fluid_dialog.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo fluid dialog.h.}, label={fluid_dialog-h},extende
+dchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/fluid_dialog.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+fluid_dialog.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo fluid dialog.cpp.}, label={fluid_dialog-cpp},ext
+endedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/fluid_dialog.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+grid.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo grid.h.}, label={grid-h},extendedchars=true,brea
+klines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/grid.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+grid.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo grid.cpp.}, label={grid-cpp},extendedchars=true,
+breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/grid.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+main_window.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo main window.h.}, label={main_window-h},extendedc
+hars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/main_window.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+main_window.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo main window.cpp.}, label={main_window-cpp},exten
+dedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/main_window.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+start_dialog.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo start dialog.h.}, label={start_dialog-h},extende
+dchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/start_dialog.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+start_dialog.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo start dialog.cpp.}, label={start_dialog-cpp},ext
+endedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/start_dialog.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+main.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo main.cpp.}, label={main-cpp},extendedchars=true,
+breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/main_i.cpp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Kernel Configurator
+\end_layout
+
+\begin_layout Standard
+Nessa seção são apresentados os códigos do configurador da interface, utilizado
+ para se exportar os dados da interface para o 
+\emph on
+kernel
+\emph default
+.
+\end_layout
+
+\begin_layout Subsection
+kernel_definitions.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo kernel definitions.h.}, label={kernel_definition
+s-h},extendedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/kernel_definitions.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+kernel_configurator.h
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo kernel configurator.h.}, label={kernel_configura
+tor-h},extendedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/kernel_configurator.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+kernel_configurator.cpp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{language=C++} 
+\backslash
+lstinputlisting[ caption={Arquivo kernel configurator.h.}, label={kernel configura
+tor-h},extendedchars=true,breaklines=true,basicstyle=
+\backslash
+footnotesize
+\backslash
+tt] {../listagens/kernel_configurator.h}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

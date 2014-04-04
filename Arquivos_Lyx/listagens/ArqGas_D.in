@@ -1,0 +1,8 @@
+5 ---   Pontos de Pressão PVT
+pressão    FVF      Peso Específico  Viscosidade
+[psia]  [RB/bbl]       [psi/ft]          [cp]
+ 1000    1.02827        0.43214	         0.01
+ 2000	 1.02224        0.43342	         0.01
+ 3000	 1.01621        0.43599	         0.01
+ 4000	 1.01024        0.43856	         0.01
+ 5000	 1.00506        0.44113          0.01

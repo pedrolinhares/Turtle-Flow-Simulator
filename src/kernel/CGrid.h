@@ -76,21 +76,32 @@ class CGrid
 		virtual int CellNumber() = 0; ///< Return the number of cells in domain;
 		virtual int CellId( int celln ) = 0; ///< Return the cell ID of a specific cell in domain;
 		virtual double Pressure( int celln ) = 0; ///< Return the atual pressure of a specific cell in domain;
+		virtual double RightPressure( int celln ) = 0; ///< Return the atual pressure of the right cell of a specific cell in domain;
+		virtual double LeftPressure( int celln ) = 0; ///< Return the atual pressure of the left cell of a specific cell in domain;
 		virtual double BackPressure( int celln ) = 0; ///< Return the back pressure of a specific cell in domain;
 		virtual double Volume( int celln ) = 0; ///< Return the volume of a specific cell in domain;
 		virtual double Deepth( int celln ) = 0; ///< Return the Deepth of a specific cell in domain.
+		virtual double RightDeepth( int celln ) = 0; ///< Return the Deepth of the right cell of a specific cell in domain.
+		virtual double LeftDeepth( int celln ) = 0; ///< Return the Deepth of the left cell of a specific cell in domain.
+		
+		//////////  Cell Connection Functions  //////////
+		virtual int ConnectionsNumber() = 0; ///< Returns the number of connections among cells in the grid.
 
 		//////////  Transmissibility Functions //////////
 		virtual void SetGTransmX() = 0; ///< Sets the Geometric transmissibility in all cells;
 		virtual double RightTrasmX( int celln) = 0; ///< Return the right transmissibility of a specific cell in ddomain;
 		virtual double RightGravityTransmX( int celln ) = 0; ///< Return the right gravitational transmissibility of a specif cell.
+		virtual double LeftTrasmX( int celln ) = 0; ///< Return the left transmissibility of a specific cell in ddomain;
+		virtual double LeftGravityTransmX( int celln ) = 0; ///< Return the left gravitational transmissibility of a specif cell.
 		virtual double Gamma( int celln ) = 0; ///< Return the gamma factor of a specific cell;
 		
 		//////////  Transmissibility Derivative Functions  //////////
 		virtual double GammaDer( int celln ) = 0;  ///< Returns the derivative of the gamma function in relation of the cell pressure;
 		virtual double RightTransmXDer( int celln ) = 0; ///< Returns the derivative of the right transm. in relation of the right cell pressure for celln;
+		virtual double LeftTransmXDer( int celln ) = 0; ///< Returns the derivative of the left transm. in relation of the right cell pressure for celln;
 		virtual double CenterTransmXDer( int celln ) = 0; ///< Returns the derivative of the right transm. in relation of the cell press for celln;
 		virtual double RightGravityTransmXDer( int celln ) = 0; ///< Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
+		virtual double LeftGravityTransmXDer( int celln ) = 0; ///< Returns the derivative of the left gravitational transmissibility in relation of the right cell pressure;
 		virtual double CenterGravityTransmXDer( int celln ) = 0; ///< Returns the derivative of the right gravitational transmissibility in relation of the center cell pressure;
 
 		//////////  Well Functions //////////
@@ -98,7 +109,7 @@ class CGrid
 		virtual int WellNumbers() = 0; ///< Return the number of wells in domain.
 
 		////////// Boundary Conditions //////////
-		virtual void SetBoundConditions(std::ifstream * fgrid) = 0; ///< Sets the boundary condition for the problem.
+		virtual void SetBoundConditions(std::ifstream * fgrid) = 0; ///< Sets the boundary condition for the problem;
 
 };
 

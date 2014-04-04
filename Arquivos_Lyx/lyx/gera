@@ -1,0 +1,13 @@
+latex  DocumentoMestre-Trabalho-ProgramacaoPratica.tex
+bibtex DocumentoMestre-Trabalho-ProgramacaoPratica.tex
+latex  DocumentoMestre-Trabalho-ProgramacaoPratica.tex
+latex  DocumentoMestre-Trabalho-ProgramacaoPratica.tex
+
+dvips -o "DocumentoMestre-Trabalho-ProgramacaoPratica.ps" DocumentoMestre-Trabalho-ProgramacaoPratica.dvi
+
+ps2pdf DocumentoMestre-Trabalho-ProgramacaoPratica.ps
+
+acroread DocumentoMestre-Trabalho-ProgramacaoPratica.pdf &
+
+mv  DocumentoMestre-Trabalho-ProgramacaoPratica.ps /tmp
+

@@ -34,6 +34,7 @@
 #include "CResModelType.h"
 #include "CSISinglePhase1d.h"
 #include "CISinglePhase1d.h"
+#include "CSISinglePhase2d.h"
 
 #include "CSolverMatrix.h"
 
@@ -52,8 +53,9 @@ private:
 
   ///////////  Numerical Parameters  /////////
   CSolverMatrix *solver; ///< Pointer to numerical solver;
-  double deltat; ///< Delta time of simulation
-  double finalt; ///< Final simulation time
+  double deltat; ///< Delta time of simulation;
+  double finalt; ///< Final simulation time;
+  int savet; ///< Time frequency of exporting solution from disk, multiple of deltat;
 
   ///////////  Output Parameters  /////////
   std::ofstream grid_data; ///< Out put file for the pressure in all cell points;

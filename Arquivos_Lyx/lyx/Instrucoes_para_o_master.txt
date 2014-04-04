@@ -1,0 +1,110 @@
+
+=================================================================================
+		LABORATÓRIO DE ENGENHARIA E EXPLORAÇÃO DE PETRÓLEO
+		http://www.lenep.uenf.br
+=================================================================================
+
+=================================================================================
+		INSTRUÇÕES PARA CONFECÇÃO MONOGRAFIA/DISSERTAÇÃO/TESE COM O LYX
+		MATERIAL ELABORADO PELO SETOR DE 
+		Modelagem Matemática e Computacional do LENEP/CCT/UENF
+		Prof. André Duarte Bueno, Leandro Puerari
+		Para download acesse: 	
+		http://www2.lenep.uenf.br/~bueno/Disciplina-Monografia/MaterialExtra
+=================================================================================
+
+Este conjunto de arquivos deve ser utilizado para confecção de sua 
+monografia/dissertação/tese usando o editor de texto LyX (http://www.lyx.org).
+
+O setor de Modelagem Matemática e Computacional dispõe de CDs com a distribuição 
+GNU/Linux utilizada no laboratório.
+Fazer a solicitação ao NRC (com Tiago Souza ou Régis).
+
+PRÉ-REQUISITOS
+==============
+Ter o GNU/Linux-Fedora, o pacote tetex e o LyX instalados.
+
+O Lyx também tem versão para Windows, mas, neste caso, deve-se instalar o pacote completo, 
+que inclui os pacotes MiKTeX e CygWin (veja ftp://ftp.lip6.fr/pub/lyx/bin/2.0.0.).
+
+Para maiores instruções, veja o diretório Instalar-LyX e Instalar-Pacote-ABNTex
+
+COMO USAR?
+==========
+1- Instalar o GNU/Linux e o LyX em seu computador.
+Todos os computadores do LENEP devem ter o GNU/Linux e o LyX instalados,
+se não estiverem funcionando entre em contato com o núcleo responsável pelo computador.
+
+2- Copiar os arquivos modelos, obtidos em
+http://www2.lenep.uenf.br/~bueno/Disciplina-Monografia/MaterialExtra
+para um diretório qualquer 
+(por exemplo: /u/seuLogin/Tese /u/seuLogin/Dissertacao /u/seuLogin/Monografia).
+
+3- Abrir o LyX
+
+4- Abrir o arquivo Monografia-Dissertacao-Tese-master.lyx
+localizado dentro de:
+Modelo-1-ProjetoTese-Formato-ABNT (se for o projeto)
+ou
+Modelo-3-MonografiaDissertacaoTese-Formato-ABNT (se for o documento completo).
+
+5- Pressionar ctrl-r para obter uma visualização dos arquivos 
+no formato pdf
+
+6- Após abrir o arquivo master, você pode editar um arquivo específico, 
+basta clicar no ícone com o nome do arquivo para acessar quadro de diálogo que permite
+que o arquivo seja aberto.
+Faça as correções/modificações que achar pertinente 
+(mudar texto e não layout, se preocupe apenas com o conteúdo).
+
+Alternativamente, pode-se abrir diretamente cada um dos arquivos.
+
+7- Para ver a versão final:
+- Basta abrir o arquivo master e pressionar Ctrl-r (Ver->ViewPDF);
+- ou gerar uma versão pdf usando File->Export->pdf
+- Outra opção é exportar o arquivo master no formato do tex e 
+então executar diretamente os comando do arquivo makefile disponibilizado. 
+Para isto, abra um terminal, vá para o diretório com os arquivos da 
+monografia/dissertação/tese e digite: make all
+(para maiores informações leia o conteúdo do arquivo Makefile)
+
+
+O DIRETÓRIO Ler-Manuais-Livros-MetodologiaCientifica:
+===============================================================
+Contém uma apostila resumo de metodologia científica, 
+preparada pelo Prof. André Bueno.
+
+O DIRETÓRIO Ler-Manuais-LyX-LaTeX-TeX:
+===============================================================
+Neste diretório você vai encontrar alguns manuais para aprender a
+usar o Latex e o Lyx.
+
+Também incluí material sobre o gnuplot (programa utilizado para fazer gráficos),
+e o octave (um programa semelhante ao mathlab).
+
+
+COMO OBTER AJUDA?
+=================
+Antes de sair pedindo ajuda, vale a pena um pouco de dedicação.
+
+A) Leia os seguintes arquivos:
+
+Sobre o LyX
+-----------
+Help->Introduction.
+Help->tutorial.
+Help->User´s Guide.
+
+Apostila do lyx localizada no diretório apostilas.
+
+Sobre o LaTex
+-------------
+Apostila do LaTeX localizada no diretório apostilas.
+Livros sobre o LaTeX disponibilizados na biblioteca.
+
+B) Peça ajuda de seus colegas.
+C) Peça ajuda de seu orientador.
+D) Peça ajuda do Prof. Bueno.
+
+
+

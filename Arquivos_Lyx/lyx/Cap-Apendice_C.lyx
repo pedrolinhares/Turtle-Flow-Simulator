@@ -1,0 +1,1761 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage {graphicx}
+\usepackage {longtable}
+\usepackage {indentfirst}
+\renewenvironment{center}{\par\centering}{\par}
+
+% Comentar linhas abaixo se não estiver usando pacote abntex
+% ou se o pacote ainda não foi instalado.
+% neste caso sugere-se usar citações no padrão apalike (lembra o da anbt).
+%\usepackage[alf ,abnt-etal-cite=2 , abnt-year-extra-label=yes , abnt-etal-list=0]{abntcite}
+%\usepackage {helvet}
+%\renewcommand {\familydefault}{\sfdefault}
+
+% Para uso de listagens de código
+\usepackage{color}
+\definecolor{azulclaro}{rgb}{0.6,1,1}%   rgb color model
+% Informa que vai usar o pacote listings, 
+% disponibilizado em /usr/share/texmf/doc/latex/styles/listings.dvi
+\usepackage{listings}
+\end_preamble
+\options normaltoc, sumarioincompleto
+\use_default_options false
+\master DocumentoMestre-Trabalho-ProgramacaoPratica.lyx
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding latin1
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref true
+\pdf_title "Título da Monografia - Dissertação - Tese"
+\pdf_author "Nome do Autor"
+\pdf_subject "Descrever assunto"
+\pdf_keywords "Copiar do resumo"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref page
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\paperwidth 210mm
+\paperheight 297mm
+\leftmargin 30mm
+\topmargin 25mm
+\rightmargin 20mm
+\bottommargin 20mm
+\secnumdepth 2
+\tocdepth 1
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Tutoriais
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Apêndice-Tutoriais"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lhead{Apêndice 
+\backslash
+thechapter}
+\backslash
+rhead{
+\backslash
+thepage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Estão descritos nessa seção os seguintes tutoriais de utilização do TFS:
+\end_layout
+
+\begin_layout Itemize
+Reservatório horizontal unidimensional homogêneo e fechado;
+\end_layout
+
+\begin_layout Itemize
+Reservatório anticlinal com duas litologias e alimentação de pressão.
+\end_layout
+
+\begin_layout Section
+Reservatório horizontal unidimensional homogêneo e fechado
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:TutD_Reservatório-horizontal-e-homogeneo"
+
+\end_inset
+
+ mostra um esboço do reservatório estudado.
+ É possível observar que as propriedades do óleo são constantes, assim como
+ as de rocha para todos os blocos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Reserv_Horiz_Homog.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Reservatório horizontal e homogêneo
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:TutD_Reservatório-horizontal-e-homogeneo"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para se modelar esse problema abra o TFS, clique em File->
+\begin_inset Quotes eld
+\end_inset
+
+New Simulation
+\begin_inset Quotes erd
+\end_inset
+
+ e preencha as propriedades iniciais do problema como mostrado na Figura
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_Propriedades-iniciais-1.1"
+
+\end_inset
+
+.
+ Observa-se que esse exemplo é formado por cinco blocos horizontais.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Config_Iniciais_Reserv_Horiz_Homog.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Propriedades iniciais do exemplo unidimensional homogêneo
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD_Propriedades-iniciais-1.1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Após clicar em Ok é necessário se preencher as propriedade iniciais do problema.
+ Na aba vertical geometria preencha o campo 
+\emph on
+Width
+\emph default
+ (Largura) com o valor de 1000.
+ Preencha o valor de 1000 para cada célula criada na aba 
+\emph on
+lenght
+\emph default
+ (Comprimento).
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_Configurações-comprimento"
+
+\end_inset
+
+ mostra como deverá ficar essas abas após o preenchimento.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename D:/Windows/Desktop/Trabalho Programacao Pratica Final Pedro e Wagner/imagens/ApD1 Config_Comprimento_Reserv_Horiz_Homog.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Configurações para o comprimento do reservatório
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD_Configurações-comprimento"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assim como feito para o comprimento do reservatório clique na aba horizontal
+ 
+\emph on
+Thickness
+\emph default
+ (Espessura) e preencha o valor de 75 para todas as células.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_Configurações-espessura"
+
+\end_inset
+
+ mostra a aba 
+\emph on
+Thickness
+\emph default
+ completamente preenchida.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Config_Espessura_Reserv_Horiz_Homog.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Configurações para a espessura das células do reservatório
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD_Configurações-espessura"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por último preencha na aba 
+\emph on
+Depth
+\emph default
+ (Profundidade) um valor de 0 para todas as células.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Como o TFS trata a profundidade relativa entre os blocos, qualquer valor
+ digitado no campo 
+\emph on
+Depth
+\emph default
+ traria os mesmos resultados, importando apenas a variação horizontal desses
+ valores.
+\end_layout
+
+\end_inset
+
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Aba-Depth-preenchida"
+
+\end_inset
+
+ mostra a aba 
+\emph on
+Depth
+\emph default
+ preenchida.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Config_Profundidade_Reserv_Horiz_Homog.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aba 
+\emph on
+Depth
+\emph default
+ preenchida
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Aba-Depth-preenchida"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A próxima etapa é o preenchimento das propriedades de rocha do reservatório.
+ Para isso clique na aba vertical 
+\emph on
+Rock
+\emph default
+ (Rocha) e entre um número de blocos igual a 1.
+ Preencha os valores do bloco 1 com os dados mostrado na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:TutD_Reservatório-horizontal-e-homogeneo"
+
+\end_inset
+
+.
+ Após preenchido os valores do bloco 1, associe todas as células à esse
+ bloco, para isso coloque o valor 1 em todas as células a direita.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_propriedades_Rocha"
+
+\end_inset
+
+ mostra a aba 
+\emph on
+Rock
+\emph default
+ preenchida.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Config_Rocha_Reserv_Horiz_Homog.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Inserção das propriedades de rocha no problema
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD_propriedades_Rocha"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Em sequência é necessário se preencher as propriedades de fluido do problema.
+ Clique na aba 
+\emph on
+Fluid
+\emph default
+ e escolha 2 pontos do teste PVT
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+O TFS faz interpolações na tabela PVT para conseguir as propriedades de
+ fluido em todos os pontos de pressão da simulação, dessa forma é sempre
+ necessário preencher a tabela PVT no 
+\emph on
+range
+\emph default
+ de pressão esperados para o problema.
+\end_layout
+
+\end_inset
+
+.
+ Coloque as propriedades de fluido mostradas na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:TutD_Reservatório-horizontal-e-homogeneo"
+
+\end_inset
+
+ entre os pontos 1000 e 10000 psia de pressão.
+ Observa-se que como o caso simulado é horizontal qualquer valor de densidade
+ escolhido produzirá os mesmos resultados.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_Dados-de-fluido"
+
+\end_inset
+
+ mostra os dados de fluido devidamente preenchidos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Config_Fluido_Reserv_Horiz_Homog.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Dados de fluido para o reservatório homogêneo
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD_Dados-de-fluido"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para se preencher as propriedades de poço clique na aba 
+\emph on
+wells
+\emph default
+ (poço) e entre com 1 poço para o problema.
+ Coloque o poço na célula 4 e coloque a vazão de -150 para esse poço.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Como notação a vazão negativa indica que o problema possui um poço produtor,
+ enquanto valores positivos indicam a presença de poços injetores.
+\end_layout
+
+\end_inset
+
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_Aba-Wells"
+
+\end_inset
+
+ mostra a aba 
+\emph on
+Wells
+\emph default
+ preenchida.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Config_Wells_Reserv_Horiz_Homog.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Aba 
+\emph on
+Wells
+\emph default
+ devidamente preenchida
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD_Aba-Wells"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+O próximo passo é a definição das propriedades numéricas do problema.
+ Clique na aba 
+\emph on
+Numerical
+\emph default
+ 
+\emph on
+Properties
+\emph default
+ (Propriedades Numéricas) e preencha os valores dessa propriedade conforme
+ mostrado na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_Propriedades-numéricas"
+
+\end_inset
+
+.
+ Nesse caso será simulado a produção desse reservatório durante dois anos,
+ sendo que o passo de tempo da simulação será de 1 dia.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Config_Numericas_Reserv_Horiz_Homog.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Propriedades numéricas do problema
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD_Propriedades-numéricas"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para se definir a solução inicial do problema, clique na aba Initialize
+ Solution e preencha os valores do problema como mostrado na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_Solução-inicial"
+
+\end_inset
+
+.
+ Observa-se que o valor de profundidade de referência deve ser o mesmo que
+ o preenchido na profundidade do reservatório (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Aba-Depth-preenchida"
+
+\end_inset
+
+) para um reservatório horizontal.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Config_Solucao_Inicial_Reserv_Horiz_Homog.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Solução inicial do problema horizontal
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD_Solução-inicial"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por último é necessário se inserir as condições de contorno do problema,
+ para isso clique na aba 
+\emph on
+Boundary
+\emph default
+ 
+\emph on
+Condition
+\emph default
+ (Condições de Contorno) e selecione reservatório fechado para ambos os
+ lados do reservatório.
+ Após isso clique no botão 
+\emph on
+Create
+\emph default
+ 
+\emph on
+Files
+\emph default
+ para se gerar os arquivos necessários para se iniciar a simulação.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_Preenchimento-do-contorno"
+
+\end_inset
+
+ mostra as condições de contorno preenchidas e a mensagem de alerta que
+ os arquivos de configuração foram devidamente gerados.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Config_Contorno_Reserv_Horiz_Homog.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Preenchimento das condições de contorno e geração dos arquivos de simulação
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD_Preenchimento-do-contorno"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para se iniciar a simulação numérica clique em 
+\emph on
+Actions-
+\emph default
+>
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Run
+\emph default
+ 
+\emph on
+Simulation
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+, após dar Ok em uma caixa de mensagem indicando o início da simulação,
+ irá aparecer uma janela mostrando o andamento da simulação, conforme mostrado
+ na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_Janela-mostrando-andamento-simulacao"
+
+\end_inset
+
+.
+ A primeira coluna de dados mostra o tempo atual da simulação, a segunda
+ coluna mostra o número de iterações de linearização para cada passo de
+ tempo e a terceira coluna mostra o erro da iteração linear.
+ É possível perceber que o erro se manteve sempre abaixo do erro inserido
+ na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD_Propriedades-numéricas"
+
+\end_inset
+
+, indicando convergência numérica do modelo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 And_Simula_Reser_Hor_Homo.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Janela mostrando o andamento da simulação
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD_Janela-mostrando-andamento-simulacao"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Após terminar a simulação numérica é possível se plotar gráficos com os
+ resultados da simulação.
+ Para se plotar a produção acumulada do poço clique em 
+\emph on
+Actions-
+\emph default
+>
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Plot
+\emph default
+ 
+\emph on
+Results
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ como mostrado na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD1_Plotar-produção-acumulada"
+
+\end_inset
+
+, escolha a opção 
+\emph on
+Well
+\emph default
+ 
+\emph on
+Production
+\emph default
+ (Produção do Poço) e coloque o número referente ao poço 1.
+ Após isso abrirá uma janela com o gráfico desejado (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD1_Gráfico-de-produção-acum-well"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Plotar_Producao_acumul.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Plotar produção acumulada de um poço
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD1_Plotar-produção-acumulada"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Plot_Acumu_Well_.png
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Gráfico de produção acumulada para um poço especificado
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD1_Gráfico-de-produção-acum-well"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Um gráfico interessante a ser plotado é o perfil de pressão do reservatório
+ em um determinado tempo.
+ Para isso escolha a opção 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Grid
+\emph default
+ 
+\emph on
+Pressure
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ (Pressão do Grid) e entre, por exemplo, um tempo de 360 dias após o início
+ da produção (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD1_Perfil-de-pressão-grid"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Perfil_pressao_grid.png
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Plotar o perfil de pressão do reservatório para um tempo especificado
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD1_Perfil-de-pressão-grid"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD1_Grid_Pressure_Perfil"
+
+\end_inset
+
+ mostra o perfil de pressão do reservatório após 1 ano de produção.
+ É possível ver a redução de pressão na célula 4, devido a presença do poço
+ produtor.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD1 Grid_Pressure_360.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Perfil de pressão do reservatório após 360 dias após a abertura do poço
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD1_Grid_Pressure_Perfil"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Reservatório anticlinal com duas litologias e alimentação de pressão
+\end_layout
+
+\begin_layout Standard
+O tutorial 2 mostra um reservatório em formato anticlinal com duas litologias
+ diferentes e alimentação de pressão em um dos lados do anticlinal, como
+ pode ser visto na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD2_Reservatório-tut2"
+
+\end_inset
+
+.
+ Nesse exemplo será mostrado apenas as diferenças entre as configurações
+ de um reservatório homogêneo e heterogêneo, sendo necessário a leitura
+ do Tutorial 1 para o completo entendimento.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD2_Reservatorio_Anticlinal.png
+	lyxscale 70
+	scale 55
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Reservatório anticlinal com duas litologias e alimetação de pressão
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD2_Reservatório-tut2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como pode ser visto na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD2_Reservatório-tut2"
+
+\end_inset
+
+ os blocos possuem a mesma dimensão, variando apenas a profundidade relativa
+ entre os mesmos.
+ Como não foi dada a profundidade do reservatório, apenas a variação de
+ profundidade entre um bloco e outro, será determinada que a profundidade
+ do bloco 1 será a referência.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Ap2_Guia-Depth"
+
+\end_inset
+
+ mostra a guia 
+\emph on
+Depth
+\emph default
+ corretamente preenchida.
+ Preencha o resto da geometria do problema como descrito no Tutorial 1.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD2 Config_Profundidade.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Guia 
+\emph on
+Depth
+\emph default
+ corrretamente preenchida para o reservatório mostrado na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD2_Reservatório-tut2"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Ap2_Guia-Depth"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esse problema é composto de duas rochas com propriedades físicas diferentes,
+ assim é necessário se inserir dois blocos diferentes no problema.
+ Conforme mostrado na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD2_Reservatório-tut2"
+
+\end_inset
+
+ as células 1-5 estão ligadas à rocha 1, e as células 6-10 estão ligadas
+ à rocha 2.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD2_Preenchimento-rock"
+
+\end_inset
+
+ mostra a guia rocha corretamente preenchida e conectada as respectivas
+ células.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD2 Config_Rock.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Preenchimento da guia 
+\emph on
+Rock
+\emph default
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD2_Preenchimento-rock"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Preencha a guia 
+\emph on
+Fluid
+\emph default
+ e a guia 
+\emph on
+Wells
+\emph default
+ conforme demonstrado no Tutorial 1.
+ Como esse problema é um pouco mais complexo que o discutido no Tutorial
+ 1, é interessante se aumentar a precisão do solver, e se diminuir o passo
+ de tempo.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD2_Propriedades-numéricas-anticlinal"
+
+\end_inset
+
+ mostra as propriedades numéricas para esse caso.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD2 Config_Numérico.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Propriedades numéricas para o reservatório anticlinal
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD2_Propriedades-numéricas-anticlinal"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Preencha a guia 
+\emph on
+Initialize
+\emph default
+ 
+\emph on
+Solution
+\emph default
+ com a pressão de 6000 psia na profundidade de 0 ft (profundidade de referência
+ do reservatório).
+ Na guia 
+\emph on
+Boundary
+\emph default
+ 
+\emph on
+Condition
+\emph default
+ coloque a condição de contorno esquerda como sendo de pressão especificada
+ (6000 psia), e a condição direita como reservatório selado, conforme mostrado
+ na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD2_Condições-de-contorno-anticlinal"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD2 Config_Bound_Cond.png
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Condições de contorno para o reservatório anticlinal
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD2_Condições-de-contorno-anticlinal"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Crie os arquivos de simulação e em sequência execute a simulação conforme
+ discutido no Tutorial 1.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ApD2_Perfil-de-pressão-anticlinal"
+
+\end_inset
+
+ mostra o perfil de pressão do reservatório após 2 anos de produção.
+ É possível ver a queda de pressão na célula 9 devido a presença do poço
+ produtor, e a manutenção da pressão inicial na parte esquerda do reservatório
+ devido a condição de contorno.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/ApD2 Plot_Grid_Press.png
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Perfil de pressão para o reservatório anticlinal após 2 anos de produção
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ApD2_Perfil-de-pressão-anticlinal"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esses tutorial ilustrou a simulação de um reservatório em formato de anticlinal
+ com propriedade heterogêneas.
+\end_layout
+
+\end_body
+\end_document

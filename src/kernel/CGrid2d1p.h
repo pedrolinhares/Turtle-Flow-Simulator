@@ -1,4 +1,4 @@
-//** @file CGrid1d.h */
+//** @file CGrid2d.h */
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
@@ -84,22 +84,37 @@ class CGrid2d1p : public CGrid1d1p
 		virtual int CellNumber() { return cellnumber; }; ///< Return the number of cells in domain;
 		CCell2d * Cell( int cellid ); ///< Return a pointer to the cell which cell ID is cellid;
 		double Pressure( int celln ); ///< Return the atual pressure of a specific cell in domain;
+		double RightPressure( int celln ); ///< Return the atual pressure of the right cell of a specific cell in domain;
+		double LeftPressure( int celln ); ///< Return the atual pressure of the left cell of a specific cell in domain;
 		double BackPressure( int celln ) { return cells[celln].BackPressure(); }; ///< Return the back pressure of a specific cell in domain;
 		double Volume( int celln ); ///< Return the volume of a specific cell in domain;
 		double Deepth( int celln ); ///< Return the Deepth of a specific cell in domain.
+		double RightDeepth( int celln ); ///< Return the Deepth of the right cell of a specific cell in domain.
+		double LeftDeepth( int celln ); ///< Return the Deepth of the left cell of a specific cell in domain.
+		
+		//////////  Cell Connection Functions  //////////
+		CCell2d * LeftCell( int cellid ) { return Cell(cellid)->LeftCell(); };   ///< Return a pointer to the left cell of the cellid;
+		CCell2d * RightCell( int cellid ) { return Cell(cellid)->RightCell(); };   ///< Return a pointer to the right cell of the cellid;
+		CCell2d * FrontCell( int cellid ) { return Cell(cellid)->FrontCell(); };   ///< Return a pointer to the front cell of the cellid;
+		CCell2d * BackCell( int cellid ) { return Cell(cellid)->BackCell(); };   ///< Return a pointer to the right cell of the cellid;
+		int ConnectionsNumber(); ///< Returns the number of connections among cells in the grid.
 
 		//////////  Transmissibility Functions //////////
 		virtual void SetGTransmX(); ///< Sets the Geometric transmissibility in all cells, in x direction;
 		virtual void SetGTransmY(); ///< Sets the Geometric transmissibility in all cells, in y direction;
 		double RightTrasmX( int celln ); ///< Return the right transmissibility of a specific cell in ddomain;
 		double RightGravityTransmX( int celln ); ///< Return the right gravitational transmissibility of a specif cell.
+		double LeftTrasmX( int celln ); ///< Return the left transmissibility of a specific cell in ddomain;
+		double LeftGravityTransmX( int celln ); ///< Return the left gravitational transmissibility of a specif cell.
 		double Gamma( int celln ); ///< Return the gamma factor of a specific cell;
 		
 		//////////  Transmissibility Derivative Functions  //////////
 		double GammaDer( int celln );  ///< Returns the derivative of the gamma function in relation of the cell pressure;
 		double RightTransmXDer( int celln ); ///< Returns the derivative of the right transm. in relation of the right cell pressure for celln;
+		double LeftTransmXDer( int celln ); ///< Returns the derivative of the left transm. in relation of the right cell pressure for celln;
 		double CenterTransmXDer( int celln ) { return cells[celln].CenterTransmXDer(); }; ///< Returns the derivative of the right transm. in relation of the cell press for celln;
 		double RightGravityTransmXDer( int celln ); ///< Returns the derivative of the right gravitational transmissibility in relation of the right cell pressure;
+		double LeftGravityTransmXDer( int celln ); ///< Returns the derivative of the left gravitational transmissibility in relation of the right cell pressure;
 		double CenterGravityTransmXDer( int celln )  { return cells[celln].CenterGravityTransmXDer(); }; ///< Returns the derivative of the right gravitational transmissibility in relation of the center cell pressure;
 
 		//////////  Well Functions //////////

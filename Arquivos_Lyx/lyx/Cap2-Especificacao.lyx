@@ -1,0 +1,1416 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+
+\usepackage {graphicx}
+\usepackage {longtable}
+\usepackage {indentfirst}
+\renewenvironment{center}{\par\centering}{\par}
+
+% Comentar linhas abaixo se não estiver usando pacote abntex
+% ou se o pacote ainda não foi instalado.
+% neste caso sugere-se usar citações no padrão apalike (lembra o da anbt).
+%\usepackage[alf ,abnt-etal-cite=2 , abnt-year-extra-label=yes , abnt-etal-list=0]{abntcite}
+%\usepackage {helvet}
+%\renewcommand {\familydefault}{\sfdefault}
+
+% Para uso de listagens de código
+\usepackage{color}
+\definecolor{azulclaro}{rgb}{0.6,1,1}%   rgb color model
+% Informa que vai usar o pacote listings, 
+% disponibilizado em /usr/share/texmf/doc/latex/styles/listings.dvi
+\usepackage{listings}
+\end_preamble
+\use_default_options false
+\master DocumentoMestre-Trabalho-ProgramacaoPratica.lyx
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding latin1
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement ph
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\paperwidth 210mm
+\paperheight 297mm
+\leftmargin 30mm
+\topmargin 25mm
+\rightmargin 20mm
+\bottommargin 20mm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lhead{
+\backslash
+thechapter
+\backslash
+space - Especificação} 
+\backslash
+rhead{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Especificação
+\end_layout
+
+\begin_layout Standard
+Apresenta-se neste capítulo a concepção e a especificação do sistema a ser
+ modelado e desenvolvido.
+\end_layout
+
+\begin_layout Section
+Especificação do programa
+\end_layout
+
+\begin_layout Standard
+O software de simulação de reservatórios TFS deverá ser capaz de simular
+ um reservatório monofásico e unidimensional de petróleo.
+ Será implementado o algorítmo de Gauss-Seidel tridiagonal para solução
+ do sistema de equações lineares.
+\end_layout
+
+\begin_layout Standard
+De forma a facilitar o entendimento do código e a utilização do 
+\emph on
+software
+\emph default
+, os códigos foram implementados e comentados em Inglês.
+\end_layout
+
+\begin_layout Standard
+O 
+\emph on
+software
+\emph default
+ deverá possuir uma interface gráfica amigável com o usuário para facilitar
+ o preenchimento dos dados do reservatório.
+ A interface gráfica será construída de forma desacoplada do kernel numérico
+ do programa, dessa forma o kernel numérico poderá ser executado sem a necessida
+de da interface.
+ Esse desacoplamento entre kernel e interface possui as seguintes vantagens:
+\end_layout
+
+\begin_layout Enumerate
+Independência entre o código da interface e o código numérico;
+\end_layout
+
+\begin_layout Enumerate
+Possibilidade de criar rotinas automatizadas de execução do código numérico;
+\end_layout
+
+\begin_layout Enumerate
+Maior velocidade de execução e economia de memória do sistema.
+\end_layout
+
+\begin_layout Standard
+Durante a criação do código numérico foram criadas classes abstratas visando
+ a expansão do software, aproveitando o conceito de polimorfismo.
+\end_layout
+
+\begin_layout Section
+Casos de uso do programa
+\end_layout
+
+\begin_layout Standard
+Será criado um software de simulação de reservatórios, capaz de executar
+ as seguintes tarefas básicas:
+\end_layout
+
+\begin_layout Enumerate
+Inserir Dados do Problema (características geométricas, físicas e numéricas
+ do problema);
+\end_layout
+
+\begin_layout Enumerate
+Gerar Arquivos de Configuração para o Kernel Numérico;
+\end_layout
+
+\begin_layout Enumerate
+Executar Simulação (Executar o Kernel Numérico);
+\end_layout
+
+\begin_layout Enumerate
+Plotar Gráficos com Soluções do Problema.
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Casos de uso GERAL"
+
+\end_inset
+
+ mostra o diagrama geral de casos de uso.
+ Cada uma das tarefas listadas serão detalhadas nos diagramas posteriores.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diagrama_Uso_Geral.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de casos de uso geral do programa
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Casos de uso GERAL"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+O software possuirá uma interface gráfica desacoplada, o que significa que
+ o usuário poderá realizar simulações através do preenchimento de arquivos
+ de dados (.in).
+ Ao final do processamento serão criados arquivos de saída (.out) com os
+ resultados da simulação para cada bloco do domínio e contendo os resultados
+ da simulação para cada poço do reservatório.
+ Esses arquivos serão identificados pela siga OUT no começo do arquivo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Exemplo de caso de uso
+\begin_inset CommandInset label
+LatexCommand label
+name "cap:Exemplo-de-um-caso-de-uso (tabela)"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="block" valignment="top" width="10cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nome do caso de uso:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cálculo da integral de uma função.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Resumo/descrição:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Determinação da integral de uma função em um dado intervalo.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Etapas: 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.
+ Criar objeto função.
+\end_layout
+
+\begin_layout Plain Layout
+2.
+ Criar objeto de integração.
+\end_layout
+
+\begin_layout Plain Layout
+3.
+ Definir intervalo de integração e número de pontos.
+\end_layout
+
+\begin_layout Plain Layout
+4.
+ Calcular área da função.
+\end_layout
+
+\begin_layout Plain Layout
+5.
+ Gerar gráficos.
+\end_layout
+
+\begin_layout Plain Layout
+6.
+ Analisar resultados.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cenários alternativos:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Um cenário alternativo envolve uma entrada errada do usuário (por exemplo,
+ a função é logarítmica, e o intervalo vai de -1 a 10).
+ O programa apresentará um bug quando for determinar o logarítmo de -1.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Inserir Dados do Problema
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Em simulação numérica de reservatórios uma das etapas mais importante é
+ a delimitação clara das propriedades físicas e geométricas do problema.
+ Entende-se por propriedades geométricas o formato do reservatório, e por
+ propriedades físicas todos os valores de atributos com significados físicos.
+ O problema possui o seguinte grupo de dados:
+\end_layout
+
+\begin_layout Enumerate
+Propriedades geométricas do reservatório:
+\begin_inset Newline newline
+\end_inset
+
+* Comprimento (
+\emph on
+Length
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Largura (
+\emph on
+Width
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Número de blocos (
+\emph on
+Block's
+\emph default
+ 
+\emph on
+Number
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Espessura de cada bloco (
+\emph on
+Thickness
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Profundidade do topo de cada bloco (
+\emph on
+Deepth
+\emph default
+).
+\end_layout
+
+\begin_layout Enumerate
+Propriedades físicas da rocha:
+\begin_inset Newline newline
+\end_inset
+
+* Permeabilidade (
+\emph on
+Permeability
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Porosidade (
+\emph on
+Porosity
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Pressão de Referência da Porosidade (
+\emph on
+Porosity
+\emph default
+ 
+\emph on
+Reference
+\emph default
+ 
+\emph on
+Pressure
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Compressibilidade (
+\emph on
+Compressibility
+\emph default
+).
+\end_layout
+
+\begin_layout Enumerate
+Propriedades físicas dos fluidos:
+\begin_inset Newline newline
+\end_inset
+
+* Pressão PVT (PVT 
+\emph on
+Pressure
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Densidade (
+\emph on
+Density
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Viscosidade (
+\emph on
+Viscosity
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Fator volume-formação (FVF).
+\end_layout
+
+\begin_layout Enumerate
+Propriedades de poços:
+\begin_inset Newline newline
+\end_inset
+
+* Localização (
+\emph on
+Cell
+\emph default
+ 
+\emph on
+Id
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Vazão (
+\emph on
+Well
+\emph default
+ 
+\emph on
+Rate
+\emph default
+).
+\end_layout
+
+\begin_layout Enumerate
+Propriedades Numéricas:
+\begin_inset Newline newline
+\end_inset
+
+* Tipo de Solver (
+\emph on
+Solver
+\emph default
+ 
+\emph on
+Type
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Máximo de Iterações do Solver (
+\emph on
+Max
+\emph default
+ 
+\emph on
+Solver
+\emph default
+ 
+\emph on
+Iterations
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Precisão do Solver (
+\emph on
+Solver
+\emph default
+ 
+\emph on
+Precision
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Variação de Tempo (
+\emph on
+Delta
+\emph default
+ 
+\emph on
+Time
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Tempo Final de Simulação (
+\emph on
+Final
+\emph default
+ 
+\emph on
+Time
+\emph default
+ 
+\emph on
+Simulation
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Máximo de Iterações de Linearização (
+\emph on
+Max
+\emph default
+ 
+\emph on
+of
+\emph default
+ 
+\emph on
+Linearization
+\emph default
+);
+\begin_inset Newline newline
+\end_inset
+
+* Precisão da Linearização (
+\emph on
+Linearization
+\emph default
+ 
+\emph on
+Precision
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama-de-casos LER PROBLEMA"
+
+\end_inset
+
+ mostra o diagrama de casos de uso utilizados na entrada das propriedades
+ do problema.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diagrama_Uso_Inserir_Propriedades.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama do caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+inserir dados do problema
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama-de-casos LER PROBLEMA"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Caso de Uso Inserir Dados do Problema.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Caso-de-Uso-Inserir_Dados"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="block" valignment="top" width="10cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nome do caso de uso:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Inserir Dados do Problema.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Resumo/descrição:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Inserir os dados da simulação na interface gráfica.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Etapas: 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.
+ Inserir propriedades do reservatório;
+\end_layout
+
+\begin_layout Plain Layout
+2.
+ Inserir propriedades da rocha;
+\end_layout
+
+\begin_layout Plain Layout
+3.
+ Inserir propriedades do fluido;
+\end_layout
+
+\begin_layout Plain Layout
+4.
+ Inserir propriedades dos poços;
+\end_layout
+
+\begin_layout Plain Layout
+5.
+ Inserir propriedades numéricas.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cenários alternativos:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Um cenário alternativo envolve uma entrada errada do usuário (por exemplo,
+ a função é logarítmica, e o intervalo vai de -1 a 10).
+ O programa apresentará um bug quando for determinar o logarítmo de -1.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Gerar Arquivos de Configuração
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Após a etapa de entrada de dados na interface gráfica o usuário deverá exportar
+ essas configurações para o 
+\emph on
+kernel
+\emph default
+ numérico.
+ Para isso a interface criará arquivos (.in) especificados (Anexo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Apêndice-Arquivos"
+
+\end_inset
+
+) que serão carregados pelo 
+\emph on
+kernel
+\emph default
+.
+ A Tabela 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Caso-de-Uso-Gerar_Arquivos"
+
+\end_inset
+
+ mostra os detalhes desse caso de uso.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+gerar arquivos de configuração
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Caso-de-Uso-Gerar_Arquivos"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="block" valignment="top" width="10cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nome do caso de uso:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gerar Arquivos de Configuração.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Resumo/descrição:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Carregar as propriedades da interface gráfica e salvá-las em arquivos .dat.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Etapas: 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.
+ Carregar propriedades da interface;
+\end_layout
+
+\begin_layout Plain Layout
+2.
+ Salvar propriedades em arquivo.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cenário alternativo:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Usuário não preencheu todas as propriedades, nesse caso o software imprime
+ na tela que não é possível gerar os arquivos de configuração.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Executar Simulação
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Essa etapa do código será destinada a solução do problema numérico.
+ O 
+\emph on
+kernel
+\emph default
+ numérico foi implementado como sendo um software externo à interface, assim,
+ a interface deverá ser capaz de executar o 
+\emph on
+kernel
+\emph default
+.
+ A Tabela 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Caso-de-uso Executar simulação"
+
+\end_inset
+
+ mostra os detalhes para esse caso de uso.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+executar simulação
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Caso-de-uso Executar simulação"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="block" valignment="top" width="10cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nome do caso de uso:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Executar Simulação.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Resumo/descrição:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Inicializa o 
+\emph on
+kernel 
+\emph default
+numérico e executa a simulação numérica do problema.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Etapas: 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.
+ Inicializar o 
+\emph on
+kernel
+\emph default
+.
+\end_layout
+
+\begin_layout Plain Layout
+2.
+ Simular o problema.
+\end_layout
+
+\begin_layout Plain Layout
+3.
+ Criar arquivos .dat com as soluções numéricas do problema.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cenário alternativo:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Alguma propriedade foi preenchida incorretamente, nesse caso o 
+\emph on
+kernel 
+\emph default
+numérico informa ao usuário o erro ocorrido e congela a tela de execução.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Plotar Gráficos
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Existem vários resultados que podem ser obtidos em uma simulação numérica
+ de reservatórios, assim, é necessário um código para o usuário escolher
+ quais resultados ele deseja visualizar.
+ É possível se plotar as seguintes soluções:
+\end_layout
+
+\begin_layout Enumerate
+Gerar histórico de produção por poço;
+\end_layout
+
+\begin_layout Enumerate
+Gerar curvas de pressão por tempo para cada poço;
+\end_layout
+
+\begin_layout Enumerate
+Gerar curvas de pressão por tempo para uma célula específica;
+\end_layout
+
+\begin_layout Enumerate
+Gerar um perfil da distribuição de pressão no reservatório para um tempo
+ qualquer.
+\end_layout
+
+\begin_layout Standard
+Para se gerar os gráficos será utilizado o software externo gnuplot.
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Casos de Uso exportar soluções"
+
+\end_inset
+
+ mostra o diagrama de casos de uso para o caso plotar as soluções do problema.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diagrama_Uso_Plotar_Solução.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de casos de uso para o uso 
+\begin_inset Quotes eld
+\end_inset
+
+plotar gráficos
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Casos de Uso exportar soluções"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

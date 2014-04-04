@@ -1,0 +1,223 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage {graphicx}
+\usepackage {longtable}
+\usepackage {indentfirst}
+\renewenvironment{center}{\par\centering}{\par}
+
+% Comentar linhas abaixo se não estiver usando pacote abntex
+% ou se o pacote ainda não foi instalado.
+% neste caso sugere-se usar citações no padrão apalike (lembra o da anbt).
+%\usepackage[alf ,abnt-etal-cite=2 , abnt-year-extra-label=yes , abnt-etal-list=0]{abntcite}
+%\usepackage {helvet}
+%\renewcommand {\familydefault}{\sfdefault}
+
+% Para uso de listagens de código
+\usepackage{color}
+\definecolor{azulclaro}{rgb}{0.6,1,1}%   rgb color model
+% Informa que vai usar o pacote listings, 
+% disponibilizado em /usr/share/texmf/doc/latex/styles/listings.dvi
+\usepackage{listings}
+\end_preamble
+\use_default_options false
+\master DocumentoMestre-Trabalho-ProgramacaoPratica.lyx
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding latin1
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\paperwidth 210mm
+\paperheight 297mm
+\leftmargin 30mm
+\topmargin 25mm
+\rightmargin 20mm
+\bottommargin 20mm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Manual do desenvolvedor 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lhead{Documentação do uso do TFS}
+\backslash
+rhead{
+\backslash
+thepage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+O TFS é um simulador de reservatório capaz de simular o comportamento de
+ um reservatório de uma dimensão e uma fase.
+ O software apresenta uma interface gráfica através da qual o usuário pode
+ configurar os parâmetros da simulação.
+ Terminada a simulação, a interface apresenta os resultados através de um
+ conjunto de gráficos.
+\end_layout
+
+\begin_layout Section
+Dependências do software
+\end_layout
+
+\begin_layout Standard
+Para compilar e rodar o Simulador TFS é necessário um sistema Windows ou
+ GNU/Linux com os seguintes softwares instalados:
+\end_layout
+
+\begin_layout Enumerate
+Qt 5.0 ou maior com bibliotecas de desenvolvimento instaladas (principalmente
+ a ferramenta qmake);
+\end_layout
+
+\begin_layout Enumerate
+C++11 instalado no sistema;
+\end_layout
+
+\begin_layout Enumerate
+Gnuplot 4.4 ou maior (http://www.gnuplot.info); 
+\end_layout
+
+\begin_layout Section
+Compilando o software
+\end_layout
+
+\begin_layout Standard
+Existem duas maneiras de se compilar software no sistema GNU/Linux:
+\end_layout
+
+\begin_layout Enumerate
+Executando o script build_all.sh a partir da pasta raiz do projeto.
+\end_layout
+
+\begin_layout Enumerate
+Executando os seguintes comandos abaixo na ordem especificada.
+ 
+\end_layout
+
+\begin_layout Itemize
+$ qmake
+\end_layout
+
+\begin_layout Itemize
+$ make -f Makefile 
+\end_layout
+
+\begin_layout Itemize
+$ cd ./src/kernel 
+\end_layout
+
+\begin_layout Itemize
+$ make -f Makefile
+\end_layout
+
+\begin_layout Standard
+No sistema Windows, devem ser executados os seguintes procedimentos:
+\end_layout
+
+\begin_layout Enumerate
+abrir o arquivo tfs.pro no Qt Creator;
+\end_layout
+
+\begin_layout Enumerate
+executar o comando build para compilar a interface; 
+\end_layout
+
+\begin_layout Enumerate
+abrir o arquivo Makefile.win em uma IDE como o DevC++; 
+\end_layout
+
+\begin_layout Enumerate
+executar o build para compilar o kernel.
+\end_layout
+
+\begin_layout Standard
+Os arquivos executáveis serão gerados na pasta bin a partir da raiz do projeto.
+ 
+\end_layout
+
+\begin_layout Section
+Executando
+\end_layout
+
+\begin_layout Standard
+O software deve ser executado a partir da pasta bin/ no diretório raiz do
+ projeto.
+ Execute os comandos de terminal exemplificados abaixo para o sistema GNU/Linux:
+\end_layout
+
+\begin_layout Itemize
+$ cd ./bin/ 
+\end_layout
+
+\begin_layout Itemize
+$ ./tfs
+\end_layout
+
+\end_body
+\end_document

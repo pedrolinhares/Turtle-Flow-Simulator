@@ -1,0 +1,8 @@
+3   --- [-] Número de Blocos;
+3   --- [-] Número de Células;
+80  --- [ft] Largura das Células;
+1   --- [-] Tipo de Fluido (1- Água, 2- Óleo, 3- Gás)
+
+380 --- [ft] Comprimento da Célula 1
+200 --- [ft] Comprimento da Célula 2
+250 --- [ft] Comprimento da Célula 3

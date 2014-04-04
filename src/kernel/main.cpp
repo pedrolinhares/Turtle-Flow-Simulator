@@ -36,7 +36,7 @@ void onExit() {
 /* ///
 	TO Do List:
 	
-	1 - URGENTE: Implementar uma rotina para o usuário escolher o tempo que será salva a simulação;
+	OK! - URGENTE: Implementar uma rotina para o usuário escolher o tempo que será salva a simulação;
 	
 	2 - Retirar o fluid type do poço e o solver type do model.
 		
@@ -44,7 +44,9 @@ void onExit() {
 	    will be implemented. The left case is the access of the left cell and the right transmissibility calculation.
 	    Again, it will help in the future cases.
 	
-	4 - Implementar a Boundary Condition de Vazão prescrita no caso 1D;    
+	4 - Implementar a Boundary Condition de Vazão prescrita no caso 1D;
+	
+	5 - Implementar todas as Boundary Conditions no caso 2D;    
 	
 	(REVIEW) - Fix all de implicit derivative functions, it can be working but it is not easy to understand the derivatives relationship.
 		

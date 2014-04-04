@@ -102,7 +102,9 @@ int CSISinglePhase1d::MatrixElementsNumber(CGrid *grid) {
  /// This function run over all cells in problem and returns the number of elements
  ///that will be created in matrix A. It is used for pre-allocate memory for UMFPack matrix
  
- return (3*grid->CellNumber() - 2); /// Each cell is connected to other two, but the firs and last not, so (3*cells - first - last)
+ return (2*grid->ConnectionsNumber() + grid->CellNumber());  ///<The matrix number is the the cell number + the connections of each cell, so 2*connections.
+ 
+ ///return (3*grid->CellNumber() - 2); /// Each cell is connected to other two, but the firs and last not, so (3*cells - first - last)
  
 }
 
@@ -117,9 +119,9 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
 	
 	/// Filling the first line of matrix A
-	Wi = grid->RightTrasmX(-1); ///< There is no west matrix element;
+	Wi = grid->LeftTrasmX(0); ///< There is no west matrix element;
 	Ei = grid->RightTrasmX(0); ///< Calculating the east matrix element;
-	Ci = - grid->Gamma(0)/deltat - Ei - Wi;	///< Calculating the central matrix element;
+	Ci = - grid->Gamma(0)/deltat - Wi - Ei;	///< Calculating the central matrix element;
 	
 		Aval[elemcount] = Ci;
 	    elemcount++;
@@ -129,7 +131,7 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 	/// Filling the middle A Elements
     for (int i = 1 ; i < (cpoints - 1) ; i++) {
 		
-		Wi = grid->RightTrasmX(i-1); ///< Calculating the west matrix element;
+		Wi = grid->LeftTrasmX(i); ///< Calculating the west matrix element;
 		Ei = grid->RightTrasmX(i);	///< Calculating the east matrix element;	
     	Ci = - grid->Gamma(i)/deltat - Ei - Wi;	///< Calculating the central matrix element;
 
@@ -142,9 +144,9 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
     }
     
     /// Filling the last line of matrix A
-    Wi = grid->RightTrasmX(cpoints - 2); ///< Calculating the west matrix element;
+    Wi = grid->LeftTrasmX(cpoints - 1); ///< Calculating the west matrix element;
     Ei = grid->RightTrasmX(cpoints - 1);	///< There is no east matrix element;
-	Ci = - grid->Gamma(cpoints - 1)/deltat - Ei - Wi;	///< Calculating the central matrix element;
+	Ci = - grid->Gamma(cpoints - 1)/deltat - Wi - Ei;	///< Calculating the central matrix element;
 	
 		Aval[elemcount] = Wi;
         elemcount++;
@@ -164,13 +166,13 @@ void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 
 	for (int i = 0 ; i < (cpoints) ; i++) {
 
-		Wig = grid->RightGravityTransmX(i-1);  ///< Calculating the west transmissibility;
+		Wig = grid->LeftGravityTransmX(i);  ///< Calculating the west transmissibility;
 
     	Eig = grid->RightGravityTransmX(i);   ///< Calculating the east transmissibility;
 
     	Cig = - Eig - Wig;  ///< Calculating the central transmissibility;
 
-		Qg =Wig*grid->Deepth(i-1) + Cig*grid->Deepth(i) + Eig*grid->Deepth(i+1); ///< Rate term;
+		Qg =Wig*grid->LeftDeepth(i) + Cig*grid->Deepth(i) + Eig*grid->RightDeepth(i); ///< Rate term;
 
     	gama_dt = grid->Gamma(i)/deltat;
 
@@ -180,12 +182,12 @@ void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 
     	/// Left Boundary Condition ///
     	if (i == 0) {
-    		b[i]  = b[i] - grid->RightTrasmX(-1)*grid->Pressure(-1);
+    		b[i]  = b[i] - grid->LeftTrasmX(0)*grid->LeftPressure(0);
     	}
 
     	/// Right Boundary Condition ///
     	if (i == (cpoints - 1)) {
-    		b[i]  = b[i] - grid->RightTrasmX(cpoints)*grid->Pressure(cpoints);
+    		b[i]  = b[i] - grid->RightTrasmX(cpoints - 1)*grid->RightPressure(cpoints - 1);
     	}
 
     }

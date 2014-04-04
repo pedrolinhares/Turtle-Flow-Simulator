@@ -1,0 +1,1487 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+
+\usepackage {graphicx}
+\usepackage {longtable}
+\usepackage {indentfirst}
+\renewenvironment{center}{\par\centering}{\par}
+
+% Comentar linhas abaixo se não estiver usando pacote abntex
+% ou se o pacote ainda não foi instalado.
+% neste caso sugere-se usar citações no padrão apalike (lembra o da anbt).
+%\usepackage[alf ,abnt-etal-cite=2 , abnt-year-extra-label=yes , abnt-etal-list=0]{abntcite}
+%\usepackage {helvet}
+%\renewcommand {\familydefault}{\sfdefault}
+
+% Para uso de listagens de código
+\usepackage{color}
+\definecolor{azulclaro}{rgb}{0.6,1,1}%   rgb color model
+% Informa que vai usar o pacote listings, 
+% disponibilizado em /usr/share/texmf/doc/latex/styles/listings.dvi
+\usepackage{listings}
+\end_preamble
+\use_default_options false
+\master DocumentoMestre-Trabalho-ProgramacaoPratica.lyx
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding latin1
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\paperwidth 210mm
+\paperheight 297mm
+\leftmargin 30mm
+\topmargin 25mm
+\rightmargin 20mm
+\bottommargin 20mm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lhead{
+\backslash
+thechapter
+\backslash
+space - Elaboração} 
+\backslash
+rhead{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Elaboração
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Elaboração
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Elaboração"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Formulação teórica
+\end_layout
+
+\begin_layout Standard
+Nesse capítulo será apresentada a formulação teórica, uma análise de pacotes
+ e de domínio que será utilizada no TFS.
+\end_layout
+
+\begin_layout Subsection
+Equação da difusividade
+\end_layout
+
+\begin_layout Standard
+Considerando o meio poroso como contínuo, a equação que governa o escoamento
+ de fluidos no reservatório é dado por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{multline}
+\frac{\partial}{\partial t}\left\{ \phi S_{j}\rho_{j}\omega_{ij}+\left(1-\phi\right)\rho_{s}\omega_{is}\right\} +\overrightarrow{\nabla}\cdot\left(\rho_{j}\omega_{ij}\overrightarrow{v_{j}}-\phi S_{j}\overleftrightarrow{D_{ij}}\nabla\left(\rho_{j}\omega_{ij}\right)\right)=\\
+\phi S_{j}r_{ij}+\left(1-\phi\right)r_{is}+R_{iWell}\label{eq:Equação da Difusividade Composicional-1}
+\end{multline}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent 
+\end_layout
+
+\end_inset
+
+essa equação é a forma geral da conservação de espécies químicas em um reservató
+rio.
+ O primeiro termo do lado esquerdo representa a variação da espécie química
+ no volume poroso, o segundo termo é o fluxo convectivo dessa espécie no
+ meio poroso.
+ Os dois primeiros termos do lado direito da equação são a geração da espécie
+ química por reação entre a parte fluida e a rocha, o terceiro termo é a
+ injeção ou produção dessa espécie por um poço de petróleo.
+ A velocidade no meio poroso é calculada segundo a Lei de Darcy, dada por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\overrightarrow{v_{j}}=-\frac{\overleftrightarrow{K}k_{rj}}{\mu_{j}}\left(\nabla P_{j}+\rho_{j}\overrightarrow{g}\right)\label{eq:Lei de Darcy-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Combinando as Equações 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Equação da Difusividade Composicional-1"
+
+\end_inset
+
+ e 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Lei de Darcy-1"
+
+\end_inset
+
+ encontra-se a equação da difusividade hidráulica composicional:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+ & \frac{\partial}{\partial t}\left\{ \phi S_{j}\rho_{j}\omega_{ij}+\left(1-\phi\right)\rho_{s}\omega_{is}\right\} +\nonumber \\
+ & \overrightarrow{\nabla}\cdot\left(-\rho_{j}\omega_{ij}\frac{\overleftrightarrow{K}k_{rj}}{\mu_{j}}\left(\nabla P_{j}+\rho_{j}\overrightarrow{g}\right)-\phi S_{j}\overleftrightarrow{D_{ij}}\nabla\left(\rho_{j}\omega_{ij}\right)\right)=\nonumber \\
+ & \phi S_{j}r_{ij}+\left(1-\phi\right)r_{is}+R_{iWell}\label{eq:Difusividade Composicional Baseada na Velocidade-1}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A Equação 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Difusividade Composicional Baseada na Velocidade-1"
+
+\end_inset
+
+ será resolvida considerando apenas uma fase no reservatório (modelo monofásico).
+ Esse modelo simplificado será discretizado e resolvido numericamente de
+ forma a prever o comportamento de um reservatório de petróleo.
+\end_layout
+
+\begin_layout Subsection
+Discretização da equação da difusividade
+\end_layout
+
+\begin_layout Standard
+Considerando o caso monofásico e linear, a forma discretizada da Equação
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Difusividade Composicional Baseada na Velocidade-1"
+
+\end_inset
+
+ é dada por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+C{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i}^{\begin{array}{c}
+\left(\nu+1\right)\\
+\left(n+1\right)
+\end{array}}+E{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i+1}^{\begin{array}{c}
+\left(\nu+1\right)\\
+\left(n+1\right)
+\end{array}}+W{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i-1}^{\begin{array}{c}
+\left(\nu+1\right)\\
+\left(n+1\right)
+\end{array}}=Q{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}\label{eq:Equação Linear Discretizada-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent 
+\end_layout
+
+\end_inset
+
+onde o índice 
+\begin_inset Formula $n$
+\end_inset
+
+ indica o passo temporal e o índice 
+\begin_inset Formula $\nu$
+\end_inset
+
+ o passo de ajuste não linear.
+ O índice 
+\begin_inset Formula $i$
+\end_inset
+
+ indica a discretização espacial do reservatório que é o número de células
+ do problema.
+ Os coeficientes da Equação 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Equação Linear Discretizada-1"
+
+\end_inset
+
+ são dados por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}=T_{x\left(i+\frac{1}{2}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+W{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}=T_{x\left(i-\frac{1}{2}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+C{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}=-T_{x\left(i-\frac{1}{2}\right)}-T_{x\left(i+\frac{1}{2}\right)}-\frac{\Gamma_{i}}{\Delta t^{n}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Q{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}=\gamma_{\left(i+\frac{1}{2}\right)}T_{x\left(i+\frac{1}{2}\right)}\left(Z_{i+1}-Z_{i}\right)-\gamma_{\left(i-\frac{1}{2}\right)}T_{x\left(i-\frac{1}{2}\right)}\left(Z_{i}-Z_{i-1}\right)-q_{i}-\frac{\Gamma_{i}}{\Delta t^{n}}P_{i}^{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\gamma_{\left(i\right)}$
+\end_inset
+
+ é o peso específico do fluido dentro da célula 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ O termo 
+\begin_inset Formula $T_{x}$
+\end_inset
+
+ é conhecido como a transmissibilidade na direção 
+\begin_inset Formula $x$
+\end_inset
+
+ e expressa a dificuldade que um fluido tem de escoar entre dois blocos.
+ Esse termo é dado por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+T_{x}=G_{x}\left(\frac{1}{\mu B}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent 
+\end_layout
+
+\end_inset
+
+onde 
+\begin_inset Formula $G_{x}$
+\end_inset
+
+ é o termo geométrico da transmissibilidade, dado por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+G_{x}=\frac{\beta_{c}k_{x}A_{x}}{\Delta x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+O termo 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ é expresso como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Gamma=\frac{V_{b}}{\alpha_{c}}\left[\frac{\phi^{0}C_{r}}{B{}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}}+\frac{\phi^{n}C_{l}}{B^{0}}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Quando a Equação 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Equação Linear Discretizada-1"
+
+\end_inset
+
+ é aplicada em todas as células do domínio, obtém-se um sistema tridiagonal
+ de equações lineares, dado por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{cccccc}
+C_{0} & E_{0} & 0 & 0 & \cdots & 0\\
+W_{1} & C_{1} & E_{1} & 0 & \cdots & 0\\
+0 & W_{2} & C_{2} & E_{2} & \cdots & 0\\
+0 & 0 & W_{3} & C_{3} & \cdots & 0\\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots\\
+0 & 0 & 0 & \cdots & W_{n} & C_{n}
+\end{array}\right]\left[\begin{array}{c}
+P_{0}\\
+P_{1}\\
+P_{2}\\
+P_{3}\\
+\vdots\\
+P_{n}
+\end{array}\right]=\left[\begin{array}{c}
+Q_{0}\\
+Q_{1}\\
+Q_{2}\\
+Q_{3}\\
+\vdots\\
+Q_{n}
+\end{array}\right]\label{eq:Forma Matricial Discreta da Difusividade-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A Equação 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Forma Matricial Discreta da Difusividade-1"
+
+\end_inset
+
+ será resolvida para cada passo de iteração linear, e para cada passo de
+ tempo, de forma a obter a solução do problema proposto.
+\end_layout
+
+\begin_layout Subsection
+Formulação Implícita
+\end_layout
+
+\begin_layout Standard
+A formulação implícita do problema será realizada utilizando-se o método
+ de Newton-Raphson, descrito por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+R_{i}^{\nu}+\sum_{j}^{NoBlocks}\frac{\partial R_{i}^{\nu}}{\partial P_{j}}\left(P_{j}^{\begin{array}{c}
+\left(\nu+1\right)\\
+\left(n+1\right)
+\end{array}}-P_{j}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}\right)=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent 
+\end_layout
+
+\end_inset
+
+ou em notação matricial:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+J^{\nu}\delta x^{\nu+1}=-R^{\nu}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent 
+\end_layout
+
+\end_inset
+
+onde 
+\begin_inset Formula $J$
+\end_inset
+
+ é a matriz Jacobiano do problema, 
+\begin_inset Formula $R$
+\end_inset
+
+ é o vetor de resíduos e 
+\begin_inset Formula $\delta x$
+\end_inset
+
+ é a variação da solução do problema.
+ Os resíduos são calculados para cada bloco, dados por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+R_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}=W{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i-1}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}+C{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}+E{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i+1}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}-Q{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Calculando as derivadas parciais:
+\end_layout
+
+\begin_layout Subsubsection
+Bloco a Esquerda:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i-1}}=\frac{\partial}{\partial P_{i-1}}\left(W{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i-1}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}+C{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}+E{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i+1}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}-Q{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i-1}}=\frac{\partial}{\partial P_{i-1}}\left(W{}_{i}P{}_{i-1}\right)+\frac{\partial}{\partial P_{i-1}}\left(C{}_{i}P{}_{i}\right)-\frac{\partial Q{}_{i}}{\partial P_{i-1}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i-1}}=P{}_{i-1}\frac{\partial W{}_{i}}{\partial P_{i-1}}+W{}_{i}+P{}_{i}\frac{\partial C{}_{i}}{\partial P_{i-1}}-\frac{\partial Q{}_{i}}{\partial P_{i-1}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Expandindo os termos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i-1}}=P{}_{i-1}\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}+T_{x\left(i-\frac{1}{2}\right)}+P{}_{i}\frac{\partial\left(-T_{x\left(i-\frac{1}{2}\right)}-\frac{\Gamma_{i}}{\Delta t^{n}}\right)}{\partial P_{i-1}}-\frac{\partial}{\partial P_{i-1}}\left(-\gamma_{\left(i-\frac{1}{2}\right)}T_{x\left(i-\frac{1}{2}\right)}\left(Z_{i}-Z_{i-1}\right)-\frac{\Gamma_{i}}{\Delta t^{n}}P_{i}^{n}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i-1}}=P{}_{i-1}\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}+T_{x\left(i-\frac{1}{2}\right)}-P{}_{i}\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}+\frac{\partial\gamma_{\left(i-\frac{1}{2}\right)}T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}\left(Z_{i}-Z_{i-1}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+No software o termo 
+\begin_inset Formula $\gamma_{\left(i-\frac{1}{2}\right)}T_{x\left(i-\frac{1}{2}\right)}$
+\end_inset
+
+ é conhecido como transmissibilidade gravitacional, dada por 
+\begin_inset Formula $TG_{x\left(i-\frac{1}{2}\right)}$
+\end_inset
+
+, assim:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i-1}}=P{}_{i-1}\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}+T_{x\left(i-\frac{1}{2}\right)}-P{}_{i}\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}+\frac{\partial TG_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}\left(Z_{i}-Z_{i-1}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i-1}}=\left[P{}_{i-1}-P{}_{i}\right]\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}+T_{x\left(i-\frac{1}{2}\right)}+\frac{\partial TG_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}\left(Z_{i}-Z_{i-1}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cada bloco guarda a informação da transmissibilidade a direita e cada bloco
+ consegue calcular a derivada com relação a pressão do seu próprio bloco
+ e com relação a pressão do seu vizinho da direita, dessa forma 
+\begin_inset Formula $\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}$
+\end_inset
+
+ é a derivada da transmissibilidade do bloco da esquerda com relação a ele
+ mesmo.
+ Analisando cada termo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}=\frac{\partial G_{x}\left(\frac{1}{\mu B}\right)}{\partial P_{i-1}}=G_{x}\frac{\partial\left(\frac{1}{\mu B}\right)}{\partial P_{i-1}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+O termo 
+\begin_inset Formula $\frac{1}{\mu B}$
+\end_inset
+
+ é dependente de 
+\begin_inset Formula $P_{med}$
+\end_inset
+
+, assim:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\left(\frac{1}{\mu B}\right)}{\partial P_{i-1}}=\frac{\partial\left(\frac{1}{\mu B}\right)}{\partial P_{med}}\frac{\partial P_{med}}{\partial P_{i-1}}=\frac{1}{2}\frac{\partial\left(\frac{1}{\mu B}\right)}{\partial P_{med}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}=-\frac{G_{x}}{2}\frac{1}{\left(\mu B\right)^{2}}\left[B\frac{\partial\mu}{\partial P}+\mu\frac{\partial B}{\partial P}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent 
+\end_layout
+
+\end_inset
+
+com todos os pontos avaliados na pressão média entre os blocos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial TG_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}=\frac{1}{2}\left[\gamma_{\left(i-\frac{1}{2}\right)}\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}+T_{x\left(i-\frac{1}{2}\right)}\frac{\partial\gamma_{\left(i-\frac{1}{2}\right)}}{\partial P_{i-1}}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent 
+\end_layout
+
+\end_inset
+
+com todos os pontos avaliados na pressão média entre os blocos.
+\end_layout
+
+\begin_layout Subsubsection
+Bloco a Direita:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i+1}}=\frac{\partial}{\partial P_{i+1}}\left(W{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i-1}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}+C{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}+E{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i+1}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}-Q{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i+1}}=P{}_{i}\frac{\partial C{}_{i}}{\partial P_{i+1}}+P{}_{i+1}\frac{\partial E{}_{i}}{\partial P_{i+1}}+E{}_{i}-\frac{\partial Q{}_{i}}{\partial P_{i+1}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i+1}}=\left[P{}_{i+1}-P{}_{i}\right]\frac{\partial T_{x\left(i+\frac{1}{2}\right)}}{\partial P_{i+1}}+T_{x\left(i+\frac{1}{2}\right)}-\frac{\partial TG_{x\left(i+\frac{1}{2}\right)}}{\partial P_{i+1}}\left(Z_{i+1}-Z_{i}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+O termo 
+\begin_inset Formula $T_{x\left(i+\frac{1}{2}\right)}$
+\end_inset
+
+ é a derivada da transmissibilidade do bloco atual com relação a pressão
+ do vizinho da direita.
+\end_layout
+
+\begin_layout Subsubsection
+Bloco Central:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i}}=\frac{\partial}{\partial P_{i}}\left(W{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i-1}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}+C{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}+E{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}P{}_{i+1}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}-Q{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i}}=\frac{\partial\left(W{}_{i}P{}_{i-1}\right)}{\partial P_{i}}+\frac{\partial\left(C{}_{i}P{}_{i}\right)}{\partial P_{i}}+\frac{\partial\left(E{}_{i}P{}_{i+1}\right)}{\partial P_{i}}-\frac{\partial Q{}_{i}}{\partial P_{i}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i}}=P{}_{i-1}\frac{\partial W{}_{i}}{\partial P_{i}}+P{}_{i}\frac{\partial C{}_{i}}{\partial P_{i}}+C{}_{i}+P{}_{i+1}\frac{\partial E{}_{i}}{\partial P_{i}}-\frac{\partial Q{}_{i}}{\partial P_{i}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Substituindo os termos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial R_{i}}{\partial P_{i}}=P{}_{i-1}\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i}}+P{}_{i}\frac{\partial\left(-T_{x\left(i-\frac{1}{2}\right)}-T_{x\left(i+\frac{1}{2}\right)}-\frac{\Gamma_{i}}{\Delta t^{n}}\right)}{\partial P_{i}}+C{}_{i}+P{}_{i+1}\frac{\partial T_{x\left(i+\frac{1}{2}\right)}}{\partial P_{i}}-\frac{\partial\left(TG_{x\left(i+\frac{1}{2}\right)}\left(Z_{i+1}-Z_{i}\right)-TG_{x\left(i-\frac{1}{2}\right)}\left(Z_{i}-Z_{i-1}\right)-q_{i}-\frac{\Gamma_{i}}{\Delta t^{n}}P_{i}^{n}\right)}{\partial P_{i}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{multline}
+\frac{\partial R_{i}}{\partial P_{i}}=\left[P{}_{i-1}-P_{i}\right]\frac{\partial T_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i}}-T_{x\left(i-\frac{1}{2}\right)}-T_{x\left(i+\frac{1}{2}\right)}-\frac{\Gamma_{i}}{\Delta t^{n}}+\\
+\left[P{}_{i+1}-P_{i}\right]\frac{\partial T_{x\left(i+\frac{1}{2}\right)}}{\partial P_{i}}-\frac{\left[P_{i}^{n+1}-P_{i}^{n}\right]}{\Delta t^{n}}|\frac{\partial\Gamma_{i}}{\partial P_{i}}+\frac{\partial TG_{x\left(i-\frac{1}{2}\right)}}{\partial P_{i}}\left(Z_{i}-Z_{i-1}\right)-\frac{\partial TG_{x\left(i+\frac{1}{2}\right)}}{\partial P_{i}}\left(Z_{i+1}-Z_{i}\right)
+\end{multline}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Analisando a derivada de 
+\begin_inset Formula $\Gamma_{i}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\Gamma_{i}}{\partial P_{i}}=\frac{\partial}{\partial P_{i}}\left(\frac{V_{bi}}{\alpha_{c}}\left[\frac{\phi_{i}^{0}C_{ri_{i}}}{B{}_{i}^{n+1}}+\frac{\phi_{i}^{n}}{B_{i}^{n}}\left(\frac{B_{i}^{n}}{B_{i}^{n+1}}-1\right)\frac{1}{P_{i}^{n+1}-P_{i}^{n}}\right]\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\Gamma_{i}}{\partial P_{i}}=\frac{V_{bi}}{\alpha_{c}}\left[\frac{\partial}{\partial P_{i}}\frac{\phi_{i}^{0}C_{ri_{i}}}{B{}_{i}^{n+1}}+\frac{\partial}{\partial P_{i}}\frac{\phi_{i}^{n}}{B_{i}^{n}}\left(\frac{B_{i}^{n}}{B_{i}^{n+1}}-1\right)\frac{1}{P_{i}^{n+1}-P_{i}^{n}}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\Gamma_{i}}{\partial P_{i}}=\frac{V_{bi}}{\alpha_{c}}\left[\phi_{i}^{0}C_{ri_{i}}\frac{\partial}{\partial P_{i}}\frac{1}{B{}_{i}^{n+1}}+\frac{\phi_{i}^{n}}{B_{i}^{n}}\frac{\partial}{\partial P_{i}}\left[\left(\frac{B_{i}^{n}}{B_{i}^{n+1}}-1\right)\frac{1}{P_{i}^{n+1}-P_{i}^{n}}\right]\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\Gamma_{i}}{\partial P_{i}}=\frac{V_{bi}}{\alpha_{c}}\left[-\phi_{i}^{0}C_{ri_{i}}\frac{1}{\left(B{}_{i}^{n+1}\right)^{2}}\frac{\partial B{}_{i}^{n+1}}{\partial P_{i}}+\frac{\phi_{i}^{n}}{B_{i}^{n}}\left[\left(\frac{B_{i}^{n}}{B_{i}^{n+1}}-1\right)\frac{\partial}{\partial P_{i}}\left(\frac{1}{P_{i}^{n+1}-P_{i}^{n}}\right)+\frac{1}{P_{i}^{n+1}-P_{i}^{n}}\frac{\partial}{\partial P_{i}}\left(\frac{B_{i}^{n}}{B_{i}^{n+1}}-1\right)\right]\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\Gamma_{i}}{\partial P_{i}}=\frac{V_{bi}}{\alpha_{c}}\left[-\phi_{i}^{0}C_{ri_{i}}\frac{1}{\left(B{}_{i}^{n+1}\right)^{2}}\frac{\partial B{}_{i}^{n+1}}{\partial P_{i}}+\frac{\phi_{i}^{n}}{B_{i}^{n}}\left[\left(-\frac{B_{i}^{n}}{B_{i}^{n+1}}+1\right)\left(\frac{1}{\left(P_{i}^{n+1}-P_{i}^{n}\right)^{2}}\right)-\frac{B_{i}^{n}}{\left(P_{i}^{n+1}-P_{i}^{n}\right)\left(B_{i}^{n+1}\right)^{2}}\frac{\partial B_{i}^{n+1}}{\partial P_{i}}\right]\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\Gamma_{i}}{\partial P_{i}}=\frac{V_{bi}}{\alpha_{c}}\left[\frac{\phi_{i}^{n}}{B_{i}^{n}}\left(\frac{\left(B_{i}^{n+1}\right)^{2}-B_{i}^{n}B_{i}^{n+1}-B_{i}^{n}\left(P_{i}^{n+1}-P_{i}^{n}\right)\frac{\partial B_{i}^{n+1}}{\partial P_{i}}}{\left(B_{i}^{n+1}\right)^{2}\left(P_{i}^{n+1}-P_{i}^{n}\right)^{2}}\right)-\frac{\phi_{i}^{0}C_{ri_{i}}}{\left(B{}_{i}^{n+1}\right)^{2}}\frac{\partial B{}_{i}^{n+1}}{\partial P_{i}}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se a variação de pressão for nula (primeira iteração do programa), a derivada
+ de gamma pode ser aproximada por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\Gamma_{i}}{\partial P_{i}}=-\frac{V_{bi}}{\alpha_{c}}\left[\frac{\phi_{i}^{0}C_{ri_{i}}}{\left(B{}_{i}^{n+1}\right)^{2}}\frac{\partial B{}_{i}^{n+1}}{\partial P_{i}}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+E{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}=T_{x\left(i+\frac{1}{2}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+W{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}=T_{x\left(i-\frac{1}{2}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+C{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}=-T_{x\left(i-\frac{1}{2}\right)}-T_{x\left(i+\frac{1}{2}\right)}-\frac{\Gamma_{i}}{\Delta t^{n}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+Q{}_{i}^{\begin{array}{c}
+\left(\nu\right)\\
+\left(n+1\right)
+\end{array}}=\gamma_{\left(i+\frac{1}{2}\right)}T_{x\left(i+\frac{1}{2}\right)}\left(Z_{i+1}-Z_{i}\right)-\gamma_{\left(i-\frac{1}{2}\right)}T_{x\left(i-\frac{1}{2}\right)}\left(Z_{i}-Z_{i-1}\right)-q_{i}-\frac{\Gamma_{i}}{\Delta t^{n}}P_{i}^{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma_{i}=\frac{V_{bi}}{\alpha_{c}}\left[\frac{\phi_{i}^{0}C_{ri_{i}}}{B{}_{i}^{n+1}}+\frac{\phi_{i}^{n}}{B_{i}^{n}}\left(\frac{B_{i}^{n}}{B_{i}^{n+1}}-1\right)\frac{1}{P_{i}^{n+1}-P_{i}^{n}}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Identificação de pacotes
+\end_layout
+
+\begin_layout Standard
+Com base nas especificações do software, e na formulação físico-matemática
+ do problema, identificou-se que o TFS deverá ser composto por 3 pacotes
+ distintos, o pacote da interface gráfica, o do kernel numérico e o pacote
+ que faz a comunicação entre os dois.
+ Abaixo segue a descrição de cada pacote.
+\end_layout
+
+\begin_layout Subsubsection
+Interface gráfica
+\end_layout
+
+\begin_layout Standard
+Composto pelas classes responsáveis pelos elementos gráficos do simulador.
+ Trata toda comunicação com o usuário, armazenando toda informação gerada
+ pelo usuário.
+ É através dele que o usuário fornece os dados necessários para que o módulo
+ do kernel execute a simulação e também é através dele que o usuário poderá
+ obter os resultados da simulação na forma de gráficos.
+\end_layout
+
+\begin_layout Subsubsection
+Kernel
+\end_layout
+
+\begin_layout Standard
+Composto pelas classes que fazem a simulação.
+ Cria a estrutura fornecida na interface gráfica pelo usuário e gera os
+ resultados da simulação.
+\end_layout
+
+\begin_layout Subsubsection
+Configurador do kernel
+\end_layout
+
+\begin_layout Standard
+Obtém as informações fornecidas pelo usuário da interface gráfica e gera
+ um conjunto de arquivos no formato entendido pelo kernel numérico.
+ De forma que a interface nada sabe sobre o funcionamento do kernel e o
+ kernel também nada sabe sobre a interface.
+ 
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap3_Diagrama-de-pacotes-TFS"
+
+\end_inset
+
+ apresenta o diagrama de pacotes do Simulador.
+ Na figura podemos ver que o controlador tem uma relação de dependência
+ com os demais pacotes para gerar a comunicação
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap3_Diagrama_Pacotes_TFS.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de pacotes do TFS
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap3_Diagrama-de-pacotes-TFS"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Análise de domínio
+\end_layout
+
+\begin_layout Standard
+O 
+\emph on
+Turtle
+\emph default
+ 
+\emph on
+Flow
+\emph default
+ 
+\emph on
+Simulator
+\emph default
+ abrange a área de engenharia de reservatório na qual modelos computacionais
+ são usados para predizer o fluxo de fluídos, tipicamente petróleo, água
+ e gás natural através de meios porosos.
+ 
+\end_layout
+
+\begin_layout Standard
+A importância da simulação de reservatórios se dá na tentativa de estudar
+ e aprender mais sobre um campo de petróleo antes mesmo de perfurá-lo e/ou
+ para prever seu comportamento ao longo de anos.
+ São usados por companhias de petróleo e gás no desenvolvimento de novos
+ campos e em campos desenvolvidos, onde as previsões de produção são necessárias
+ para ajudar a tomar decisões de investimento.
+ Como construir e manter um modelo experimental robusto e confiável de um
+ campo é muitas vezes demorado e caro, os modelos são normalmente construídos
+ apenas onde decisões de investimento vultosos estão em jogo.
+ Melhorias no software de simulação reduziram o tempo necessário para desenvolve
+r um modelo numérico com precisão aceitável capaz de substituir modelos
+ experimentais de reservatórios.
+\end_layout
+
+\begin_layout Subsubsection
+Softwares relacionados:
+\end_layout
+
+\begin_layout Subsubsection
+Merlin
+\end_layout
+
+\begin_layout Standard
+Criado pela empresa 
+\emph on
+Gemini
+\emph default
+ 
+\emph on
+Solutions
+\emph default
+ 
+\emph on
+Inc
+\emph default
+ (www.Geminisi.com, acessado em 03/02/2014) o Merlin é um software de simulação
+ de reservatório de óleo e gás para aplicações convencionais, pseudo composicion
+al e de porosidade dupla.
+ Permite construir, executar e visualizar os resultados de uma simulação
+ de reservatório com relativa rapidez.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap3_Ilustração-do-simulador-MERLIN"
+
+\end_inset
+
+ apresenta uma imagem representativa do simulador.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap3_figura_MERLIN.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ilustração do simulador Merlin
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap3_Ilustração-do-simulador-MERLIN"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+JewelSuite
+\end_layout
+
+\begin_layout Standard
+O JewelSuite foi desenvolvido pela empresa Baker Hughes (www.Jewelsuite.com,
+ acessado em 03/02/2014) e obtém resultados precisos, possuindo um modelo
+ patenteado de criação de grids.
+ Simulação de modelos dinâmicos pode ser controlada diretamente a partir
+ do software e ainda pode ser conectado a vários outros sistemas externos
+ como, por exemplo, os simuladores IMEX, GEM, SENSOR e ECLIPSE.
+ Na Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap3_Captura-da-tela-JewelSuite"
+
+\end_inset
+
+ é possível ver uma captura de tela do programa em execução.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Cap3_Tela_JeweSuit.png
+	lyxscale 60
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Captura da tela do simulador JewelSuite em execução
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap3_Captura-da-tela-JewelSuite"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

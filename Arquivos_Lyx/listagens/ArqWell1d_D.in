@@ -1,0 +1,11 @@
+2   --- [-] Número de Poços;
+
+2   --- [-] Identificador da Célula que contém o poço;
+1   --- [-] Identificador do Poço;
+1   --- [-] Tipo de Fluido (1- Água; 2- Óleo; 3- Gás)
+-20 --- [STB/D] Vazão do Poço. (Positivo = Injeção // Negativo = produção)
+
+2   --- [-] Identificador da Célula que contém o poço;
+2   --- [-] Identificador do Poço;
+1   --- [-] Tipo de Fluido (1- Água; 2- Óleo; 3- Gás)
+10  --- [STB/D] Vazão do Poço. (Positivo = Injeção // Negativo = produção)

@@ -68,73 +68,71 @@ CReservoir::CReservoir()
   
   cpoints=grid->CellNumber(); ///< Getting the number of cells in domain.
   
-  //////////  Constructing Model //////////
-//  
-//  int model_type, model_maxni;
-//  double model_errorni;
-//  
-//  fmodel >> model_type;
-//  fmodel.ignore(256, '\n');
-//  
-//  fmodel >> model_maxni;
-//  fmodel.ignore(256, '\n');
-//  
-//  fmodel >> model_errorni;
-//  fmodel.ignore(256, '\n');
-//  
-//  //model_errorni = 0.001;
-//  
-//  cout << model_maxni << "\n";
-//  cout << model_errorni << "\n";
-//  
-//  switch (model_type) {
-//  	case 1:  {
-//  		model = new CSISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the Reservoir Semi-Implicit Model.		
-//  		break;
-//  	}
-//  	case 2: {
-//  		model = new CISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the Reservoir Implicit Model.		
-//  		break;
-//  	}
-//  }
-//  
-//  //////////  Constructing Solver //////////
-//  int solverid, solver_maxit;
-//  double solver_error;
-//  
-//  fmodel >> solverid;
-//  fmodel.ignore(256, '\n');
-//  
-//  switch (solverid) {
-//  	case 1: {
-//  		switch (dimensions) {
-//  			case 1: {
-//  				solver = new CSolverMatrix(); ///< Constructing Solver.
-//  				break;
-//  			}
-//  		}
-//  		break;
-//  	}
-//  }
-//  
-//  ////////// Constructing time parameters /////////
-//  fmodel >> deltat;
-//  fmodel.ignore(256, '\n');
-//  
-//  fmodel >> finalt;
-//  fmodel.ignore(256, '\n');
-//  
-//  ///////// Initiating Initial Solution //////////
-//  double ref_press, ref_deepth;
-//  
-//  fmodel >> ref_press;
-//  fmodel.ignore(256, '\n');
-//  
-//  fmodel >> ref_deepth;
-//  fmodel.ignore(256, '\n');
-//  
-//  grid->InitiateSolution(ref_press, ref_deepth);
-//  
+  ////////  Constructing Model //////////
+  
+  int model_type, model_maxni;
+  double model_errorni;
+  
+  fmodel >> model_type;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> model_maxni;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> model_errorni;
+  fmodel.ignore(256, '\n');
+  
+  switch (dimensions) {
+  	case 1: {
+		switch (model_type) {
+		  	case 1:  {
+		  		model = new CSISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the 1d Reservoir Semi-Implicit Model.		
+		  		break;
+		  	}
+		  	case 2: {
+		  		model = new CISinglePhase1d(grid, model_maxni, model_errorni); ///< Constructing the 1d Reservoir Implicit Model.		
+		  		break;
+		  	}
+		}
+  		break;
+  	  }
+  	case 2: {
+  		switch (model_type) {
+  			case 1: {
+  				model = new CSISinglePhase2d(grid, model_maxni, model_errorni); ///< Constructing the 2d Reservoir Semi-Implicit Model.		
+  				break;
+  			}
+  		}
+  		break;
+  	}
+  }
+  
+  
+  //////////  Constructing Solver //////////
+  solver = new CSolverMatrix(); ///< Constructing Solver.
+  
+  ////////// Constructing time parameters /////////
+  fmodel >> deltat;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> finalt;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> savet;
+  fmodel.ignore(256, '\n');
+  
+  ///////// Initiating Initial Solution //////////
+  double ref_press, ref_deepth;
+  
+  fmodel >> ref_press;
+  fmodel.ignore(256, '\n');
+  
+  fmodel >> ref_deepth;
+  fmodel.ignore(256, '\n');
+  
+  grid->InitiateSolution(ref_press, ref_deepth);
+  fmodel.close();
+  
 }
 
 CReservoir::~CReservoir() {
@@ -162,22 +160,30 @@ void CReservoir::Run() {
      for (int i = 0; i < grid->WellNumbers(); i++) {
          grid->SaveWellSolution(&well_data[i], (i + 1), tme);
      }
-
-		/////////  Time Iteration  //////////
+	
+	int itcounter = 0;
+	
+	/////////  Time Iteration  //////////
      while ( (finalt - tme + deltat) > deltat) {
 
      	tme = tme + deltat;
+     	itcounter++;
 
     	cout.precision(4);
     	cout << "\n Time - "<< tme << std::fixed;
 	   
    		model->Iterationt(grid, solver, deltat); ///< Iterating the time in all cells;
 
-    	/// Saving the solution in disk;
-    	grid->SaveGridSolution(&grid_data, tme);
-    	for (int i = 0; i < grid->WellNumbers(); i++) {
-      		grid->SaveWellSolution(&well_data[i], (i + 1), tme);
+    	if (itcounter % savet == 0) {
+    		
+			/// Saving the solution in disk;
+    	    grid->SaveGridSolution(&grid_data, tme);
+    	    for (int i = 0; i < grid->WellNumbers(); i++) {
+      		    grid->SaveWellSolution(&well_data[i], (i + 1), tme);
+    	    }	
+    		
     	}
+		
     }
     
 } 

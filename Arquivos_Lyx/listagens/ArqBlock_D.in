@@ -1,0 +1,11 @@
+1      --- [-] Identificador do Bloco
+6e-6   --- [-] Compressibilidade da Rocha no bloco 1
+0.1    --- [Darcy]Permeabilidade no bloco 1
+0.2    --- [-]Porosidade no bloco 1
+2000   --- [psi] Pressão de Referência da Porosidade
+
+2      --- [-] Identificador do Bloco
+5e-6   --- [-] Compressibilidade da Rocha no bloco 1
+0.08   --- [Darcy]Permeabilidade no bloco 1
+0.3    --- [-]Porosidade no bloco 1
+2100   --- [psi] Pressão de Referência da Porosidade

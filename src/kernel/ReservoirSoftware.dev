@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=43
+UnitCount=45
 
 [VersionInfo]
 Major=1
@@ -474,6 +474,26 @@ BuildCmd=
 FileName=CWell2d.h
 CompileCpp=1
 Folder=Grid Classes/Two-Dimensional Grid
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit44]
+FileName=CSISinglePhase2d.cpp
+CompileCpp=1
+Folder=Model Classes/Two-Dimensional Model
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit45]
+FileName=CSISinglePhase2d.h
+CompileCpp=1
+Folder=Model Classes/Two-Dimensional Model
 Compile=1
 Link=1
 Priority=1000

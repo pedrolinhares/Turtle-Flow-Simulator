@@ -1,0 +1,1301 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage {graphicx}
+\usepackage {longtable}
+
+\usepackage {indentfirst}
+\renewenvironment{center}{\par\centering}{\par}
+\end_preamble
+\use_default_options false
+\master DocumentoMestre-Trabalho-ProgramacaoPratica.lyx
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding latin1
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement p
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\paperwidth 210mm
+\paperheight 297mm
+\leftmargin 30mm
+\topmargin 25mm
+\rightmargin 20mm
+\bottommargin 20mm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lhead{
+\backslash
+thechapter
+\backslash
+space - AOO} 
+\backslash
+rhead{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+AOO
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+AOO
+\end_layout
+
+\end_inset
+
+ - Análise Orientada a Objeto
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Análise orientada a objeto
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:AOO"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Nesse capítulo serão mostrados alguns diagramas da linguagem UML (
+\emph on
+Unified
+\emph default
+ 
+\emph on
+Modeling
+\emph default
+ 
+\emph on
+Language
+\emph default
+) que foram desenvolvidos durante a idealização e concepção do software.
+\end_layout
+
+\begin_layout Standard
+A linguagem UML é uma linguagem de modelagem não proprietária, que permite
+ que desenvolvedores visualizem a estrutura interna de um software através
+ de diagramas padronizados.
+\end_layout
+
+\begin_layout Section
+Diagramas de classes
+\end_layout
+
+\begin_layout Standard
+O diagrama de classes é uma representação das relações que as classes de
+ um software orientado a objetos possuem entre si.
+ É um dos diagramas mais úteis da linguagem UML pois mostra de forma clara
+ as conexões entre as classes de um software.
+\end_layout
+
+\begin_layout Subsection
+Classes gerais
+\end_layout
+
+\begin_layout Standard
+A classe CReservoir é a principal classe do programa, responsável por inicializa
+r todos os objetos e comandar a execução do código numérico.
+ Essa classe é considerada como o centro do programa.
+ Foram implementadas três classes abstratas CGrid, CResModelType e CSolverMatrix
+ que são as classes que modelam a estrutura principal do simulador.
+ A medida que novos modelos forem implementados, utilizar-se-á o conceito
+ de polimorfismo para essas classes.
+ A classe CDataControl é utilizada para carregar os arquivos .dat do disco,
+ e será utilizado nos construtores das classes principais do programa.
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama Geral de Classes"
+
+\end_inset
+
+ mostra a interação entre as classes principais, que serão discutidas detalhadam
+ente nos próximos tópicos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diagrama_Classes_GERAL.png
+	lyxscale 50
+	scale 50
+	rotateAngle 90
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama geral de classes
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama Geral de Classes"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Subsubsection
+Dicionário de classes com atributos/métodos
+\end_layout
+
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Classes de grid
+\end_layout
+
+\begin_layout Standard
+Em uma simulação de reservatórios, o número de informações que devem ser
+ armazenadas na memória é muito grande, dessa forma as informações são tratadas
+ em três níveis: Célula, Bloco e Malha (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Representaçao do Grid"
+
+\end_inset
+
+).
+ A célula (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Representaçao do Grid"
+
+\end_inset
+
+-(c)) é a menor unidade da simulação onde serão resolvidas as equações governant
+es do problema.
+ O bloco (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Representaçao do Grid"
+
+\end_inset
+
+-(b)) é um conjunto de células com propriedades de rocha iguais.
+ Dessa forma, evita-se a repetição de informação.
+ A malha (ou grid) (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Representaçao do Grid"
+
+\end_inset
+
+-(a)) é a maior unidade possível, e expressa todo o domínio do reservatório.
+ Nessa figura as células pintadas com a mesma cor representam um mesmo bloco,
+ ou seja, as propriedades de rocha dessas células são iguais.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Representação_Grid.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama representando a malha computacional do problema.
+ (a) é a representação de um grid, (b) é um bloco do problema e (c) é uma
+ única célula do domínio 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Representaçao do Grid"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Observa-se a presença de três poços nesse exemplo, assim os poços são armazenado
+s na célula.
+ Como as malhas são regulares, as informações de espaçamento horizontal
+ são armazenados na malha.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama-de-classes_GRID"
+
+\end_inset
+
+ mostra o diagrama de classes CGrid de forma detalhada.
+ Ressalta-se entretanto que apenas as classes unidimensionais foram implementada
+s nessa versão do TFS.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diagrama_Classes_GRID.png
+	lyxscale 50
+	scale 300
+	rotateAngle 90
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de classes para um software de reservatórios
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama-de-classes_GRID"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Subsubsection
+Dicionário de classes com atributos/métodos
+\end_layout
+
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Classes de modelos de discretização
+\end_layout
+
+\begin_layout Standard
+Essa classe é responsável pela discretização das equações diferenciais parciais
+ e construção do sistema linear de equações que serão resolvidas pelo solver
+ numérico.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama Classes CModelType"
+
+\end_inset
+
+ mostra o diagrama de classes para essa classe.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diagrama_Classes_MODEL.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de classes CModelType
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama Classes CModelType"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como é possível perceber, essa classe possui as seguintes classes filho:
+\end_layout
+
+\begin_layout Enumerate
+CSinglePhase: Essa classe discretiza as equações de transporte considerando
+ que existe somente uma fase líquida saturando o meio poroso.
+\end_layout
+
+\begin_layout Enumerate
+CBlackOil: Essa classe discretiza as equações de transporte considerando
+ o modelo 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Black
+\emph default
+ 
+\emph on
+Oil
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ de fluido.
+ Na versão atual do TFS essa classe não foi implementada.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Subsubsection
+Dicionário de classes com atributos/métodos
+\end_layout
+
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Classes de solver
+\end_layout
+
+\begin_layout Standard
+Essa classe é o código numérico principal do problema.
+ Representa as funções necessárias para se resolver os sistemas de equações
+ lineares do problema.
+ As equações serão constantemente resolvidas, dessa forma, o desempenho
+ do software está diretamente ligado com o desempenho dessa classe.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama Classes CSolver"
+
+\end_inset
+
+ mostra o diagrama de classes para o solver.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diagrama_Classes_SOLVER.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de classes CSolver
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama Classes CSolver"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A classe CSolverMatrix possui três classes filho:
+\end_layout
+
+\begin_layout Enumerate
+CSolMatTrid: Responsável por resolver problemas unidimensionais;
+\end_layout
+
+\begin_layout Enumerate
+CSolMatPentad: Responsável por resolver problemas bidimensionais (não implementa
+do);
+\end_layout
+
+\begin_layout Enumerate
+CSolMatHeptad: Responsável por resolver problemas tridimensionais (não implement
+ado).
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Subsubsection
+Dicionário de classes com atributos/métodos
+\end_layout
+
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Classe CNomeClasse: representa.....
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nome Atributo: Descrever o que representa
+\end_layout
+
+\begin_layout Itemize
+Nome Método: Descrever o que faz (pode incluir parâmetros e retorno)
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Classes de interface gráfica
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap4-Diagrama-de-classes-interface"
+
+\end_inset
+
+ mostra as classes utilizadas na interface gráfica do TFS.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diagrama_Classes_INTERFACE.png
+	lyxscale 10
+	scale 22
+	rotateAngle 90
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de classes interface gráfica
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap4-Diagrama-de-classes-interface"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Diagrama de sequência - eventos
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Eventos
+\end_layout
+
+\end_inset
+
+ e mensagens
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Mensagens
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Diagrama de sequência
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:diagrama de sequência"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+\emph on
+Baseado nos casos de uso do TFS, foram criados diagramas de sequências mostrando
+ a interação entre os objetos do software.
+\end_layout
+
+\begin_layout Subsection
+
+\shape italic
+\emph on
+Diagrama de sequência 
+\begin_inset Quotes eld
+\end_inset
+
+Inserir Dados do Problema
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap4 Diagrama de sequência “Inserir Dados do Problema”"
+
+\end_inset
+
+ mostra o diagrama de sequência para o caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Inserir Dados do Problema
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Observa-se a constante troca de informação entre a interface gráfica e
+ o usuário.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diag_Seq_Inserir_Dados_Pro.png
+	lyxscale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\shape italic
+\emph on
+Diagrama de sequência 
+\begin_inset Quotes eld
+\end_inset
+
+Inserir Dados do Problema
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap4 Diagrama de sequência “Inserir Dados do Problema”"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Diagrama de sequência 
+\begin_inset Quotes eld
+\end_inset
+
+Gerar Arquivos de Configuração
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama-de-sequência_Gerar_Arquivos"
+
+\end_inset
+
+ mostra o diagrama de sequência para o caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Gerar Arquivos de Configuração
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diag_Seq_Gerar_Arq_Configuracao.png
+	lyxscale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de sequência para o caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Gerar Arquivos de Configuração
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama-de-sequência_Gerar_Arquivos"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Diagrama de sequência 
+\begin_inset Quotes eld
+\end_inset
+
+Executar Simulação
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esse diagrama foi dividido em duas partes distintas, a primeira parte mostra
+ como o caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Executar Simulação
+\begin_inset Quotes erd
+\end_inset
+
+ é modelado pela interface gráfica (Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap4_Diagrama-de-sequência_Exec_Sim_Interface"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diag_Seq_Executar_Simulação_Interf.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de sequência para o caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Executar Simulação
+\begin_inset Quotes erd
+\end_inset
+
+ sob o ponto de vista da interface gráfica
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap4_Diagrama-de-sequência_Exec_Sim_Interface"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cap4_Diagrama-de-sequência_Exec_Sim_Kernel"
+
+\end_inset
+
+ mostra a segunda parte desse diagrama de sequências, que especifica o caso
+ de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Executar Simulação
+\begin_inset Quotes erd
+\end_inset
+
+ do ponto de vista do 
+\emph on
+kernel
+\emph default
+ numérico.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diag_Seq_Executar_Simulação_Kernel.png
+	lyxscale 50
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de sequência para o caso de uso 
+\begin_inset Quotes eld
+\end_inset
+
+Executar Simulação
+\begin_inset Quotes erd
+\end_inset
+
+ sob o ponto de vista do 
+\emph on
+kernel
+\emph default
+ numérico
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cap4_Diagrama-de-sequência_Exec_Sim_Kernel"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Diagrama de atividades
+\end_layout
+
+\begin_layout Standard
+O método Simulate da classe CReservoir é o mais importante do 
+\emph on
+kernel
+\emph default
+ numérico, pois controla todo o fluxo da simulação numérica.
+ A Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diagrama-de-atividades-Simulate"
+
+\end_inset
+
+ mostra o diagrama de atividades para esse método.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagens/Diagrama_Atividades_Simulate.png
+	lyxscale 50
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Diagrama de atividades do método Simulate da classe CReservoir
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diagrama-de-atividades-Simulate"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

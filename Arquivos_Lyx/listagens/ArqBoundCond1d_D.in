@@ -1,0 +1,5 @@
+1      --- [-] Tipo condição esquerda (0 - Vazão Constante, 1 - Pressão Constante)
+6000   --- [STB/d ou Psia] Valor utilizado para a condição esquerda
+
+0      --- [-] Tipo condição direita (0 - Vazão Constante, 1 - Pressão Constante)
+0      --- [STB/d ou Psia] Valor utilizado para a condição direita
