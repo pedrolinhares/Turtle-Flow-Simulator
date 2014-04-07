@@ -24,7 +24,7 @@ HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
 CommandLine=
-Folders="Fluid Classes","Grid Classes","Grid Classes/One-Dimensional Grid","Grid Classes/Two-Dimensional Grid","Model Classes","Model Classes/One-Dimensional Model","Model Classes/Two-Dimensional Model","Solver Classes"
+Folders="Fluid Classes","Grid Classes","Grid Classes/One-Dimensional Grid","Grid Classes/Two-Dimensional Grid","Model Classes","Model Classes/One-Dimensional Model","Model Classes/Two-Dimensional Model","Reservoir Classes","Reservoir Classes/One-Dimensional Reservoir","Reservoir Classes/Two-Dimensional Reservoir","Solver Classes"
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
@@ -183,7 +183,7 @@ BuildCmd=
 [Unit15]
 FileName=CReservoir.cpp
 CompileCpp=1
-Folder=
+Folder=Reservoir Classes
 Compile=1
 Link=1
 Priority=1000
@@ -193,7 +193,7 @@ BuildCmd=
 [Unit16]
 FileName=CReservoir.h
 CompileCpp=1
-Folder=
+Folder=Reservoir Classes
 Compile=1
 Link=1
 Priority=1000

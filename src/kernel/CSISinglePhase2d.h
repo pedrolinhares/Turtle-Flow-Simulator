@@ -63,6 +63,7 @@ class CSISinglePhase2d : public CResModelType
 		void BuildCoefVector(CGrid *grid, double deltat); ///< Builds the free vector "b";
 		virtual void BuildInitialSolution(CGrid *grid);	///< Builds the solution "X";
 		virtual void Print(); ///< This function prints on screen all the matrix. It is used to debug the code.
+		void FillAMatrix(CGrid *grid); ///< Allocating the matrix that will be solved by solver;
 
 };
 

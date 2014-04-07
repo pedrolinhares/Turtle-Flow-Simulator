@@ -70,6 +70,20 @@ class CGrid1d1p : public CGrid
 		double Por0( int celln ) { return cells[celln].Porosity(); }; ///< Return the initial porosity of a specific cell in domain;
 		double Porosity( int celln, double pressure) { return cells[celln].Porosity(pressure); }; ///< Return the atual porosity of a specific cell in domain.
 
+/////////////////////////////////////////    RETIRAR     //////////////////////////////////////////////////////////////////////////////////		
+		//////////  Grid Functions  //////////
+		//double XCells() {return 0;}; ///< Return the number of cells in x direction;
+		double YCells() {return 0;}; ///< Return the number of cells in y direction;
+		int CellXPosition(int _cellid) {return 0;}; ///Returns the x position of the cell in the grid;
+		int CellYPosition(int _cellid) {return 0;}; ///Returns the y position of the cell in the grid;
+		int CellPositioninGrid(int _cellid) {return 0;}; ///Returns the cell position of the cell with _cellid;
+		//virtual int CellId( int celln ) =0; ///< Return the cell ID of a specific cell in domain;
+		int GridPosition(int cellx, int celly) {return 0;}; ///< Return the cell position in cell array, based on the position in grid;
+		
+		
+/////////////////////////////////////////    RETIRAR     //////////////////////////////////////////////////////////////////////////////////		
+
+
 		//////////  Cell Functions  //////////
 		virtual int CellNumber() { return cellnumber; }; ///< Return the number of cells in domain;
 		double XCells() { return xcells; }; ///< Retunr the number of cells in x direction;
@@ -92,6 +106,14 @@ class CGrid1d1p : public CGrid
 		double RightGravityTransmX( int celln ); ///< Return the right gravitational transmissibility of a specif cell.
 		double LeftTrasmX( int celln ); ///< Return the left transmissibility of a specific cell in ddomain;
 		double LeftGravityTransmX( int celln ); ///< Return the left gravitational transmissibility of a specif cell.
+		
+/////////////////////////////////////////    RETIRAR     //////////////////////////////////////////////////////////////////////////////////		
+		virtual double FrontTrasmY( int celln ) {return 0;} ; ///< Return the front transmissibility of a specific cell in ddomain;
+		virtual double FrontGravityTransmY( int celln ) {return 0;}; ///< Return the front gravitational transmissibility of a specif cell.
+		virtual double BackTrasmY( int celln ) {return 0;}; ///< Return the back transmissibility of a specific cell in ddomain;
+		virtual double BackGravityTransmY( int celln ) {return 0;}; ///< Return the back gravitational transmissibility of a specif cell.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+
 		double Gamma( int celln ); ///< Return the gamma factor of a specific cell;
 		
 		//////////  Transmissibility Derivative Functions  //////////

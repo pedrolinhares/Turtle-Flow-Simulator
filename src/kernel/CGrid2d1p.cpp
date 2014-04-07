@@ -575,6 +575,43 @@ double CGrid2d1p::Gamma( int celln ) {
 	 
 }
 
+double CGrid2d1p::FrontTrasmY( int celln ) {
+  /// This function return the front transmissibility of a specif cell.
+
+  if (cells[celln].FrontCell() == NULL) { return 0; }
+  
+  return cells[celln].FrontTransmY();
+    
+}
+
+double CGrid2d1p::BackTrasmY( int celln ) {
+  /// This function return the right transmissibility of a specif cell.
+
+  if (cells[celln].BackCell() == NULL) { return 0; }
+  
+  return cells[celln].BackCell()->FrontTransmY();
+    
+}
+
+double CGrid2d1p::FrontGravityTransmY( int celln ){
+  /// This function return the right gravitational transmissibility of a specif cell.
+  
+  if (cells[celln].FrontCell() == NULL) { return 0; }
+  
+  return cells[celln].FrontGravityTransmY();
+    
+}
+
+double CGrid2d1p::BackGravityTransmY( int celln ){
+  /// This function return the right gravitational transmissibility of a specif cell.
+  
+  if (cells[celln].BackCell() == NULL) { return 0; }
+  
+  return cells[celln].BackCell()->FrontGravityTransmY();
+    
+}
+
+
 double CGrid2d1p::GammaDer( int celln ) {
 	  /// Returns the derivative of the gamma function in relation of the cell pressure;
 	  

@@ -38,6 +38,8 @@ void onExit() {
 	
 	OK! - URGENTE: Implementar uma rotina para o usuário escolher o tempo que será salva a simulação;
 	
+	1 - O polimorfismo do grid não está legal. REVER.
+	
 	2 - Retirar o fluid type do poço e o solver type do model.
 		
 	3 - Every cell needs to have left and right transmissibility function, but only the right

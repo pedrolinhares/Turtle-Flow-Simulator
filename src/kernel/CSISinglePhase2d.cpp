@@ -43,40 +43,9 @@ CSISinglePhase2d::CSISinglePhase2d(CGrid *grid, int _maxni, double _erroni) {
 	
 	/// Starting Acol and Arow ///
 	/// For this is needed to access all cells in domain and verify their neighbours
-	/// For 1d case, the cells are accessed from left to right.
+	FillAMatrix(grid);	
 	
-	int colcount = 0; ///< Counter used to fill the Acol;
 	
-	/// First Cell
-	Arow[0] = 0;
-	Arow[1] = 2;
-	Acol[colcount] = 0;
-	colcount++;
-	Acol[colcount] = 1;
-	colcount++;
-	
-	/// Middle Cells 
-	for (int i = 1 ; i < (cpoints - 1) ; i++ ) {
-		Arow[(i+1)] = 3;
-		Acol[colcount] = (i - 1);
-		colcount++;
-		Acol[colcount] = i;
-		colcount++;
-		Acol[colcount] = (i + 1);
-		colcount++;
-	}
-	
-	/// Last Cell
-	Arow[cpoints] = 2;
-	Acol[colcount] = (cpoints - 2);
-	colcount++;
-	Acol[colcount] = (cpoints - 1);
-	colcount++;
-	
-	/// Cumulating the Arow array
-	for (int g = 0; g < cpoints ; g++) {
-		Arow[g+1] = Arow[g] + Arow[g+1] ;
-	}
 	
 	/// Constructing the Free Vector
 	b = new double[cpoints]; 
@@ -115,44 +84,63 @@ void CSISinglePhase2d::BuildMatrix(CGrid *grid, double deltat)
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
 
-    double Wi, Ci, Ei;
+    double Ri, Ci, Li, Bi, Fi;
 	double deltap;
 	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
 	
-	/// Filling the first line of matrix A
-	Wi = grid->LeftTrasmX(0); ///< There is no west matrix element;
-	Ei = grid->RightTrasmX(0); ///< Calculating the east matrix element;
-	Ci = - grid->Gamma(0)/deltat - Wi - Ei;	///< Calculating the central matrix element;
-	
-		Aval[elemcount] = Ci;
-	    elemcount++;
-	    Aval[elemcount] = Ei;
-	    elemcount++;
-	
-	/// Filling the middle A Elements
-    for (int i = 1 ; i < (cpoints - 1) ; i++) {
-		
-		Wi = grid->LeftTrasmX(i); ///< Calculating the west matrix element;
-		Ei = grid->RightTrasmX(i);	///< Calculating the east matrix element;	
-    	Ci = - grid->Gamma(i)/deltat - Ei - Wi;	///< Calculating the central matrix element;
 
-	        Aval[elemcount] = Wi;
-	        elemcount++;
-	        Aval[elemcount] = Ci;
-	        elemcount++;
-	        Aval[elemcount] = Ei;
-	        elemcount++;
-    }
+	/// Filling the middle A Elements
+//    for (int i = 0 ; i < cpoints ; i++) {
+//		
+//		Bi = grid->BackTrasmY(i);	///< Calculating the back matrix element;
+//		Li = grid->LeftTrasmX(i); ///< Calculating the west matrix element;
+//		Ri = grid->RightTrasmX(i);	///< Calculating the east matrix element;
+//		Fi = grid->FrontTrasmY(i); 	///< Calculating the front matrix element;	
+//		
+//    	Ci = - grid->Gamma(i)/deltat - Ri - Li - Bi - Fi;	///< Calculating the central matrix element;
+//    	
+//    	if (grid->Cell(i)->BackCell() != NULL ) {
+//    		if (grid->Cell(i)->BackCell()->CellId() != grid->Cell(i)->CellId()) {
+//    			Aval[elemcount] = Bi;
+//	        	elemcount++;
+//    		}
+//    	}
+//    	
+//    	if (grid->Cell(i)->LeftCell() != NULL ) {
+//    		if (grid->Cell(i)->LeftCell()->CellId() != grid->Cell(i)->CellId()) {
+//    			Aval[elemcount] = Li;
+//	        	elemcount++;
+//    		}
+//    	}
+//    	
+//    	Aval[elemcount] = Ci;
+//	    elemcount++;
+//	    
+//	    if (grid->Cell(i)->RightCell() != NULL ) {
+//    		if (grid->Cell(i)->RightCell()->CellId() != grid->Cell(i)->CellId()) {
+//    			Aval[elemcount] = Ri;
+//	        	elemcount++;
+//    		}
+//    	}
+//    	
+//    	if (grid->Cell(i)->FrontCell() != NULL ) {
+//    		if (grid->Cell(i)->FrontCell()->CellId() != grid->Cell(i)->CellId()) {
+//    			Aval[elemcount] = Fi;
+//	        	elemcount++;
+//    		}
+//    	}
+//    		       
+//    }
     
     /// Filling the last line of matrix A
-    Wi = grid->LeftTrasmX(cpoints - 1); ///< Calculating the west matrix element;
-    Ei = grid->RightTrasmX(cpoints - 1);	///< There is no east matrix element;
-	Ci = - grid->Gamma(cpoints - 1)/deltat - Wi - Ei;	///< Calculating the central matrix element;
-	
-		Aval[elemcount] = Wi;
-        elemcount++;
-        Aval[elemcount] = Ci;
-        elemcount++;	
+//    Wi = grid->LeftTrasmX(cpoints - 1); ///< Calculating the west matrix element;
+//    Ei = grid->RightTrasmX(cpoints - 1);	///< There is no east matrix element;
+//	Ci = - grid->Gamma(cpoints - 1)/deltat - Wi - Ei;	///< Calculating the central matrix element;
+//	
+//		Aval[elemcount] = Wi;
+//        elemcount++;
+//        Aval[elemcount] = Ci;
+//        elemcount++;	
 
 }
 
@@ -217,10 +205,11 @@ void CSISinglePhase2d::Iterationt(CGrid *grid, CSolverMatrix *solver, double del
 
        do {
 
-         BuildMatrix(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
-         BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
+         Print();
+		 BuildMatrix(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
+         //BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
          
-         //Print();
+         Print();
 
          solver->UMFPack( Acol, Arow, Aval, b, Xni, cpoints ); ///< Calling the solver used in this problem
 
@@ -267,4 +256,77 @@ void CSISinglePhase2d::Print() {
 	cout << "\nValue of solution x (Xni):\n";
 	for (int i = 0; i < (cpoints) ; i++ ) { cout << Xni[i] << endl; }
 	
+}
+
+void CSISinglePhase2d::FillAMatrix(CGrid *grid){
+	/// Starting Acol and Arow ///
+	/// For this is needed to access all cells in domain and verify their neighbours
+	/// For 2d case, the cells are accessed from left to right and from top to down.
+	
+	/// First Cell
+	Arow[0] = 0;
+	
+	int colcount = 0; ///< Counter used to fill the Acol;
+	
+	int xpos, max_x, ypos, max_y, cellID, row_number, auxpos;
+	
+	max_x = grid->XCells(); ///< Max elements in X direction;
+	max_y = grid->YCells(); ///< Max elements in Y direction;
+	row_number = 0;
+		
+	for (int i=0; i<cpoints; i++)	{
+		
+		
+		cellID = grid->CellId(i);
+		xpos = grid->CellXPosition(cellID);
+		ypos = grid->CellYPosition(cellID);
+		
+		if ((ypos-1) >= 0) {
+			auxpos = grid->GridPosition((ypos-1),xpos);
+			if (auxpos != -1) {	
+				Acol[colcount] = auxpos;
+				row_number++;
+				colcount++;
+			}
+		}
+		
+		if ((xpos-1) >=0) {
+			auxpos = grid->GridPosition(ypos,(xpos-1));
+			if (auxpos != -1) {	
+				Acol[colcount] = auxpos;
+				row_number++;
+				colcount++;
+			}
+		}
+		
+		Acol[colcount] = i;
+		row_number++;
+		colcount++;
+		
+		if ((xpos+1) < max_x) {
+			auxpos = grid->GridPosition(ypos,(xpos+1));
+			if (auxpos != -1) {	
+				Acol[colcount] = auxpos;
+				row_number++;
+				colcount++;
+			}
+		}
+		
+		if ((ypos+1) < max_y) {
+			auxpos = grid->GridPosition((ypos+1),xpos);
+			if (auxpos != -1) {
+				Acol[colcount] = auxpos;
+				row_number++;
+				colcount++;
+			}			
+		}
+		
+	Arow[i+1] = row_number;
+	row_number = 0;
+	}
+	
+	/// Cumulating the Arow array
+	for (int g = 0; g < cpoints ; g++) {
+		Arow[g+1] = Arow[g] + Arow[g+1] ;
+	}
 }

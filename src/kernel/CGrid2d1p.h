@@ -79,6 +79,7 @@ class CGrid2d1p : public CGrid1d1p
 		int CellYPosition(int _cellid); ///Returns the y position of the cell in the grid;
 		int CellPositioninGrid(int _cellid); ///Returns the cell position of the cell with _cellid;
 		int CellId( int celln ) { return cells[celln].CellId(); }; ///< Return the cell ID of a specific cell in domain;
+		int GridPosition(int celly, int cellx) { return CellPositioninGrid(cellsID[celly][cellx]); }; ///< Return the cell position in cell array, based on the position in grid;
 
 		//////////  Cell Functions  //////////
 		virtual int CellNumber() { return cellnumber; }; ///< Return the number of cells in domain;
@@ -106,6 +107,12 @@ class CGrid2d1p : public CGrid1d1p
 		double RightGravityTransmX( int celln ); ///< Return the right gravitational transmissibility of a specif cell.
 		double LeftTrasmX( int celln ); ///< Return the left transmissibility of a specific cell in ddomain;
 		double LeftGravityTransmX( int celln ); ///< Return the left gravitational transmissibility of a specif cell.
+		
+		double FrontTrasmY( int celln ); ///< Return the front transmissibility of a specific cell in ddomain;
+		double FrontGravityTransmY( int celln ); ///< Return the front gravitational transmissibility of a specif cell.
+		double BackTrasmY( int celln ); ///< Return the back transmissibility of a specific cell in ddomain;
+		double BackGravityTransmY( int celln ); ///< Return the back gravitational transmissibility of a specif cell.
+		
 		double Gamma( int celln ); ///< Return the gamma factor of a specific cell;
 		
 		//////////  Transmissibility Derivative Functions  //////////
