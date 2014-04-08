@@ -22,7 +22,7 @@
 #include <iostream>
 #include <ctime>
 
-#include "CReservoir.h"
+#include "CReservoirSimulator.h"
 
 void onExit() {
   std::cout << "End of Execution" << std::endl;
@@ -59,8 +59,8 @@ int main() {
   timer = clock(); ///< Getting the current time.
   std::atexit(onExit);
 
-  CReservoir reservoir; ///< Reservoir Constructor
-  reservoir.Run(); ///< Running the simulation. This is the main code of the program.
+  CReservoirSimulator simulation; ///< Simulator Constructor
+  simulation.Run(); ///< Running the simulation. This is the main code of the program.
   
   timer = clock() - timer; ///< Updating timer;
   std::cout << "Processing time in seconds: " <<((float) timer)/1000 << std::endl; ///< Display the processing time.

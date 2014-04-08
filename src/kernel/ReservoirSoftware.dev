@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=45
+UnitCount=47
 
 [VersionInfo]
 Major=1
@@ -494,6 +494,26 @@ BuildCmd=
 FileName=CSISinglePhase2d.h
 CompileCpp=1
 Folder=Model Classes/Two-Dimensional Model
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit46]
+FileName=CReservoirSimulator.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit47]
+FileName=CReservoirSimulator.cpp
+CompileCpp=1
+Folder=
 Compile=1
 Link=1
 Priority=1000
