@@ -5,7 +5,7 @@
  *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
  *  
  *  Class Author: Wagner Queiroz Barros.
- *  Last Update: 08/04/2014
+ *  Date: 08/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
