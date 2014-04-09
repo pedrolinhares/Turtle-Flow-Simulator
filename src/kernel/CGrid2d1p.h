@@ -5,6 +5,7 @@
  *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
  *  
  *  Class Author: Wagner Queiroz Barros.
+ *  Date: 09/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +26,6 @@
 
 #include <cmath>
 
-#include "CGrid.h"
 #include "CGrid1d1p.h"
 #include "CCell2d.h"
 #include "CBlock2d.h"
@@ -45,22 +45,24 @@ class CGrid2d1p : public CGrid1d1p
     	
     protected:
     	
+    	//////////  Cells Parameters  //////////
     	int **cellsID; ///< Matrix storing the connections between the neighbooring cells;
     	int ycells; ///< Number of cells in y direction;
 
 	public:
 
-		CGrid2d1p(int _fluidtype); ///< One-Dimensional Grid Constructor
-		virtual ~CGrid2d1p(); ///< One-Dimensional Grid Destructor
+		CGrid2d1p(); ///< Two-Dimensional Grid Constructor
+		CGrid2d1p(int _fluidtype); ///<Overloaded Two-Dimensional Grid Constructor
+		virtual ~CGrid2d1p(); ///< Two-Dimensional Grid Destructor
 
-		virtual void Print(); ///< Function used to print all the reservoir data on screen.
-		virtual void SaveGridSolution(std::ofstream *fout, double time); ///< Function used to save the grid solution in disk.
-		virtual void SaveWellSolution(std::ofstream *fout, int welln, double time);///< Function used to save the well solution in disk.
+		void Print(); ///< Function used to print all the reservoir data on screen.
+		void SaveGridSolution(std::ofstream *fout, double time); ///< Function used to save the grid solution in disk.
+		void SaveWellSolution(std::ofstream *fout, int welln, double time);///< Function used to save the well solution in disk.
 
 		//////////  Numerical Functions  //////////
-		virtual void InitiateSolution(double pref, double href); ///< Initiate the solution in all reservoir;
-		virtual void Iterationni(double *Xni); ///< Makes the linear iteration "ni" in all cells;
-		virtual void Iterationt(double deltat); ///< Makes the time iteration in all cells.
+		void InitiateSolution(double pref, double href); ///< Initiate the solution in all reservoir;
+		void Iterationni(double *Xni); ///< Makes the linear iteration "ni" in all cells;
+		void Iterationt(double deltat); ///< Makes the time iteration in all cells.
 
 		//////////  Fluid Functions  /////////
 		void ConstructingCFluid(); ///< Construct the fluid in grid in domain;
@@ -101,8 +103,8 @@ class CGrid2d1p : public CGrid1d1p
 		int ConnectionsNumber(); ///< Returns the number of connections among cells in the grid.
 
 		//////////  Transmissibility Functions //////////
-		virtual void SetGTransmX(); ///< Sets the Geometric transmissibility in all cells, in x direction;
-		virtual void SetGTransmY(); ///< Sets the Geometric transmissibility in all cells, in y direction;
+		void SetGTransmX(); ///< Sets the Geometric transmissibility in all cells, in x direction;
+		void SetGTransmY(); ///< Sets the Geometric transmissibility in all cells, in y direction;
 		double RightTrasmX( int celln ); ///< Return the right transmissibility of a specific cell in ddomain;
 		double RightGravityTransmX( int celln ); ///< Return the right gravitational transmissibility of a specif cell.
 		double LeftTrasmX( int celln ); ///< Return the left transmissibility of a specific cell in ddomain;
@@ -127,7 +129,7 @@ class CGrid2d1p : public CGrid1d1p
 		//////////  Well Functions //////////
 		void ConstructingCWell(); ///< Construct all wells in domain;
 		double WellRate( int celln ) { return cells[celln].WellRate(); }; ///< Return the flow rate of a well in a specific cell in domain.
-		virtual int WellNumbers(); ///< Return the number of wells in domain.
+		int WellNumbers(); ///< Return the number of wells in domain.
 
 		////////// Boundary Conditions //////////
 		void SetBoundConditions(std::ifstream * fgrid); ///< Sets the boundary condition for the problem;

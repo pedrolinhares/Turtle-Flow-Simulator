@@ -5,6 +5,7 @@
  *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
  *  
  *  Class Author: Wagner Queiroz Barros.
+ *  Last Update: 08/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,14 +25,16 @@
 
 using namespace std;
 
-CSISinglePhase2d::CSISinglePhase2d(CGrid *grid, int _maxni, double _erroni) {
+CSISinglePhase2d::CSISinglePhase2d(CGrid2d1p *_grid, CSolverMatrix *_solver, int _maxni, double _erroni) {
 	/// Class Constructor
 	
+	grid = _grid;
+	solver = _solver;
 	cpoints = grid->CellNumber();
 	maxni = _maxni;
 	erroni = _erroni;
 	
-	elem_numb = MatrixElementsNumber(grid);
+	elem_numb = MatrixElementsNumber();
 	
 	/// Allocating the Matrix A ///
 	Acol = new int[elem_numb]; 
@@ -43,7 +46,7 @@ CSISinglePhase2d::CSISinglePhase2d(CGrid *grid, int _maxni, double _erroni) {
 	
 	/// Starting Acol and Arow ///
 	/// For this is needed to access all cells in domain and verify their neighbours
-	FillAMatrix(grid);	
+	FillAMatrix();	
 	
 	
 	
@@ -69,7 +72,7 @@ CSISinglePhase2d::~CSISinglePhase2d()
 	
 }
 
-int CSISinglePhase2d::MatrixElementsNumber(CGrid *grid) {
+int CSISinglePhase2d::MatrixElementsNumber() {
  /// This function run over all cells in problem and returns the number of elements
  ///that will be created in matrix A. It is used for pre-allocate memory for UMFPack matrix
  /// The elements un matrix A is the number of connections in domain;
@@ -78,7 +81,7 @@ int CSISinglePhase2d::MatrixElementsNumber(CGrid *grid) {
  
 }
 
-void CSISinglePhase2d::BuildMatrix(CGrid *grid, double deltat)
+void CSISinglePhase2d::BuildMatrix(double deltat)
 {
 	/// This function creates the coefficient matrix "A", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
@@ -144,7 +147,7 @@ void CSISinglePhase2d::BuildMatrix(CGrid *grid, double deltat)
 
 }
 
-void CSISinglePhase2d::BuildCoefVector(CGrid *grid, double deltat){
+void CSISinglePhase2d::BuildCoefVector(double deltat){
 	/// This function creates the free vector "b", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
@@ -183,7 +186,7 @@ void CSISinglePhase2d::BuildCoefVector(CGrid *grid, double deltat){
 
 }
 
-void CSISinglePhase2d::BuildInitialSolution(CGrid *grid) {
+void CSISinglePhase2d::BuildInitialSolution() {
 	 /// This function builds the initial solution for the first problem iteration.
 	 /// It is used to initiate the first solution.
 
@@ -195,7 +198,7 @@ void CSISinglePhase2d::BuildInitialSolution(CGrid *grid) {
 
 }
 
-void CSISinglePhase2d::Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat) {
+void CSISinglePhase2d::Iterationt(double deltat) {
 	/// This function makes a time iteration in all cells of domain
 	/// using the semi-implicit linearization model.
 	
@@ -206,7 +209,7 @@ void CSISinglePhase2d::Iterationt(CGrid *grid, CSolverMatrix *solver, double del
        do {
 
          Print();
-		 BuildMatrix(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
+		 BuildMatrix(deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
          //BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
          
          Print();
@@ -258,7 +261,7 @@ void CSISinglePhase2d::Print() {
 	
 }
 
-void CSISinglePhase2d::FillAMatrix(CGrid *grid){
+void CSISinglePhase2d::FillAMatrix(){
 	/// Starting Acol and Arow ///
 	/// For this is needed to access all cells in domain and verify their neighbours
 	/// For 2d case, the cells are accessed from left to right and from top to down.

@@ -5,6 +5,7 @@
  *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
  *  
  *  Class Author: Wagner Queiroz Barros.
+ *  Last Update: 08/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +25,8 @@
 #define CSISinglePhase2d_h
 
 #include "CResModelType.h"
+#include "CGrid2d1p.h"
+#include "CSolverMatrix.h"
 
 /**
  * CSISinglePhase2d (Class Semi-Implicit Single Phase)
@@ -34,36 +37,23 @@
 class CSISinglePhase2d : public CResModelType
 {
 	protected:
-				
-  		int cpoints; ///< Number of cells in the reservoir. It is the same number of the linear equation system lines;
-  		int elem_numb; ///< Number of non-zeros elements in matrix A;
-	 	int maxni; ///< Max number of iterations in linearization;
-  		double erroni; ///< Precision of linearization.
-
-		/// The solver will be called to solve the linear system:
-		/// A' * Xni = b, Where A' = f(Acol, Arow, Aval)	
-		double *b; ///< Free Vector;
-  		double *Xni; ///< Solution Vector;
 		
-		/// The A matrix must be constructed using three arrays of data. More details are described in UMFPack user-guide.
-		int *Acol; ///< Column index for all non-zero elements in matrix A;
-		int *Arow; ///< Cumulative Row sum for the number of non-zeros elements;
-		double *Aval; ///< Value for all non-zero elements in matrix A.
-		
+		CGrid2d1p *grid;
+		CSolverMatrix *solver;	
 		
 	public:
 
-		CSISinglePhase2d(CGrid *grid, int _maxni, double _erroni); ///< Single Phase 1d Constructor; 
+		CSISinglePhase2d(CGrid2d1p *_grid, CSolverMatrix *_solver, int _maxni, double _erroni); ///< Single Phase 1d Constructor; 
 		virtual ~CSISinglePhase2d(); ///< Single Phase 1d destructor;	
 		
 		/// Model Functions ///		
-		int MatrixElementsNumber(CGrid *grid); ///< Returns the number of elements that will be created in matrix A;
-		virtual void Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat); ///< Makes a time iteration for the problem;
-		void BuildMatrix(CGrid *grid, double deltat); ///< Builds the coefficient matrix "A";
-		void BuildCoefVector(CGrid *grid, double deltat); ///< Builds the free vector "b";
-		virtual void BuildInitialSolution(CGrid *grid);	///< Builds the solution "X";
-		virtual void Print(); ///< This function prints on screen all the matrix. It is used to debug the code.
-		void FillAMatrix(CGrid *grid); ///< Allocating the matrix that will be solved by solver;
+		int MatrixElementsNumber(); ///< Returns the number of elements that will be created in matrix A;
+		void Iterationt(double deltat); ///< Makes a time iteration for the problem;
+		void BuildMatrix(double deltat); ///< Builds the coefficient matrix "A";
+		void BuildCoefVector(double deltat); ///< Builds the free vector "b";
+		void BuildInitialSolution();	///< Builds the solution "X";
+		void Print(); ///< This function prints on screen all the matrix. It is used to debug the code.
+		void FillAMatrix(); ///< Allocating the matrix that will be solved by solver;
 
 };
 

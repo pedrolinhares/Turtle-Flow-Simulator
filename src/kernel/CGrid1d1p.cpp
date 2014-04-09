@@ -2,7 +2,10 @@
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
- *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz.
+ *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
+ *  
+ *  Class Author: Wagner Queiroz Barros.
+ *  Date: 09/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,10 +28,12 @@
 using namespace std;
 using namespace filename_definitions;
 
-CGrid1d1p::CGrid1d1p(int _fluidtype) :CGrid()
+CGrid1d1p::CGrid1d1p(int _fluidtype)
 {
   /// class constructor
-  
+  	
+  	betac = 1.127; ///< Conversion units factor.
+  	
 	ifstream fgrid(ARQ_GRID1d_FILE.c_str());
   
     if (fgrid.fail())
@@ -190,7 +195,9 @@ CGrid1d1p::CGrid1d1p(int _fluidtype) :CGrid()
   
 }
 
-CGrid1d1p::CGrid1d1p() : CGrid() {}
+CGrid1d1p::CGrid1d1p() {
+	betac = 1.127; ///< Conversion units factor.
+}
 
 CGrid1d1p::~CGrid1d1p()
 {

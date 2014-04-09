@@ -26,8 +26,6 @@
 
 #include <iostream>
 
-#include "CGrid.h"
-#include "CGrid1d1p.h"
 #include "CSolverMatrix.h"
 
 /**

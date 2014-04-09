@@ -5,6 +5,7 @@
  *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
  *  
  *  Class Author: Wagner Queiroz Barros.
+ *  Date: 09/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +27,8 @@
 
 using namespace std;
 using namespace filename_definitions;
+
+CGrid2d1p::CGrid2d1p() : CGrid1d1p() {}
 
 CGrid2d1p::CGrid2d1p(int _fluidtype) : CGrid1d1p()
 {

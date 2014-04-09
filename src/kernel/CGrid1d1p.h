@@ -2,7 +2,10 @@
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
- *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz.
+ *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
+ *  
+ *  Class Author: Wagner Queiroz Barros.
+ *  Date: 09/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +26,11 @@
 
 #include <cmath>
 
-#include "CGrid.h"
+#include "CFluid.h"
+#include "CWater.h"
+#include "COil.h"
+#include "CGas.h"
+
 #include "CCell1d.h"
 
 /**
@@ -31,35 +38,44 @@
  * This class has a array with one-dimensional cells.
  */
 
-class CGrid1d1p : public CGrid
+class CGrid1d1p
 {
 
     private:
-
+    	
 		CBlock1d *block; ///< Pointer to a block array;
     	CCell1d *cells; ///< Array with all cells of domain
     	
     protected:
     	
-    	int xcells; ///< Number of cells in x direction;
-    	double *lenght; ///< Vector representing the lenght of each cell in domain
+    	double betac; ///< Conversion factor.
+    	
+    	//////////  Cells Parameters  //////////
+		int cellnumber; ///< Number of cells in domain
+		int xcells; ///< Number of cells in x direction;
+        int blknumber; ///< Number of blocks in domain;
+        double *lenght; ///< Vector representing the lenght of each cell in domain
     	double *width;   ///< Vector representing the Width of each cell in domain.
 		double *thickness;  ///< Vector representing the Thickness of each cell in domain.
-
+		
+		////////// Fluid Parameters  //////////
+		CFluid *fluid; ///< Pointer to the fluid data;
+    	int fluidtype1; ///< Type of simulated fluid;
+		
 	public:
-
-		CGrid1d1p(int _fluidtype); ///< One-Dimensional Grid Constructor
-		CGrid1d1p(); ///< Overloaded One-Dimensional Grid Constructor
+		
+		CGrid1d1p(); ///<  One-Dimensional Grid Constructor
+		CGrid1d1p(int _fluidtype); ///<Overloaded One-Dimensional Grid Constructor
 		virtual ~CGrid1d1p(); ///< One-Dimensional Grid Destructor
 
-		virtual void Print(); ///< Function used to print all the reservoir data on screen.
-		virtual void SaveGridSolution(std::ofstream *fout, double time); ///< Function used to save the grid solution in disk.
-		virtual void SaveWellSolution(std::ofstream *fout, int welln, double time);///< Function used to save the well solution in disk.
+		void Print(); ///< Function used to print all the reservoir data on screen.
+		void SaveGridSolution(std::ofstream *fout, double time); ///< Function used to save the grid solution in disk.
+		void SaveWellSolution(std::ofstream *fout, int welln, double time);///< Function used to save the well solution in disk.
 
 		//////////  Numerical Functions  //////////
-		virtual void InitiateSolution(double pref, double href); ///< Initiate the solution in all reservoir;
-		virtual void Iterationni(double *Xni); ///< Makes the linear iteration "ni" in all cells;
-		virtual void Iterationt(double deltat); ///< Makes the time iteration in all cells.
+		void InitiateSolution(double pref, double href); ///< Initiate the solution in all reservoir;
+		void Iterationni(double *Xni); ///< Makes the linear iteration "ni" in all cells;
+		void Iterationt(double deltat); ///< Makes the time iteration in all cells.
 
 		//////////  Fluid Functions  /////////
 		double FVF( int celln ) { return cells[celln].FVF(); }; ///< Return the FVF of a specific cell in domain;
@@ -70,22 +86,8 @@ class CGrid1d1p : public CGrid
 		double Por0( int celln ) { return cells[celln].Porosity(); }; ///< Return the initial porosity of a specific cell in domain;
 		double Porosity( int celln, double pressure) { return cells[celln].Porosity(pressure); }; ///< Return the atual porosity of a specific cell in domain.
 
-/////////////////////////////////////////    RETIRAR     //////////////////////////////////////////////////////////////////////////////////		
-		//////////  Grid Functions  //////////
-		//double XCells() {return 0;}; ///< Return the number of cells in x direction;
-		double YCells() {return 0;}; ///< Return the number of cells in y direction;
-		int CellXPosition(int _cellid) {return 0;}; ///Returns the x position of the cell in the grid;
-		int CellYPosition(int _cellid) {return 0;}; ///Returns the y position of the cell in the grid;
-		int CellPositioninGrid(int _cellid) {return 0;}; ///Returns the cell position of the cell with _cellid;
-		//virtual int CellId( int celln ) =0; ///< Return the cell ID of a specific cell in domain;
-		int GridPosition(int cellx, int celly) {return 0;}; ///< Return the cell position in cell array, based on the position in grid;
-		
-		
-/////////////////////////////////////////    RETIRAR     //////////////////////////////////////////////////////////////////////////////////		
-
-
 		//////////  Cell Functions  //////////
-		virtual int CellNumber() { return cellnumber; }; ///< Return the number of cells in domain;
+		int CellNumber() { return cellnumber; }; ///< Return the number of cells in domain;
 		double XCells() { return xcells; }; ///< Retunr the number of cells in x direction;
 		int CellId( int celln ) { return cells[celln].CellId(); }; ///< Return the cell ID of a specific cell in domain;
 		double Pressure( int celln ); ///< Return the atual pressure of a specific cell in domain;
@@ -101,19 +103,11 @@ class CGrid1d1p : public CGrid
 		int ConnectionsNumber() { return (xcells - 1); }; ///< Returns the number of connections among cells in the grid.
 
 		//////////  Transmissibility Functions //////////
-		virtual void SetGTransmX(); ///< Sets the Geometric transmissibility in all cells;
+		void SetGTransmX(); ///< Sets the Geometric transmissibility in all cells;
 		double RightTrasmX( int celln ); ///< Return the right transmissibility of a specific cell in ddomain;
 		double RightGravityTransmX( int celln ); ///< Return the right gravitational transmissibility of a specif cell.
 		double LeftTrasmX( int celln ); ///< Return the left transmissibility of a specific cell in ddomain;
 		double LeftGravityTransmX( int celln ); ///< Return the left gravitational transmissibility of a specif cell.
-		
-/////////////////////////////////////////    RETIRAR     //////////////////////////////////////////////////////////////////////////////////		
-		virtual double FrontTrasmY( int celln ) {return 0;} ; ///< Return the front transmissibility of a specific cell in ddomain;
-		virtual double FrontGravityTransmY( int celln ) {return 0;}; ///< Return the front gravitational transmissibility of a specif cell.
-		virtual double BackTrasmY( int celln ) {return 0;}; ///< Return the back transmissibility of a specific cell in ddomain;
-		virtual double BackGravityTransmY( int celln ) {return 0;}; ///< Return the back gravitational transmissibility of a specif cell.
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
-
 		double Gamma( int celln ); ///< Return the gamma factor of a specific cell;
 		
 		//////////  Transmissibility Derivative Functions  //////////
@@ -127,7 +121,7 @@ class CGrid1d1p : public CGrid
 
 		//////////  Well Functions //////////
 		double WellRate( int celln ) { return cells[celln].WellRate(); }; ///< Return the flow rate of a well in a specific cell in domain.
-		virtual int WellNumbers(); ///< Return the number of wells in domain.
+		int WellNumbers(); ///< Return the number of wells in domain.
 
 		////////// Boundary Conditions //////////
 		void SetBoundConditions(std::ifstream * fgrid); ///< Sets the boundary condition for the problem;

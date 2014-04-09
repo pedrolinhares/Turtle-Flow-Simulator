@@ -27,15 +27,6 @@
 #include <fstream>
 #include <sstream>
 
-#include "CGrid.h"
-#include "CGrid1d1p.h"
-#include "CGrid2d1p.h"
-
-#include "CResModelType.h"
-#include "CSISinglePhase1d.h"
-#include "CISinglePhase1d.h"
-#include "CSISinglePhase2d.h"
-
 #include "CSolverMatrix.h"
 
 /**
@@ -48,8 +39,6 @@ class CReservoir {
 	protected:
 		
 	  //////////  Reservoir Parameters  //////////
-	  //CGrid *grid; ///< Pointer to the reservoir grid;
-	  //CResModelType *model; ///< Pointer to the model that describes the reservoir behaviour;
 	  int cpoints; //Number of lines of linear equation system, and of cells in reservaoir;
 	
 	  ///////////  Numerical Parameters  /////////
@@ -61,7 +50,6 @@ class CReservoir {
 	  ///////////  Output Parameters  /////////
 	  std::ofstream grid_data; ///< Out put file for the pressure in all cell points;
 	  std::ofstream *well_data; ///< Out put file for the pressure in all cell points;
-	  //void OutPutInitiate(); ///< This function is used to initiate the output files;
 	
 	public:
 	  CReservoir();
