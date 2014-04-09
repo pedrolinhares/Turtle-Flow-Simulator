@@ -1,14 +1,14 @@
 1     #* Phases Number *#
-2     #* Fluid Type (1- water; 2- Oil; 3- Gas) *#
 1     #* Problem Dimension *#
 
+2     #* Fluid Type (1- water; 2- Oil; 3- Gas) *#
 1     #* Discretization Model (1 - Semi-Implicit, 2 - Implicit) *#
 500   #* Maximum Linear Iterations *#
 1e-3  #* Relative Linear Precision *#
 
 15    #*[days] Delta time *#
 360   #*[days] Final Simulation Time *#
-2     #*Save Export Frequency (Multiple of Delta time)*#
+4     #*Save Export Frequency (Multiple of Delta time)*#
 
 6000  #*[psia] Initial Reference Pressure *#
 0     #*[ft] Initial Reference Deepth *#

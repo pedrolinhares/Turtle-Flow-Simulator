@@ -44,28 +44,29 @@
  */
 
 class CReservoir {
-private:
 	
-  //////////  Reservoir Parameters  //////////
-  CGrid *grid; ///< Pointer to the reservoir grid;
-  CResModelType *model; ///< Pointer to the model that describes the reservoir behaviour;
-  int cpoints; //Number of lines of linear equation system, and of cells in reservaoir;
-
-  ///////////  Numerical Parameters  /////////
-  CSolverMatrix *solver; ///< Pointer to numerical solver;
-  double deltat; ///< Delta time of simulation;
-  double finalt; ///< Final simulation time;
-  int savet; ///< Time frequency of exporting solution from disk, multiple of deltat;
-
-  ///////////  Output Parameters  /////////
-  std::ofstream grid_data; ///< Out put file for the pressure in all cell points;
-  std::ofstream *well_data; ///< Out put file for the pressure in all cell points;
-  void OutPutInitiate(); ///< This function is used to initiate the output files;
-
-public:
-  CReservoir();
-  ~CReservoir();
-  void Run(); ///< Function used to manage the reservoir simulation
+	protected:
+		
+	  //////////  Reservoir Parameters  //////////
+	  //CGrid *grid; ///< Pointer to the reservoir grid;
+	  //CResModelType *model; ///< Pointer to the model that describes the reservoir behaviour;
+	  int cpoints; //Number of lines of linear equation system, and of cells in reservaoir;
+	
+	  ///////////  Numerical Parameters  /////////
+	  CSolverMatrix *solver; ///< Pointer to numerical solver;
+	  double deltat; ///< Delta time of simulation;
+	  double finalt; ///< Final simulation time;
+	  int savet; ///< Time frequency of exporting solution from disk, multiple of deltat;
+	
+	  ///////////  Output Parameters  /////////
+	  std::ofstream grid_data; ///< Out put file for the pressure in all cell points;
+	  std::ofstream *well_data; ///< Out put file for the pressure in all cell points;
+	  //void OutPutInitiate(); ///< This function is used to initiate the output files;
+	
+	public:
+	  CReservoir();
+	  virtual ~CReservoir();
+	  virtual void Run() = 0; ///< Function used to manage the reservoir simulation
 
 };
 

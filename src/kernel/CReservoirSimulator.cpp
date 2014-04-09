@@ -21,6 +21,11 @@
  *****************************************************************************/
 
 #include "CReservoirSimulator.h"
+#include "filename_definitions.h"
+#include <cstdlib>
+
+using namespace std;
+using namespace filename_definitions;
 
 CReservoirSimulator::CReservoirSimulator()
 {
@@ -31,8 +36,41 @@ CReservoirSimulator::~CReservoirSimulator()
 }
 
 void CReservoirSimulator::Run() {
-	reservoir = new CReservoir();
-	reservoir->Run();
 	
+    /// Getting simulation parameters
+  
+  	ifstream fmodel(ARQ_MODEL_FILE.c_str());
+  
+    if (fmodel.fail())
+       {
+            cerr << "There is no model data." << endl;
+            exit(EXIT_FAILURE);
+       }
+
+  	int phase_number, dimensions;
+  
+  	fmodel >> phase_number;
+  	fmodel.ignore(256, '\n');
+  
+  	fmodel >> dimensions;
+  	fmodel.ignore(256, '\n');
+  
+	  switch (phase_number) {
+	  	case 1: {
+	  		switch (dimensions) {
+	  			case 1: {
+	  				reservoir = new CReservoir1d(&fmodel); ///< Constructing 1d grid.				
+	  				break;
+	  			}
+	  			
+	  		}
+	  		
+	  		break;
+	  	}
+	  }
+  
+   	fmodel.close();  ///< Closing the input file
+   	reservoir->Run(); ///< Running simulation.
+		
 }
 

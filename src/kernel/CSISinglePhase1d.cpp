@@ -2,7 +2,10 @@
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
- *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz.
+ *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
+ *  
+ *  Class Author: Wagner Queiroz Barros.
+ *  Last Update: 08/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,14 +25,17 @@
 
 using namespace std;
 
-CSISinglePhase1d::CSISinglePhase1d(CGrid *grid, int _maxni, double _erroni) {
+CSISinglePhase1d::CSISinglePhase1d(CGrid1d1p *_grid, CSolverMatrix *_solver, int _maxni, double _erroni) {
 	/// Class Constructor
+	
+	grid = _grid;
+	solver = _solver;
 	
 	cpoints = grid->CellNumber();
 	maxni = _maxni;
 	erroni = _erroni;
 	
-	elem_numb = MatrixElementsNumber(grid);
+	elem_numb = MatrixElementsNumber();
 	
 	/// Allocating the Matrix A ///
 	Acol = new int[elem_numb]; 
@@ -98,17 +104,17 @@ CSISinglePhase1d::~CSISinglePhase1d()
 	
 }
 
-int CSISinglePhase1d::MatrixElementsNumber(CGrid *grid) {
+int CSISinglePhase1d::MatrixElementsNumber() {
  /// This function run over all cells in problem and returns the number of elements
  ///that will be created in matrix A. It is used for pre-allocate memory for UMFPack matrix
  
- return (2*grid->ConnectionsNumber() + grid->CellNumber());  ///<The matrix number is the the cell number + the connections of each cell, so 2*connections.
+ 	return (2*grid->ConnectionsNumber() + grid->CellNumber());  ///<The matrix number is the the cell number + the connections of each cell, so 2*connections.
  
  ///return (3*grid->CellNumber() - 2); /// Each cell is connected to other two, but the firs and last not, so (3*cells - first - last)
  
 }
 
-void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
+void CSISinglePhase1d::BuildMatrix(double deltat)
 {
 	/// This function creates the coefficient matrix "A", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
@@ -155,7 +161,7 @@ void CSISinglePhase1d::BuildMatrix(CGrid *grid, double deltat)
 
 }
 
-void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
+void CSISinglePhase1d::BuildCoefVector(double deltat){
 	/// This function creates the free vector "b", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
@@ -194,7 +200,7 @@ void CSISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
 
 }
 
-void CSISinglePhase1d::BuildInitialSolution(CGrid *grid) {
+void CSISinglePhase1d::BuildInitialSolution() {
 	 /// This function builds the initial solution for the first problem iteration.
 	 /// It is used to initiate the first solution.
 
@@ -206,7 +212,7 @@ void CSISinglePhase1d::BuildInitialSolution(CGrid *grid) {
 
 }
 
-void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat) {
+void CSISinglePhase1d::Iterationt( double deltat) {
 	/// This function makes a time iteration in all cells of domain
 	/// using the semi-implicit linearization model.
 	
@@ -216,8 +222,8 @@ void CSISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double del
 
        do {
 
-         BuildMatrix(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
-         BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
+         BuildMatrix(deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
+         BuildCoefVector(deltat); ///< Constructing the free vector, according to the grid data.
          
          //Print();
 

@@ -2,7 +2,10 @@
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
- *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz.
+ *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
+ *  
+ *  Class Author: Wagner Queiroz Barros.
+ *  Last Update Date: 08/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,17 +38,30 @@
 class CResModelType
 {
 	protected:
+		
+		int cpoints; ///< Number of cells in the reservoir. It is the same number of the linear equation system lines;
+  		int elem_numb; ///< Number of non-zeros elements in matrix A;
+		int maxni; ///< Max number of iterations in linearization;
+  		double erroni; ///< Precision of linearization.
+  		
+  		/// The solver will be called to solve the linear system:
+		/// A' * Xni = b, Where A' = f(Acol, Arow, Aval)	
+		double *b; ///< Free Vector;
+  		double *Xni; ///< Solution Vector;
+  		double *Xpress_ni; ///< Solution Vector;
+  		
+  		/// The A matrix must be constructed using three arrays of data. More details are described in UMFPack user-guide.
+		int *Acol; ///< Column index for all non-zero elements in matrix A;
+		int *Arow; ///< Cumulative Row sum for the number of non-zeros elements;
+		double *Aval; ///< Value for all non-zero elements in matrix A.
 
 	public:
 		CResModelType(); ///< Model constructor;
 		virtual ~CResModelType(); ///< Model destructor;
 				
 		/// Model Functions ///		
-		//virtual int MatrixElementsNumber(CGrid *grid) = 0; ///< Returns the number of elements that will be created in matrix A;
-		virtual void Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat) = 0; ///< Makes a time iteration for the problem;
-		//virtual void BuildMatrix(CGrid *grid, double deltat) = 0; ///< Builds the coefficient matrix "A";
-		//virtual void BuildCoefVector(CGrid *grid, double deltat) = 0; ///< Builds the free vector "b";
-		virtual void BuildInitialSolution(CGrid *grid) = 0; ///< Builds the solution "X";
+		virtual void Iterationt(double deltat) = 0; ///< Makes a time iteration for the problem;
+		virtual void BuildInitialSolution() = 0; ///< Builds the solution "X";
 		virtual void Print() = 0; ///< This function prints on screen all the matrix. It is used to debug the code.
 };
 

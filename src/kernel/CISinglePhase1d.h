@@ -3,6 +3,9 @@
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
  *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
+ *  
+ *  Class Author: Wagner Queiroz Barros.
+ *  Last Update: 08/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +25,8 @@
 #define CISinglePhase1d_h
 
 #include "CResModelType.h"
+#include "CGrid1d1p.h"
+#include "CSolverMatrix.h"
 
 /**
  * CISinglePhase (Class Implicit Single Phase)
@@ -32,44 +37,31 @@
 class CISinglePhase1d : public CResModelType
 {
 	protected:
-				
-  		int cpoints; ///< Number of cells in the reservoir. It is the same number of the linear equation system lines;
-  		int elem_numb; ///< Number of non-zeros elements in matrix A;
-	 	int maxni; ///< Max number of iterations in linearization;
-  		double erroni; ///< Precision of linearization.
-
-		/// The solver will be called to solve the linear system:
-		/// A' * Xni = b, Where A' = f(Acol, Arow, Aval)	
-		double *b; ///< Free Vector;
-  		double *Xni; ///< Solution Vector;
-  		double *Xpress_ni; ///< Solution Vector;
+					 	
+  		double *Xpress_ni; ///< This solver is used to convert delta_x in the Solution Vector;
   		
-		
-		/// The A matrix must be constructed using three arrays of data. More details are described in UMFPack user-guide.
-		int *Acol; ///< Column index for all non-zero elements in matrix A;
-		int *Arow; ///< Cumulative Row sum for the number of non-zeros elements;
-		double *Aval; ///< Value for all non-zero elements in matrix A.
-		
+		CGrid1d1p *grid;
+		CSolverMatrix *solver;
 		
 	public:
 
-		CISinglePhase1d(CGrid *grid, int _maxni, double _erroni); ///< Single Phase 1d Constructor; 
+		CISinglePhase1d(CGrid1d1p *_grid, CSolverMatrix *_solver, int _maxni, double _erroni); ///< Single Phase 1d Constructor; 
 		virtual ~CISinglePhase1d(); ///< Single Phase 1d destructor;	
 		
 		/// Model Functions ///		
-		int MatrixElementsNumber(CGrid *grid); ///< Returns the number of elements that will be created in matrix A;
-		virtual void Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat); ///< Makes a time iteration for the problem;
-		void BuildJacobian(CGrid *grid, double deltat); ///< Builds the Jacobian matrix "A";
-		void BuildCoefVector(CGrid *grid, double deltat); ///< Builds the free vector "b";
-		virtual void BuildInitialSolution(CGrid *grid);	///< Builds the solution "X";
-		virtual void Print(); ///< This function prints on screen all the matrix. It is used to debug the code.
+		int MatrixElementsNumber(); ///< Returns the number of elements that will be created in matrix A;
+		void Iterationt(double deltat); ///< Makes a time iteration for the problem;
+		void BuildJacobian(double deltat); ///< Builds the Jacobian matrix "A";
+		void BuildCoefVector(double deltat); ///< Builds the free vector "b";
+		void BuildInitialSolution();	///< Builds the solution "X";
+		void Print(); ///< This function prints on screen all the matrix. It is used to debug the code.
 		
 		/// Implicit Residual Functions ///
-		double CellResidual(CGrid *grid, double deltat, int celln); ///< Returns the residual for the cell n in domain;
-		double RHSTerm(CGrid *grid, double deltat, int celln); ///< Returns the Qi term used for calculate the residual for cell n;
-		double LeftResDer(CGrid *grid, int celln); ///< Returns the left residual derivative for cell n;
-		double CentralResDer(CGrid *grid, double deltat, int celln); ///< Returns the central residual derivative for cell n;
-		double RightResDer(CGrid *grid, int celln); ///< Returns the right residual derivative for cell n.
+		double CellResidual(double deltat, int celln); ///< Returns the residual for the cell n in domain;
+		double RHSTerm(double deltat, int celln); ///< Returns the Qi term used for calculate the residual for cell n;
+		double LeftResDer(int celln); ///< Returns the left residual derivative for cell n;
+		double CentralResDer(double deltat, int celln); ///< Returns the central residual derivative for cell n;
+		double RightResDer(int celln); ///< Returns the right residual derivative for cell n.
 
 };
 

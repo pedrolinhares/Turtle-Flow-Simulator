@@ -2,7 +2,10 @@
 /******************************************************************************
  *  This file is part of TFS (Turtle Flow Simulator), a Qt based reservoir
  *  simulator.
- *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz.
+ *  Copyright (C) 2013-2014 Pedro Henrique Linhares, Wagner Queiroz Barros.
+ *  
+ *  Class Author: Wagner Queiroz Barros.
+ *  Last Update: 08/04/2014
  *
  *  TFS is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,14 +25,17 @@
 
 using namespace std;
 
-CISinglePhase1d::CISinglePhase1d(CGrid *grid, int _maxni, double _erroni) {
+CISinglePhase1d::CISinglePhase1d(CGrid1d1p *_grid, CSolverMatrix *_solver, int _maxni, double _erroni) {
 	/// Class Constructor
 	
+	grid = _grid;
+	solver = _solver;
+
 	cpoints = grid->CellNumber();
 	maxni = _maxni;
 	erroni = _erroni;
 	
-	elem_numb = MatrixElementsNumber(grid);
+	elem_numb = MatrixElementsNumber();
 	
 	/// Allocating the Matrix A ///
 	Acol = new int[elem_numb]; 
@@ -104,7 +110,7 @@ CISinglePhase1d::~CISinglePhase1d()
 	
 }
 
-int CISinglePhase1d::MatrixElementsNumber(CGrid *grid) {
+int CISinglePhase1d::MatrixElementsNumber() {
  /// This function run over all cells in problem and returns the number of elements
  ///that will be created in matrix A. It is used for pre-allocate memory for UMFPack matrix
  
@@ -112,7 +118,7 @@ int CISinglePhase1d::MatrixElementsNumber(CGrid *grid) {
  
 }
 
-double CISinglePhase1d::CellResidual(CGrid *grid, double deltat, int celln) {
+double CISinglePhase1d::CellResidual(double deltat, int celln) {
 	/// This function returns the cell residual for the cell n. This residual is calculated using the single-phase
 	/// implicit model, for a one-dimensional reservoir.
 	
@@ -131,12 +137,12 @@ double CISinglePhase1d::CellResidual(CGrid *grid, double deltat, int celln) {
     Ci_p = Ci*grid->Pressure(celln); 
 	
 	/// Calculating the Qi element:
-	Qi = RHSTerm(grid, deltat, celln);
+	Qi = RHSTerm(deltat, celln);
 		
 	return ( Wi_p + Ci_p + Ei_p - Qi );
 }
 
-double CISinglePhase1d::RHSTerm(CGrid *grid, double deltat, int celln){
+double CISinglePhase1d::RHSTerm(double deltat, int celln){
 	/// This function returns the Right Hand Side term (Q_i) for the cell celln.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
@@ -163,7 +169,7 @@ double CISinglePhase1d::RHSTerm(CGrid *grid, double deltat, int celln){
 }
 
 
-double CISinglePhase1d::LeftResDer(CGrid *grid, int celln) {
+double CISinglePhase1d::LeftResDer(int celln) {
 	/// This function returns the left residual derivative for de cell n. 
 	
 	double leftpress, centerpress;
@@ -183,7 +189,7 @@ double CISinglePhase1d::LeftResDer(CGrid *grid, int celln) {
 	return ( (leftpress - centerpress)*lefttransmderiv + lefttransmx + (centerdeepth - leftdeepth)*leftgravitderiv );
 }
 
-double CISinglePhase1d::CentralResDer(CGrid *grid, double deltat, int celln) {
+double CISinglePhase1d::CentralResDer(double deltat, int celln) {
 	/// This function returns the central residual derivative for de cell n. 
 	
 	double leftpress, centerpress, backcenterpress, rightpress;
@@ -225,7 +231,7 @@ double CISinglePhase1d::CentralResDer(CGrid *grid, double deltat, int celln) {
 	return centralres;
 }
 
-double CISinglePhase1d::RightResDer(CGrid *grid, int celln) {
+double CISinglePhase1d::RightResDer(int celln) {
 	/// This function returns the right residual derivative for de cell n.
 	
 	double rightpress, centerpress;
@@ -245,7 +251,7 @@ double CISinglePhase1d::RightResDer(CGrid *grid, int celln) {
 	return ( (rightpress - centerpress)*righttransmderiv + righttransmx + (rightdeepth - centerdeepth)*rightgravitderiv ); 
 }
 
-void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
+void CISinglePhase1d::BuildJacobian(double deltat)
 {
 	/// This function creates the jacobian matrix "A", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
@@ -255,8 +261,8 @@ void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
 	int elemcount = 0; ///< Counter to control the number of elements inserted in matrix A.
 	
 	/// Filling the first line of matrix A
-	Ci = CentralResDer(grid, deltat, 0); ///< Calculating the central Jacobian Residual term;
-	Ei = RightResDer(grid, 0); 	///< Calculating the east Jacobian Residual term;
+	Ci = CentralResDer(deltat, 0); ///< Calculating the central Jacobian Residual term;
+	Ei = RightResDer(0); 	///< Calculating the east Jacobian Residual term;
 	
 		Aval[elemcount] = Ci;
 	    elemcount++;
@@ -266,9 +272,9 @@ void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
 	/// Filling the middle A Elements
     for (int i = 1 ; i < (cpoints - 1) ; i++) {
 		
-		Wi = LeftResDer(grid,  i); ///< Calculating the west Jacobian Residual term;
-		Ei = RightResDer(grid, i);	///< Calculating the east Jacobian Residual term;
-    	Ci = CentralResDer(grid, deltat, i);	///< Calculating the central Jacobian Residual term;
+		Wi = LeftResDer(i); ///< Calculating the west Jacobian Residual term;
+		Ei = RightResDer(i);	///< Calculating the east Jacobian Residual term;
+    	Ci = CentralResDer(deltat, i);	///< Calculating the central Jacobian Residual term;
 
 	        Aval[elemcount] = Wi;
 	        elemcount++;
@@ -279,8 +285,8 @@ void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
     }
     
     /// Filling the last line of matrix A
-    Wi = LeftResDer(grid, (cpoints - 1)); ///< Calculating the west matrix element;
-	Ci = CentralResDer(grid, deltat, (cpoints - 1));	///< Calculating the central matrix element;
+    Wi = LeftResDer((cpoints - 1)); ///< Calculating the west matrix element;
+	Ci = CentralResDer(deltat, (cpoints - 1));	///< Calculating the central matrix element;
 	
 		Aval[elemcount] = Wi;
         elemcount++;
@@ -288,20 +294,20 @@ void CISinglePhase1d::BuildJacobian(CGrid *grid, double deltat)
         elemcount++;	
 }
 
-void CISinglePhase1d::BuildCoefVector(CGrid *grid, double deltat){
+void CISinglePhase1d::BuildCoefVector(double deltat){
 	/// This function creates the free vector "b", using the grid data.
 	///	It is used a Single-Phase Compressible-Flow model, described in chapter 8 of
 	/// Ertekin, T., Abou-Kassem, J. & King, G., "Basic Reservoir Simulation", 2001.
 
 	for (int i = 0 ; i < (cpoints) ; i++) {
 		
-		b[i] = - CellResidual(grid, deltat, i); ///< 
+		b[i] = - CellResidual(deltat, i); ///< 
 
 	}
 
 }
 
-void CISinglePhase1d::BuildInitialSolution(CGrid *grid) {
+void CISinglePhase1d::BuildInitialSolution() {
 	 /// This function builds the initial solution for the first problem iteration.
 	 /// It is used to initiate the first solution.
 
@@ -314,7 +320,7 @@ void CISinglePhase1d::BuildInitialSolution(CGrid *grid) {
 
 }
 
-void CISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double deltat) {
+void CISinglePhase1d::Iterationt( double deltat) {
 	/// This function makes a time iteration in all cells of domain
 	/// using the semi-implicit linearization model.
 	
@@ -324,8 +330,8 @@ void CISinglePhase1d::Iterationt(CGrid *grid, CSolverMatrix *solver, double delt
 
        do {
 
-         BuildJacobian(grid, deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
-         BuildCoefVector(grid, deltat); ///< Constructing the free vector, according to the grid data.
+         BuildJacobian(deltat);  ///< Constructing the coeficient matrix, according to the grid data.        
+         BuildCoefVector(deltat); ///< Constructing the free vector, according to the grid data.
          
          //Print();
 

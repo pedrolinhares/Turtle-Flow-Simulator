@@ -56,22 +56,12 @@
 3	1	2	3	1
 2	3	1	2	3
 
-#* Left BC Type/Value (0 - Const Rate / 1 - Const Pressure) *#
-0	0	0
-#* Left BC Value [STB/d / Psi] *#
-0	0	0
+2     #* Grid Row that well is inserted *#
+4     #* Grid Column that well is inserted *#
+1     #* Well Id *#
+-150  #* [STB/D] Well Flow Rate (Negative = Production || Positive = Injection) *#
 
-#* Top BC Type/Value (0 - Const Rate / 1 - Const Pressure) *#
-0	0	0	0	0
-#* Top BC Value [STB/d / Psi] *#
-0	0	0	0	0
-
-#* Right BC Type/Value (0 - Const Rate / 1 - Const Pressure) *#
-0	0	0
-#* Right BC Value [STB/d / Psi] *#
-0	0	0
-
-#* Bottom BC Type/Value (0 - Const Rate / 1 - Const Pressure) *#
-0	0	0	0	0
-#* Bottom BC Value [STB/d / Psi] *#
-0	0	0	0	0
+1     #* Grid Row that well is inserted *#
+1     #* Grid Column that well is inserted *#
+2     #* Well Id *#
+50  #* [STB

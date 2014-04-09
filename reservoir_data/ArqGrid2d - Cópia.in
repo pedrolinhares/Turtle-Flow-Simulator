@@ -1,0 +1,63 @@
+1     #* Blocks Number *#
+
+1       #* Block Id *#
+3.5e-6  #* [-] Rock Compressibility in Block 1 *#
+0.015   #* [Darcy] Permeability X in Block 1 *#
+0.015   #* [Darcy] Permeability Y in Block 1 *#
+0.18    #* [-] Porosity in block 1 *#
+6000    #* [psi] Reference Pressure *#
+
+5     #* X Cells Number *#
+3     #* Y Cells Number *#
+
+#* Lenght of cell (dX) [ft] *# 
+1000  
+1000
+1000
+1000
+1000
+
+#* Width of Cell (dY) [ft] *#
+333.333
+333.333
+333.333
+
+#* Thickness of Cell (dZ) [ft] *#
+75.0	75.0	75.0	75.0	75.0
+75.0	75.0	75.0	75.0	75.0
+75.0	75.0	75.0	75.0	75.0
+
+#* Cells Identification Number (0 is a NULL Cell) *#
+1	2	3	4	5
+6	7	8	9	10
+11	12	13	14	15
+
+#* Deepth of Cells (Z) [ft] *#
+0	0	0	0	0
+0	0	0	0	0
+0	0	0	0	0
+
+#* ID of Block Connected to Cell *#
+1	1	1	1	1
+1	1	1	1	1
+1	1	1	1	1
+
+#* Left BC Type/Value (0 - Const Rate / 1 - Const Pressure) *#
+0	0	0
+#* Left BC Value [STB/d / Psi] *#
+0	0	0
+
+#* Top BC Type/Value (0 - Const Rate / 1 - Const Pressure) *#
+0	0	0	0	0
+#* Top BC Value [STB/d / Psi] *#
+0	0	0	0	0
+
+#* Right BC Type/Value (0 - Const Rate / 1 - Const Pressure) *#
+0	0	0
+#* Right BC Value [STB/d / Psi] *#
+0	0	0
+
+#* Bottom BC Type/Value (0 - Const Rate / 1 - Const Pressure) *#
+0	0	0	0	0
+#* Bottom BC Value [STB/d / Psi] *#
+0	0	0	0	0
